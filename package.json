@@ -1,0 +1,23 @@
+{
+  "name": "edifylearningspaceswebapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "Node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EdifyLearningSpacesWebAPP/EdifyLearningSpacesWebApp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EdifyLearningSpacesWebAPP/EdifyLearningSpacesWebApp/issues"
+  },
+  "homepage": "https://github.com/EdifyLearningSpacesWebAPP/EdifyLearningSpacesWebApp#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
