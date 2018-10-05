@@ -10,8 +10,16 @@ app.use(express.static(__dirname + '/css'))
 
 
 
-app.get('/', (req, res) => {
+app.get('/provider', (req, res) => {
 	res.render('provider page.hbs')
+})
+
+app.get('/provider_login', (req, res) => {
+	res.render('login.hbs')
+})
+
+app.get('/dashboard', (req, res) => {
+	res.render('dashboard.hbs')
 })
 
 app.listen(process.env.PORT || 8080, () => {
