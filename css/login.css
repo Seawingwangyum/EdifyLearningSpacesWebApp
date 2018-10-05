@@ -1,0 +1,98 @@
+#Login_Panel{
+    height:400px;    
+    width:800px;
+    display:flex;
+    padding:15px;
+    -webkit-flex-direction: row;
+    -me-flex-direction: row;
+    flex-direction: row; 
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    position: absolute;
+    margin:auto;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+#Left_Panel{
+    flex-grow:1;
+    padding: 0px 5px 0px 15px;
+    border-right:0px;
+    position: relative;
+    background-color:lightblue;
+    border-radius: 6px 0px 0px 6px;
+}
+
+#Right_Panel{
+    flex-grow:3;
+    padding: 0px 5px 0 px 15px;
+    border-left:0px;
+    position: relative;
+    border-radius: 0px 6px 6px 0px;
+}
+
+.Login_Panels{
+    background-color:#f5f8fa;
+    border: 2px solid #e6eff3;
+}
+
+h2{
+    font-family: Baloo Bhai, sans-serif;
+    margin:20px;
+}
+
+p,a{
+    margin:20px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.loginelements{
+    margin:20px;
+}
+
+.inputbox{
+    background-color: #f5f8fa;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-style: none none solid;
+    border-bottom-width:1px;
+    border-bottom-color: #ced7db;
+    width:90%;
+    height:20px;
+    font-size: 18px;
+}
+
+.purple_button{
+    background-color: #5f59a5;
+    border-radius: 6px;
+    border:0px;
+    display:inline-block;
+    padding:15px 25px;
+    color:white;
+    font-family: Baloo Bhai, sans-serif;
+    margin:20px;
+    position: absolute;
+    bottom:0px;
+    left:0;
+}
+
+::placeholder{
+    font-size: 18px;
+}
+
+/* baloo-bhai-regular - latin */
+@font-face {
+    font-family: 'Baloo Bhai';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../fonts/baloo-bhai-v3-latin-regular.eot'); /* IE9 Compat Modes */
+    src: local('Baloo Bhai Regular'), local('BalooBhai-Regular'),
+         url('../fonts/baloo-bhai-v3-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         url('../fonts/baloo-bhai-v3-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
+         url('../fonts/baloo-bhai-v3-latin-regular.woff') format('woff'), /* Modern Browsers */
+         url('../fonts/baloo-bhai-v3-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
+         url('../fonts/baloo-bhai-v3-latin-regular.svg#BalooBhai') format('svg'); /* Legacy iOS */
+  }
