@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <title> Dashboard </title>
+    <link href = "dashstyle.css" type = "text/css" rel = "stylesheet"/>
+</head>
+
+<body>
+
+{{> navbar}}
+
+ <div id="menubar">
+    	<div class="buttbox" id="licensesbutt">
+        	<a class="buttcont" href=./licenses>Licenses</a>
+    	</div>
+
+    	<div class="buttbox" id="statusbutt">
+        	<a class="buttcont" href=./status>Status</a>
+    	</div>
+
+    	<div class="buttbox" id="settingsbutt">
+        	<a class="buttcont" href=./settings>Settings</a>
+    	</div>
+    </div>
+    
+    <div id="mainarea">
+    
+        <div id="crimRecord" class="mainbuttons">Criminal record check</div>
+        <div id="buildingCheck" class="mainbuttons">Building check</div>
+        <div id="eliTest" class="mainbuttons">Eligibility test</div>
+        <div id="education" class="mainbuttons">Education</div>
+        <div id="references" class="mainbuttons">References</div>
+        
+    </div>
+
+</body>
+
+</html>
