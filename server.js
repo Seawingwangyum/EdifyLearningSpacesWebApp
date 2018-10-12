@@ -14,6 +14,28 @@ app.listen(process.env.PORT || 8080, () => {
     console.log(`server up on port ${port}`)
 });
 
+app.get('/quiz', (request, response) => {
+    /**
+     * Displays the status page
+     */
+
+    response.render('quiz.hbs', {
+        title: 'Quiz Page'
+
+    });
+});
+
+app.get('/quizresults', (request, response) => {
+    /**
+     * Displays the status page
+     */
+
+    response.render('quizresults.hbs', {
+        title: 'Quiz Page'
+
+    });
+});
+
 
 
 app.get('/status', (request, response) => {
@@ -34,7 +56,7 @@ app.get('/licenses', (request, response) => {
      */
 
     response.render('licenses.hbs', {
-        title: 'Status Page'
+        title: 'Licenses Page'
 
     });
 });
@@ -46,7 +68,7 @@ app.get('/settings', (request, response) => {
      */
 
     response.render('settings.hbs', {
-        title: 'Status Page'
+        title: 'Settings Page'
 
     });
 });
