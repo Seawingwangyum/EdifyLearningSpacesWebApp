@@ -8,7 +8,7 @@ app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
 app.use(express.static(__dirname + '/css'))
 const fs = require('fs');
-const hbs = require('hbs');
+
 
 app.use(express.static(__dirname + '/public'));
 
