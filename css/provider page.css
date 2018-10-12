@@ -1,7 +1,17 @@
 body {
-	margin: 0;
+	margin: 0 auto;
 	background-color: #E4E8ED;
 	font-family: sans-serif;
+	width:80%;
+	height:100vh;
+
+}
+
+#providerSelect {
+	left:80%;
+	margin: 0 auto;
+	text-align: right;
+	position:absolute;
 }
 
 #navbar {
@@ -27,4 +37,40 @@ body {
 #main {
 	background-color: #EAEAEA;
 	height: 100%;
+}
+
+#scroll {
+	
+    overflow: hidden;
+    height: 100vh;
+    
+    position: relative;
+    width: 100%;
+    backface-visibility: hidden;
+    will-change: overflow;
+}
+
+#attributes {
+	height: 50px;
+	width:100%;
+}
+
+.prov {
+	height: 50px;
+	width:100%;
+}
+
+#id {
+	padding-left:40px;
+}
+#fname {
+	padding-left:200px;
+}
+
+#lname {
+	padding-left:200px;
+}
+
+#status {
+	padding-left:400px;
 }
