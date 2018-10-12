@@ -1,0 +1,30 @@
+body {
+	margin: 0;
+	background-color: #E4E8ED;
+	font-family: sans-serif;
+}
+
+#navbar {
+	width: 100%;
+	height: 60px;
+	background-color: white;
+	color: #57A4DB;
+	font-size: 48px;
+	border-bottom: 1px solid grey;
+	text-align: center;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+#navbar_left {
+	font-size: 24px;
+	position: absolute;
+	left: 0;
+	top: 0;
+	text-align: left;
+}
+
+#main {
+	background-color: #EAEAEA;
+	height: 100%;
+}
