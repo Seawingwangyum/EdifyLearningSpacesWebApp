@@ -1,7 +1,17 @@
 body {
-	margin: 0;
+	margin: 0 auto;
 	background-color: #E4E8ED;
 	font-family: sans-serif;
+	width:80%;
+	height:100vh;
+
+}
+
+#providerSelect {
+	left:80%;
+	margin: 0 auto;
+	text-align: right;
+	position:absolute;
 }
 
 #navbar {
@@ -106,4 +116,5 @@ body {
 	background-color: #C4C4C4;
 	padding-right: 91%;
 	padding-left: 12px;
+
 }
