@@ -1,31 +1,51 @@
 const port = process.env.port || 8080;
 const express = require('express');
-const hbs = require('hbs')
+const hbs = require('hbs');
+const fs = require('fs');
+const session = require('client-sessions');
 
 const app = express();
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
 app.use(express.static(__dirname + '/css'))
+
 const fs = require('fs');
-//const hbs = require('hbs');
+
+
+const fs = require('fs');
+
 
 app.use(express.static(__dirname + '/public'));
 
+// creates a session
+app.use(session({
+    cookieName: 'edify_session',
+    secret: 'edify_apple_sauce',
+    duration: 1 * 60 * 60 * 1000,
+    activeDuration: 1 * 30 * 60 * 1000
+}));
 
-
+// Checks to see if the session is still active, if it isnt it redirects to '/provider_login'
+function sessionCheck(req, res, next) {
+    if (req.session && req.session.user) {
+        next()
+    } else {
+        res.redirect('/provider_login')
+    }
+}
 
 app.get('/provider', (req, res) => {
 	res.render('provider page.hbs')
-})
+});
 
 app.get('/provider_login', (req, res) => {
 	res.render('login.hbs')
-})
+});
 
 app.get('/dashboard', (req, res) => {
 	res.render('dashboard.hbs')
-})
+});
 
 app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
