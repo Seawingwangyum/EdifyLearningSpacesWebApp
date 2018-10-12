@@ -13,6 +13,9 @@ app.use(express.static(__dirname + '/css'))
 const fs = require('fs');
 
 
+const fs = require('fs');
+
+
 app.use(express.static(__dirname + '/public'));
 
 // creates a session
@@ -43,6 +46,14 @@ app.get('/provider_login', (req, res) => {
 app.get('/dashboard', (req, res) => {
 	res.render('dashboard.hbs')
 });
+
+app.get('/account_creation', (req, res) => {
+	res.render('account_creation.hbs')
+})
+
+app.get('/ad_page', (req, res) => {
+	res.render('ad_page.hbs')
+})
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`server up on port ${port}`)
