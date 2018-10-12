@@ -4,9 +4,12 @@ const hbs = require('hbs');
 
 const app = express();
 
-app.set('view engine', 'hbs');
-hbs.registerPartials(__dirname + '/views/partials');
-app.use(express.static(__dirname + '/css'));
+app.set('view engine', 'hbs')
+hbs.registerPartials(__dirname + '/views/partials')
+app.use(express.static(__dirname + '/css'))
+const fs = require('fs');
+
+app.use(express.static(__dirname + '/public'));
 
 app.get('/provider', (req, res) => {
 	res.render('provider page.hbs')
@@ -22,4 +25,41 @@ app.get('/dashboard', (req, res) => {
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`server up on port ${port}`)
+});
+
+
+
+app.get('/status', (request, response) => {
+    /**
+     * Displays the status page
+     */
+
+    response.render('status.hbs', {
+        title: 'Status Page'
+
+    });
+});
+
+
+app.get('/licenses', (request, response) => {
+    /**
+     * Displays the status page
+     */
+
+    response.render('licenses.hbs', {
+        title: 'Status Page'
+
+    });
+});
+
+
+app.get('/settings', (request, response) => {
+    /**
+     * Displays the status page
+     */
+
+    response.render('settings.hbs', {
+        title: 'Status Page'
+
+    });
 });
