@@ -9,13 +9,6 @@ const app = express();
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
 app.use(express.static(__dirname + '/css'))
-
-const fs = require('fs');
-
-
-const fs = require('fs');
-
-
 app.use(express.static(__dirname + '/public'));
 
 // creates a session
@@ -53,6 +46,10 @@ app.get('/account_creation', (req, res) => {
 
 app.get('/ad_page', (req, res) => {
 	res.render('ad_page.hbs')
+})
+
+app.get('/provider_list_page', (req, res) => {
+	res.render('provider list page.hbs')
 })
 
 app.listen(process.env.PORT || 8080, () => {
