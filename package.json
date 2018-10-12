@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/EdifyLearningSpacesWebAPP/EdifyLearningSpacesWebApp#readme",
   "dependencies": {
+    "client-sessions": "^0.8.0",
     "express": "^4.16.3",
     "fs": "0.0.1-security",
     "hbs": "^4.0.1"
