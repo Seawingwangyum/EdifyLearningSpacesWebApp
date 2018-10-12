@@ -8,132 +8,92 @@
 <body>
 	{{> navbar}}
 
-	<div id='body'>
-		<div id="top">
-		<input type="text" name="id" placeholder="ID">
-		<select name="example" id="providerSelect">
-			<option selected="selected" value="one">All applicants</option>
-			<option  value="two">Choice 2</option>
-			<option  value="three">Choice 3</option>
-		</select><br>
-		
-		<input type="text" name="fname" placeholder="First Name">
-		<input type="text" name="lname" placeholder="Last Name">
-		<button name="submit">Submit</button>
+	<div id='main'>
+		<div id='info'>
+			<div id='infoTop'>
+				<button id=back_but>
+					back
+				</button>
+			</div>
+
+			<div id='infoBot'>
+				<div id='number'>
+					number
+				</div>
+				<div id='first_name'>
+					first name
+				</div>
+				<div id='last_name'>
+					last name
+				</div>
+				<div id='status'>
+					status
+				</div>
+			</div>
 		</div>
 
-		<div id="scroll">
-			<div id="attributes">
-				<text id="id">ID</text>
-				<text id="fname">First Name</text>
-				<text id="lname">Last Name</text>
-				<text id="status">Status</text>
+		<div id='licenses'>
+			<div style='height: 65px'></div>
+			<div class='license_group'>
+				<div id='awaiting_approval' class='license_group_name'>
+					Awaiting approval
+				</div>
+				<div style="height: 18px"></div>
+				<button class='license_but'>
+					license
+				</button>
+				<div style="height: 5px"></div>
+				<button class='license_but'>
+					license
+				</button>
+				<div style="height: 18px"></div>
 			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			<div class="prov" id="prov1">
-				<text id="id">912323</text>
-				<text id="fname">Joe</text>
-				<text id="lname">DiMaggio</text>
-				<text id="status">Approved</text>
-			</div>
-			
-		</div>
 
+			<div class='license_group'>
+				<div id='awaiting_submission' class='license_group_name'>
+					Awaiting submission
+				</div>
+				<div style="height: 18px"></div>
+				<button class='license_but'>
+					license
+				</button>
+				<div style="height: 5px"></div>
+				<button class='license_but'>
+					license
+				</button>
+				<div style="height: 5px"></div>
+				<button class='license_but'>
+					license
+				</button>
+				<div style="height: 18px"></div>
+			</div>
+
+			<div class='license_group'>
+				<div id='approval' class='license_group_name'>
+					Approved
+				</div>
+				<div style="height: 18px"></div>
+				<button class='license_but'>
+					license
+				</button>
+				<div style="height: 18px"></div>
+			</div>
+
+			<div class='license_group'>
+				<div id='denied' class='license_group_name'>
+					Denied
+				</div>
+				<div style="height: 18px"></div>
+				<button class='license_but'>
+					license
+				</button>
+				<div style="height: 5px"></div>
+				<button class='license_but'>
+					license
+				</button>
+				<div style="height: 18px"></div>
+			</div>
+		</div>
 
 	</div>
 
