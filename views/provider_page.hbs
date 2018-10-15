@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+	<title>Provider</title>
+	<link href='provider_page.css' rel='stylesheet' type='text/css'/>
+	
+</head>
+
+<body>
+	{{> navbar}}
+
+	<div id='main'>
+		<div id='info'>
+			<div id='infoTop'>
+				<form method='get' action='/provider_list_page'>
+					<input id ='back_but'type='submit' value='back'>
+				</form>
+			</div>
+
+			<div id='infoBot'>
+				<div id='number'>
+					{{userData.number}}
+				</div>
+				<div id='first_name'>
+					{{userData.firstName}}
+				</div>
+				<div id='last_name'>
+					{{userData.lastName}}
+				</div>
+				<div id='status'>
+					{{userData.status}}
+				</div>
+			</div>
+		</div>
+
+		<div id='licenses'>
+			<div style='height: 65px'></div>
+
+			{{#each userData.licenses as |licenseStatus|}}
+				<div class='license_group'>
+					<div id={{this.name}} class='license_group_name'>
+						{{licenseStatus.name}}
+					</div>
+					<div style="height: 18px"></div>
+					{{#each licenseStatus.licenses as |license|}}
+						<button class='license_but'>
+							{{license.name}}
+						</button>
+						<div style="height: 5px"></div>
+					{{/each}}
+				</div>
+			{{/each}}
+		</div>
+	</div>
+
+	<script src='provider_page.js'></script>
+</body>

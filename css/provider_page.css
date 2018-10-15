@@ -2,9 +2,6 @@ body {
 	margin: 0 auto;
 	background-color: #E4E8ED;
 	font-family: sans-serif;
-	width:80%;
-	height:100vh;
-
 }
 
 #providerSelect {
@@ -98,6 +95,7 @@ body {
 	position: relative;
 	left: 8%;
 	width: 84%;
+	padding-bottom: 18px;
 }
 
 .license_group_name {
@@ -114,7 +112,7 @@ body {
 	height: 30px;
 	border: none;
 	background-color: #C4C4C4;
-	padding-right: 91%;
+	padding-right: 90%;
 	padding-left: 12px;
 
 }
