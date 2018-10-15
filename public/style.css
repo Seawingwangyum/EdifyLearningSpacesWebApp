@@ -185,7 +185,7 @@ h3 {
 */
 
 #backPage {
-    display: block;
+    display: none;
     position:fixed;
     left:0;
     top:0;
@@ -275,7 +275,7 @@ button {
 
 
 #changeName {
-	display: block;
+	display: none;
     position: absolute;
     background-color: white;
     width: 400px;
@@ -304,4 +304,80 @@ button {
     transition: 0.5s;
 	text-align: center;
     font-family: Baloobhai,sans-serif;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.quizscreen {
+	position: relative;
+	width: 500px;
+	height: 370px;
+	top: 50px;
+	background-color: #B6DEF9;
+	margin-bottom: 30px;
+	margin-left: auto;
+	margin-right: auto;
+
+}
+
+.checkingtitle {
+	position: relative;
+	width: 500px;
+	height: 50px;
+	top: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.quizbackButt {
+	position: relative;
+	width: 90px;
+	height: 30px;
+	background-color: #9c67ec;
+	left: 20px;
+    border-radius: 8px;
+    text-align: center;
+    display: inline-block;
+
+}
+
+.quizbackButt:hover {
+    background-color: #5f59a5;
+}
+
+.quiznextButt {
+	position: relative;
+	width: 90px;
+	height: 30px;
+	background-color: #9c67ec;
+	left: 300px;
+    border-radius: 8px;
+    text-align: center;
+    display: inline-block;
+
+}
+
+.quiznextButt:hover {
+    background-color: #5f59a5;
+}
+
+.quiztitle {
+	position: relative;
+	top: 6px;
+	font-size: 17px;
+    color: #f7fbfd;
+    font-family: Baloobhai,sans-serif;
+    font-weight: bold;
 }
