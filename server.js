@@ -19,6 +19,8 @@ app.use(session({
     activeDuration: 1 * 30 * 60 * 1000
 }));
 
+var testData = require('./public/testData')
+
 // Checks to see if the session is still active, if it isnt it redirects to '/provider_login'
 function sessionCheck(req, res, next) {
     if (req.session && req.session.user) {
@@ -29,14 +31,16 @@ function sessionCheck(req, res, next) {
 }
 
 app.get('/provider', (req, res) => {
-	res.render('provider page.hbs')
+	res.render('provider_page.hbs', {
+		userData: testData.provider_page_data
+	})
 });
 
 app.get('/provider_login', (req, res) => {
 	res.render('login.hbs')
 });
 
-app.get('/dashboard', (req, res) => {
+app.get('/licenses', (req, res) => {
 	res.render('dashboard.hbs')
 });
 
