@@ -12,7 +12,7 @@
 		<div id='info'>
 			<div id='infoTop'>
 				<form method='get' action='/provider_list_page'>
-					<input id ='back_but'type='submit' value='back'>
+					<input id ='back_but'type='submit' value='back'/>
 				</form>
 			</div>
 
@@ -33,8 +33,6 @@
 		</div>
 
 		<div id='licenses'>
-			<div style='height: 65px'></div>
-
 			{{#each userData.licenses as |licenseStatus|}}
 				<div class='license_group'>
 					<div id={{this.name}} class='license_group_name'>
@@ -42,10 +40,29 @@
 					</div>
 					<div style="height: 18px"></div>
 					{{#each licenseStatus.licenses as |license|}}
-						<button class='license_but'>
-							{{license.name}}
-						</button>
-						<div style="height: 5px"></div>
+						<div id={{license.name}} class='license'>
+							<button class='license_but' onclick="createOptions('{{license.name}}', '{{licenseStatus.name}}')">
+								{{license.name}}
+							</button>
+<!-- 							<div class='license_options'>
+								<div class='filename'>
+									<div class='filename_button'><button>Download</button></div>
+									<div class='filename_name'>Filename</div>
+									<div class='filename_approved_by'>Approved by:</div>
+								</div>
+
+								<form class='file_submit' method='post' action='make_data_button'>
+									<div class='form_left'>
+										<div class='form_left_padding'>Add a note</div>
+										<textarea class='note_input' rows='3'></textarea>
+									</div>
+									<div class='form_right'>
+										<input class='form_but' type='submit' value='Accept'/>
+										<input class='form_but' type='submit' value='Deny'/>
+									</div>
+								</form>
+							</div> -->
+						</div>
 					{{/each}}
 				</div>
 			{{/each}}

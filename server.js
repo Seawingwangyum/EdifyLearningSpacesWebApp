@@ -56,10 +56,6 @@ app.get('/provider_list_page', (req, res) => {
 	res.render('provider list page.hbs')
 })
 
-app.listen(process.env.PORT || 8080, () => {
-    console.log(`server up on port ${port}`)
-});
-
 app.get('/quiz', (request, response) => {
     /**
      * Displays the status page
@@ -78,10 +74,8 @@ app.get('/quizresults', (request, response) => {
 
     response.render('quizresults.hbs', {
         title: 'Quiz Page'
-
     });
 });
-
 
 
 app.get('/status', (request, response) => {
@@ -91,22 +85,8 @@ app.get('/status', (request, response) => {
 
     response.render('status.hbs', {
         title: 'Status Page'
-
     });
 });
-
-
-app.get('/licenses', (request, response) => {
-    /**
-     * Displays the status page
-     */
-
-    response.render('licenses.hbs', {
-        title: 'Licenses Page'
-
-    });
-});
-
 
 app.get('/settings', (request, response) => {
     /**
@@ -115,6 +95,9 @@ app.get('/settings', (request, response) => {
 
     response.render('settings.hbs', {
         title: 'Settings Page'
-
     });
+});
+
+app.listen(process.env.PORT || 8080, () => {
+    console.log(`server up on port ${port}`)
 });
