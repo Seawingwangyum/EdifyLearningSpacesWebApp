@@ -11,54 +11,53 @@
     <div id="headerdiv">
         <h1 id="headtext">edify Providers</h1>
     </div>
-
     <div id="menubar">
+        <div class="buttbox" id="licensesbutt">
+            <a class="buttcont" href=./licenses>Licenses</a>
+        </div>
 
-    	<div class="buttbox" id="licensesbutt">
-        	<a class="buttcont" href=./licenses>Licenses</a>
-    	</div>
-
-    	<div class="buttbox" id="statusbutt">
-        	<a class="buttcont" href=./status>Status</a>
-    	</div>
-
-    	<div class="buttbox" id="settingsbutt">
-        	<a class="buttcont" href=./settings>Settings</a>
-    	</div>
+        <div class="buttbox" id="statusbutt">
+            <a class="buttcont" href=./status>Status</a>
+        </div>
+        <div class="buttbox" id="settingsbutt">
+            <a class="buttcont" href=./settings>Settings</a>
+        </div>
 
     </div>
 
-    <div id="maincontent">
-    	<div class="changepart" id="namepart">
-	    	<div class="changebox" id="changename">
-	    		<text class="changetitle">Change name</text>
-	    	</div>
-	    	<div class="changeinfo" id="nameinfo">
-	    		<text>Current name <br> <i><font size="4" color="#73618d">Shibe Ng</font></i></text>
-	    	</div>
-    	</div>
+    <div id="maincontent" >
+        <div class="changepart" id="namepart" href="changePass" onclick=" openOrClose('backPage', 'changeName', 'block')">
+            <div class="changebox" id="changename">
+                <text class="changetitle">Change name</text>
+            </div>
+            <div class="changeinfo" id="nameinfo">
+                <text>Current name <br> <i><font size="4" color="#73618d">Shibe Ng</font></i>
+                </text>
+            </div>
+        </div>
 
-    	<div class="changepart" id="emailpart">
-	    	<div class="changebox" id="changeemail">
-	    		<text class="changetitle">Change email</text>
-	    	</div>
-	    	<div class="changeinfo" id="emailinfo">
-	    		<text>Current email <br> <i><font size="4" color="#73618d">shibeng26@gmail.com</font></i></text>
-	    	</div>
-	    </div>
+        <div class="changepart" id="emailpart" onclick=" openOrClose('backPage', 'changeEmail', 'block')">
+            <div class="changebox" id="changeemail">
+                <text class="changetitle">Change email</text>
+            </div>
+            <div class="changeinfo" id="emailinfo">
+                <text>Current email <br> <i><font size="4" color="#73618d">shibeng26@gmail.com
+                </font></i></text>
+            </div>
+        </div>
 
-    	<div class="changepart" id="pwpart">
-	    	<div class="changebox" id="changepw">
-	    		<text class="changetitle">Change password</text>
-	    	</div>
-	    	<div class="changeinfo" id="pwinfo">
-	    		<text>Current password <br> <i><font size="4" color="#73618d">*********ng</font></i></text>
-	    	</div>
-	    </div>
+        <div class="changepart" id="pwpart" onclick="openOrClose('backPage', 'changePass', 'block')">
+            <div class="changebox" id="changepw">
+                <text class="changetitle">Change password</text>
+            </div>
+            <div class="changeinfo" id="pwinfo">
+                <text>Current password <br> <i><font size="4" color="#73618d">*********ng</font></i></text>
+            </div>
+        </div>
 
     </div>
 
-    <div id="backPage">
+    <div id="backPage" >
         <form action="/settings" method="post">
                 <div id="changePass">
                     <h3 class="popuptitle">Change password</h3>
@@ -66,7 +65,7 @@
                     <input class="changeInput" type="password" placeholder="New password" name="pswd" >
                     <input class="changeInput" type="password" placeholder="Re-type new password" name="pswd">
                     <button class="changeButt" type="submit">Confirm</button>
-                    <button class="changeButt" type="submit">Cancel</button>
+                    <button class="changeButt" type="button" onclick="openOrClose('backPage', 'changePass', 'none')">Cancel</button>
 
                 </div>
         </form>
@@ -74,9 +73,9 @@
         <form action="/settings" method="post">
                 <div id="changeName">
                     <h3 class="popuptitle">Change name</h3>
-                    <input class="changeInput" type="text" placeholder="New name" name="newname" required>
+                    <input class="changeInput" type="text" placeholder="New name" name="newname">
                     <button class="changeButt" type="submit">Confirm</button>
-                    <button class="changeButt" type="submit">Cancel</button>
+                    <button class="changeButt" type="button" onclick="openOrClose('backPage', 'changeName', 'none')">Cancel</button>
 
                 </div>
         </form>
@@ -84,18 +83,16 @@
         <form action="/settings" method="post">
                 <div id="changeEmail">
                     <h3 class="popuptitle">Change email</h3>
-                    <input class="changeInput" type="text" placeholder="New email" name="newemail" required>
+                    <input class="changeInput" type="text" placeholder="New email" name="newemail" >
                     <button class="changeButt" type="submit">Confirm</button>
-                    <button class="changeButt" type="submit">Cancel</button>
+                    <button class="changeButt" type="button" onclick="openOrClose('backPage', 'changeEmail', 'none')">Cancel</button>
 
                 </div>
         </form>
     </div>
-
+    <script src='settings.js'></script>
 
 </body>
-<script>
 
-</script>
 
 </html>
