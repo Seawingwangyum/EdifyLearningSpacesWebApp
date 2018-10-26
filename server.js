@@ -9,13 +9,6 @@ const app = express();
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
 app.use(express.static(__dirname + '/css'))
-
-const fs = require('fs');
-
-
-const fs = require('fs');
-
-
 app.use(express.static(__dirname + '/public'));
 
 // creates a session
@@ -25,6 +18,8 @@ app.use(session({
     duration: 1 * 60 * 60 * 1000,
     activeDuration: 1 * 30 * 60 * 1000
 }));
+
+var testData = require('./public/testData')
 
 // Checks to see if the session is still active, if it isnt it redirects to '/provider_login'
 function sessionCheck(req, res, next) {
@@ -36,14 +31,16 @@ function sessionCheck(req, res, next) {
 }
 
 app.get('/provider', (req, res) => {
-	res.render('provider page.hbs')
+	res.render('provider_page.hbs', {
+		userData: testData.provider_page_data
+	})
 });
 
 app.get('/provider_login', (req, res) => {
 	res.render('login.hbs')
 });
 
-app.get('/dashboard', (req, res) => {
+app.get('/licenses', (req, res) => {
 	res.render('dashboard.hbs')
 });
 
@@ -55,10 +52,30 @@ app.get('/ad_page', (req, res) => {
 	res.render('ad_page.hbs')
 })
 
-app.listen(process.env.PORT || 8080, () => {
-    console.log(`server up on port ${port}`)
+app.get('/provider_list_page', (req, res) => {
+	res.render('provider list page.hbs')
+})
+
+app.get('/quiz', (request, response) => {
+    /**
+     * Displays the status page
+     */
+
+    response.render('quiz.hbs', {
+        title: 'Quiz Page'
+
+    });
 });
 
+app.get('/quizresults', (request, response) => {
+    /**
+     * Displays the status page
+     */
+
+    response.render('quizresults.hbs', {
+        title: 'Quiz Page'
+    });
+});
 
 
 app.get('/status', (request, response) => {
@@ -68,22 +85,8 @@ app.get('/status', (request, response) => {
 
     response.render('status.hbs', {
         title: 'Status Page'
-
     });
 });
-
-
-app.get('/licenses', (request, response) => {
-    /**
-     * Displays the status page
-     */
-
-    response.render('licenses.hbs', {
-        title: 'Status Page'
-
-    });
-});
-
 
 app.get('/settings', (request, response) => {
     /**
@@ -91,7 +94,10 @@ app.get('/settings', (request, response) => {
      */
 
     response.render('settings.hbs', {
-        title: 'Status Page'
-
+        title: 'Settings Page'
     });
+});
+
+app.listen(process.env.PORT || 8080, () => {
+    console.log(`server up on port ${port}`)
 });
