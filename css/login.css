@@ -23,15 +23,18 @@
     border-right:0px;
     position: relative;
     background-color:lightblue;
-    border-radius: 6px 0px 0px 6px;
+    border-radius: 6px 6px 6px 6px;
+    margin-right: 100px;
+    width:200px;
 }
 
 #Right_Panel{
-    flex-grow:3;
-    padding: 0px 5px 0 px 15px;
+    flex-grow:1;
+    padding: 0px 5px 0px 15px;
     border-left:0px;
     position: relative;
-    border-radius: 0px 6px 6px 0px;
+    border-radius: 6px 6px 6px 6px;
+    width:200px;
 }
 
 .Login_Panels{

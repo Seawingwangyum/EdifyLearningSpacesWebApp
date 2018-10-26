@@ -42,6 +42,14 @@ app.get('/dashboard', (req, res) => {
 
 app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
+});
+
+app.get('/passchange', (req, res)=>{
+    res.render('PassChange_window.hbs')
+});
+
+app.get('/deleteaccount', (req, res)=>{
+    res.render('accountdelete.hbs')
 })
 
 app.get('/ad_page', (req, res) => {
