@@ -52,6 +52,14 @@ app.get('/provider_list_page', (req, res) => {
 	res.render('provider list page.hbs')
 })
 
+app.get('/admin_list_page', (req, res) => {
+    res.render('admin list page.hbs')
+})
+
+app.get('/admin_list_page_edit', (req, res) => {
+    res.render('admin list page edit.hbs')
+})
+
 app.listen(process.env.PORT || 8080, () => {
     console.log(`server up on port ${port}`)
 });
@@ -61,10 +69,7 @@ app.get('/quiz', (request, response) => {
      * Displays the status page
      */
 
-    response.render('quiz.hbs', {
-        title: 'Quiz Page'
-
-    });
+    response.render('quiz.hbs');
 });
 
 app.get('/quizresults', (request, response) => {
