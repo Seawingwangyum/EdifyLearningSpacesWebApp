@@ -1,12 +1,28 @@
-@import 'navbar1.css';
-
 body {
     margin: 0;
     background-color: #E4E8ED;
     font-family: sans-serif;
 }
 
+#navbar {
+    width: 100%;
+    height: 60px;
+    background-color: white;
+    color: #57A4DB;
+    font-size: 48px;
+    border-bottom: 1px solid grey;
+    text-align: center;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
 
+#navbar_left {
+    font-size: 24px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: left;
+}
 
 #main {
     background-color: #f5f8fa;
@@ -51,7 +67,7 @@ body {
     background-color:#f5f8fa;
 }
 
-#rightbox{
+#rightbox2{
     flex-grow:1;
     padding: 0px 5px 0 px 15px;
     position: relative;
@@ -79,12 +95,22 @@ body {
     padding:15px 25px;
     color:white;
     font-family: Baloo Bhai, sans-serif;
-    margin:15px;
-    margin-bottom: 5px;
-    position: absolute;
-    bottom:0px;
-    right:0
+    margin:20px;
+    margin-top: 40px;
+    position: relative;
 }
+.purple_button2{
+    background-color: #5f59a5;
+    border-radius: 6px;
+    border:0px;
+    padding:15px 25px;
+    color:white;
+    font-family: Baloo Bhai, sans-serif;
+    margin:10px;
+    position: relative;
+    left: 200px;
+}
+
 .providers{
     background-color: #f5f8fa;
     border-bottom: 1px solid grey;
@@ -112,4 +138,73 @@ body {
     margin-top:10px;
     flex-grow: 1;
     text-align: right;
+}
+
+
+
+
+.changeInput {
+    position: relative;
+    width: 300px;
+    height: 15px;
+    top: -20px;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 30px 10px 0px 15px;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+    color: #48456b;
+    font-family: Baloobhai,sans-serif;
+}
+
+.changeButt {
+    position: relative;
+    top: 15px;
+    background-color: #5f59a5;
+    border-radius: 10px;
+    width: 100px;
+    height: 50px;
+    margin-left: 40px;
+    margin-right: 40px;
+    padding: 15px;
+    color: white;
+    font-family: Baloobhai,sans-serif;
+    border: none;
+
+
+}
+
+.popuptitle {
+    font-size: 25px;
+    padding-left: 20px;
+    color: #48456b;
+    font-family: Baloobhai,sans-serif;
+    position: relative;
+    top: 0px;
+}
+
+#createAccount {
+    display: none;
+    position: absolute;
+    background-color: white;
+    width: 400px;
+    height: 400px;
+    top: 70px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    transition: 0.5s;
+    text-align: center;
+    font-family: Baloobhai,sans-serif;
+}
+
+#backPage {
+    display: none;
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background-color: rgba(0,0,0,0.6);
 }
