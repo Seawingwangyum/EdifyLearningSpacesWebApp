@@ -1,7 +1,46 @@
+@import 'navbar1.css';
 
 
-/* baloo-bhai-regular - latin */
+body {
+	margin: 0 auto;
+	background-color: #E4E8ED;
+	background-image: url("img1.PNG");
+  	background-repeat: no-repeat;
+  	background-position: center;
+  	background-size: cover;
+  	color: #9795b2;
+}
+
+.heading {
+    color: #48456b;
+}
+
+
 #adpage {
-    font-family: 'Berkshire Swash', cursive;
-    
+    font-family: Baloo Bhai, sans-serif;
+    padding-left: 10px;
   }
+
+ .advid {
+ 	padding-bottom: 10px;
+ }
+
+  .button, .nav--link {
+    border-bottom-style: none;
+    font-family: Baloobhai,sans-serif;
+    text-transform: lowercase;
+
+}
+
+.w-button {
+    display: inline-block;
+    padding: 9px 15px;
+    background-color: #5f59a5;
+    color: #fff;
+    border: 0;
+    line-height: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 0;
+
+}
