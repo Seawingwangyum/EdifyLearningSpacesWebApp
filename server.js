@@ -4,11 +4,15 @@ const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
 
+
 const app = express();
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
 app.use(express.static(__dirname + '/css'))
+
+app.use(express.static(__dirname + '/public'));
+
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/Assets'));
 
@@ -40,6 +44,7 @@ app.get('/provider', (req, res) => {
 app.get('/provider_login', (req, res) => {
 	res.render('login.hbs')
 });
+
 
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
