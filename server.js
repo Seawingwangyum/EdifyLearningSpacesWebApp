@@ -4,12 +4,17 @@ const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
 
+
 const app = express();
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
 app.use(express.static(__dirname + '/css'))
+
 app.use(express.static(__dirname + '/public'));
+
+app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/Assets'));
 
 // creates a session
 app.use(session({
@@ -40,12 +45,25 @@ app.get('/provider_login', (req, res) => {
 	res.render('login.hbs')
 });
 
+
+app.get('/tandp', (req, res) => {
+    res.render('terms.hbs')
+});
+
 app.get('/licenses', (req, res) => {
 	res.render('dashboard.hbs')
 });
 
 app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
+});
+
+app.get('/passchange', (req, res)=>{
+    res.render('PassChange_window.hbs')
+});
+
+app.get('/deleteaccount', (req, res)=>{
+    res.render('accountdelete.hbs')
 })
 
 app.get('/ad_page', (req, res) => {
@@ -56,15 +74,21 @@ app.get('/provider_list_page', (req, res) => {
 	res.render('provider list page.hbs')
 })
 
+app.get('/admin_list_page', (req, res) => {
+    res.render('admin list page.hbs')
+})
+
+app.get('/admin_list_page_edit', (req, res) => {
+    res.render('admin list page edit.hbs')
+})
+
+
 app.get('/quiz', (request, response) => {
     /**
      * Displays the status page
      */
 
-    response.render('quiz.hbs', {
-        title: 'Quiz Page'
-
-    });
+    response.render('quiz.hbs');
 });
 
 app.get('/quizresults', (request, response) => {
