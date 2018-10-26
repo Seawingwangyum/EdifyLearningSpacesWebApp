@@ -1,4 +1,13 @@
-* {box-sizing: border-box}
+@import 'navbar1.css';
+
+body {
+  margin: 0 auto;
+  background-color: #E4E8ED;
+  background-image: url("img7.PNG");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
 
   input[type=text], input[type=password] {
   width: 100%;
@@ -17,7 +26,7 @@ input[type=text]:focus, input[type=password]:focus {
 
 
 button {
-  background-color: #4CAF50;
+  background-color: #5f59a5;
   color: white;
   padding: 14px 20px;
   margin: 8px 0;
@@ -34,7 +43,7 @@ button:hover {
 
 .cancelbtn {
   padding: 14px 20px;
-  background-color: #f44336;
+  background-color: #9795b2;
 }
 
 
@@ -46,7 +55,8 @@ button:hover {
 
 .container {
   padding: 16px;
-  font-family: 'Berkshire Swash', cursive;
+  font-family: Baloo Bhai, sans-serif;
+  width: 90%;
 }
 
 
