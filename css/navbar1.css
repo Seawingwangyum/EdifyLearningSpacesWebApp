@@ -1,0 +1,28 @@
+	#navbar {
+		width: 100%;
+		height: 75px;
+		background-color: white;
+		color: #9795b2;
+		font-size: 48px;
+		border-bottom: 1px solid grey;
+		text-align: center;
+		padding-bottom: 5px;
+		padding-top: 5px;
+	}
+
+
+	#navbar_left {
+		font-size: 24px;
+		position: absolute;
+		left: 0;
+		top: 0;
+		text-align: left;
+	}
+
+	#navbar_right {
+		font-size: 24px;
+		position: absolute;
+		right: 0;
+		top: 1;
+		text-align: right;
+	}

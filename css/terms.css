@@ -1,0 +1,12 @@
+@import 'navbar1.css';
+
+body {
+	margin: 0 auto;
+	background-color: #E4E8ED;
+	font-family: Baloo Bhai, sans-serif;
+  	color: #9795b2;
+}
+
+.heading {
+    color: #48456b;
+}
