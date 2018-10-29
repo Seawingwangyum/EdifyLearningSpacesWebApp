@@ -73,12 +73,12 @@ app.get('/provider_list', (req, res) => {
     })
 })
 
-app.get('/admin_list_page', (req, res) => {
-    res.render('admin list page.hbs')
+app.get('/admin_list', (req, res) => {
+    res.render('admin list.hbs')
 })
 
-app.get('/admin_list_page_edit', (req, res) => {
-    res.render('admin list page edit.hbs')
+app.get('/admin_edit', (req, res) => {
+    res.render('admin edit.hbs')
 })
 
 
