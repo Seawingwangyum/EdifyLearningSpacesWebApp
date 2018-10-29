@@ -74,7 +74,9 @@ app.get('/provider_list', (req, res) => {
 })
 
 app.get('/admin_list', (req, res) => {
-    res.render('admin list.hbs')
+    res.render('admin list.hbs', {
+        userData: testData.admin_list_data
+    })
 })
 
 app.get('/admin_edit', (req, res) => {

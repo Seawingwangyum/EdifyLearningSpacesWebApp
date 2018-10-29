@@ -40,7 +40,7 @@
         <div id='list'>
             {{#each userData.providers as |provider|}}
                 <form class='providers' method='GET' action='provider_edit'>
-                    <input type='submit'  value='{{provider.number}}' class='goto_provider'/>
+                    <input type='submit'  value='{{provider.id}}' class='goto_provider'/>
                     <h2 class='textentry'></h2>
                     <h2 class='textentry'>{{provider.firstName}}</h2>
                     <h2 class='textentry'>{{provider.lastName}}</h2>
