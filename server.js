@@ -32,9 +32,9 @@ function sessionCheck(req, res, next) {
     }
 }
 
-app.get('/provider_edit', (req, res) => {
-	res.render('provider edit.hbs', {
-		userData: testData.provider_edit_data
+app.get('/provider', (req, res) => {
+	res.render('provider_page.hbs', {
+		userData: testData.provider_page_data
 	})
 });
 
@@ -67,20 +67,16 @@ app.get('/ad_page', (req, res) => {
 	res.render('ad_page.hbs')
 })
 
-app.get('/provider_list', (req, res) => {
-	res.render('provider list.hbs', {
-        userData: testData.provider_list_data
-    })
+app.get('/provider_list_page', (req, res) => {
+	res.render('provider list page.hbs')
 })
 
-app.get('/admin_list', (req, res) => {
-    res.render('admin list.hbs', {
-        userData: testData.admin_list_data
-    })
+app.get('/admin_list_page', (req, res) => {
+    res.render('admin list page.hbs')
 })
 
-app.get('/admin_edit', (req, res) => {
-    res.render('admin edit.hbs')
+app.get('/admin_list_page_edit', (req, res) => {
+    res.render('admin list page edit.hbs')
 })
 
 

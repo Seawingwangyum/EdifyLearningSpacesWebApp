@@ -1,9 +1,27 @@
-@import 'navbar1.css';
-
 body {
     margin: 0;
     background-color: #E4E8ED;
     font-family: sans-serif;
+}
+
+#navbar {
+    width: 100%;
+    height: 60px;
+    background-color: white;
+    color: #57A4DB;
+    font-size: 48px;
+    border-bottom: 1px solid grey;
+    text-align: center;
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+#navbar_left {
+    font-size: 24px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    text-align: left;
 }
 
 #main {
@@ -189,15 +207,4 @@ body {
     width:100%;
     height:100%;
     background-color: rgba(0,0,0,0.6);
-}
-
-.goto_provider {
-    position: absolute;
-    border: none;
-    background: none;
-    width: 100%;
-    height: 5%;
-    text-align: left;
-    font-size: 20px;
-    padding-left: 20px;
 }

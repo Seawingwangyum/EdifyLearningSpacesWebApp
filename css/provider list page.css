@@ -18,10 +18,6 @@ body {
     right:0;
 
 }
-#options {
-    border-bottom: #878787 solid 2px;
-    padding-bottom: 20px;
-}
 #optionbox{
     width:20vw;
     height:25px;
@@ -89,15 +85,12 @@ body {
     bottom:0px;
     right:0
 }
-#list {
-    border-top: solid #e6e6e6 4px;
-}
 .providers{
     background-color: #f5f8fa;
-    border: none;
     border-bottom: 1px solid grey;
     height:35px;
     width:100%;
+    margin-top:25px;
     display:flex;
     -webkit-flex-direction: row;
     -me-flex-direction: row;
@@ -106,34 +99,17 @@ body {
     -ms-flex-pack: distribute;
     justify-content: space-around;
 }
-.providers:hover {
-    background-color: #e6e6e6;
-}
 .textentry{
     width:25px;
     margin-left:15px;
     margin-top:10px;
     flex-grow: 1;
-    text-align: left;
 }
 .applicationentry{
-    width: 100px;
+    width:25px;
     margin-left:15px;
     margin-right: 40px;
     margin-top:10px;
     flex-grow: 1;
-    text-align: left;
-}
-#provider_list {
-    width: 100%;
-}
-.goto_provider {
-    position: absolute;
-    border: none;
-    background: none;
-    width: 100%;
-    height: 5%;
-    text-align: left;
-    font-size: 20px;
-    padding-left: 20px;
+    text-align: right;
 }
