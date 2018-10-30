@@ -47,6 +47,10 @@ app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
 });
 
+app.get('/test', (req, res) => {
+    res.render('testingnavbar.hbs')
+});
+
 app.get('/licenses', (req, res) => {
 	res.render('dashboard.hbs')
 });
