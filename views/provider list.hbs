@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <head>
 	<title>Provider</title>
-	<link href='provider list page.css' rel='stylesheet' type='text/css'/>
+	<link href='provider list.css' rel='stylesheet' type='text/css'/>
 	
 </head>
 
@@ -31,20 +31,31 @@
                     </select>
                     </div>
                     <div>
-                    <input class="purple_button" type="submit" value="Submit"/>
+                    <input class="purple_button" type="submit" value="Search"/>
                     </div>
                 </div>
             </form>    
         </div>
 
         <div id='list'>
-            <div class="providers">
-                <h2 class='textentry'>id number</h2>
-                <h2 class='textentry'>FirstName</h2>
-                <h2 class='textentry'>LastName</h2>
-                <h2 class='applicationentry'>Application</h2>
-            </div>
+            {{#each userData.providers as |provider|}}
+                <form class='providers' method='GET' action='provider_edit'>
+                    <input type='submit'  value='{{provider.id}}' class='goto_provider'/>
+                    <h2 class='textentry'></h2>
+                    <h2 class='textentry'>{{provider.firstName}}</h2>
+                    <h2 class='textentry'>{{provider.lastName}}</h2>
+                    <h2 class='applicationentry'>{{provider.status}}</h2>
+                </form>
+            {{/each}}
         </div>
-
 	</div>
 </body>
+
+<script> 
+    // function openProviderEdit() {
+        // console.log('test');
+        // var xhr = new XMLHttpRequest();
+        // xhr.open('GET', '/redirect');
+        // xhr.send();
+    // }
+</script>
