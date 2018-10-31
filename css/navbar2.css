@@ -1,0 +1,35 @@
+#menu {
+	
+	display: inline-block;
+	height: 30px;
+	width: 100%;
+	background-color: #d0c4ee;
+	left: 0px;
+	top: 50px;
+}
+
+.butte {
+	display: inline-block;
+	position: relative;
+	width: 130px;
+	height: 30px;
+}
+
+.cont {
+	display: inline-block;
+	position: relative;
+	width: 130px;
+	height: 30px;
+	text-decoration: none;
+    font-size: 25px;
+    text-align: center;
+    color: #48456b;
+    font-weight: bold;
+    font-family: Baloobhai,sans-serif;
+}
+
+.cont:hover {
+    background-color: #5f59a5;
+    color: white;
+}
+
