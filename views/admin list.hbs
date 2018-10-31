@@ -35,6 +35,14 @@
                 <h2 class='textentry'>FirstName</h2>
                 <h2 class='textentry'>LastName</h2>
             </div>
+            {{#each userData.admins as |admin|}}
+                <form class='providers' method='GET' action='admin_edit'>
+                    <input type='submit'  value='{{admin.id}}' class='goto_provider'/>
+                    <h2 class='textentry'></h2>
+                    <h2 class='textentry'>{{admin.firstName}}</h2>
+                    <h2 class='textentry'>{{admin.lastName}}</h2>
+                </form>
+            {{/each}}
         </div>
 
          <div id="backPage">
