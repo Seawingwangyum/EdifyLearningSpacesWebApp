@@ -46,6 +46,7 @@ app.get('/requirements', (req, res) => {
 	res.render('requirements.hbs')
 });
 
+/*
 app.get('/ad_page', (req, res) => {
 	res.render('ad_page.hbs')
 });
@@ -53,7 +54,7 @@ app.get('/ad_page', (req, res) => {
 app.get('/provider_login', (req, res) => {
 	res.render('login.hbs')
 });
-
+*/
 
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
@@ -70,12 +71,12 @@ app.get('/licenses', (req, res) => {
 app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
 });
-<<<<<<< HEAD
+
 
 app.get('/provider_list_page', (req, res) => {
 	res.render('provider list page.hbs')
 });
-=======
+
 
 app.get('/passchange', (req, res)=>{
     res.render('PassChange_window.hbs')
@@ -85,16 +86,14 @@ app.get('/deleteaccount', (req, res)=>{
     res.render('accountdelete.hbs')
 })
 
-app.get('/ad_page', (req, res) => {
-	res.render('ad_page.hbs')
-})
+
 
 app.get('/provider_list', (req, res) => {
 	res.render('provider list.hbs', {
         userData: testData.provider_list_data
     })
 })
->>>>>>> upstream/master
+
 
 app.get('/admin_list', (req, res) => {
     res.render('admin list.hbs', {
