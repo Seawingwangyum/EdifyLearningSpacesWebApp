@@ -1,5 +1,7 @@
 @import 'navbar1.css';
 
+
+
 #Login_Panel{
     height:400px;    
     width:800px;
@@ -11,12 +13,10 @@
     -webkit-justify-content: space-around;
     -ms-flex-pack: distribute;
     justify-content: space-around;
-    position: absolute;
+    position: relative;
     margin:auto;
     top:0;
-    bottom:0;
-    left:0;
-    right:0;
+    right:475px;
 }
 
 #Left_Panel{
@@ -25,18 +25,15 @@
     border-right:0px;
     position: relative;
     background-color:lightblue;
-    border-radius: 6px 6px 6px 6px;
-    margin-right: 100px;
-    width:200px;
+    border-radius: 6px 0px 0px 6px;
 }
 
 #Right_Panel{
-    flex-grow:1;
-    padding: 0px 5px 0px 15px;
+    flex-grow:3;
+    padding: 0px 5px 0 px 15px;
     border-left:0px;
     position: relative;
-    border-radius: 6px 6px 6px 6px;
-    width:200px;
+    border-radius: 0px 6px 6px 0px;
 }
 
 .Login_Panels{
@@ -47,11 +44,13 @@
 h2{
     font-family: Baloo Bhai, sans-serif;
     margin:20px;
+    color: #48456b;
 }
 
 p,a{
     margin:20px;
     font-family: Arial, Helvetica, sans-serif;
+
 }
 
 .loginelements{
@@ -68,6 +67,7 @@ p,a{
     width:90%;
     height:20px;
     font-size: 18px;
+    
 }
 
 .purple_button{

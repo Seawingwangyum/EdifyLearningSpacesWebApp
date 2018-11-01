@@ -3,7 +3,7 @@
 body {
   margin: 0 auto;
   background-color: #E4E8ED;
-  background-image: url("img7.PNG");
+  background-image: url("img2.PNG");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -65,8 +65,8 @@ button:hover {
   top: 0px;
   bottom:0px;
   margin: auto;
-}
 
+}
 
 
 hr {

@@ -13,6 +13,13 @@ app.use(express.static(__dirname + '/css'))
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/Assets'));
 
+// bodyparser setup
+var bodyParser = require('body-parser')
+app.use(bodyParser.urlencoded ({
+    extended: true
+}));
+app.use(bodyParser.json())
+
 // creates a session
 app.use(session({
     cookieName: 'edify_session',
@@ -32,16 +39,50 @@ function sessionCheck(req, res, next) {
     }
 }
 
+function filterList(list, id, fname, lname, status) {
+    var filteredList = list;
+    if (id != '') {
+        filteredList = list.filter(provider => provider.id == id);
+        console.log(1, filteredList);
+    } if (fname != '') {
+        filteredList = filteredList.filter(provider => provider.firstName == fname);
+        console.log(2, filteredList);
+    } if (lname != '') {
+        filteredList = filteredList.filter(provider => provider.lastName == lname);
+        console.log(3, filteredList);
+    } if (status != '' && status != null) {
+        if (status != 'all') {
+            filteredList = filteredList.filter(provider => provider.status == status);
+            console.log(4, filteredList);
+        }
+    }
+    console.log(filteredList);
+    return filteredList
+}
+
 app.get('/provider_edit', (req, res) => {
 	res.render('provider edit.hbs', {
 		userData: testData.provider_edit_data
 	})
 });
 
+app.get('/landing_page', (req, res) => {
+	res.render('landing_page.hbs')
+});
+
+app.get('/requirements', (req, res) => {
+	res.render('requirements.hbs')
+});
+
+/*
+app.get('/ad_page', (req, res) => {
+	res.render('ad_page.hbs')
+});
+
 app.get('/provider_login', (req, res) => {
 	res.render('login.hbs')
 });
-
+*/
 
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
@@ -59,6 +100,12 @@ app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
 });
 
+
+app.get('/provider_list_page', (req, res) => {
+	res.render('provider list page.hbs')
+});
+
+
 app.get('/passchange', (req, res)=>{
     res.render('PassChange_window.hbs')
 });
@@ -67,21 +114,45 @@ app.get('/deleteaccount', (req, res)=>{
     res.render('accountdelete.hbs')
 })
 
-app.get('/ad_page', (req, res) => {
-	res.render('ad_page.hbs')
-})
 
-app.get('/provider_list', (req, res) => {
+
+app.get('/provider_list', (req, res, list) => {
 	res.render('provider list.hbs', {
         userData: testData.provider_list_data
     })
 })
+
+app.post('/provider_list', (req, res) => {
+    var id = req.body.Idsearch
+    var fname = req.body.fnamesearch
+    var lname = req.body.lnamesearch
+    var status = req.body.querytype
+    var list = testData.provider_list_data.providers;
+
+    var filteredList = {providers: filterList(list, id, fname, lname, status)}
+    res.render('provider list.hbs', {
+        userData: filteredList
+    })
+});
 
 app.get('/admin_list', (req, res) => {
     res.render('admin list.hbs', {
         userData: testData.admin_list_data
     })
 })
+
+app.post('/admin_list', (req, res) => {
+    var id = req.body.Idsearch
+    var fname = req.body.fnamesearch
+    var lname = req.body.lnamesearch
+    var status = req.body.querytype
+    var list = testData.admin_list_data.admins;
+
+    var filteredList = {admins: filterList(list, id, fname, lname, status)}
+    res.render('admin list.hbs', {
+        userData: filteredList
+    })
+});
 
 app.get('/admin_edit', (req, res) => {
     res.render('admin edit.hbs')

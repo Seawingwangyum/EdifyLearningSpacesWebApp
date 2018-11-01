@@ -53,82 +53,87 @@ const provider_edit_data = {
 }
 
 const provider_list_data = {
-	providers: {
-		provider1: {
+	providers: [ 
+		{
 			firstName: 'nick',
 			lastName: 'Sososo',
 			id: 10000,
 			status: 'Awaiting Approval',
 		},
-		provider2: {
+		{
+			firstName: 'mick',
+			lastName: 'Sososo',
+			id: 10000,
+			status: 'Awaiting Approval',
+		},
+		{
 			firstName: 'erik',
 			lastName: 'Sososo',
 			id: 30000,
-			status: 'Awaiting submission',
+			status: 'Awaiting Submission',
 		},
-		provider3: {
+		{
 			firstName: 'precidia',
 			lastName: 'Sososo',
 			id: 20000,
 			status: 'Approval Denied',
 		},
-		provider4: {
+		{
 			firstName: 'dummy',
 			lastName: 'dummy',
 			id: 10050,
 			status: 'Approval Denied',
 		},
-		provider5: {
+		{
 			firstName: 'dummy',
 			lastName: 'dummy',
 			id: 10040,
 			status: 'Approved Granted',
 		},
-		provider6: {
+		{
 			firstName: 'dummy',
 			lastName: 'dummy',
 			id: 10030,
 			status: 'Approved Granted',
 		},
-		provide7r: {
+		{
 			firstName: 'dummy',
 			lastName: 'dummy',
 			id: 10020,
 			status: 'Approval Denied',
 		},
-		provider8: {
+		{
 			firstName: 'dummy',
 			lastName: 'dummy',
 			id: 10010,
 			status: 'Approved Granted',
-		},	
-	}
-
+		} 
+	]
 }
 
 const admin_list_data = {
-	admins: {
-		admin1: {
+	admins: [
+		{
 			id: 1000,
 			firstName: 'bob',
 			lastName: 'theBuilder',
 		},
-		admin2: {
+		{
 			id: 1000,
 			firstName: 'bob',
 			lastName: 'theBuilder',
 		},
-		admin3: {
+		{
 			id: 1000,
 			firstName: 'bob',
 			lastName: 'theBuilder',
 		},
-		admin4: {
+		{
 			id: 1000,
 			firstName: 'bob',
 			lastName: 'theBuilder',
 		},
-	}
+	]
 }
 
 module.exports = {
