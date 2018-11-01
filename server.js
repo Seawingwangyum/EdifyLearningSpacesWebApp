@@ -3,9 +3,15 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
+const bodyParser = require('body-parser');
 
 
 const app = express();
+
+const password_check = require("./components/password_check");
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
@@ -32,16 +38,15 @@ function sessionCheck(req, res, next) {
     }
 }
 
-app.get('/provider_edit', (req, res) => {
-	res.render('provider edit.hbs', {
-		userData: testData.provider_edit_data
+app.get('/provider', (req, res) => {
+	res.render('provider_page.hbs', {
+		userData: testData.provider_page_data
 	})
 });
 
 app.get('/provider_login', (req, res) => {
 	res.render('login.hbs')
 });
-
 
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
@@ -59,32 +64,33 @@ app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
 });
 
-app.get('/passchange', (req, res)=>{
-    res.render('PassChange_window.hbs')
+app.post('/account_creation', (req, res) =>{
+    console.log(req.body);
+    password_check.check_password(req.body).then((info) =>{
+        console.log(info)
+        res.send(JSON.stringify(info))
+    }, (error) =>{
+        console.log(error)
+        res.send(JSON.stringify(error))
+    })
+    
 });
 
-app.get('/deleteaccount', (req, res)=>{
-    res.render('accountdelete.hbs')
-})
 
 app.get('/ad_page', (req, res) => {
 	res.render('ad_page.hbs')
 })
 
-app.get('/provider_list', (req, res) => {
-	res.render('provider list.hbs', {
-        userData: testData.provider_list_data
-    })
+app.get('/provider_list_page', (req, res) => {
+	res.render('provider list page.hbs')
 })
 
-app.get('/admin_list', (req, res) => {
-    res.render('admin list.hbs', {
-        userData: testData.admin_list_data
-    })
+app.get('/admin_list_page', (req, res) => {
+    res.render('admin list page.hbs')
 })
 
-app.get('/admin_edit', (req, res) => {
-    res.render('admin edit.hbs')
+app.get('/admin_list_page_edit', (req, res) => {
+    res.render('admin list page edit.hbs')
 })
 
 
