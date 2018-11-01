@@ -1,3 +1,10 @@
+/**
+* Function to create new HTML element
+* @param {string} element - The type of element to create
+* @param {string} class_name - The css class name to give the element
+* @param {string} innerHTML - The content to populate the element with
+* @return {string} newElement - The new HTML element
+*/
 function createNewElement(element, class_name, innerHTML = '') {
 	var newElement = document.createElement(element);
 	newElement.className = class_name;
@@ -5,6 +12,12 @@ function createNewElement(element, class_name, innerHTML = '') {
 	return newElement;
 }
 
+/**
+* Function to create new HTML input
+* @param {string} type - The type of input e.g. submit
+* @param {string} value - The text on the input that will appear 
+* @return {string} newInput - the HTML that will create inputs
+*/
 function CreateNewInput(type, value) {
 	var newInput = document.createElement('input');
 	newInput.type = type;
@@ -12,7 +25,11 @@ function CreateNewInput(type, value) {
 	return newInput;
 }
 
-// When a user clicks the license name button this creates everything that appears
+/**
+* When a user clicks the license name button this creates everything that appears
+* @param {string} id - the identifier for the HTML element
+* @param {string} name - the specific name of the HTML element
+*/
 function createOptions(id, name) {
 	var license = document.getElementById(id);
 	var licenseOptions = document.getElementById(license.id + '_options');
