@@ -66,10 +66,23 @@ app.get('/provider_edit', (req, res) => {
 	})
 });
 
+app.get('/landing_page', (req, res) => {
+	res.render('landing_page.hbs')
+});
+
+app.get('/requirements', (req, res) => {
+	res.render('requirements.hbs')
+});
+
+/*
+app.get('/ad_page', (req, res) => {
+	res.render('ad_page.hbs')
+});
+
 app.get('/provider_login', (req, res) => {
 	res.render('login.hbs')
 });
-
+*/
 
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
@@ -87,6 +100,12 @@ app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
 });
 
+
+app.get('/provider_list_page', (req, res) => {
+	res.render('provider list page.hbs')
+});
+
+
 app.get('/passchange', (req, res)=>{
     res.render('PassChange_window.hbs')
 });
@@ -95,9 +114,7 @@ app.get('/deleteaccount', (req, res)=>{
     res.render('accountdelete.hbs')
 })
 
-app.get('/ad_page', (req, res) => {
-	res.render('ad_page.hbs')
-})
+
 
 app.get('/provider_list', (req, res, list) => {
 	res.render('provider list.hbs', {
