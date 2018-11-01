@@ -37,6 +37,18 @@ app.get('/provider', (req, res) => {
 	})
 });
 
+app.get('/landing_page', (req, res) => {
+	res.render('landing_page.hbs')
+});
+
+app.get('/requirements', (req, res) => {
+	res.render('requirements.hbs')
+});
+
+app.get('/ad_page', (req, res) => {
+	res.render('ad_page.hbs')
+});
+
 app.get('/provider_login', (req, res) => {
 	res.render('login.hbs')
 });
@@ -51,15 +63,11 @@ app.get('/licenses', (req, res) => {
 
 app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
-})
-
-app.get('/ad_page', (req, res) => {
-	res.render('ad_page.hbs')
-})
+});
 
 app.get('/provider_list_page', (req, res) => {
 	res.render('provider list page.hbs')
-})
+});
 
 app.get('/quiz', (request, response) => {
     /**

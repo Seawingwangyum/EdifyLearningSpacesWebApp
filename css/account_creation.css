@@ -3,10 +3,10 @@
 body {
   margin: 0 auto;
   background-color: #E4E8ED;
-  background-image: url("img7.PNG");
+  background-image: url("img2.PNG");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: auto;
 }
 
   input[type=text], input[type=password] {
