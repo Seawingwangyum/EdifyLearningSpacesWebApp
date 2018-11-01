@@ -10,10 +10,10 @@
 
 	<div id='main'>
 		<div id ='options'>
-            <form id="parameters">
+            <form method="POST" action="/provider_list" id="parameters">
                 <div id="leftbox">
                     <div>
-                    <input class="inputbox" type="text" name="Idsearch" placeholder="ID Number"/>
+                        <input class="inputbox" type="number" name="Idsearch" placeholder="ID Number"/>
                     </div>
                     <div>
                         <input class="inputbox" type="text" name="fnamesearch" placeholder="First Name"/>
@@ -23,15 +23,15 @@
                 <div id="rightbox">
                     <div>
                     <select id="optionbox" class="inputbox" name="querytype">
-                        <option id="dropdown" value= "All">All applicants</option>
-                        <option id="dropdown" value= "Awaitingl">Awaiting approval</option>
-                        <option id="dropdown" value="Approval">Awaiting submission</option>
-                        <option id="dropdown" value="Granted">Approval granted</option>
-                        <option id="dropdown" value="denied">Approval denied</option>
+                        <option id="dropdown" value="all">All applicants</option>
+                        <option id="dropdown" value="Awaiting Approval">Awaiting approval</option>
+                        <option id="dropdown" value="Awaiting Submission">Awaiting submission</option>
+                        <option id="dropdown" value="Approved Granted">Approval granted</option>
+                        <option id="dropdown" value="Approval Denied">Approval denied</option>
                     </select>
                     </div>
                     <div>
-                    <input class="purple_button" type="submit" value="Search"/>
+                        <input class="purple_button" type="submit" value="Search"/>
                     </div>
                 </div>
             </form>    
