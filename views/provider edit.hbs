@@ -2,17 +2,21 @@
 <head>
 	<title>Provider</title>
 	<link href='provider_page.css' rel='stylesheet' type='text/css'/>
+	<link href = "navbar1.css" type = "text/css" rel = "stylesheet"/>
+  	<link href = "navbar2.css" type = "text/css" rel = "stylesheet"/>
+  
 	
 </head>
 
 <body>
 
 	{{> navbar}}
+	{{> navbar2}}
 
 	<div id='main'>
 		<div id='info'>
 			<div id='infoTop'>
-				<form method='get' action='/provider_list_page'>
+				<form method='get' action='/provider_list'>
 					<input id ='back_but'type='submit' value='back'/>
 				</form>
 			</div>
@@ -45,24 +49,6 @@
 							<button class='license_but' onclick="createOptions('{{license.name}}', '{{licenseStatus.name}}')">
 								{{license.name}}
 							</button>
-<!-- 							<div class='license_options'>
-								<div class='filename'>
-									<div class='filename_button'><button>Download</button></div>
-									<div class='filename_name'>Filename</div>
-									<div class='filename_approved_by'>Approved by:</div>
-								</div>
-
-								<form class='file_submit' method='post' action='make_data_button'>
-									<div class='form_left'>
-										<div class='form_left_padding'>Add a note</div>
-										<textarea class='note_input' rows='3'></textarea>
-									</div>
-									<div class='form_right'>
-										<input class='form_but' type='submit' value='Accept'/>
-										<input class='form_but' type='submit' value='Deny'/>
-									</div>
-								</form>
-							</div> -->
 						</div>
 					{{/each}}
 				</div>

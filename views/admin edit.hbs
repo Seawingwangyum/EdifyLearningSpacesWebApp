@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+	<title>Admin Edit</title>
+	<link href='admin list page.css' rel='stylesheet' type='text/css'/>
+	
+</head>
+
+<body>
+	{{> navbar}}
+
+	<div id='main'>
+		<div id ='options'>
+            <div id="parameters">
+                <div id="leftbox">
+                    <form method='GET' action='admin_list'>
+                        <input class="purple_button" type="submit" value="Back"/>
+                    </form>
+                </div>
+                <div id="rightbox2">
+                    <form>
+                        <input class="purple_button2" type="submit" value="Change Password"/>
+                        <br>
+                        <input class="purple_button2" type="submit" value="Delete"/>
+                    </form>
+                </div>
+            </div>    
+        </div>
+
+        <div id='list'>
+            <div class="providers">
+                <h2 class='textentry'>id number</h2>
+                <h2 class='textentry'>FirstName</h2>
+                <h2 class='textentry'>LastName</h2>
+            </div>
+        </div>
+
+       
+
+	</div>
+</body>
