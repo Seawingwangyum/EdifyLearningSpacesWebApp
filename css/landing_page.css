@@ -1,3 +1,14 @@
 @import 'navbar1.css';
 @import 'login.css';
 @import 'ad_page.css';
+
+
+#Login_Panel {
+  height: 50vh;
+  width: 75vw;
+  right: 0;
+  left: 0;
+  top: 0;
+  bottom:0;
+  margin: auto;
+}
