@@ -2,7 +2,10 @@ var crimtxtState = "close",
     hometxtState = "close",
     cctxtState = "close";
 
-//opening and closing licensing information
+/**
+* Function to open and close criminal record check information box
+* 
+*/
 function crimOC() {
 document.getElementById("crimCheck").addEventListener("click", () =>{
     if (crimtxtState == "close"){
@@ -15,6 +18,9 @@ document.getElementById("crimCheck").addEventListener("click", () =>{
 });
 }
 
+/**
+* Function to open and close home check information box
+*/
 function homeOC() {
     document.getElementById("homeCheck").addEventListener("click", () =>{
     if (hometxtState == "close"){
@@ -26,6 +32,10 @@ function homeOC() {
     }
 });
 }
+
+/**
+* Function to open and close childcare licensing information box
+*/
 function ccOC() {
     document.getElementById("ccCheck").addEventListener("click", () =>{
     if (cctxtState == "close"){
@@ -39,7 +49,9 @@ function ccOC() {
 }
 
 
-//alert for License Submit
+/**
+* Alerts for document submission
+*/
 document.getElementById("crSubmit").addEventListener("click", () => {
     alert("You have attempted to submit a document")
 });
