@@ -4,8 +4,10 @@ const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
 
-
 const app = express();
+
+const password_check = require("./components/password_check");
+
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
@@ -99,6 +101,17 @@ app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
 });
 
+app.post('/account_creation', (req, res) =>{
+    console.log(req.body);
+    password_check.check_password(req.body).then((info) =>{
+        console.log(info)
+        res.send(JSON.stringify(info))
+    }, (error) =>{
+        console.log(error)
+        res.send(JSON.stringify(error))
+    })
+    
+});
 
 app.get('/provider_list_page', (req, res) => {
 	res.render('provider list page.hbs')
