@@ -20,7 +20,7 @@
 
 
 #adpage {
-    font-family: Baloo Bhai, sans-serif;
+    font-family: 'BalooBhai', sans-serif;
     padding-left: 10px;
     height: 100%;
 }
@@ -32,7 +32,7 @@
 .button,
 .nav--link {
     border-bottom-style: none;
-    font-family: Baloobhai, sans-serif;
+    font-family: 'BalooBhai', sans-serif;
     text-transform: lowercase;
 
 }

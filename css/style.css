@@ -7,7 +7,13 @@
 @import 'status.css';
 @import 'settings.css';
 
-
+@font-face{ 
+	font-family: 'BalooBhai';
+	src: url('baloo-bhai-v3-latin-regular.eot');
+	src: url('baloo-bhai-v3-latin-regular.woff') format('woff'),
+	     url('baloo-bhai-v3-latin-regular.ttf') format('truetype'),
+	     url('baloo-bhai-v3-latin-regular.svg') format('svg');
+}
 
 
 #headerdiv {
