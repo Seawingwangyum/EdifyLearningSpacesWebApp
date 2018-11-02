@@ -1,13 +1,5 @@
 @import 'navbar1.css';
-@import 'login.css';
 
-
-body {
-    background-color: #e5e3f8;
-    color: #9795b2;
-    overflow-x: hidden;
-    margin: 5px;
-}
 
 #bg {
     background-image: url("img1.PNG");

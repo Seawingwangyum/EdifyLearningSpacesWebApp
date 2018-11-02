@@ -23,20 +23,28 @@ body{
     width: 65vw;
     right: 0px;
     left: 0px;
-    top: 0px;
+    top: 100px;
     bottom:0px;
     
 }
 .mainbuttons {
+    border-radius: 6px;
+    border:0px;
     width: 60vw;
     background-color: #5f59a5;
-    padding: 30px;
+    padding: 20px;
     margin: 10px;
     color: white;
     text-align: center;
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
     float: left;
+    opacity: 0.9;
+
+}
+
+.mainbuttons:hover {
+  opacity:1;
 }
 
 .hiddentext {
@@ -51,7 +59,7 @@ body{
     background-color: #fff;
     float: left;
     text-align: center;
-    margin: 1px;
+    margin: 10px;
     padding:10px;
     position: inherit;
 
@@ -62,20 +70,11 @@ body{
     height:300px;
     float: right;
     text-align: center;
-    margin: 1px;
+    margin: 10px;
     padding: 10px;
     position: inherit;
 }
 
-.submitbutton {
-    width:100px;
-    height: 35px;
-    background-color: #5f59a5;
-    color: #fff;
-    border: none;
-    font-size: 16px;
-    font-family: sans-serif;
-}
 
 #crInfo {
     display: none;

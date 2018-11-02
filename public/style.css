@@ -1,5 +1,14 @@
 @import 'navbar1.css';
 
+@import 'login.css';
+@import 'ad_page.css';
+@import 'account_creation.css';
+@import 'dashstyle.css';
+@import 'status.css';
+@import 'settings.css';
+
+
+
 
 #headerdiv {
 	position: absolute;
@@ -10,6 +19,11 @@
 	top: 0px;
 }
 
+
+body{
+    font-family: Baloobhai, sans-serif;
+    background-color: #d2dee3;
+}
 
 #headtext {
 	position: absolute;
@@ -22,82 +36,20 @@
 
 }
 
-#menubar {
-	position: absolute;
-	display: inline-block;
-	height: 30px;
-	width: 100%;
-	background-color: #d0c4ee;
-	left: 0px;
-	top: 50px;
-}
 
-.buttbox {
-	display: inline-block;
-	position: relative;
-	width: 130px;
-	height: 30px;
-}
-
-.buttcont {
-	display: inline-block;
-	position: relative;
-	width: 130px;
-	height: 30px;
-}
-
-.buttcont:hover {
-    background-color: #5f59a5;
-    color: white;
-}
-
-
-
-#maincontent {
-	position: absolute;
-	height: 100vh;
-	width: 100vw;
-	background-color: #d2dee3;
-	left: 0px;
-	
-}
-
-.checkingbox {
-	position: relative;
-	width: 500px;
-	height: 190px;
-	top: 50px;
-	background-color: #f7f8f9;
-	margin-bottom: 30px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-.checkingtitle {
-	position: relative;
-	width: 500px;
-	height: 50px;
-	top: 0px;
-	margin-left: auto;
-	margin-right: auto;
-}
-
-#criminaltitle {
-	background-color: #8cdba1;
-}
-
-#buildingtitle {
-	background-color: #ec6d6d;
+h1 {
+    color: #48456b;
+    margin-bottom: 10px;
 }
 
 h2 {
 	font-size: 27px;
 	padding-left: 20px;
 	padding-top: 10px;
-    color: #f7fbfd;
+    color: #48456b;
     font-family: Baloobhai,sans-serif;
-
 }
+
 
 h3 {
 	font-size: 23px;
@@ -105,198 +57,51 @@ h3 {
     color: #48456b;
     font-family: Baloobhai,sans-serif;
     position: relative;
-    top: -10px;
+    top: 10px;
+}
+
+p,a{
+    margin:0px;
+    font-family: Baloobhai,sans-serif;
 
 }
 
-.notesbox {
-	position: relative;
-	width: 92%;
-	height: 28%;
-	background-color: #d7d0ff;
-	top: -30px;
-	left: 0px;
-	right: 0px;
-	margin: auto;
-}
-
-.changebox {
-	position: relative;
-	width: 300px;
-	height: 50px;
-	background-color: #9c67ec;
-	left: 300px;
-    border-radius: 8px;
-    text-align: center;
-    padding-top: 10px;
-    display: inline-block;
 
 
-
-}
-
-.changebox:hover {
+.purple_button{
     background-color: #5f59a5;
-}
-
-.changetitle {
-	font-size: 30px;
-    color: #f7fbfd;
-    font-family: Baloobhai,sans-serif;
-    font-weight: bold;
-}
-
-.changepart {
-	width: 100%;
-	position: relative;
-	height: 70px;
-	margin-bottom: 30px;
-	top: 80px;
-
-}
-
-.changeinfo {
-	position: relative;
-	width: 300px;
-	height: 50px;
-	top: 10px;
-	display: inline-block;
-	left: 350px;
-	font-size: 23px;
-    color: #48456b;
-    font-family: Baloobhai,sans-serif;
-    font-weight: 800;
-    line-height: 120%;
-
-}
-
-
-
-
-/* settings page 
---------------------------------
-*/
-
-#backPage {
-    display: none;
-    position:fixed;
+    border-radius: 6px;
+    border:0px;
+    display: inline-block;
+    padding:15px 25px;
+    color:white;
+    font-family: Baloo Bhai, sans-serif;
+    margin:20px;
+    position: absolute;
+    bottom:0px;
     left:0;
-    top:0;
-    width:100%;
-    height:100%;
-    background-color: rgba(0,0,0,0.6);
-}
-
-
-.changeInput {
-	position: relative;
-    width: 300px;
-    height: 15px;
-    top: -20px;
-	border-radius: 10px;
-    padding: 15px;
-    margin: 30px 10px 0px 15px;
-    display: inline-block;
-    border: none;
-    background: #f1f1f1;
-    color: #48456b;
-    font-family: Baloobhai,sans-serif;
-}
-
-
-.changeButt {
-	position: relative;
-	top: 15px;
-    background-color: #5f59a5;
-	border-radius: 10px;
-    width: 100px;
-    height: 50px;
-    margin-left: 40px;
-    margin-right: 40px;
-    padding: 15px;
-    color: white;
-    font-family: Baloobhai,sans-serif;
-    border: none;
-
-
+    opacity: 0.9;
+    font-weight: bold;
 
 }
 
-input {
-	font-size: 15px;
-	padding-left: 20px;
-	padding-top: 10px;
-    color: #f7fbfd;
-    font-family: Baloobhai,sans-serif;
+.purple_button:hover {
+  opacity:1;
 }
 
-button {
-	font-size: 15px;
-	padding-left: 20px;
-	padding-top: 10px;
-    color: #f7fbfd;
-    font-family: Baloobhai,sans-serif;
-    letter-spacing: 1px;
-}
-
-.popuptitle {
-	font-size: 25px;
-	padding-left: 20px;
-    color: #48456b;
-    font-family: Baloobhai,sans-serif;
+#mainarea .purple_button{
     position: relative;
-    top: 0px;
 }
 
-
-
-#changePass {
-	display: none;
-    position: absolute;
-    background-color: white;
-    width: 400px;
-    height: 400px;
-    top: 100px;
-    left: 0px;
-    right: 0px;
-    margin: auto;
-    transition: 0.5s;
-	text-align: center;
-    font-family: Baloobhai,sans-serif;
+.clearfix .purple_button{
+	float: left;
+  	width: 25%;
+  	position: relative;
 }
 
-
-
-#changeName {
-	display: none;
-    position: absolute;
-    background-color: white;
-    width: 400px;
-    height: 400px;
-    top: 100px;
-    left: 0px;
-    right: 0px;
-    margin: auto;
-    transition: 0.5s;
-	text-align: center;
-    font-family: Baloobhai,sans-serif;
-}
-
-
-
-#changeEmail {
-	display: none;
-    position: absolute;
-    background-color: white;
-    width: 400px;
-    height: 400px;
-    top: 100px;
-    left: 0px;
-    right: 0px;
-    margin: auto;
-    transition: 0.5s;
-	text-align: center;
-    font-family: Baloobhai,sans-serif;
+#backPage .purple_button{
+	top: 50px;
+  	position: relative;
 }
 
 
@@ -306,12 +111,7 @@ button {
 
 
 
-
-
-
-
-
-
+/*-----------------quiz------------------
 
 .quizscreen {
 	position: relative;
@@ -374,3 +174,5 @@ button {
     font-family: Baloobhai,sans-serif;
     font-weight: bold;
 }
+
+-------------------------------*/
