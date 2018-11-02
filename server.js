@@ -89,12 +89,20 @@ app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
 });
 
+app.get('/verifyemail', (req, res) => {
+    res.render('verifyemail.hbs')
+});
+
 app.get('/test', (req, res) => {
     res.render('testingnavbar.hbs')
 });
 
 app.get('/licenses', (req, res) => {
 	res.render('dashboard.hbs')
+});
+
+app.post('/licenses', (req, res) => {
+    res.render('dashboard.hbs')
 });
 
 app.get('/account_creation', (req, res) => {
@@ -113,13 +121,10 @@ app.post('/account_creation', (req, res) =>{
     
 });
 
-app.get('/provider_list_page', (req, res) => {
-	res.render('provider list page.hbs')
-});
 
 
 app.get('/passchange', (req, res)=>{
-    res.render('PassChange_window.hbs')
+    res.render('verifyemail.hbs')
 });
 
 app.get('/deleteaccount', (req, res)=>{
@@ -134,9 +139,6 @@ app.get('/provider_list', (req, res, list) => {
     })
 })
 
-
-app.get('/admin_list_page', (req, res) => {
-    res.render('admin list page.hbs')
 
 app.post('/provider_list', (req, res) => {
     var id = req.body.Idsearch
@@ -156,7 +158,7 @@ app.get('/admin_list', (req, res) => {
         userData: testData.admin_list_data
     })
 
-})
+});
 
 app.post('/admin_list', (req, res) => {
     var id = req.body.Idsearch
@@ -173,7 +175,7 @@ app.post('/admin_list', (req, res) => {
 
 app.get('/admin_edit', (req, res) => {
     res.render('admin edit.hbs')
-})
+});
 
 
 app.get('/quiz', (request, response) => {
