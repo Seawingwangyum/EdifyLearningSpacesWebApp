@@ -4,8 +4,10 @@ const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
 
-
 const app = express();
+
+const password_check = require("./components/password_check");
+
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
@@ -61,7 +63,7 @@ function filterList(list, id, fname, lname, status) {
 }
 
 app.get('/provider_edit', (req, res) => {
-	res.render('provider edit.hbs', {
+	res.render('provider_edit.hbs', {
 		userData: testData.provider_edit_data
 	})
 });
@@ -78,7 +80,6 @@ app.get('/requirements', (req, res) => {
 app.get('/ad_page', (req, res) => {
 	res.render('ad_page.hbs')
 });
-
 app.get('/provider_login', (req, res) => {
 	res.render('login.hbs')
 });
@@ -86,6 +87,10 @@ app.get('/provider_login', (req, res) => {
 
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
+});
+
+app.get('/verifyemail', (req, res) => {
+    res.render('verifyemail.hbs')
 });
 
 app.get('/test', (req, res) => {
@@ -96,31 +101,40 @@ app.get('/licenses', (req, res) => {
 	res.render('dashboard.hbs')
 });
 
+app.post('/licenses', (req, res) => {
+    res.render('dashboard.hbs')
+});
+
 app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
 });
 
-
-app.get('/provider_list_page', (req, res) => {
-	res.render('provider list page.hbs')
+app.post('/account_creation', (req, res) =>{
+    console.log(req.body);
+    password_check.check_password(req.body).then((info) =>{
+        console.log(info)
+        res.send(JSON.stringify(info))
+    }, (error) =>{
+        console.log(error)
+        res.send(JSON.stringify(error))
+    })
+    
 });
 
-
 app.get('/passchange', (req, res)=>{
-    res.render('PassChange_window.hbs')
+    res.render('verifyemail.hbs')
 });
 
 app.get('/deleteaccount', (req, res)=>{
     res.render('accountdelete.hbs')
 })
 
-
-
 app.get('/provider_list', (req, res, list) => {
-	res.render('provider list.hbs', {
+	res.render('provider_list.hbs', {
         userData: testData.provider_list_data
     })
 })
+
 
 app.post('/provider_list', (req, res) => {
     var id = req.body.Idsearch
@@ -130,16 +144,17 @@ app.post('/provider_list', (req, res) => {
     var list = testData.provider_list_data.providers;
 
     var filteredList = {providers: filterList(list, id, fname, lname, status)}
-    res.render('provider list.hbs', {
+    res.render('provider_list.hbs', {
         userData: filteredList
     })
 });
 
 app.get('/admin_list', (req, res) => {
-    res.render('admin list.hbs', {
+    res.render('admin_list.hbs', {
         userData: testData.admin_list_data
     })
-})
+
+});
 
 app.post('/admin_list', (req, res) => {
     var id = req.body.Idsearch
@@ -149,14 +164,14 @@ app.post('/admin_list', (req, res) => {
     var list = testData.admin_list_data.admins;
 
     var filteredList = {admins: filterList(list, id, fname, lname, status)}
-    res.render('admin list.hbs', {
+    res.render('admin_list.hbs', {
         userData: filteredList
     })
 });
 
 app.get('/admin_edit', (req, res) => {
-    res.render('admin edit.hbs')
-})
+    res.render('admin_edit.hbs')
+});
 
 
 app.get('/quiz', (request, response) => {

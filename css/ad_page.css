@@ -1,14 +1,17 @@
 @import 'navbar1.css';
-@import 'login.css';
 
 
-body {
-	margin: 0 auto;
-	background-color: #E4E8ED;
-	background-image: url("img1.PNG");
-  	background-repeat: no-repeat;
-  	background-position: center;
-  	color: #9795b2;
+#bg {
+    background-image: url("img1.PNG");
+    position: fixed;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: contain;
+    width: 50vw;
+    height: 40vh;
+    left: 50%;
+    bottom: 0;
+    z-index: 0.3;
 }
 
 .heading {
@@ -19,15 +22,17 @@ body {
 #adpage {
     font-family: Baloo Bhai, sans-serif;
     padding-left: 10px;
-  }
+    height: 100%;
+}
 
- .advid {
- 	padding-bottom: 10px;
- }
+.advid {
+    padding-bottom: 10px;
+}
 
-  .button, .nav--link {
+.button,
+.nav--link {
     border-bottom-style: none;
-    font-family: Baloobhai,sans-serif;
+    font-family: Baloobhai, sans-serif;
     text-transform: lowercase;
 
 }

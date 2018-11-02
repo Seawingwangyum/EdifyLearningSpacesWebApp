@@ -29,7 +29,14 @@
 }
 
 .cont:hover {
-    background-color: #5f59a5;
+	display: inline-block;
+	position: relative;
+	width: 130px;
+	height: 30px;
+	
     color: white;
+    
+    background-color: #5f59a5;
+    
 }
 
