@@ -1,14 +1,9 @@
-#main{
-    text-align: center;
-    height:300px;
-    width: 500px;
-    background-color: #f5f8fa;
-    margin:auto;
-    position:absolute;
-    left:0;
-    right:0;
-    top:0;
-    bottom:0;
+#passchange{
+    display:none;
+}
+
+#account_delete{
+    display:none;
 }
 
 #label{
@@ -27,12 +22,12 @@
     width:55%
 }
 
-#cancelbutton{
+.cancelbutton{
     right:0px;
     bottom:0px;
 }
 
-#confirmbutton{
+.confirmbutton{
     left:0px;
     bottom:0px
 }
@@ -66,4 +61,17 @@
     font-family: Baloo Bhai, sans-serif;
     margin:20px;
     position: absolute;
+}
+
+.popup{
+    text-align: center;
+    height:300px;
+    width: 500px;
+    background-color: #f5f8fa;
+    margin:auto;
+    position:absolute;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
 }

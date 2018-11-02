@@ -78,7 +78,6 @@ app.get('/requirements', (req, res) => {
 app.get('/ad_page', (req, res) => {
 	res.render('ad_page.hbs')
 });
-
 app.get('/provider_login', (req, res) => {
 	res.render('login.hbs')
 });
