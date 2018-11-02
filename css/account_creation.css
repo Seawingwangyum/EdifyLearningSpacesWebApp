@@ -2,8 +2,7 @@
 
 body {
   margin: 0 auto;
-  background-color: #E4E8ED;
-  background-image: url("img2.PNG");
+  background-color: #e4e2f7;
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -18,7 +17,6 @@ body {
   background: #e8e8e8;
   color: black;
 }
-
 
 .container input[type=text]:focus, .container input[type=password]:focus {
   background-color: #ddd;

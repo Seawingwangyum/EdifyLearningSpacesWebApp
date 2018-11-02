@@ -63,7 +63,7 @@ function filterList(list, id, fname, lname, status) {
 }
 
 app.get('/provider_edit', (req, res) => {
-	res.render('provider edit.hbs', {
+	res.render('provider_edit.hbs', {
 		userData: testData.provider_edit_data
 	})
 });
@@ -121,8 +121,6 @@ app.post('/account_creation', (req, res) =>{
     
 });
 
-
-
 app.get('/passchange', (req, res)=>{
     res.render('verifyemail.hbs')
 });
@@ -131,10 +129,8 @@ app.get('/deleteaccount', (req, res)=>{
     res.render('accountdelete.hbs')
 })
 
-
-
 app.get('/provider_list', (req, res, list) => {
-	res.render('provider list.hbs', {
+	res.render('provider_list.hbs', {
         userData: testData.provider_list_data
     })
 })
@@ -148,13 +144,13 @@ app.post('/provider_list', (req, res) => {
     var list = testData.provider_list_data.providers;
 
     var filteredList = {providers: filterList(list, id, fname, lname, status)}
-    res.render('provider list.hbs', {
+    res.render('provider_list.hbs', {
         userData: filteredList
     })
 });
 
 app.get('/admin_list', (req, res) => {
-    res.render('admin list.hbs', {
+    res.render('admin_list.hbs', {
         userData: testData.admin_list_data
     })
 
@@ -168,13 +164,13 @@ app.post('/admin_list', (req, res) => {
     var list = testData.admin_list_data.admins;
 
     var filteredList = {admins: filterList(list, id, fname, lname, status)}
-    res.render('admin list.hbs', {
+    res.render('admin_list.hbs', {
         userData: filteredList
     })
 });
 
 app.get('/admin_edit', (req, res) => {
-    res.render('admin edit.hbs')
+    res.render('admin_edit.hbs')
 });
 
 
