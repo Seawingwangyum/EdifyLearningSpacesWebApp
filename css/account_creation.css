@@ -9,7 +9,7 @@ body {
   background-size: contain;
 }
 
-  .container input[type=text], .container input[type=password] {
+.container input[type=text], .container input[type=password] {
   width: 45vw;
   padding: 15px;
   margin: 5px 0 22px 0;
