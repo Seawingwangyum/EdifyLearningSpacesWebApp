@@ -3,19 +3,20 @@
 body {
   margin: 0 auto;
   background-color: #E4E8ED;
-  background-image: url("img7.PNG");
+  background-image: url("img2.PNG");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: cover;
+  background-size: contain;
+  padding: 5px;
 }
 
   input[type=text], input[type=password] {
-  width: 100%;
+  width: 45vw;
   padding: 15px;
   margin: 5px 0 22px 0;
   display: inline-block;
   border: none;
-  background: #f1f1f1;
+  background: #e8e8e8;
 }
 
 
@@ -56,12 +57,16 @@ button:hover {
 .container {
   padding: 16px;
   font-family: Baloo Bhai, sans-serif;
-  width: 90%;
+  width: 50vw;
+  height: 50vh;
+  background-color: rgba(227, 232, 237, 0.65); 
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom:0px;
+  margin: auto;
+
 }
-
-
-
-
 
 
 hr {

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<head>
+	<title>Provider</title>
+	<link href='provider list.css' rel='stylesheet' type='text/css'/>
+	
+</head>
+
+<body>
+	{{> navbar}}
+
+	<div id='main'>
+		<div id ='options'>
+            <form method="POST" action="/provider_list" id="parameters">
+                <div id="leftbox">
+                    <div>
+                        <input class="inputbox" type="number" name="Idsearch" placeholder="ID Number"/>
+                    </div>
+                    <div>
+                        <input class="inputbox" type="text" name="fnamesearch" placeholder="First Name"/>
+                        <input class="inputbox" type="text" name="lnamesearch" placeholder="Last Name"/>
+                    </div>
+                </div>
+                <div id="rightbox">
+                    <div>
+                    <select id="optionbox" class="inputbox" name="querytype">
+                        <option id="dropdown" value="all">All applicants</option>
+                        <option id="dropdown" value="Awaiting Approval">Awaiting approval</option>
+                        <option id="dropdown" value="Awaiting Submission">Awaiting submission</option>
+                        <option id="dropdown" value="Approved Granted">Approval granted</option>
+                        <option id="dropdown" value="Approval Denied">Approval denied</option>
+                    </select>
+                    </div>
+                    <div>
+                        <input class="purple_button" type="submit" value="Search"/>
+                    </div>
+                </div>
+            </form>    
+        </div>
+
+        <div id='list'>
+            {{#each userData.providers as |provider|}}
+                <form class='providers' method='GET' action='provider_edit'>
+                    <input type='submit'  value='{{provider.id}}' class='goto_provider'/>
+                    <h2 class='textentry'></h2>
+                    <h2 class='textentry'>{{provider.firstName}}</h2>
+                    <h2 class='textentry'>{{provider.lastName}}</h2>
+                    <h2 class='applicationentry'>{{provider.status}}</h2>
+                </form>
+            {{/each}}
+        </div>
+	</div>
+</body>
+
+<script> 
+    // function openProviderEdit() {
+        // console.log('test');
+        // var xhr = new XMLHttpRequest();
+        // xhr.open('GET', '/redirect');
+        // xhr.send();
+    // }
+</script>

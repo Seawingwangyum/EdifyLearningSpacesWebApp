@@ -3,27 +3,10 @@
 
 body{
     font-family: Baloo Bhai, sans-serif;
-    background-color: #d8e7ff;
+    background-color: #d2dee3;
 }
 
-#menubar{
-    width: 100vw;
-    height: 5vh;
-    background-color: pink;
-    padding: 5px;
-}
 
-a:link { 
-    color: #5f59a5;
-}
-
-a:hover {
-    color: white;
-    height:20px;
-    width:350px;
-    background-color: purple;
-    padding: 10px;
-}
 
 .buttbox {
     width: 200px; 

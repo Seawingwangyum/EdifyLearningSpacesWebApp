@@ -5,30 +5,16 @@
     <meta charset='utf-8'>
     <title>{{title}}</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href = "navbar1.css" type = "text/css" rel = "stylesheet"/>
+  <link href = "navbar2.css" type = "text/css" rel = "stylesheet"/>
 </head>
 
 <body id="body">
-    <div id="headerdiv">
-        <h1 id="headtext">edify Providers</h1>
-    </div>
-
-    <div id="menubar">
-
-    	<div class="buttbox" id="licensesbutt">
-        	<a class="buttcont" href=./licenses>Licenses</a>
-    	</div>
-
-    	<div class="buttbox" id="statusbutt">
-        	<a class="buttcont" href=./status>Status</a>
-    	</div>
-
-    	<div class="buttbox" id="settingsbutt">
-        	<a class="buttcont" href=./settings>Settings</a>
-    	</div>
-
-    </div>
-
+     
+{{> navbar}}
+    {{> navbar2}}
     <div id="maincontent">
+        
     	<div class="checkingbox" id="criminalcheck">
     		<div class="checkingtitle" id="criminaltitle">
     			<h2 class="checkingtext">Criminal record check</h2>
