@@ -1,38 +1,148 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <title> Account Creation </title>
-  <link href = "style.css" type = "text/css" rel = "stylesheet"/>
+  <link href="style.css" type="text/css" rel="stylesheet" />
+  <link href="terms.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
-{{> navbar}}  
-    <div class="container">
-      <h1>Edify Provider Account Creation</h1>
-      <p>Please fill in this basic form to start registering as an Edify Provider.</p>
-      <hr>
-      <label for="email"><b>Email</b></label>
-      <input class="inputbox loginelements" id="email" type="text" placeholder="Enter Email" name="email" required>
+  {{> navbar}}
+  <div id="signupcontainer" class="container">
+    <h1 id="acheader">Become an Edify provider today</h1>
+    <p id="instructions">Please fill in this form to register.</p>
 
-      <label for="psw"><b>Password</b></label>
-      <input class="inputbox" id="password" type="password" placeholder="Enter Password" name="psw" required>
-
-      <label for="psw-repeat"><b>Repeat Password</b></label>
-      <input class="inputbox" id="passwordcheck" type="password" placeholder="Repeat Password" name="psw-repeat" required>
-
-      
-
-      <p>By creating an account you agree to our <a href="/tandp" style="color:indigo"><Strong>Terms & Privacy</Strong></a>.</p>
-
-      <div class="clearfix">
-        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="purple_button" id="cancelbtn">Cancel</button>
-        <button id="signup" type="submit" class="purple_button">Sign Up</button>
+    <div>
+      <div class="double">
+        <label for="fname"><b>First Name*</b></label>
+        <input class="inputbox doubleinput" id="fname" type="text" placeholder="Enter First Name" name="fname" required>
+      </div>
+      <div class="double">
+        <label for="email"><b>Last Name*</b></label>
+        <input class="inputbox" id="lname" type="text" placeholder="Enter last Name" name="lname" required>
+      </div>
+    </div>
+    <div>
+      <div id="emaildiv">
+        <label for="email"><b>Email*</b></label>
+        <input class="inputbox loginelements doubleinput" id="email" type="text" placeholder="Enter Email" name="email"
+          required>
+      </div>
+      <div id="edudiv">
+        <label for="edu"><b>Education*</b></label>
+        <select id="selectbox" class="inputbox loginelements">
+          <option value="">Choose one</option>
+          <option value="nursing">Nursing</option>
+          <option value="science">Science</option>
+          <option value="tech">Tech</option>
+          <option value="math">Math</option>
+          <option value="engineering">Engineering</option>
+          <option value="art">art</option>
+          <option value="education">Education</option>
+        </select>
       </div>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="signup.js"></script>
- 
-</div>
+    <div>
+      <div class="double">
+        <label for="psw"><b>Password*</b></label>
+        <input class="inputbox" id="password" type="password" placeholder="Minimum 8 Characters" name="psw" required>
+      </div>
+      <div class="double">
+        <label for="psw-repeat"><b>Repeat Password*</b></label>
+        <input class="inputbox" id="passwordcheck" type="password" placeholder="Repeat Password" name="psw-repeat"
+          required>
+      </div>
+    </div>
+
+
+    <div>
+      <label for="email"><b>Your Address*</b></label>
+      <input style="width:45vw;" class="inputbox loginelements" id="address" type="text" placeholder="Enter Address"
+        name="address" required>
+
+      <!--
+      <p>By creating an account you agree to our <a href="/tandp" style="color:indigo"><Strong>Terms & Privacy</Strong></a>.</p>
+      --->
+      <div id="button_bar">
+        <button type="button" onclick="location.href ='/landing_page';" class="purple_button" id="cancelbtn">Cancel</button>
+        <button id="signup" type="submit" class="purple_button">Next</button>
+      </div>
+    </div>
+  </div>
+
+    <div id="bubble" class="speech-bubble">
+      <h4>Password requirements</h4>
+      <p>Must be between 8 and 30 characters in length</p>
+      <p>Must contain at least one number</p>
+      <p>Must contain at least one capitol letter</p>
+      <p>must contain at least one special character</p>
+    </div>
+
+    <div id="tccontainer">
+      <h3 style="text-align: center;">Terms and Conditions</h3>
+      <div id="tcwindow">
+        <p class="tclines">An applicant for a licence must submit with the application all of the matters set out in
+          this Schedule.</p>
+        <p class="tclines">2 An applicant must provide a detailed description of the care program to be offered.</p>
+        <p class="tclines">3 An applicant must provide 3 references and a criminal record check for</p>
+        <p class="tclines">(a) the applicant, if not a corporation, and</p>
+        <p class="tclines">(b) the proposed manager, if not the applicant.</p>
+        <p class="tclines">4 An applicant who intends to provide a care program described as Family Child Care or
+          In-Home Multi-Age Child Care must provide a criminal record check for any person over the age of 12 who will
+          be ordinarily present at the community care facility.</p>
+        <p class="tclines">5 An applicant must provide an employee plan that includes all of the following:</p>
+        <p class="tclines">(a) a statement of the duties, qualifications, relevant work experience and suitability of
+          the proposed manager;</p>
+        <p class="tclines">(b) the proposed number of employees, their qualifications and expected duties;</p>
+        <p class="tclines">(c) the supervision and staffing plan, including while children are attending or being
+          transported to and from outdoor play areas or activities located outside the property boundaries.</p>
+        <p class="tclines">6 An applicant must provide a site plan, drawn to scale, showing all of the following:</p>
+        <p class="tclines">(a) the proposed location of the community care facility, including the property boundaries;</p>
+        <p class="tclines">(b) subject to section 8, the location and dimensions of the outdoor play area intended for
+          regular or daily outdoor activities;</p>
+        <p class="tclines">(c) if children will be attending outdoor play areas or activities located outside the
+          property boundaries on a regular or daily basis,</p>
+        <p class="tclines">(i) the distances from the community care facility to the outdoor play areas and activities,</p>
+        <p class="tclines">(ii) the routes to the outdoor play areas and activities, and</p>
+        <p class="tclines">(iii) any major physical features that may affect the safety of children, including roads
+          and bodies of water, located along the routes to, and in the immediate vicinity of, the outdoor play areas
+          and activities.</p>
+        <p class="tclines">7 An applicant must provide a safety plan describing how children will be transported to
+          regular or daily outdoor play areas, or regular or daily activities, located outside the property boundaries.</p>
+        <p class="tclines">8 If there is no outdoor play area available for regular or daily outdoor activities, an
+          applicant must provide an activity plan that describes both of the following:</p>
+        <p class="tclines">(a) how the program standards set out in section 1 of Schedule G will be met;</p>
+        <p class="tclines">9 An applicant must provide a floor plan showing all of the following:</p>
+        <p class="tclines">(a) the inside dimensions of each room and the width of each corridor and stair;</p>
+        <p class="tclines">(b) the location and size of windows and the height of windowsills from the floor;</p>
+        <p class="tclines">(c) the location of accommodation reserved for family or employees, and for children who are
+          sleeping;</p>
+        <p class="tclines">(d) the location of toilets, wash basins and diaper changing surfaces;</p>
+        <p class="tclines">(e) the location and size of the fixed equipment in each room;</p>
+        <p class="tclines">(f) the location of all exits.</p>
+        <p class="tclines">10 An applicant must provide a statement of projected monthly revenues and expenditures,
+          including the estimated cost of employee salaries and benefits, food, utilities, taxes, insurance,
+          maintenance, housing and programs.</p>
+        <p class="tclines">11 If the applicant is a society, the applicant must provide, on request of a medical health
+          officer, a copy of its constitution and bylaws.</p>
+      </div>
+      <div id="tccheck">
+        I have read and agree to the terms and conditions
+        <input type="checkbox" id="checkbox" />
+
+        <div id="button_bar">
+          <button type="button" class="purple_button" id="backbtn">Back</button>
+          <button id="finishsignup" class="purple_button">finish</button>
+        </div>
+
+      </div>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="signup.js"></script>
+      <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    </div>
+
 </body>
+
 </html>
