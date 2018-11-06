@@ -13,7 +13,8 @@ app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
 app.use(express.static(__dirname + '/css'))
 app.use(express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '/Assets'));
+app.use(express.static(__dirname + '/assets'));
+app.use(express.static(__dirname + '/fonts'));
 
 // bodyparser setup
 var bodyParser = require('body-parser')

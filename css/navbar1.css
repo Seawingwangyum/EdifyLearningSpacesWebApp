@@ -15,7 +15,7 @@
     font-size: 48px;
     padding: 3px;
     color: rgb(87, 164, 219);
-    font-family: Baloobhai, sans-serif;
+    font-family: 'BalooBhai', sans-serif;
 }
 
 
@@ -46,7 +46,7 @@
     color: white;
     border-radius: 10px;
     background-color: rgb(133, 86, 193);
-    font-family: Baloobhai, sans-serif;
+    font-family: 'BalooBhai', sans-serif;
 }
 
 #login {
