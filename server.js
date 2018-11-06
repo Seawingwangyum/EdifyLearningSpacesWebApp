@@ -38,7 +38,7 @@ function sessionCheck(req, res, next) {
     if (req.session && req.session.user) {
         next()
     } else {
-        res.redirect('/provider_login')
+        res.redirect('/landing_page')
     }
 }
 
@@ -112,14 +112,7 @@ app.get('/account_creation', (req, res) => {
 
 app.post('/account_creation', (req, res) =>{
     console.log(req.body);
-    password_check.check_password(req.body).then((info) =>{
-        console.log(info)
-        res.send(JSON.stringify(info))
-    }, (error) =>{
-        console.log(error)
-        res.send(JSON.stringify(error))
-    })
-    
+    res.send()  
 });
 
 app.get('/passchange', (req, res)=>{

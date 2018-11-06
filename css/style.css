@@ -79,15 +79,14 @@ p,a{
     border-radius: 6px;
     border:0px;
     display: inline-block;
-    padding:15px 25px;
+    padding:15px 80px;
     color:white;
     font-family: Baloo Bhai, sans-serif;
-    margin:20px;
-    position: absolute;
-    bottom:0px;
-    left:0;
+	margin-left: 20px;
+	margin-right: 20px;
     opacity: 0.9;
-    font-weight: bold;
+	font-weight: bold;
+	position: relative;
 
 }
 
@@ -99,15 +98,9 @@ p,a{
     position: relative;
 }
 
-.clearfix .purple_button{
-	float: left;
-  	width: 25%;
-  	position: relative;
-}
 
 #backPage .purple_button{
 	top: 50px;
-  	position: relative;
 }
 
 #adpage {
