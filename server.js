@@ -7,7 +7,7 @@ const session = require('client-sessions');
 const app = express();
 
 const password_check = require("./components/password_check");
-
+const login_check = require("./components/login_check");
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
@@ -80,10 +80,24 @@ app.get('/requirements', (req, res) => {
 app.get('/ad_page', (req, res) => {
 	res.render('ad_page.hbs')
 });
-app.get('/provider_login', (req, res) => {
-	res.render('login.hbs')
-});
 */
+
+app.get('/login', (req, res) => {
+    res.render('login.hbs')
+});
+
+app.post('/login', (req, res) => {
+    console.log(req.body);
+    login_check.login_check(req.body).then((info) =>{
+        console.log(info)
+        res.send(JSON.stringify(info))
+    }, (error) =>{
+        console.log(error)
+        res.send(JSON.stringify(error))
+    })
+	
+});
+
 
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')

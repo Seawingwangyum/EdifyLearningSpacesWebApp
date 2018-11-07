@@ -39,7 +39,8 @@ body{
 
 h1 {
     color: #48456b;
-    margin-bottom: 10px;
+    padding:5px;
+    
 }
 
 h2 {
@@ -77,9 +78,9 @@ p,a{
     color:white;
     font-family: Baloo Bhai, sans-serif;
     margin:20px;
-    position: absolute;
     bottom:0px;
-    left:0;
+    right:0;
+    position: absolute;
     opacity: 0.9;
     font-weight: bold;
 
@@ -103,12 +104,6 @@ p,a{
 	top: 50px;
   	position: relative;
 }
-
-#adpage {
-    background-color: #e4e2f7
-}
-
-
 
 
 

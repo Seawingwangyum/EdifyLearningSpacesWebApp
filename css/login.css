@@ -1,36 +1,21 @@
 @import 'navbar1.css';
 
 
-#Login_Panel{
-    height: 55vh;
-    width: 75vw;
+#panel{
+    height: 75vh;
+    width: 55vw;
     right: 0;
     left: 0;
     top: 0;
     bottom:0;
     margin: auto;
 
-    display:flex;
     padding:15px;
-    -webkit-flex-direction: row;
-    -me-flex-direction: row;
-    flex-direction: row; 
-    -webkit-justify-content: space-around;
-    -ms-flex-pack: distribute;
-    justify-content: space-around;
-    position: relative;
+    
 }
 
-#Left_Panel{
-    flex-grow:1;
-    padding: 0px 5px 0px 15px;
-    border-right:0px;
-    position: relative;
-    background-color:lightblue;
-    border-radius: 6px 0px 0px 6px;
-}
 
-#Right_Panel{
+#loginBox{
     flex-grow:3;
     padding: 0px 5px 0 px 15px;
     border-left:0px;
@@ -49,15 +34,6 @@
     color: #48456b;
 }
 
-#adpage a{
-    margin:20px;
-
-}
-
-#adpage p{
-    margin:20px;
-
-}
 
 .loginelements{
     margin:20px;

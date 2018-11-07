@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title> Welcome!</title>
+    <link href="style.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+    {{> navbar}}
+    <div id="adpage">
+        <div id="bg"></div>
+          <div id="Login_Panel" class="login_p">
+            <div id="Left_Panel" class="Login_Panels">
+                <h2>Create An Account</h2>
+                <p>Apply to be an Edify provider today!!</p>
+                <form action="/account_creation">
+                    <input class="purple_button" type="submit" value="Create an Account" />
+                </form>
+            </div>
+            <div id="Right_Panel" class="Login_Panels">
+                <h2>Login</h2>
+                <form id="Right_form" action="/licenses" method="post">
+                    <div>
+                        <input class="inputbox loginelements" type="text" name="Email" placeholder="Email" id=""/>
+                    </div>
+                    <div>
+                        <input class="inputbox loginelements" type="password" name="Passwd" placeholder="Password" />
+                    </div>
+                    <div>
+                        <input class="purple_button loginelements" type="submit" value="Login" id="loginbutton"/>
+                        <a href="/passchange" style="color:indigo">Don't remember your password?</a>
+                    </div>
+                </form>
+            </div>
+            </form>
+        </div>
+        <h1 class="heading">Why should you become an Edify Provider?</h1>
+        <div class="advid">
+            <iframe width="500" height="315" src="https://www.youtube.com/embed/giS0BrfXUmM?rel=0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+        </div>
+        <div class="column__padded w-col w-col-6">
+            <h1 class="heading">Edifying the future</h1>
+            <p class="intro">Connecting you to parents in search of
+                <strong>After School Care</strong>.
+                Providing their 5 - 12 year old children with the benefits of a S.T.E.A.M. education.</p>
+            <h1 class="heading">What is S.T.E.A.M.</h1>
+            <p class="intro">
+                S.T.E.A.M. stands for Science, Technology, Engineering, Art &amp; Math</p>
+            <h1 class="heading">What do you need to become an Edify Provider?</h1>
+            <p>If you would like to see what is needed to become an Edify Provider, please take a look at
+                the following list of<a href="/requirements" style="color:indigo"><Strong>requirements.</Strong></a>.</p>
+        </div>
+    </div>
+</body>
+
+</html>
