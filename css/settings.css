@@ -26,7 +26,7 @@
     border: none;
     background: #f1f1f1;
     color: #48456b;
-    font-family: Baloobhai,sans-serif;
+    font-family: 'BalooBhai',sans-serif;
 }
 
 
@@ -43,16 +43,26 @@
 }
 
 
+<<<<<<< HEAD
+=======
+input {
+	font-size: 15px;
+	padding-left: 20px;
+	padding-top: 10px;
+    color: #f7fbfd;
+    font-family: 'BalooBhai',sans-serif;
+}
+
+>>>>>>> 3788bd2e78628f433b185a8b6e8702e362e11806
 
 .popuptitle {
 	font-size: 25px;
 	padding-left: 20px;
     color: #48456b;
-    font-family: Baloobhai,sans-serif;
+    font-family: 'BalooBhai', sans-serif;
     position: relative;
     top: 20px;
 }
-
 
 #changePass {
 	display: none;
@@ -66,10 +76,8 @@
     margin: auto;
     transition: 0.5s;
 	text-align: center;
-    font-family: Baloobhai,sans-serif;
+    font-family: 'BalooBhai', sans-serif;
 }
-
-
 
 #changeName {
 	display: none;
@@ -83,10 +91,8 @@
     margin: auto;
     transition: 0.5s;
 	text-align: center;
-    font-family: Baloobhai,sans-serif;
+    font-family: 'BalooBhai', sans-serif;
 }
-
-
 
 #changeEmail {
 	display: none;
@@ -100,5 +106,5 @@
     margin: auto;
     transition: 0.5s;
 	text-align: center;
-    font-family: Baloobhai,sans-serif;
+    font-family: 'BalooBhai', sans-serif;
 }

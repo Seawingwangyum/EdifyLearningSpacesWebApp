@@ -1,40 +1,29 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Login</title>
-<link href = "style.css" type = "text/css" rel = "stylesheet"/>
 
+<head>
+    <title>Login</title>
+    <link href="style.css" type="text/css" rel="stylesheet" />
+    <link href="terms.css" type="text/css" rel="stylesheet" />
 </head>
 
 <body>
     {{> navbar}}
-
-        <div id="panel" class="Login_Panels">
-            <h2>Login</h2>
-            
-                <div>
-                    <input id="Email" class="inputbox loginelements" type="text" name="Email" placeholder="Email"/>
-                </div>
-                <div>
-                        <input id="Passwd" class="inputbox loginelements" type="password" name="Passwd" placeholder="Password"/>
-                </div>
-                
-                         
-                        <a href="Don't remember your password?">Don't remember your password?</a>
-                        <div class="clearfix">
-                        <button id="loginButton" type="submit" class="purple_button">Login</button>
-                        </div>
-                        
-   
-
-    
-           
+    <div id="panel">
+        <label id="loginTitle">Login</label>
+        <div>
+            <input id="Email" class="inputbox doubleinput" type="text" name="Email" placeholder="Email" />
         </div>
-
-
+        <div>
+            <input id="Passwd" class="inputbox doubleinput" type="password" name="Passwd" placeholder="Password" />
+        </div>
+        <a href="Don't remember your password?" style="color:indigo" >Forgot your password?</a>
+        <p>
+        <button id="loginButton" type="submit" class="purple_button">Login</button>
+        
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="login.js"></script>
-
 </body>
 
 </html>

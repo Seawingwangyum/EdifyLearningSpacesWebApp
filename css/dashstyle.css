@@ -2,17 +2,14 @@
 
 
 body{
-    font-family: Baloo Bhai, sans-serif;
     background-color: #d2dee3;
 }
-
-
 
 .buttbox {
     width: 200px; 
     height: 500px;
     display: inline;
-    font-family: Baloo Bhai, sans-serif;
+    font-family: 'BalooBhai', sans-serif;
 }
 
 #mainarea{

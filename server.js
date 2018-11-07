@@ -13,7 +13,8 @@ app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
 app.use(express.static(__dirname + '/css'))
 app.use(express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '/Assets'));
+app.use(express.static(__dirname + '/assets'));
+app.use(express.static(__dirname + '/fonts'));
 
 // bodyparser setup
 var bodyParser = require('body-parser')
@@ -37,7 +38,7 @@ function sessionCheck(req, res, next) {
     if (req.session && req.session.user) {
         next()
     } else {
-        res.redirect('/provider_login')
+        res.redirect('/landing_page')
     }
 }
 
@@ -125,14 +126,7 @@ app.get('/account_creation', (req, res) => {
 
 app.post('/account_creation', (req, res) =>{
     console.log(req.body);
-    password_check.check_password(req.body).then((info) =>{
-        console.log(info)
-        res.send(JSON.stringify(info))
-    }, (error) =>{
-        console.log(error)
-        res.send(JSON.stringify(error))
-    })
-    
+    res.send()  
 });
 
 app.get('/passchange', (req, res)=>{
