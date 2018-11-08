@@ -63,7 +63,7 @@ h3 {
     color: #48456b;
     font-family: Baloobhai,sans-serif;
     position: relative;
-    top: 10px;
+    top: 0px;
 }
 
 p,a{
@@ -80,14 +80,14 @@ p,a{
     border:0px;
     display: inline-block;
     padding:15px 80px;
-    color:white;
+    color: white;
     font-family: Baloo Bhai, sans-serif;
 	margin-left: 20px;
 	margin-right: 20px;
     opacity: 0.9;
+    font-size: 20px;
 	font-weight: bold;
 	position: relative;
-
 }
 
 .purple_button:hover {
