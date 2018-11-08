@@ -40,7 +40,7 @@
     padding-left: 9%;
     width: 50%;
     height: 50px;
-    top: 15px;
+    top: 8px;
     display: inline-block;
     font-size: 23px;
     color: #48456b;
@@ -58,7 +58,8 @@
     background-color: #9c67ec;
     left: 0px;
     border-radius: 8px;
-    padding-top: 12px;
+    padding-top: 10px;
+    padding-bottom: 5px;
     display: inline-block;
     color: white;
     text-align: center;

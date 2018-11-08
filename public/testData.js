@@ -52,6 +52,10 @@ const provider_edit_data = {
 	}
 }
 
+const notes = {
+	content: "This is the content of the notes. This is also the content of the notes. This is still the content of the notes. Notes notes notes notes notes."
+}
+
 const provider_list_data = {
 	providers: [ 
 		{
@@ -153,5 +157,6 @@ module.exports = {
 	provider_edit_data: provider_edit_data,
 	provider_list_data: provider_list_data,
 	admin_list_data: admin_list_data,
-	user_data: user_data
+	user_data: user_data,
+	notes: notes
 }

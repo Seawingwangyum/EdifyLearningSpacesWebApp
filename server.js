@@ -3,7 +3,6 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
-const swert = require('sweetalert');
 
 const app = express();
 
@@ -72,7 +71,8 @@ app.get('/status', (request, response) => {
         title: 'Status Page',
         userData1: testData.provider_list_data.providers[3],
         userData2: testData.provider_list_data.providers[6],
-        userData3: testData.provider_list_data.providers[0]
+        userData3: testData.provider_list_data.providers[0],
+        userData4: testData.notes
     });
 });
 
@@ -80,7 +80,9 @@ app.post('/status', (req, res) => {
     res.render('status.hbs', {
         userData1: testData.provider_list_data.providers[3],
         userData2: testData.provider_list_data.providers[6],
-        userData3: testData.provider_list_data.providers[0]
+        userData3: testData.provider_list_data.providers[0],
+        userData4: testData.notes
+
     })
 });
 
