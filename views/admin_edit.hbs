@@ -1,27 +1,42 @@
 <!DOCTYPE html>
 <head>
-	<title>Admin Edit</title>
-	<link href='admin_list_page.css' rel='stylesheet' type='text/css'/>
-    <link href="pass_change.css" type="text/css" rel = "stylesheet"/>
-	
+    <title>Admins</title>
+    <link href='adminEdit.css' rel='stylesheet' type='text/css'/>
 </head>
 
 <body>
-	{{> navbar}}
-	<div id='main'>
-        <div id="parameters">
-            <form id='leftbox' method='GET' action='admin_list'>
-                <input class="purple_button" type="submit" value="Back"/>
-            </form>
-            <div id="rightbox2">
-                <button  class="purple_button2" type="submit" value="Change Password">Change password</button>
-                <br>
-                <button  class="purple_button2" type="submit" value="Delete">Delete account</button>
-            </div>
-        </div>    
+    {{> navbar}}
 
-        <div class="providers">
-            <h2 class='textentry'>id number</h2>
-            <h2 class='textentry'>First name</h2>
-            <h2 class='textentry'>Last name</h2>
+    <div id='main'>
+        <div id='header'>
+            <form class='row' method='get' action='/admin_list'>
+                <input id='back' class='purple_button' type='submit' value='back'/>
+            </form>
+            <div class='row'>
+                <input type="number" name="Idsearch" placeholder="ID Number"/>
+            </div>
+            <div class='row'>
+                <input type="text" name="fnamesearch" placeholder="First Name"/>
+                <input type="text" name="lnamesearch" placeholder="Last Name"/>
+                <button class='purple_button' type='button' onclick='deleteAdmin()'>Delete Admin</button>
+                <button class='purple_button' type='submit' onclick='getInputs()'>Change Password</button>
+            </div>
+            <div class='row'>
+                <h2 class='id'>Id number</h2>
+                <h2 class='fname'>First name</h2>
+                <h2 class='lname'>Last name</h2>
+            </div>
         </div>
+
+        <div id='list'>
+            <div class='providers' method='GET' action='admin_edit'>
+                <h2 class='id'>{{userData.id}}</h2>
+                <h2 class='fname'>{{userData.firstName}}</h2>
+                <h2 class='lname'>{{userData.lastName}}</h2>
+            </div>
+        </div>
+
+    </div>
+    <script src="sweetalert2.all.min.js"></script>
+    <script src="adminEdit.js"></script>
+</body>

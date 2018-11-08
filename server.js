@@ -186,7 +186,9 @@ app.post('/admin_list', (req, res) => {
 });
 
 app.get('/admin_edit', (req, res) => {
-    res.render('admin_edit.hbs')
+    res.render('admin_edit.hbs', {
+        userData: testData.admin_edit_data
+    })
 });
 
 app.get('/quiz', (request, response) => {

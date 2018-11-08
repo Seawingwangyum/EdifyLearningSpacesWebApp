@@ -160,12 +160,17 @@ const user_data = {
 	UEmail: 'ShibeNgn26@gmail.com',
 }
 
-
+const admin_edit_data = {
+	id: '1000',
+	firstName: 'nick',
+	lastName: 'Me'
+}
 
 module.exports = {
 	provider_edit_data: provider_edit_data,
 	provider_list_data: provider_list_data,
 	admin_list_data: admin_list_data,
 	user_data: user_data,
-	notes: notes
+	notes: notes,
+	admin_edit_data: admin_edit_data
 }

@@ -46,7 +46,7 @@ input, select, button {
             .filters, .id, .fname, .lname, .status, .city {
                 float: left;
                 margin: 16px 0px 0px 0px;
-                padding: 0px 0px 0px 0px;
+                padding: 0px 0px 0px 25px;
                 width: 18%;
                 background: none;
                 border: none;

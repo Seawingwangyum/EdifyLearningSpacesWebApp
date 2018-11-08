@@ -6,6 +6,18 @@ body {
     font-family: sans-serif;
 }
 
+input, select, button {
+    border-style: none none solid;
+    background-color: #f5f8fa;
+    margin: 15px 0px 0px 20px;
+    border-style: none none solid;
+    border-bottom-width:1px;
+    border-bottom-color: #ced7db;
+    width:15vw;
+    font-size: 18px;
+    float: left;
+}
+
 #main {
     background-color: #f5f8fa;
     height: 100vh;
@@ -15,73 +27,63 @@ body {
     left:0;
     right:0;
 }
-    #parameters {
-        height: 100px;
-        width:100%;
-        display:flex;
-        -webkit-flex-direction: row;
-        -me-flex-direction: row;
-        flex-direction: row; 
-        -webkit-justify-content: space-around;
-        -ms-flex-pack: distribute;
-        justify-content: space-around;
-        margin:auto;
-        left:0;
-        right:0;
+    #title {
+        position: relative;
+        top: 20px;
+        font-size: 40px;
+        text-align: center;
+        color: rgb(87, 164, 219);
     }
-        #leftbox {
-            flex-grow:1;
-            padding: 0px 5px 0px 15px;
-            position: relative;
-            background-color:#f5f8fa;
+    #header {
+        height: 25%;
+        width: 100%;
+        border-bottom: solid gray 2px;
+    }
+        .row{
+            height: 25%;
+            width: 100%;
         }
-            .purple_button {
-                background-color: #5f59a5;
-                border-radius: 6px;
-                border:0px;
-                display:inline-block;
-                padding:15px 25px;
-                color:white;
-                font-family: Baloo Bhai, sans-serif;
-                margin:20px;
-                margin-top: 40px;
-                position: relative;
-            }
-        #rightbox2 {
-            flex-grow:1;
-            padding: 0px 5px 0 px 15px;
-            position: relative;
-            background-color: #f5f8fa;
+        #back {
+            float: left;
+            margin-top: 4px;
         }
-            .purple_button2 {
-                background-color: #5f59a5;
-                border-radius: 6px;
-                border:0px;
-                padding:15px 25px;
-                color:white;
-                font-family: Baloo Bhai, sans-serif;
-                margin:10px;
-                position: relative;
-                left: 200px;
+            .filters, .id, .fname, .lname, .status, .city {
+                float: left;
+                margin: 16px 0px 0px 0px;
+                padding: 0px 0px 0px 25px;
+                width: 18%;
+                background: none;
+                border: none;
+                text-align: left;
             }
-    /*list???0*/
+            .id {width: 10%;}
+            .fname {width: 16%;}
+            .lname {width: 16%;}
+            .status {width: 25%;}
+            .city {width: 22%;}
+                #optionbox {
+                    width:20vw;
+                    float: right;
+                }
+                .purple_button {
+                    float: right;
+                    background-color: #5f59a5;
+                    border-radius: 6px;
+                    border:0px;
+                    margin: 0px;
+                    color:white;
+                    height: 80%;
+                    margin: 5px 25px;
+                }
+                .purple_button:hover {
+                    background-color: #916cc6;
+                }
+    #list {
+        border-top: solid #e6e6e6 3px;
+    }
         .providers {
             background-color: #f5f8fa;
             border-bottom: 1px solid grey;
-            height:35px;
+            height:70px;
             width:100%;
-            margin-top:25px;
-            display:flex;
-            -webkit-flex-direction: row;
-            -me-flex-direction: row;
-            flex-direction: row; 
-            -webkit-justify-content: space-around;
-            -ms-flex-pack: distribute;
-            justify-content: space-around;
         }
-            .textentry {
-                width:25px;
-                margin-left:15px;
-                margin-top:10px;
-                flex-grow: 1;
-            }
