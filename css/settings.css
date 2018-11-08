@@ -101,6 +101,8 @@
 }
 
 
+<<<<<<< HEAD
+=======
 input {
 	font-size: 15px;
 	padding-left: 20px;
@@ -109,6 +111,7 @@ input {
     font-family: 'BalooBhai',sans-serif;
 }
 
+>>>>>>> 3788bd2e78628f433b185a8b6e8702e362e11806
 
 .popuptitle {
 	font-size: 25px;

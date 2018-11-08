@@ -45,7 +45,8 @@ body{
 
 h1 {
     color: #48456b;
-    margin-bottom: 10px;
+    padding:5px;
+    
 }
 
 h2 {
@@ -82,8 +83,11 @@ p,a{
     padding:15px 80px;
     color: white;
     font-family: Baloo Bhai, sans-serif;
-	margin-left: 20px;
-	margin-right: 20px;
+
+    margin:20px;
+    bottom:0px;
+    right:0;
+    position: absolute;
     opacity: 0.9;
     font-size: 20px;
 	font-weight: bold;
@@ -102,12 +106,6 @@ p,a{
 #backPage .purple_button{
 	top: 50px;
 }
-
-#adpage {
-    background-color: #e4e2f7
-}
-
-
 
 
 

@@ -1,34 +1,135 @@
 @import 'navbar1.css';
 
 
+#leftland {
+    float:left;
+    width:35vw;
+    top:0px;
+  
+}
+
+#rightland {
+    float:right;
+    width:45vw;
+    top:0px;
+ 
+}
+
 #bg {
     background-image: url("img1.PNG");
-    position: fixed;
+    position: relative;
     background-repeat: no-repeat;
     background-position: right;
     background-size: contain;
     width: 50vw;
     height: 40vh;
-    left: 50%;
+    right:0;
     bottom: 0;
-    z-index: 0.3;
+    z-index: -432843;
 }
-
-.heading {
-    color: #48456b;
-}
-
 
 #adpage {
-    font-family: 'BalooBhai', sans-serif;
-    padding-left: 10px;
-    height: 100%;
+    background-image: url("img1.PNG");
+    background-repeat: no-repeat;
+    background-position: right bottom;
+    background-size: contain;
+    margin:0 auto;
+    margin-bottom: 10px;
+    width: 90vw;
+    display:block;
+    position: relative;
+    background-color: #e4e2f7;
+    overflow:none;
+    
 }
 
-.advid {
-    padding-bottom: 10px;
+#creAccBut {
+    bottom:0;
+    right:0;
+    position: absolute;
+    float: right;
 }
 
+#create_acc {
+    height:28vh;
+    width:22vw;
+    background-color: white;
+    padding:20px;
+    left:40px;
+    top:20px;
+    position:relative;
+    border-radius: 10px;
+    float:left;
+}
+
+
+#box1 {
+    right:40px;
+    top:10vh;
+    width:45vw;
+    padding:20px;
+    position:relative;
+
+   
+    float:right;
+    background-color: white;
+    border-radius: 10px;
+
+}
+
+#box2 {
+    left:40px;
+    float:left;
+    top:70px;
+    width:20vw;
+    padding:20px;
+    position:relative;
+    background-color: white;
+    border-radius: 10px;
+    
+    display:block;
+
+}
+
+#box3{
+    top:130px;
+    width:50vw;
+    padding:20px;
+    position:relative;
+    right:40px;
+    float:right;
+    background-color: white;
+    border-radius: 10px;
+    display:block;
+    margin-bottom: 40px;
+
+}
+
+#box4 {
+    float:right;
+    top:50px;
+    height:30vh;
+    width:20vw;
+    padding:20px;
+    position:relative;
+    background-color: white;
+    border-radius: 10px;
+    display:block;
+}
+
+.ptext {
+    color:#9795b2;
+}
+
+#video {
+    text-align: center;
+    margin:0 auto;
+    padding:10px;
+}
+
+.clear {
+  clear: both;
+}
 .button,
 .nav--link {
     border-bottom-style: none;

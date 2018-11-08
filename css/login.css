@@ -1,35 +1,33 @@
 @import 'navbar1.css';
 
-#Login_Panel{
-    height: 55vh;
-    width: 75vw;
-    right: 0;
-    left: 0;
-    top: 0;
-    bottom:0;
-    margin: auto;
+body {
+    background-color: #E4E8ED;
+}
 
-    display:flex;
+#panel{
+    height: 40vh;
+    width: 30vw;
+    margin: 0 auto;
+    text-align:center;
     padding:15px;
-    -webkit-flex-direction: row;
-    -me-flex-direction: row;
-    flex-direction: row; 
-    -webkit-justify-content: space-around;
-    -ms-flex-pack: distribute;
-    justify-content: space-around;
-    position: relative;
+    
 }
 
-#Left_Panel{
-    flex-grow:1;
-    padding: 0px 5px 0px 15px;
-    border-right:0px;
+#loginButton {
     position: relative;
-    background-color:lightblue;
-    border-radius: 6px 0px 0px 6px;
+    margin:20px 20px;
+
+}
+#loginTitle {
+    font-size: 27px;
+    font-size: 2em;
+    font-weight: bold;
+    color: #48456b;
+    font-family: Baloobhai,sans-serif;
 }
 
-#Right_Panel{
+
+#loginBox{
     flex-grow:3;
     padding: 0px 5px 0 px 15px;
     border-left:0px;
@@ -42,36 +40,35 @@
     border: 2px solid #e6eff3;
 }
 
+
+
+
 #Login_Panel h2{
     font-family: 'BalooBhai', sans-serif;
     margin: 5px;
     color: #48456b;
 }
 
-#adpage a{
-    margin:20px;
-
-}
-
-#adpage p{
-    margin:20px;
-
-}
 
 .loginelements{
     margin:20px;
 }
 
 .inputbox{
-    background-color: #f5f8fa;
-    margin-top: 15px;
-    margin-bottom: 15px;
+
+    padding: 15px;
+    margin: 15px 0 30px 0;
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.65);
+    color: black;
+
+
     border-style: none none solid;
     border-bottom-width:2px;
     border-bottom-color: #ced7db;
-    width:80%;
+   
     font-size: 18px;
-    color: black;
+
     
 }
 
