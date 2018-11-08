@@ -1,6 +1,8 @@
 var crimtxtState = "close",
-    hometxtState = "close",
-    cctxtState = "close";
+    sitetxtState = "close",
+    floortxtState = "close",
+    reftxtState = "close",
+    firetxtState = "close";
 
 /**
 * Function to open and close criminal record check information box
@@ -11,7 +13,7 @@ document.getElementById("crimCheck").addEventListener("click", () =>{
     if (crimtxtState == "close"){
         document.getElementById("crInfo").style.display = "block";
         crimtxtState = "open";
-    } else if (crmtxtState = "open"){
+    } else if (crimtxtState = "open"){
        document.getElementById("crInfo").style.display = "none";
        crimtxtState = "close";
     }
@@ -19,16 +21,45 @@ document.getElementById("crimCheck").addEventListener("click", () =>{
 }
 
 /**
-* Function to open and close home check information box
+* Function to open and close site check information box
 */
-function homeOC() {
-    document.getElementById("homeCheck").addEventListener("click", () =>{
-    if (hometxtState == "close"){
-        document.getElementById("homeInfo").style.display = "block";
-        hometxtState = "open";
-    } else if (hometxtState = "open"){
-       document.getElementById("homeInfo").style.display = "none";
-       hometxtState = "close";
+function siteOC() {
+    document.getElementById("siteCheck").addEventListener("click", () =>{
+    if (sitetxtState == "close"){
+        document.getElementById("siteInfo").style.display = "block";
+        sitetxtState = "open";
+    } else if (sitetxtState = "open"){
+       document.getElementById("siteInfo").style.display = "none";
+       sitetxtState = "close";
+    }
+});
+}
+
+/**
+* Function to open and close floor plan information box
+*/
+function floorOC() {
+    document.getElementById("floorCheck").addEventListener("click", () =>{
+    if (floortxtState == "close"){
+        document.getElementById("floorInfo").style.display = "block";
+        floortxtState = "open";
+    } else if (floortxtState = "open"){
+       document.getElementById("floorInfo").style.display = "none";
+       floortxtState = "close";
+    }
+});
+}
+/**
+* Function to open and close fire safety information box
+*/
+function fireOC() {
+    document.getElementById("firePlan").addEventListener("click", () =>{
+    if (firetxtState == "close"){
+        document.getElementById("fireInfo").style.display = "block";
+        firetxtState = "open";
+    } else if (firetxtState = "open"){
+       document.getElementById("fireInfo").style.display = "none";
+       firetxtState = "close";
     }
 });
 }
@@ -36,32 +67,21 @@ function homeOC() {
 /**
 * Function to open and close childcare licensing information box
 */
-function ccOC() {
-    document.getElementById("ccCheck").addEventListener("click", () =>{
-    if (cctxtState == "close"){
-        document.getElementById("ccInfo").style.display = "block";
-        cctxtState = "open";
-    } else if (cctxtState = "open"){
-       document.getElementById("ccInfo").style.display = "none";
-       cctxtState = "close";
+function refOC() {
+    document.getElementById("refCheck").addEventListener("click", () =>{
+    if (reftxtState == "close"){
+        document.getElementById("refInfo").style.display = "block";
+        reftxtState = "open";
+    } else if (reftxtState = "open"){
+       document.getElementById("refInfo").style.display = "none";
+       reftxtState = "close";
     }
 });
 }
 
 
-/**
-* Alerts for document submission
-*/
-document.getElementById("crSubmit").addEventListener("click", () => {
-    alert("You have attempted to submit a document")
-});
-document.getElementById("homeSubmit").addEventListener("click", () => {
-    alert("You have attempted to submit a document")
-});
-document.getElementById("ccSubmit").addEventListener("click", () => {
-    alert("You have attempted to submit a document")
-});
-
 crimOC();
-homeOC();
-ccOC();
+siteOC();
+floorOC();
+refOC();
+fireOC();
