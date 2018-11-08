@@ -6,14 +6,12 @@ const session = require('client-sessions');
 
 const app = express();
 
-const password_check = require("./components/password_check");
-
-
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
 app.use(express.static(__dirname + '/css'))
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/Assets'));
+app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
 
 // bodyparser setup
 var bodyParser = require('body-parser')
@@ -55,10 +53,8 @@ function filterList(list, id, fname, lname, status) {
     } if (status != '' && status != null) {
         if (status != 'all') {
             filteredList = filteredList.filter(provider => provider.status == status);
-            console.log(4, filteredList);
         }
     }
-    console.log(filteredList);
     return filteredList
 }
 
@@ -80,6 +76,7 @@ app.get('/requirements', (req, res) => {
 app.get('/ad_page', (req, res) => {
 	res.render('ad_page.hbs')
 });
+
 app.get('/provider_login', (req, res) => {
 	res.render('login.hbs')
 });
@@ -87,10 +84,6 @@ app.get('/provider_login', (req, res) => {
 
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
-});
-
-app.get('/verifyemail', (req, res) => {
-    res.render('verifyemail.hbs')
 });
 
 app.get('/test', (req, res) => {
@@ -101,30 +94,18 @@ app.get('/licenses', (req, res) => {
 	res.render('dashboard.hbs')
 });
 
-app.post('/licenses', (req, res) => {
-    res.render('dashboard.hbs')
-});
-
 app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
 });
 
-app.post('/account_creation', (req, res) =>{
-    console.log(req.body);
-    password_check.check_password(req.body).then((info) =>{
-        console.log(info)
-        res.send(JSON.stringify(info))
-    }, (error) =>{
-        console.log(error)
-        res.send(JSON.stringify(error))
-    })
-    
+
+app.get('/provider_list_page', (req, res) => {
+	res.render('provider list page.hbs')
 });
 
 
-
 app.get('/passchange', (req, res)=>{
-    res.render('verifyemail.hbs')
+    res.render('PassChange_window.hbs')
 });
 
 app.get('/deleteaccount', (req, res)=>{
@@ -138,7 +119,6 @@ app.get('/provider_list', (req, res, list) => {
         userData: testData.provider_list_data
     })
 })
-
 
 app.post('/provider_list', (req, res) => {
     var id = req.body.Idsearch
@@ -157,8 +137,7 @@ app.get('/admin_list', (req, res) => {
     res.render('admin list.hbs', {
         userData: testData.admin_list_data
     })
-
-});
+})
 
 app.post('/admin_list', (req, res) => {
     var id = req.body.Idsearch
@@ -175,7 +154,7 @@ app.post('/admin_list', (req, res) => {
 
 app.get('/admin_edit', (req, res) => {
     res.render('admin edit.hbs')
-});
+})
 
 
 app.get('/quiz', (request, response) => {

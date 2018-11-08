@@ -1,0 +1,138 @@
+@import 'navbar1.css';
+
+html, body {
+	margin: 0 auto;
+	background-color: #E4E8ED;
+	font-family: sans-serif;
+	height: 100%;
+}
+input[type=submit], .download_but {
+	background-color: #5f59a5;
+	height: 65%;
+	width: 130px;
+	border-radius: 6px;
+	border: none;
+	color: white;
+	margin: 20px 5px;
+	font-size: 18px;
+}
+input[type=submit]:hover, .download_but:hover {
+	background-color: #916cc6;
+}
+
+#main {
+	background-color: #f5f8fa;
+	height: 100%;
+	width: 80%;
+	margin: auto;
+}
+	#header {
+		height: 15%;
+		width: 100%;
+		border-bottom: 2px solid black;
+		font-size: 20px;
+	}
+		.row {
+			width: 91%;
+			padding-left: 9%;
+			height: 50%;
+		}
+			#number, #first_name, #last_name, #status {
+				float: left;
+				margin-top: 20px;
+			}
+			#last_name {
+				padding-left: 40px;
+			}
+			#status {
+				float: right;
+				padding-right: 75px;
+			}
+	#license_container {
+		width: 100%;
+		background-color: #f5f8fa;
+	}
+		.license_group {
+			margin:	auto;
+			margin-top: 18px;
+			width: 80%;
+		}
+			.license_group_name {
+				width: 25%;
+				border-bottom: 1px solid black;
+				padding-left: 10px;
+				padding-right: 30px;
+				margin-bottom: 18px;
+			}
+			.license {
+				position: relative;
+				padding-bottom: 5px;
+			}
+				.license_but {
+					height: 40px;
+					border: none;
+					background-color: #5f59a5;
+					width: 100%;
+					padding-left: 3%;
+					text-align: left;
+					font-size: 18px;
+					color: white;
+					border-radius: 6px;
+				}
+				.license_but:hover {
+					background-color: #916cc6;
+				}
+
+/*The following are divs created when the user clicks one of the license buttons*/
+				.license_options {
+					height: 130px;
+					background-color: white;
+					padding: 5px 0px 0px 25px;
+				}
+					.filename {
+						height: 20%;
+						width: 100%;
+					}
+						.filename_button {
+							padding-right: 10px;
+							float: left;
+						}
+						.download_but {
+							margin: 0;
+						}
+						.filename_name, .filename_date {
+							padding-top: 2px;
+							float: left;
+						}
+						.filename_date {
+							float: right;
+							padding-right: 20px;
+						}
+/*Exclusive to the approved / denied licenses*/
+						.filename_changed_by {
+							width: 30%; 
+							float: left; 
+							padding-left: 5%;
+						}
+/*Back to the new divs below*/
+					.file_submit {
+						position: relative;
+						width: 100%;
+						height: 80%;
+					}
+						.form_left {
+							float: left;
+							height: 100%;
+							width: 70%;
+						}
+							.form_left_padding {
+								padding-top: 25px;
+							}
+							.note_input {
+								width: 95%;
+							}
+						.form_right {
+							float: right;
+							height: 100%;
+							width: 30%;
+						}

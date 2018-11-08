@@ -59,54 +59,63 @@ const provider_list_data = {
 			lastName: 'Sososo',
 			id: 10000,
 			status: 'Awaiting Approval',
+			city: 'New Westminster',
 		},
 		{
 			firstName: 'mick',
 			lastName: 'Sososo',
 			id: 10000,
 			status: 'Awaiting Approval',
+			city: 'New Westminster',
 		},
 		{
 			firstName: 'erik',
 			lastName: 'Sososo',
 			id: 30000,
 			status: 'Awaiting Submission',
+			city: 'New Westminster',
 		},
 		{
 			firstName: 'precidia',
 			lastName: 'Sososo',
 			id: 20000,
 			status: 'Approval Denied',
+			city: 'New Westminster',
 		},
 		{
 			firstName: 'dummy',
 			lastName: 'dummy',
 			id: 10050,
 			status: 'Approval Denied',
+			city: 'New Westminster',
 		},
 		{
 			firstName: 'dummy',
 			lastName: 'dummy',
 			id: 10040,
 			status: 'Approved Granted',
+			city: 'New Westminster',
 		},
 		{
 			firstName: 'dummy',
 			lastName: 'dummy',
 			id: 10030,
 			status: 'Approved Granted',
+			city: 'New Westminster',
 		},
 		{
 			firstName: 'dummy',
 			lastName: 'dummy',
 			id: 10020,
 			status: 'Approval Denied',
+			city: 'New Westminster',
 		},
 		{
 			firstName: 'dummy',
 			lastName: 'dummy',
 			id: 10010,
 			status: 'Approved Granted',
+			city: 'New Westminster',
 		} 
 	]
 }
@@ -115,23 +124,23 @@ const admin_list_data = {
 	admins: [
 		{
 			id: 1000,
-			firstName: 'bob',
-			lastName: 'theBuilder',
+			firstName: 'nick',
+			lastName: 'lastname',
 		},
 		{
-			id: 1000,
-			firstName: 'bob',
-			lastName: 'theBuilder',
+			id: 1001,
+			firstName: 'marcus',
+			lastName: 'lastnamer',
 		},
 		{
-			id: 1000,
-			firstName: 'bob',
-			lastName: 'theBuilder',
+			id: 1002,
+			firstName: 'alice',
+			lastName: 'theadmin',
 		},
 		{
-			id: 1000,
-			firstName: 'bob',
-			lastName: 'theBuilder',
+			id: 1003,
+			firstName: 'priya',
+			lastName: 'theowner',
 		},
 	]
 }
