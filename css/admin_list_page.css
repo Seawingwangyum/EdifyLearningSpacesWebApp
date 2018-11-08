@@ -1,0 +1,198 @@
+@import 'navbar1.css';
+
+body {
+    margin: 0;
+    background-color: #E4E8ED;
+    font-family: sans-serif;
+}
+
+#main {
+    background-color: #f5f8fa;
+    height: 100vh;
+    width:80vw;
+    position: absolute;
+    margin:auto;
+    left:0;
+    right:0;
+
+}
+#optionbox{
+    width:20vw;
+    height:25px;
+    position: absolute;
+    right:0;
+    top:0;
+}
+
+.inputbox{
+    background-color: #f5f8fa;
+    margin-left:15px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    margin-right:15px;
+    border-style: none none solid;
+    border-bottom-width:1px;
+    border-bottom-color: #ced7db;
+    width:15vw;
+    height:20px;
+    font-size: 18px;
+}
+.Login_Panels{
+    background-color:#f5f8fa;
+    border: 2px solid #e6eff3;
+}
+
+#leftbox{
+    flex-grow:1;
+    padding: 0px 5px 0px 15px;
+    position: relative;
+    background-color:#f5f8fa;
+}
+
+#rightbox2{
+    flex-grow:1;
+    padding: 0px 5px 0 px 15px;
+    position: relative;
+    background-color: #f5f8fa;
+}
+#parameters{
+    height: 100px;
+    width:100%;
+    display:flex;
+    -webkit-flex-direction: row;
+    -me-flex-direction: row;
+    flex-direction: row; 
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+    margin:auto;
+    left:0;
+    right:0;
+}
+.purple_button{
+    background-color: #5f59a5;
+    border-radius: 6px;
+    border:0px;
+    display:inline-block;
+    padding:15px 25px;
+    color:white;
+    font-family: 'BalooBhai', sans-serif;
+    margin:20px;
+    margin-top: 40px;
+    position: relative;
+}
+.purple_button2{
+    background-color: #5f59a5;
+    border-radius: 6px;
+    border:0px;
+    padding:15px 25px;
+    color:white;
+    font-family: 'BalooBhai', sans-serif;
+    margin:10px;
+    position: relative;
+    left: 200px;
+}
+
+.providers{
+    background-color: #f5f8fa;
+    border-bottom: 1px solid grey;
+    height:35px;
+    width:100%;
+    margin-top:25px;
+    display:flex;
+    -webkit-flex-direction: row;
+    -me-flex-direction: row;
+    flex-direction: row; 
+    -webkit-justify-content: space-around;
+    -ms-flex-pack: distribute;
+    justify-content: space-around;
+}
+.textentry{
+    width:25px;
+    margin-left:15px;
+    margin-top:10px;
+    flex-grow: 1;
+}
+.applicationentry{
+    width:25px;
+    margin-left:15px;
+    margin-right: 40px;
+    margin-top:10px;
+    flex-grow: 1;
+    text-align: right;
+}
+
+.changeInput {
+    position: relative;
+    width: 300px;
+    height: 15px;
+    top: -20px;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 30px 10px 0px 15px;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+    color: #48456b;
+    font-family: Baloobhai,sans-serif;
+}
+
+.changeButt {
+    position: relative;
+    top: 15px;
+    background-color: #5f59a5;
+    border-radius: 10px;
+    width: 100px;
+    height: 50px;
+    margin-left: 40px;
+    margin-right: 40px;
+    padding: 15px;
+    color: white;
+    font-family: 'BalooBhai', sans-serif;
+    border: none;
+}
+
+.popuptitle {
+    font-size: 25px;
+    padding-left: 20px;
+    color: #48456b;
+    font-family: Baloobhai,sans-serif;
+    position: relative;
+    top: 0px;
+}
+
+#createAccount {
+    display: none;
+    position: absolute;
+    background-color: white;
+    width: 400px;
+    height: 400px;
+    top: 70px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    transition: 0.5s;
+    text-align: center;
+    font-family: 'BalooBhai', sans-serif;
+}
+
+#backPage {
+    display: none;
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background-color: rgba(0,0,0,0.6);
+}
+
+.goto_provider {
+    position: absolute;
+    border: none;
+    background: none;
+    width: 100%;
+    height: 5%;
+    text-align: left;
+    font-size: 20px;
+    padding-left: 20px;
+}

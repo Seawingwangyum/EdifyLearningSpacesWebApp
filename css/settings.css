@@ -1,0 +1,110 @@
+
+/* settings page 
+--------------------------------
+*/
+
+#backPage {
+    display: none;
+    position:fixed;
+    left:0;
+    top:0;
+    width:100%;
+    height:100%;
+    background-color: rgba(0,0,0,0.6);
+}
+
+
+.changeInput {
+	position: relative;
+    width: 300px;
+    height: 15px;
+    top: 30px;
+	border-radius: 10px;
+    padding: 15px;
+    margin: 10px 10px 0px 15px;
+    display: inline-block;
+    border: none;
+    background: #f1f1f1;
+    color: #48456b;
+    font-family: 'BalooBhai',sans-serif;
+}
+
+
+#cancelPass {
+  background-color: #9795b2;
+}
+
+#cancelName {
+  background-color: #9795b2;
+}
+
+#cancelEmail {
+  background-color: #9795b2;
+}
+
+
+<<<<<<< HEAD
+=======
+input {
+	font-size: 15px;
+	padding-left: 20px;
+	padding-top: 10px;
+    color: #f7fbfd;
+    font-family: 'BalooBhai',sans-serif;
+}
+
+>>>>>>> 3788bd2e78628f433b185a8b6e8702e362e11806
+
+.popuptitle {
+	font-size: 25px;
+	padding-left: 20px;
+    color: #48456b;
+    font-family: 'BalooBhai', sans-serif;
+    position: relative;
+    top: 20px;
+}
+
+#changePass {
+	display: none;
+    position: absolute;
+    background-color: white;
+    width: 400px;
+    height: 350px;
+    top: 100px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    transition: 0.5s;
+	text-align: center;
+    font-family: 'BalooBhai', sans-serif;
+}
+
+#changeName {
+	display: none;
+    position: absolute;
+    background-color: white;
+    width: 400px;
+    height: 250px;
+    top: 100px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    transition: 0.5s;
+	text-align: center;
+    font-family: 'BalooBhai', sans-serif;
+}
+
+#changeEmail {
+	display: none;
+    position: absolute;
+    background-color: white;
+    width: 400px;
+    height: 250px;
+    top: 100px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    transition: 0.5s;
+	text-align: center;
+    font-family: 'BalooBhai', sans-serif;
+}

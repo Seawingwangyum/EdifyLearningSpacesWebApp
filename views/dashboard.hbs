@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <title> Dashboard </title>
+    <link href = "style.css" type = "text/css" rel = "stylesheet"/>
+    <link href = "navbar1.css" type = "text/css" rel = "stylesheet"/>
+  <link href = "navbar2.css" type = "text/css" rel = "stylesheet"/>
+  
+</head>
+
+<body>
+
+    {{> navbar_logout}}
+    {{> navbar2}}
+
+    
+    <div id="mainarea">
+    
+        <div class="mainbuttons" id="crimCheck">Criminal Record Check</div>
+        <div class="hiddenspace" id="crInfo">
+            <div class="textarea">
+            <h2>Why?</h2>
+                We need a criminal record check because you will be working with a vulnerable group.
+            <h2>What?</h2>
+                A criminal record check is....
+            <h2>How?</h2>
+                You can get a criminal record check by...
+            </div>
+            
+            <div class="submitarea">
+                <h3>Upload a file...</h3>
+                <input type="submit" value="Submit" class="purple_button" id="crSubmit">
+            </div>
+        </div>
+        
+        <div id="homeCheck" class="mainbuttons">Site Plan</div>
+            <div class="hiddenspace" id="homeInfo">
+            <div class="textarea">
+                <h2>Why?</h2>
+                    We need to verify whether your home is a safe environment to provide the curriculum.
+                <h2>What?</h2>
+                    A site plan involves....
+                    Major physical features: roads, bodies of water, outdoor play areas
+                <h2>How?</h2>
+                    Provide a site plan that is drawn to scale showing all of the features.
+                </div>
+                
+                <div class="submitarea">
+                    <h3>Upload a file...</h3>
+                    <input type="submit" value="Submit" class="purple_button" id="homeSubmit">
+            </div>
+        </div>
+
+        <div id="ccCheck" class="mainbuttons">Childcare license</div>
+            <div class="hiddenspace" id="ccInfo">
+            <div class="textarea">
+                <h2>Why?</h2>
+                    We need to providers to apply for a valid childcare license. 
+                <h2>What?</h2>
+                    A childcare license is....
+                <h2>How?</h2>
+                    You can obtain a childcare license by...
+                </div>
+                
+                <div class="submitarea">
+                    <h3>Upload a file...</h3>
+                    <input type="submit" value="Submit" class="purple_button" id="ccSubmit">
+                </div>
+
+            </div>
+        
+        <div id="references" class="mainbuttons">References</div>
+        <div id="empplan" class="mainbuttons">Employee Plan</div>
+
+        <script src='license_page.js'></script>
+
+</body>
+
+</html>

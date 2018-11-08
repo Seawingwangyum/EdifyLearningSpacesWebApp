@@ -1,0 +1,102 @@
+
+#maincontent {
+	position: absolute;
+	height: 100vh;
+	width: 100vw;
+	background-color: #d2dee3;
+	left: 0px;
+}
+
+#maincontent h2 {
+    color: white;
+    font-weight: bold;
+}
+
+.checkingbox {
+	position: relative;
+	width: 500px;
+	height: 190px;
+	top: 50px;
+	background-color: #f7f8f9;
+	margin-bottom: 30px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.checkingtitle {
+	position: relative;
+	width: 500px;
+	height: 50px;
+	top: 0px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#criminaltitle {
+	background-color: #70AF80;
+}
+
+#buildingtitle {
+	background-color: #ec6d6d;
+}
+
+
+.notesbox {
+	position: relative;
+	width: 92%;
+	height: 28%;
+	background-color: #d7d0ff;
+	bottom: -20px;
+	left: 0px;
+	right: 0px;
+	margin: auto;
+}
+
+.changebox {
+	position: relative;
+	width: 300px;
+	height: 50px;
+	background-color: #9c67ec;
+	left: 300px;
+    border-radius: 8px;
+    text-align: center;
+    padding-top: 10px;
+    display: inline-block;
+}
+
+.changebox:hover {
+    background-color: #5f59a5;
+}
+
+.changetitle {
+	font-size: 30px;
+    color: #f7fbfd;
+    font-family: 'BalooBhai', sans-serif;
+    font-weight: bold;
+}
+
+.changepart {
+	width: 100%;
+	position: relative;
+	height: 70px;
+	margin-bottom: 30px;
+	top: 80px;
+
+}
+
+.changeinfo {
+	position: relative;
+	width: 300px;
+	height: 50px;
+	top: 10px;
+	display: inline-block;
+	left: 350px;
+	font-size: 23px;
+    color: #48456b;
+    font-family: 'BalooBhai', sans-serif;
+    font-weight: 800;
+    line-height: 120%;
+
+}
+
+

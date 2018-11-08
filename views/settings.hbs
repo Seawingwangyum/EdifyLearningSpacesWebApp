@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>{{title}}</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link href = "navbar1.css" type = "text/css" rel = "stylesheet"/>
+  <link href = "navbar2.css" type = "text/css" rel = "stylesheet"/>
+
+</head>
+
+<body id="body">
+    {{> navbar_logout}}
+    {{> navbar2}}
+
+    <div id="maincontent" >
+        <div class="changepart" id="namepart" href="changePass" onclick=" openOrClose('backPage', 'changeName', 'block')">
+            <div class="changebox" id="changename">
+                <text class="changetitle">Change name</text>
+            </div>
+            <div class="changeinfo" id="nameinfo">
+                <text>Current name <br> <i><font size="4" color="#73618d">Shibe Ng</font></i>
+                </text>
+            </div>
+        </div>
+
+        <div class="changepart" id="emailpart" onclick=" openOrClose('backPage', 'changeEmail', 'block')">
+            <div class="changebox" id="changeemail">
+                <text class="changetitle">Change email</text>
+            </div>
+            <div class="changeinfo" id="emailinfo">
+                <text>Current email <br> <i><font size="4" color="#73618d">shibeng26@gmail.com
+                </font></i></text>
+            </div>
+        </div>
+
+        <div class="changepart" id="pwpart" onclick="openOrClose('backPage', 'changePass', 'block')">
+            <div class="changebox" id="changepw">
+                <text class="changetitle">Change password</text>
+            </div>
+            <div class="changeinfo" id="pwinfo">
+                <text>Current password <br> <i><font size="4" color="#73618d">*********ng</font></i></text>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="backPage" >
+        <form action="/settings" method="post">
+                <div id="changePass">
+                    <h3 class="popuptitle">Change password</h3>
+                    <input class="changeInput" type="password" placeholder="Current password" name="curpw">
+                    <input class="changeInput" type="password" placeholder="New password" name="pswd" >
+                    <input class="changeInput" type="password" placeholder="Re-type new password" name="pswd">
+                    <button class="purple_button" type="submit">Confirm</button>
+                    <button id="cancelPass" class="purple_button" type="button" onclick="openOrClose('backPage', 'changePass', 'none')">Cancel</button>
+
+                </div>
+        </form>
+
+        <form action="/settings" method="post">
+                <div id="changeName">
+                    <h3 class="popuptitle">Change name</h3>
+                    <input class="changeInput" type="text" placeholder="New name" name="newname">
+                    <button class="purple_button" type="submit">Confirm</button>
+                    <button id="cancelName" class="purple_button" type="button" onclick="openOrClose('backPage', 'changeName', 'none')">Cancel</button>
+
+                </div>
+        </form>
+
+        <form action="/settings" method="post">
+                <div id="changeEmail">
+                    <h3 class="popuptitle">Change email</h3>
+                    <input class="changeInput" type="text" placeholder="New email" name="newemail" >
+                    <button class="purple_button" type="submit">Confirm</button>
+                    <button id="cancelEmail" class="purple_button" type="button" onclick="openOrClose('backPage', 'changeEmail', 'none')">Cancel</button>
+
+                </div>
+        </form>
+    </div>
+    <script src='settings.js'></script>
+
+</body>
+
+
+</html>
