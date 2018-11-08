@@ -1,29 +1,42 @@
 <!DOCTYPE html>
-<html>
-
 <head>
-    <title>Login</title>
-    <link href="style.css" type="text/css" rel="stylesheet" />
-    <link href="terms.css" type="text/css" rel="stylesheet" />
+<title>Login Page</title>
+<link href = "login.css" type = "text/css" rel = "stylesheet"/>
+<link href = "navbar1.css" type = "text/css" rel = "stylesheet"/>
+    <link href = "navbar2.css" type = "text/css" rel = "stylesheet"/>
 </head>
 
 <body>
     {{> navbar}}
-    <div id="panel">
-        <label id="loginTitle">Login</label>
-        <div>
-            <input id="Email" class="inputbox doubleinput" type="text" name="Email" placeholder="Email" />
+    
+    <div id="Login_Panel">
+        <div id="Left_Panel" class="Login_Panels">
+            <h2>Create An account</h2>
+            <p>Apply to be an edify educator today!!:)</p>
+            <form action="/ad_page">
+                <input class="purple_button" type="submit" value="create an account"/>
+            </form>
         </div>
-        <div>
-            <input id="Passwd" class="inputbox doubleinput" type="password" name="Passwd" placeholder="Password" />
+        <div id="Right_Panel" class="Login_Panels">
+            <h2>Sign in</h2>
+            <form id="Right_form" method="post" action="/">
+                <div>
+                    <input class="inputbox loginelements" type="text" name="Email" placeholder="Email"/>
+                </div>
+                <div>
+                        <input class="inputbox loginelements" type="password" name="Passwd" placeholder="Password"/>
+                </div>
+                <div>
+                        <input class="purple_button loginelements" type="submit" value="login"/> 
+                        <a href="Don't remember your password?">Don't remember your password?</a>
+                </div>
+                
+                
+                
+            </form>
         </div>
-        <a href="Don't remember your password?" style="color:indigo" >Forgot your password?</a>
-        <p>
-        <button id="loginButton" type="submit" class="purple_button">Login</button>
         
+        </form>
     </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="login.js"></script>
-</body>
 
-</html>
+</body>
