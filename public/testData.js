@@ -52,6 +52,10 @@ const provider_edit_data = {
 	}
 }
 
+const notes = {
+	content: "This is the content of the notes. This is also the content of the notes. This is still the content of the notes. Notes notes notes notes notes."
+}
+
 const provider_list_data = {
 	providers: [ 
 		{
@@ -85,9 +89,15 @@ const provider_list_data = {
 		{
 			firstName: 'dummy',
 			lastName: 'dummy',
-			id: 10050,
+			id: 10060,
 			status: 'Approval Denied',
 			city: 'New Westminster',
+		},
+		{
+			firstName: 'dummy',
+			lastName: 'dummy',
+			id: 10050,
+			status: 'Awaiting Approval',
 		},
 		{
 			firstName: 'dummy',
@@ -145,8 +155,17 @@ const admin_list_data = {
 	]
 }
 
+const user_data = {
+	UName: 'Shibe Ngn',
+	UEmail: 'ShibeNgn26@gmail.com',
+}
+
+
+
 module.exports = {
 	provider_edit_data: provider_edit_data,
 	provider_list_data: provider_list_data,
 	admin_list_data: admin_list_data,
+	user_data: user_data,
+	notes: notes
 }

@@ -1,10 +1,14 @@
 
 #maincontent {
-	position: absolute;
-	height: 100vh;
-	width: 100vw;
-	background-color: #d2dee3;
-	left: 0px;
+	margin: auto;
+    padding: 10px;
+    position: absolute;
+    height: 55vh;
+    width: 65vw;
+    right: 0px;
+    left: 0px;
+    top: 100px;
+    bottom:0px;
 }
 
 #maincontent h2 {
@@ -12,91 +16,129 @@
     font-weight: bold;
 }
 
-.checkingbox {
-	position: relative;
-	width: 500px;
-	height: 190px;
-	top: 50px;
-	background-color: #f7f8f9;
-	margin-bottom: 30px;
-	margin-left: auto;
-	margin-right: auto;
+.redbuttons {
+    border-radius: 6px;
+    border:0px;
+    width: 60vw;
+    background-color: #ec6d6d;
+    padding: 20px;
+    margin: 10px;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    float: left;
+    opacity: 0.9;
 }
 
-.checkingtitle {
-	position: relative;
-	width: 500px;
-	height: 50px;
-	top: 0px;
-	margin-left: auto;
-	margin-right: auto;
+.redbuttons:hover {
+  opacity:1;
 }
 
-#criminaltitle {
-	background-color: #70AF80;
+.greenbuttons {
+    border-radius: 6px;
+    border:0px;
+    width: 60vw;
+    background-color: #589b78;
+    padding: 20px;
+    margin: 10px;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    float: left;
+    opacity: 0.9;
 }
 
-#buildingtitle {
-	background-color: #ec6d6d;
+.greenbuttons:hover {
+  opacity:1;
 }
+
+.yellowbuttons {
+    border-radius: 6px;
+    border:0px;
+    width: 60vw;
+    background-color: #ffd53a;
+    padding: 20px;
+    margin: 10px;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    float: left;
+    opacity: 0.9;
+}
+
+.yellowbuttons:hover {
+  opacity:1;
+}
+
+
+.greybuttons {
+    border-radius: 6px;
+    border:0px;
+    width: 60vw;
+    background-color: #827878;
+    padding: 20px;
+    margin: 10px;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+    float: left;
+    opacity: 0.9;
+}
+
 
 
 .notesbox {
 	position: relative;
-	width: 92%;
-	height: 28%;
+	width: 90%;
+	height: 50%;
 	background-color: #d7d0ff;
-	bottom: -20px;
+	bottom: 0px;
 	left: 0px;
 	right: 0px;
 	margin: auto;
 }
 
-.changebox {
+.notescontent {
 	position: relative;
-	width: 300px;
-	height: 50px;
-	background-color: #9c67ec;
-	left: 300px;
-    border-radius: 8px;
-    text-align: center;
-    padding-top: 10px;
-    display: inline-block;
-}
-
-.changebox:hover {
-    background-color: #5f59a5;
-}
-
-.changetitle {
-	font-size: 30px;
-    color: #f7fbfd;
-    font-family: Baloobhai,sans-serif;
-    font-weight: bold;
-}
-
-.changepart {
-	width: 100%;
-	position: relative;
-	height: 70px;
-	margin-bottom: 30px;
-	top: 80px;
-
-}
-
-.changeinfo {
-	position: relative;
-	width: 300px;
-	height: 50px;
+	width: 97%;
+	height: 100%;
 	top: 10px;
-	display: inline-block;
-	left: 350px;
-	font-size: 23px;
-    color: #48456b;
-    font-family: Baloobhai,sans-serif;
-    font-weight: 800;
-    line-height: 120%;
-
+	left: 10px;
 }
 
 
+.textareaSS {
+    background-color: #fff;
+    margin: 0px;
+    position: relative;
+    height: 150px;
+}
+
+.hiddenspaceSS {
+	top: -20px;
+    width: 60vw;
+    height: 150px;
+    background-color: #fff;
+    float: left;
+    padding: 20px;
+    margin: 10px;
+    position: relative;
+
+}
+
+#crInfoSS {
+    display: none;
+}
+
+
+#homeInfoSS {
+    display:none;
+}
+
+#ccInfoSS {
+    display: none;
+}

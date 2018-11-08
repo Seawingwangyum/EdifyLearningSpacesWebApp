@@ -1,6 +1,5 @@
 @import 'navbar1.css';
 
-
 #Login_Panel{
     height: 55vh;
     width: 75vw;
@@ -44,7 +43,7 @@
 }
 
 #Login_Panel h2{
-    font-family: Baloo Bhai, sans-serif;
+    font-family: 'BalooBhai', sans-serif;
     margin: 5px;
     color: #48456b;
 }
@@ -68,30 +67,14 @@
     margin-top: 15px;
     margin-bottom: 15px;
     border-style: none none solid;
-    border-bottom-width:1px;
+    border-bottom-width:2px;
     border-bottom-color: #ced7db;
     width:80%;
-    height:20px;
     font-size: 18px;
     color: black;
     
 }
 
-
 ::placeholder{
     font-size: 18px;
 }
-
-/* baloo-bhai-regular - latin */
-@font-face {
-    font-family: 'Baloo Bhai';
-    font-style: normal;
-    font-weight: 400;
-    src: url('../fonts/baloo-bhai-v3-latin-regular.eot'); /* IE9 Compat Modes */
-    src: local('Baloo Bhai Regular'), local('BalooBhai-Regular'),
-         url('../fonts/baloo-bhai-v3-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-         url('../fonts/baloo-bhai-v3-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-         url('../fonts/baloo-bhai-v3-latin-regular.woff') format('woff'), /* Modern Browsers */
-         url('../fonts/baloo-bhai-v3-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-         url('../fonts/baloo-bhai-v3-latin-regular.svg#BalooBhai') format('svg'); /* Legacy iOS */
-  }

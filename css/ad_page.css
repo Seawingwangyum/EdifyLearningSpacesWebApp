@@ -11,7 +11,7 @@
     height: 40vh;
     left: 50%;
     bottom: 0;
-    z-index: -1;
+    z-index: 0.3;
 }
 
 .heading {
@@ -20,8 +20,9 @@
 
 
 #adpage {
-    font-family: Baloo Bhai, sans-serif;
+    font-family: 'BalooBhai', sans-serif;
     padding-left: 10px;
+    height: 100%;
 }
 
 .advid {
@@ -31,7 +32,7 @@
 .button,
 .nav--link {
     border-bottom-style: none;
-    font-family: Baloobhai, sans-serif;
+    font-family: 'BalooBhai', sans-serif;
     text-transform: lowercase;
 
 }

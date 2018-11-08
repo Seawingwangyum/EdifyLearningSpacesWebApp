@@ -10,7 +10,10 @@ app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
 app.use(express.static(__dirname + '/css'))
 app.use(express.static(__dirname + '/public'));
-app.use(express.static(__dirname + '/Assets'));
+app.use(express.static(__dirname + '/assets'));
+app.use(express.static(__dirname + '/fonts'));
+
+app.use(express.static(__dirname + '/node_modules/sweetalert/dist'))
 app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
 
 // bodyparser setup
@@ -35,7 +38,7 @@ function sessionCheck(req, res, next) {
     if (req.session && req.session.user) {
         next()
     } else {
-        res.redirect('/provider_login')
+        res.redirect('/landing_page')
     }
 }
 
@@ -58,8 +61,42 @@ function filterList(list, id, fname, lname, status) {
     return filteredList
 }
 
+
+app.get('/status', (request, response) => {
+    response.render('status.hbs', {
+        title: 'Status Page',
+        userData1: testData.provider_list_data.providers[3],
+        userData2: testData.provider_list_data.providers[6],
+        userData3: testData.provider_list_data.providers[0],
+        userData4: testData.notes
+    });
+});
+
+app.post('/status', (req, res) => {
+    res.render('status.hbs', {
+        userData1: testData.provider_list_data.providers[3],
+        userData2: testData.provider_list_data.providers[6],
+        userData3: testData.provider_list_data.providers[0],
+        userData4: testData.notes
+
+    })
+});
+
+app.get('/settings', (request, response) => {
+    response.render('settings.hbs', {
+        title: 'Settings Page',
+        userData: testData.user_data
+    });
+});
+
+app.post('/settings', (req, res) => {
+    res.render('settings.hbs', {
+        userData: testData.user_data
+    })
+});
+
 app.get('/provider_edit', (req, res) => {
-	res.render('provider edit.hbs', {
+	res.render('provider_edit.hbs', {
 		userData: testData.provider_edit_data
 	})
 });
@@ -98,11 +135,9 @@ app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
 });
 
-
 app.get('/provider_list_page', (req, res) => {
 	res.render('provider list page.hbs')
 });
-
 
 app.get('/passchange', (req, res)=>{
     res.render('PassChange_window.hbs')
@@ -112,10 +147,8 @@ app.get('/deleteaccount', (req, res)=>{
     res.render('accountdelete.hbs')
 })
 
-
-
 app.get('/provider_list', (req, res, list) => {
-	res.render('provider list.hbs', {
+	res.render('provider_list.hbs', {
         userData: testData.provider_list_data
     })
 })
@@ -128,13 +161,13 @@ app.post('/provider_list', (req, res) => {
     var list = testData.provider_list_data.providers;
 
     var filteredList = {providers: filterList(list, id, fname, lname, status)}
-    res.render('provider list.hbs', {
+    res.render('provider_list.hbs', {
         userData: filteredList
     })
 });
 
 app.get('/admin_list', (req, res) => {
-    res.render('admin list.hbs', {
+    res.render('admin_list.hbs', {
         userData: testData.admin_list_data
     })
 })
@@ -147,15 +180,14 @@ app.post('/admin_list', (req, res) => {
     var list = testData.admin_list_data.admins;
 
     var filteredList = {admins: filterList(list, id, fname, lname, status)}
-    res.render('admin list.hbs', {
+    res.render('admin_list.hbs', {
         userData: filteredList
     })
 });
 
 app.get('/admin_edit', (req, res) => {
-    res.render('admin edit.hbs')
-})
-
+    res.render('admin_edit.hbs')
+});
 
 app.get('/quiz', (request, response) => {
     /**
@@ -172,27 +204,6 @@ app.get('/quizresults', (request, response) => {
 
     response.render('quizresults.hbs', {
         title: 'Quiz Page'
-    });
-});
-
-
-app.get('/status', (request, response) => {
-    /**
-     * Displays the status page
-     */
-
-    response.render('status.hbs', {
-        title: 'Status Page'
-    });
-});
-
-app.get('/settings', (request, response) => {
-    /**
-     * Displays the status page
-     */
-
-    response.render('settings.hbs', {
-        title: 'Settings Page'
     });
 });
 
