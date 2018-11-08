@@ -76,7 +76,7 @@ body {
     display:inline-block;
     padding:15px 25px;
     color:white;
-    font-family: Baloo Bhai, sans-serif;
+    font-family: 'BalooBhai', sans-serif;
     margin:20px;
     margin-top: 40px;
     position: relative;
@@ -87,7 +87,7 @@ body {
     border:0px;
     padding:15px 25px;
     color:white;
-    font-family: Baloo Bhai, sans-serif;
+    font-family: 'BalooBhai', sans-serif;
     margin:10px;
     position: relative;
     left: 200px;
@@ -122,9 +122,6 @@ body {
     text-align: right;
 }
 
-
-
-
 .changeInput {
     position: relative;
     width: 300px;
@@ -151,10 +148,8 @@ body {
     margin-right: 40px;
     padding: 15px;
     color: white;
-    font-family: Baloobhai,sans-serif;
+    font-family: 'BalooBhai', sans-serif;
     border: none;
-
-
 }
 
 .popuptitle {
@@ -178,7 +173,7 @@ body {
     margin: auto;
     transition: 0.5s;
     text-align: center;
-    font-family: Baloobhai,sans-serif;
+    font-family: 'BalooBhai', sans-serif;
 }
 
 #backPage {

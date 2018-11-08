@@ -111,11 +111,19 @@
 }
 
 
+<<<<<<< HEAD
 .textareaSS {
     background-color: #fff;
     margin: 0px;
     position: relative;
     height: 150px;
+=======
+.changetitle {
+	font-size: 30px;
+    color: #f7fbfd;
+    font-family: 'BalooBhai', sans-serif;
+    font-weight: bold;
+>>>>>>> 3788bd2e78628f433b185a8b6e8702e362e11806
 }
 
 .hiddenspaceSS {
@@ -130,8 +138,24 @@
 
 }
 
+<<<<<<< HEAD
 #crInfoSS {
     display: none;
+=======
+.changeinfo {
+	position: relative;
+	width: 300px;
+	height: 50px;
+	top: 10px;
+	display: inline-block;
+	left: 350px;
+	font-size: 23px;
+    color: #48456b;
+    font-family: 'BalooBhai', sans-serif;
+    font-weight: 800;
+    line-height: 120%;
+
+>>>>>>> 3788bd2e78628f433b185a8b6e8702e362e11806
 }
 
 #homeInfoSS {
