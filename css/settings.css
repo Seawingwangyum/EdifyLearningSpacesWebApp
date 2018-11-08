@@ -3,6 +3,17 @@
 --------------------------------
 */
 
+#maincontentset {
+    margin: auto;
+    position: absolute;
+    height: 70vh;
+    width: 100vw;
+    right: 0px;
+    left: 0px;
+    top: 150px;
+    bottom:0px;
+}
+
 #backPage {
     display: none;
     position:fixed;
@@ -11,6 +22,52 @@
     width:100%;
     height:100%;
     background-color: rgba(0,0,0,0.6);
+}
+
+
+.changepart {
+    width: 70%;
+    position: relative;
+    height: 70px;
+    margin-left: 24vw;
+    margin-right: auto;
+    padding-top: 20px;
+
+}
+
+.changeinfo {
+    position: relative;
+    padding-left: 9%;
+    width: 50%;
+    height: 50px;
+    top: 15px;
+    display: inline-block;
+    font-size: 23px;
+    color: #48456b;
+    font-family: Baloobhai,sans-serif;
+    font-weight: 800;
+    line-height: 120%;
+
+}
+
+
+.changebox {
+    position: relative;
+    width: 40%;
+    height: 50px;
+    background-color: #9c67ec;
+    left: 0px;
+    border-radius: 8px;
+    padding-top: 12px;
+    display: inline-block;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.changebox:hover {
+    background-color: #5f59a5;
 }
 
 
@@ -68,9 +125,10 @@ input {
     background-color: white;
     width: 400px;
     height: 350px;
-    top: 100px;
     left: 0px;
     right: 0px;
+    top: 0px;
+    bottom: 0px;
     margin: auto;
     transition: 0.5s;
 	text-align: center;
@@ -85,9 +143,10 @@ input {
     background-color: white;
     width: 400px;
     height: 250px;
-    top: 100px;
     left: 0px;
     right: 0px;
+    top: 0px;
+    bottom: 0px;
     margin: auto;
     transition: 0.5s;
 	text-align: center;
@@ -102,9 +161,10 @@ input {
     background-color: white;
     width: 400px;
     height: 250px;
-    top: 100px;
     left: 0px;
     right: 0px;
+    top: 0px;
+    bottom: 0px;
     margin: auto;
     transition: 0.5s;
 	text-align: center;

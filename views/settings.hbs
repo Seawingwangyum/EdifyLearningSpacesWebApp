@@ -14,35 +14,30 @@
      {{> navbar}}
     {{> navbar2}}
 
-    <div id="maincontent" >
-        <div class="changepart" id="namepart" href="changePass" onclick=" openOrClose('backPage', 'changeName', 'block')">
-            <div class="changebox" id="changename">
-                <text class="changetitle">Change name</text>
-            </div>
+    <div id="maincontentset" >
+        <div class="changepart" id="namepart" href="changePass">
+            <div class="changebox" id="changename" onclick=" openOrClose('backPage', 'changeName', 'block')">Change name</div>
             <div class="changeinfo" id="nameinfo">
-                <text>Current name <br> <i><font size="4" color="#73618d">Shibe Ng</font></i>
+                <text>Name <br> <i><font size="4" color="#73618d">{{userData.UName}}</font></i>
                 </text>
             </div>
         </div>
 
-        <div class="changepart" id="emailpart" onclick=" openOrClose('backPage', 'changeEmail', 'block')">
-            <div class="changebox" id="changeemail">
-                <text class="changetitle">Change email</text>
-            </div>
+        <div class="changepart" id="emailpart">
+            <div class="changebox" id="changeemail" onclick=" openOrClose('backPage', 'changeEmail', 'block')">Change email</div>
             <div class="changeinfo" id="emailinfo">
-                <text>Current email <br> <i><font size="4" color="#73618d">shibeng26@gmail.com
+                <text>Email <br> <i><font size="4" color="#73618d">{{userData.UEmail}}</font></i>
                 </font></i></text>
             </div>
         </div>
 
-        <div class="changepart" id="pwpart" onclick="openOrClose('backPage', 'changePass', 'block')">
-            <div class="changebox" id="changepw">
-                <text class="changetitle">Change password</text>
-            </div>
+        <div class="changepart" id="pwpart">
+            <div class="changebox" id="changepw" onclick=" openOrClose('backPage', 'changePass', 'block')">Change password</div>
             <div class="changeinfo" id="pwinfo">
-                <text>Current password <br> <i><font size="4" color="#73618d">*********ng</font></i></text>
             </div>
+
         </div>
+
 
     </div>
 
@@ -80,6 +75,21 @@
         </form>
     </div>
     <script src='settings.js'></script>
+    <script src='sweetalert.min.js'></script>
+
+    <script>
+    sweetAlert("Hello world!");
+    </script>
+
+    <!-- <script src="node_modules/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+    sweetAlert("Hello world!");
+    </script> -->
+
+    <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>sweetAlert('Your list must have a name longer than 5 characters')</script> -->
+
+
 
 </body>
 

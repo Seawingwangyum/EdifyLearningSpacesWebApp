@@ -57,7 +57,7 @@ h3 {
     color: #48456b;
     font-family: Baloobhai,sans-serif;
     position: relative;
-    top: 10px;
+    top: 0px;
 }
 
 p,a{
@@ -82,6 +82,7 @@ p,a{
     left:0;
     opacity: 0.9;
     font-weight: bold;
+    font-size: 20px;
 
 }
 
