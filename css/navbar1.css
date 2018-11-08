@@ -4,7 +4,7 @@
 }
 
 #navbar {
-    width: 100%;
+    width: 100vw;
     height: 70px;
     background-color: rgb(245, 245, 245);
     border-bottom: 3px solid rgb(227, 229, 233);
