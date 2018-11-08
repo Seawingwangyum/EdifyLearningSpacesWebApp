@@ -7,7 +7,7 @@ const session = require('client-sessions');
 const app = express();
 
 const password_check = require("./components/password_check");
-const password_check = require("./components/login_check");
+const login_check = require("./components/login_check");
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
