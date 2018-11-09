@@ -4,7 +4,7 @@
     <title> Licensing Information </title>
     <link href = "style.css" type = "text/css" rel = "stylesheet"/>
     <link href = "navbar1.css" type = "text/css" rel = "stylesheet"/>
-  <link href = "navbar2.css" type = "text/css" rel = "stylesheet"/>
+    <link href = "navbar2.css" type = "text/css" rel = "stylesheet"/>
 </head>
 
 <body>
@@ -14,28 +14,24 @@
 
     <div id="mainarea">
     
+   <div class="bigcontainer">
         <div class="mainbuttons" id="crimCheck">Criminal Record Check</div>
-        <div class="hiddenspace" id="crInfo">
-            <div class="textarea">
+            <div id='crInfo' class="textarea">
             <h2>Why?</h2>
                 We need a criminal record check because you will be working with a vulnerable group.
             <h2>What?</h2>
                 You will need to fill out a consent to the criminal record check form, provide two pieces of ID, and payment for the check 
             <h2>How?</h2>
-                Fill out the criminal record check form and submit it to your licensing officer. They are available online at www2.gov.bc.ca/gov/content/safety/crime-prevention/criminal-record-check
-            
-            
+                Fill out the criminal record check form and submit it to your licensing officer. They are available online at www2.gov.bc.ca/gov/content/safety/crime-prevention/criminal-record-check           
             </div>
-            <div class="submitarea">
+            <div id='crInfo2' class="submitarea">
                 <h3>Upload a file...</h3>
-                <input type="file" name="pic" accept="image/*">
+                <input type="file" name="pic" accept="image/*" style='width:100%;'>
                 <input type="submit" value="Submit" class="purple_button">
             </div>
-            
         </div>
-        
+    <div class ="bigcontainer" >
         <div id="siteCheck" class="mainbuttons">Site Plan</div>
-            <div class="hiddenspace" id="siteInfo">
             <div class="textarea">
                 <h2>Why?</h2>
                     We need to verify whether the outdoor areas of the care facility are a safe environment.
@@ -52,9 +48,8 @@
                     <input type="submit" value="Submit" class="purple_button" />
             </div>
         </div>
-
+        <div class="bigcontainer">
         <div id="floorCheck" class="mainbuttons">Floor Plan</div>
-            <div class="hiddenspace" id="floorInfo">
             <div class="textarea">
                 <h2>Why?</h2>
                 We need to verify whether the premise has the necessary facilities and sufficient space for child care. 
@@ -67,13 +62,12 @@
                 <div class="submitarea">
                     <h3>Upload a file...</h3>
                     <input type="file" name="doc" accept="image/*">
-                    <input type="submit" value="Submit" class="purple_button" />
-                      
+                    <input type="submit" value="Submit" class="purple_button" />      
                 </div>
-            </div>
+        </div>
         
+        <div class="bigcontainer">
         <div id="refCheck" class="mainbuttons">References</div>
-        <div class="hiddenspace" id="refInfo">
             <div class="textarea">
                 <h2>Why?</h2>
                     To determine whether you are a suitable person to be a child care provider
@@ -90,8 +84,8 @@
             </div>
         </div>
         
+        <div class="bigcontainer">
         <div id="firePlan" class="mainbuttons">Fire Safety Plan</div>
-        <div class="hiddenspace" id="fireInfo">
             <div class="textarea">
                 <h2>Why?</h2>
                     To ensure there is an escape plan in the case of a fire in the building. 
@@ -108,8 +102,13 @@
                 </div>
         </div>
         
-        <div id="immunstat" class="mainbuttons">Immunization Status</div>
+        <div class="bigcontainer">
+            <div id="immunstat" class="mainbuttons">Immunization Status</div>
+        </div>
+        
+        <div class="bigcontainer">
         <div id="empplan" class="mainbuttons">Employee Plan</div>
+        </div>
     </div>
     
 </body>

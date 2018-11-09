@@ -2,6 +2,7 @@
 
 body{
     background-color: #d2dee3;
+    overflow: scroll;
 }
 
 .buttbox {
@@ -9,6 +10,16 @@ body{
     height: 500px;
     display: inline;
     font-family: 'BalooBhai', sans-serif;
+}
+
+.bigcontainer {
+    width: 65vw;
+
+    background-color: white;
+    margin-bottom: 20px;
+    overflow: hidden;
+    border-radius: 6px;
+
 }
 
 #mainarea{
@@ -21,22 +32,17 @@ body{
     left: 0px;
     top: 100px;
     bottom:0px;
-
-    
 }
+
 .mainbuttons {
     border-radius: 6px;
     border:0px;
-    width: 60vw;
+    width: 65vw;
     background-color: #5f59a5;
-    padding: 20px;
-    margin: 10px;
     color: white;
     text-align: center;
     font-size: 30px;
     font-weight: bold;
-    float: left;
-    opacity: 0.9;
 
 }
 
@@ -44,15 +50,8 @@ body{
   opacity: 1;
 }
 
-.hiddenspace {
-    border-radius: 6px;
-    width: 62.5vw;
-    height: 500px;
-
-}
-
 .textarea {
-    width:38vw;
+    width:35vw;
     height: auto;
     background-color: rgba(255, 250, 255, 0.9);
     float: left;
@@ -78,7 +77,9 @@ body{
 #crInfo {
     display: none;
 }
-
+#crInfo2 {
+    display: none;
+}
 #floorInfo {
     display:none;
 }
