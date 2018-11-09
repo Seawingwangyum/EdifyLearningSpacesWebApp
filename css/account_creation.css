@@ -54,8 +54,8 @@ body {
 	background: #ffffff;
   border-radius: .4em;
   padding:10px;
-  bottom:244px;
-  left:25px;
+  margin-left: 25px;
+  top:55%;
 }
 
 .speech-bubble:after {
