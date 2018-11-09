@@ -8,42 +8,118 @@ body {
   background-size: contain;
 }
 
-.container input[type=text], .container input[type=password] {
-  width: 45vw;
+#instructions {
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+#acheader {
+  text-align: center;
+}
+
+.container input[type=text], #selectbox  {
   padding: 15px;
   margin: 5px 0 22px 0;
   display: inline-block;
-  border: none;
-  background: #e8e8e8;
+  background: rgba(255, 255, 255, 0.65);
   color: black;
 }
 
-.container input[type=text]:focus, .container input[type=password]:focus {
-  background-color: #ddd;
-  outline: none;
+.container input[type=password] {
+  width: 85%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.65);
   color: black;
 }
 
-
+.doubleinput {
+  width:85%;
+}
 
 #cancelbtn {
   background-color: #9795b2;
 }
 
+#button_bar {
+  margin-top:20px;
+  width:96%;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.speech-bubble {
+  display:none;
+	position: absolute;
+	background: #ffffff;
+  border-radius: .4em;
+  padding:10px;
+  margin-left: 25px;
+  top:55%;
+}
+
+.speech-bubble:after {
+	content: '';
+	position: absolute;
+	right: 0;
+	top: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-left-color: #ffffff;
+	border-right: 0;
+	border-top: 0;
+	margin-top: -10px;
+	margin-right: -20px;
+}
 
 .container {
+  position: absolute;
   padding: 16px;
   width: 50vw;
-  height: 50vh;
+  height:80vh;
   background-color: rgba(227, 232, 237, 0.65); 
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom:20px;
+  margin: auto;
+  text-align: center;
+}
+#tccontainer {
+  display: none;
+  position: absolute;
+  padding: 16px;
+  width: 50vw;
+  height:75vh;
+  background-color: rgba(227, 232, 237, 1); 
   left: 0px;
   right: 0px;
   top: 0px;
   bottom:0px;
   margin: auto;
-
 }
 
+#signupcontainer {
+  display: block;
+  margin-top: 100px;
+}
+
+.double {
+  width:48%;
+  display: inline-block;
+}
+
+#emaildiv {
+  width:60%;
+  display: inline-block;
+}
+
+#edudiv {
+  width:38%;
+  display: inline-block;
+}
 
 .container hr {
   border: 1px solid #f1f1f1;
@@ -66,9 +142,3 @@ body {
   cursor: pointer;
 }
 
-
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
-}

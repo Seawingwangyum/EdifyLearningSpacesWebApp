@@ -16,11 +16,11 @@ function verify(name, password) {
 
 function getInputs() {
 	swal({
-		title: 'Change Password',
+		title: 'Create Admin',
 		html:
-		'Change the admins password</h2>'+
-		'<input id="swal-input1" class="swal2-input" autofocus placeholder="New Password">' +
-		'<input id="swal-input2" class="swal2-input" placeholder="Confirm Password">',
+		'Create a new admin account</h2>'+
+		'<input id="swal-input1" class="swal2-input" autofocus placeholder="User ID">' +
+		'<input id="swal-input2" class="swal2-input" placeholder="Password">',
 		 preConfirm: function() {
 		   return new Promise(function(resolve) {
 			   if (true) {
@@ -33,16 +33,5 @@ function getInputs() {
 		}
 	}).then(function(result) {
 		verify(result.value[0], result.value[1])
-	})
-}
-
-function deleteAdmin() {
-	swal({
-		title: 'Delete Admin?',
-		html:
-		"You won't be able to revert this!",
-		showCancelButton: 'Cancel',
-		cancelButtonColor: 'red',
-		confirmButtonText: 'Delete'
 	})
 }

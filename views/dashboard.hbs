@@ -1,19 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head> 
-    <title> Dashboard </title>
+    <title> Licensing Information </title>
     <link href = "style.css" type = "text/css" rel = "stylesheet"/>
     <link href = "navbar1.css" type = "text/css" rel = "stylesheet"/>
   <link href = "navbar2.css" type = "text/css" rel = "stylesheet"/>
-  
 </head>
 
 <body>
 
-    {{> navbar}}
+    {{> navbar_logout}}
     {{> navbar2}}
 
-    
     <div id="mainarea">
     
         <div class="mainbuttons" id="crimCheck">Criminal Record Check</div>
@@ -22,58 +20,98 @@
             <h2>Why?</h2>
                 We need a criminal record check because you will be working with a vulnerable group.
             <h2>What?</h2>
-                A criminal record check is....
+                You will need to fill out a consent to the criminal record check form, provide two pieces of ID, and payment for the check 
             <h2>How?</h2>
-                You can get a criminal record check by...
-            </div>
+                Fill out the criminal record check form and submit it to your licensing officer. They are available online at www2.gov.bc.ca/gov/content/safety/crime-prevention/criminal-record-check
             
+            
+            </div>
             <div class="submitarea">
                 <h3>Upload a file...</h3>
-                <input type="submit" value="Submit" class="purple_button" id="crSubmit">
+                <input type="file" name="pic" accept="image/*">
+                <input type="submit" value="Submit" class="purple_button">
             </div>
+            
         </div>
         
-        <div id="homeCheck" class="mainbuttons">Site Plan</div>
-            <div class="hiddenspace" id="homeInfo">
+        <div id="siteCheck" class="mainbuttons">Site Plan</div>
+            <div class="hiddenspace" id="siteInfo">
             <div class="textarea">
                 <h2>Why?</h2>
-                    We need to verify whether your home is a safe environment to provide the curriculum.
+                    We need to verify whether the outdoor areas of the care facility are a safe environment.
                 <h2>What?</h2>
-                    A site plan involves....
-                    Major physical features: roads, bodies of water, outdoor play areas
+                    A site plan is a drawn plan of the premise, surround outdoor areas, and the property boundaries. 
+                    It needs to include major physical features such as roads, bodies of water, outdoor play areas or structures. 
                 <h2>How?</h2>
-                    Provide a site plan that is drawn to scale showing all of the features.
+                    Digitally create a drawing to scale. Alternatively, you may use graph paper and hand draw the site plan, including measurements. 
                 </div>
                 
                 <div class="submitarea">
                     <h3>Upload a file...</h3>
-                    <input type="submit" value="Submit" class="purple_button" id="homeSubmit">
+                    <input type="file" name="pic" accept="image/*">
+                    <input type="submit" value="Submit" class="purple_button" />
             </div>
         </div>
 
-        <div id="ccCheck" class="mainbuttons">Childcare license</div>
-            <div class="hiddenspace" id="ccInfo">
+        <div id="floorCheck" class="mainbuttons">Floor Plan</div>
+            <div class="hiddenspace" id="floorInfo">
             <div class="textarea">
                 <h2>Why?</h2>
-                    We need to providers to apply for a valid childcare license. 
+                We need to verify whether the premise has the necessary facilities and sufficient space for child care. 
                 <h2>What?</h2>
-                    A childcare license is....
+                    A floor plan is a drawn to scale plan which accurately reflects the layout of the building and rooms. It should the room dimensions as well as features such as the location of toilets, exits, and fixed appliances/equipment among other things. 
                 <h2>How?</h2>
-                    You can obtain a childcare license by...
+                    Digitally create a drawing to scale. Alternatively, you may use graph paper and hand draw the site plan, including measurements. 
                 </div>
                 
                 <div class="submitarea">
                     <h3>Upload a file...</h3>
-                    <input type="submit" value="Submit" class="purple_button" id="ccSubmit">
+                    <input type="file" name="doc" accept="image/*">
+                    <input type="submit" value="Submit" class="purple_button" />
+                      
                 </div>
-
             </div>
         
-        <div id="references" class="mainbuttons">References</div>
+        <div id="refCheck" class="mainbuttons">References</div>
+        <div class="hiddenspace" id="refInfo">
+            <div class="textarea">
+                <h2>Why?</h2>
+                    To determine whether you are a suitable person to be a child care provider
+                <h2>What?</h2>
+                    3 references who can talk about your skills, personality, interests. 
+                <h2>How?</h2>
+                    Provide their name, mailing address, and phone number. 
+                </div>
+                
+                <div class="submitarea">
+                    <h3>Upload a file...</h3>
+                    <input type="file" name="doc" accept="image/*">
+                    <input type="submit" value="Submit" class="purple_button" />
+            </div>
+        </div>
+        
+        <div id="firePlan" class="mainbuttons">Fire Safety Plan</div>
+        <div class="hiddenspace" id="fireInfo">
+            <div class="textarea">
+                <h2>Why?</h2>
+                    To ensure there is an escape plan in the case of a fire in the building. 
+                <h2>What?</h2>
+                    A plan with instructions on how to evacuate the building with main exit and alternative exit. This plan also needs to include the floor plan.  
+                <h2>How?</h2>
+                    Provide a drawn floor plan and written procedure. Will need to practice and record the escape plan at least once a month.
+                </div>
+                
+                <div class="submitarea">
+                    <h3>Upload a file...</h3>
+                    <input type="file" name="doc" accept="image/*">
+                    <input type="submit" value="Submit" class="purple_button" />
+                </div>
+        </div>
+        
+        <div id="immunstat" class="mainbuttons">Immunization Status</div>
         <div id="empplan" class="mainbuttons">Employee Plan</div>
-
-        <script src='license_page.js'></script>
-
+    </div>
+    
 </body>
-
+        <script src='license_page.js'></script>
 </html>

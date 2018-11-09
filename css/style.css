@@ -7,7 +7,13 @@
 @import 'status.css';
 @import 'settings.css';
 
-
+@font-face{ 
+	font-family: 'BalooBhai';
+	src: url('baloo-bhai-v3-latin-regular.eot');
+	src: url('baloo-bhai-v3-latin-regular.woff') format('woff'),
+	     url('baloo-bhai-v3-latin-regular.ttf') format('truetype'),
+	     url('baloo-bhai-v3-latin-regular.svg') format('svg');
+}
 
 
 #headerdiv {
@@ -57,10 +63,10 @@ h3 {
     color: #48456b;
     font-family: Baloobhai,sans-serif;
     position: relative;
-    top: 10px;
+    top: 0px;
 }
 
-p,a{
+p,a, option, select{
     margin:0px;
     font-family: Baloobhai,sans-serif;
 
@@ -73,42 +79,43 @@ p,a{
     border-radius: 6px;
     border:0px;
     display: inline-block;
-    padding:15px 25px;
-    color:white;
+    padding: 15px 35px;
+    color: white;
     font-family: Baloo Bhai, sans-serif;
-    margin:20px;
-    position: absolute;
-    bottom:0px;
-    left:0;
+	margin-left: 20px;
+	margin-right: 20px;
     opacity: 0.9;
-    font-weight: bold;
-
+    font-size: 20px;
+	font-weight: bold;
+	position: relative;
+	text-align: center;
 }
 
 .purple_button:hover {
   opacity:1;
 }
 
+/*licenses page submit butotn */
 #mainarea .purple_button{
     position: relative;
 }
 
-.clearfix .purple_button{
-	float: left;
-  	width: 25%;
-  	position: relative;
-}
-
+/*settings buttons*/
 #backPage .purple_button{
 	top: 50px;
-  	position: relative;
 }
 
 #adpage {
     background-color: #e4e2f7
 }
 
-
+/*acc creation page*/
+#button_bar .purple_button{
+	padding-left: 50px;
+	padding-right: 50px;
+	margin-left: 40px;
+	margin-right: 40px;
+}
 
 
 

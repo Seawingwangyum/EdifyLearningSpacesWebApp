@@ -3,6 +3,17 @@
 --------------------------------
 */
 
+#maincontentset {
+    margin: auto;
+    position: absolute;
+    height: 70vh;
+    width: 100vw;
+    right: 0px;
+    left: 0px;
+    top: 150px;
+    bottom:0px;
+}
+
 #backPage {
     display: none;
     position:fixed;
@@ -14,6 +25,53 @@
 }
 
 
+.changepart {
+    width: 70%;
+    position: relative;
+    height: 70px;
+    margin-left: 24vw;
+    margin-right: auto;
+    padding-top: 20px;
+
+}
+
+.changeinfo {
+    position: relative;
+    padding-left: 9%;
+    width: 50%;
+    height: 50px;
+    top: 8px;
+    display: inline-block;
+    font-size: 23px;
+    color: #48456b;
+    font-family: Baloobhai,sans-serif;
+    font-weight: 800;
+    line-height: 120%;
+
+}
+
+
+.changebox {
+    position: relative;
+    width: 40%;
+    height: 50px;
+    background-color: #9c67ec;
+    left: 0px;
+    border-radius: 8px;
+    padding-top: 10px;
+    padding-bottom: 5px;
+    display: inline-block;
+    color: white;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.changebox:hover {
+    background-color: #5f59a5;
+}
+
+
 .changeInput {
 	position: relative;
     width: 300px;
@@ -21,12 +79,12 @@
     top: 30px;
 	border-radius: 10px;
     padding: 15px;
-    margin: 10px 10px 0px 15px;
+    margin: 10px 10px 0px 10px;
     display: inline-block;
     border: none;
     background: #f1f1f1;
     color: #48456b;
-    font-family: Baloobhai,sans-serif;
+    font-family: 'BalooBhai',sans-serif;
 }
 
 
@@ -48,7 +106,7 @@ input {
 	padding-left: 20px;
 	padding-top: 10px;
     color: #f7fbfd;
-    font-family: Baloobhai,sans-serif;
+    font-family: 'BalooBhai',sans-serif;
 }
 
 
@@ -56,11 +114,10 @@ input {
 	font-size: 25px;
 	padding-left: 20px;
     color: #48456b;
-    font-family: Baloobhai,sans-serif;
+    font-family: 'BalooBhai', sans-serif;
     position: relative;
     top: 20px;
 }
-
 
 #changePass {
 	display: none;
@@ -68,16 +125,15 @@ input {
     background-color: white;
     width: 400px;
     height: 350px;
-    top: 100px;
     left: 0px;
     right: 0px;
+    top: 0px;
+    bottom: 0px;
     margin: auto;
     transition: 0.5s;
 	text-align: center;
-    font-family: Baloobhai,sans-serif;
+    font-family: 'BalooBhai', sans-serif;
 }
-
-
 
 #changeName {
 	display: none;
@@ -85,16 +141,15 @@ input {
     background-color: white;
     width: 400px;
     height: 250px;
-    top: 100px;
     left: 0px;
     right: 0px;
+    top: 0px;
+    bottom: 0px;
     margin: auto;
     transition: 0.5s;
 	text-align: center;
-    font-family: Baloobhai,sans-serif;
+    font-family: 'BalooBhai', sans-serif;
 }
-
-
 
 #changeEmail {
 	display: none;
@@ -102,11 +157,12 @@ input {
     background-color: white;
     width: 400px;
     height: 250px;
-    top: 100px;
     left: 0px;
     right: 0px;
+    top: 0px;
+    bottom: 0px;
     margin: auto;
     transition: 0.5s;
 	text-align: center;
-    font-family: Baloobhai,sans-serif;
+    font-family: 'BalooBhai', sans-serif;
 }
