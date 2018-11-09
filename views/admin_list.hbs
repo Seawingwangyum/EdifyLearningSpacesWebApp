@@ -1,63 +1,42 @@
 <!DOCTYPE html>
 <head>
-	<title>Admin Page</title>
-	<link href='admin_list_page.css' rel='stylesheet' type='text/css'/>
-	
+	<title>Admins</title>
+	<link href='adminList.css' rel='stylesheet' type='text/css'/>
 </head>
 
 <body>
 	{{> navbar}}
 
 	<div id='main'>
-		<div id ='options'>
-            <form method="POST" action="/admin_list" id="parameters">
-                <div id="leftbox">
-                    <div>
-                    <input class="inputbox" type="text" name="Idsearch" placeholder="ID Number"/>
-                    </div>
-                    <div>
-                        <input class="inputbox" type="text" name="fnamesearch" placeholder="First Name"/>
-                        <input class="inputbox" type="text" name="lnamesearch" placeholder="Last Name"/>
-                    </div>
-                </div>
-                <div id="rightbox">
-                    <div>
-                    <input class="purple_button" type="submit" value="Create Account"/>
-                    <input class="purple_button" type="submit" value="Search"/>
-                    </div>
-                </div>
-            </form>    
-        </div>
+        <div id='title'>Admins</div>
+        <form id='header' method='POST' action='/admin_list'>
+            <div class='row'>
+                <input type="number" name="Idsearch" placeholder="ID Number"/>
+            </div>
+            <div class='row'>
+                <input type="text" name="fnamesearch" placeholder="First Name"/>
+                <input type="text" name="lnamesearch" placeholder="Last Name"/>
+                <button class='purple_button' type='button' onclick='getInputs()'>Create Admin</button>
+                <input class='purple_button' type='submit' value='Search'>
+            </div>
+            <div class='row'>
+                <h2 class='id'>Id number</h2>
+                <h2 class='fname'>First name</h2>
+                <h2 class='lname'>Last name</h2>
+            </div>
+        </form>
 
         <div id='list'>
-            <div class="providers">
-                <h2 class='textentry'>id number</h2>
-                <h2 class='textentry'>FirstName</h2>
-                <h2 class='textentry'>LastName</h2>
-            </div>
             {{#each userData.admins as |admin|}}
                 <form class='providers' method='GET' action='admin_edit'>
                     <input type='submit'  value='{{admin.id}}' class='goto_provider'/>
-                    <h2 class='textentry'></h2>
-                    <h2 class='textentry'>{{admin.firstName}}</h2>
-                    <h2 class='textentry'>{{admin.lastName}}</h2>
+                    <h2 class='id'></h2>
+                    <h2 class='fname'>{{admin.firstName}}</h2>
+                    <h2 class='lname'>{{admin.lastName}}</h2>
                 </form>
             {{/each}}
         </div>
-
-         <div id="backPage">
-        <form action="/admin-list_page_edit" method="post">
-                <div id="createAccount">
-                    <h3 class="popuptitle">Create Account</h3>
-                    <input class="changeInput" type="text" placeholder="Name" name="name">
-                    <input class="changeInput" type="password" placeholder="Password" name="pswd" >
-                    <input class="changeInput" type="password" placeholder="Re-type new password" name="pswd">
-                    <button class="changeButt" type="submit">Confirm</button>
-                    <button class="changeButt" type="submit">Cancel</button>
-
-                </div>
-        </form>
-        </div>
-
 	</div>
+    <script src="sweetalert2.all.min.js"></script>
+    <script src='adminList.js'></script>
 </body>
