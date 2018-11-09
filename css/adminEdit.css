@@ -6,7 +6,7 @@ body {
     font-family: sans-serif;
 }
 
-input, select {
+input, select, button {
     border-style: none none solid;
     background-color: #f5f8fa;
     margin: 15px 0px 0px 20px;
@@ -18,11 +18,10 @@ input, select {
     float: left;
 }
 
-/*following is structured to follow the html structure hierarchy -- was 139 lines of code*/
 #main {
     background-color: #f5f8fa;
-    height: 100%;
-    width: 80%;
+    height: 100vh;
+    width:80vw;
     position: absolute;
     margin:auto;
     left:0;
@@ -36,18 +35,22 @@ input, select {
         color: rgb(87, 164, 219);
     }
     #header {
-        height: 20%;
+        height: 25%;
         width: 100%;
         border-bottom: solid gray 2px;
     }
         .row{
-            height: 33%;
+            height: 25%;
             width: 100%;
+        }
+        #back {
+            float: left;
+            margin-top: 4px;
         }
             .filters, .id, .fname, .lname, .status, .city {
                 float: left;
                 margin: 16px 0px 0px 0px;
-                padding: 0px 0px 0px 24px;
+                padding: 0px 0px 0px 25px;
                 width: 18%;
                 background: none;
                 border: none;
@@ -84,20 +87,3 @@ input, select {
             height:70px;
             width:100%;
         }
-        .providers:nth-child(even) {
-            background-color: lightblue;
-        }  
-        .providers:hover {
-            background-color: #00ff99;
-        }
-            .goto_provider {
-                position: absolute;
-                border: none;
-                background: none;
-                width: 100%;
-                height: 10%;
-                text-align: left;
-                font-size: 20px;
-                margin: 0px;
-                padding-left: 22px;
-            }
