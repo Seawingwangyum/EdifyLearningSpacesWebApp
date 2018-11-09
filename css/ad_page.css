@@ -24,21 +24,22 @@
     background-position: center;
     background-size:900px;
     margin:0 auto;
-    margin-bottom: 10px;
     width: 90vw;
     display:block;
-    
+    height:900px;
     background-color: #e4e2f7;
     overflow:none;
     
 }
 
 #creAccBut {
-    bottom:0;
-    right:0;
+    float:right;
+    bottom:0px;
+    right:0px;
     position: relative;
+    margin-top:30px;
     
-    margin: 30;
+   
 }
 
 #create_acc {
