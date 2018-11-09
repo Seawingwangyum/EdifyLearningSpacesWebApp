@@ -147,7 +147,7 @@ app.get('/test', (req, res) => {
 });
 
 app.get('/licenses', (req, res) => {
-	res.render('dashboard.hbs')
+	res.render('license.hbs')
 });
 
 app.get('/account_creation', (req, res) => {
@@ -158,10 +158,6 @@ app.post('/account_creation',(req, res)=> {
     console.log(req.body);
     res.send();
 })
-
-app.get('/provider_list_page', (req, res) => {
-	res.render('provider list page.hbs')
-});
 
 app.get('/passchange', (req, res)=>{
     res.render('PassChange_window.hbs')

@@ -3,7 +3,7 @@
 @import 'login.css';
 @import 'ad_page.css';
 @import 'account_creation.css';
-@import 'dashstyle.css';
+@import 'license.css';
 @import 'status.css';
 @import 'settings.css';
 
@@ -58,12 +58,13 @@ h2 {
 
 
 h3 {
-	font-size: 23px;
+	font-size: 30px;
 	padding-left: 20px;
     color: #48456b;
     font-family: Baloobhai,sans-serif;
     position: relative;
     top: 0px;
+    font-weight: normal;
 }
 
 p,a, option, select{

@@ -1,7 +1,6 @@
 @import 'navbar1.css';
 
-body{
-    background-color: #d2dee3;
+#license{
     overflow: scroll;
 }
 
@@ -14,23 +13,21 @@ body{
 
 .bigcontainer {
     width: 65vw;
-
     background-color: white;
     margin-bottom: 20px;
     overflow: hidden;
     border-radius: 6px;
-
 }
 
 #mainarea{
     margin: auto;
-    padding: 10px;
+    padding: 5px;
     position: absolute;
-    height: 75vh;
+    height: 80vh;
     width: 65vw;
     right: 0px;
     left: 0px;
-    top: 100px;
+    top: 200px;
     bottom:0px;
 }
 
@@ -43,7 +40,8 @@ body{
     text-align: center;
     font-size: 30px;
     font-weight: bold;
-
+    opacity: 0.8;
+    padding: 10px;
 }
 
 .mainbuttons:hover {
@@ -51,15 +49,16 @@ body{
 }
 
 .textarea {
-    width:35vw;
+    width:38vw;
     height: auto;
-    background-color: rgba(255, 250, 255, 0.9);
+    background-color: rgba(254, 250, 255, 0.9);
     float: left;
     text-align: left;
     margin: 8px;
     padding:5px;
     position: relative;
     border-radius: 5px;
+    font-size: 20px;
 }
 
 .submitarea {
@@ -69,7 +68,7 @@ body{
     text-align: center;
     margin: 8px;
     padding: 10px;
-    background-color: rgba(254, 205, 254, 0.76);
+    background-color: rgba(254, 205, 254, 0.5);
     position: relative;
     border-radius: 6px;
 }
@@ -83,15 +82,39 @@ body{
 #floorInfo {
     display:none;
 }
+#floorInfo2 {
+    display:none;
+}
 
 #siteInfo {
+    display: none;
+}
+#siteInfo2 {
     display: none;
 }
 
 #refInfo {
     display: none; 
 }
+#refInfo2 {
+    display: none; 
+}
 
 #fireInfo {
     display: none;
+}
+#fireInfo2 {
+    display: none;
+}
+
+#immunInfo {
+    display: none;
+    text-align: center;
+    width: 100%;
+}
+
+#empInfo {
+    display: none;
+    text-align: center;
+    width: 100%;
 }
