@@ -12,9 +12,11 @@ function crimOC() {
 document.getElementById("crimCheck").addEventListener("click", () =>{
     if (crimtxtState == "close"){
         document.getElementById("crInfo").style.display = "block";
+        document.getElementById("crInfo2").style.display = "block";
         crimtxtState = "open";
     } else if (crimtxtState = "open"){
        document.getElementById("crInfo").style.display = "none";
+        document.getElementById("crInfo2").style.display = "none";
        crimtxtState = "close";
     }
 });
@@ -78,7 +80,6 @@ function refOC() {
     }
 });
 }
-
 
 crimOC();
 siteOC();
