@@ -7,7 +7,7 @@
     width: 65vw;
     right: 0px;
     left: 0px;
-    top: 100px;
+    top: 200px;
     bottom:0px;
 }
 
@@ -94,7 +94,7 @@
 .notesbox {
 	position: relative;
 	width: 90%;
-	height: 50%;
+	height: 100%;
 	background-color: #d7d0ff;
 	bottom: 0px;
 	left: 0px;
@@ -105,9 +105,9 @@
 .notescontent {
 	position: relative;
 	width: 97%;
-	height: 100%;
-	top: 10px;
+	height: 97%;
 	left: 10px;
+    font-size: 20px;
 }
 
 
@@ -115,13 +115,13 @@
     background-color: #fff;
     margin: 0px;
     position: relative;
-    height: 150px;
+    height: 100%;
 }
 
 .hiddenspaceSS {
 	top: -20px;
     width: 60vw;
-    height: 150px;
+    height: auto;
     background-color: #fff;
     float: left;
     padding: 20px;

@@ -127,7 +127,7 @@
     a great candidate to become an Edify Provider, apply today!`;
 }else{
   resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}, you should
-  apply to become an Edify Provider`
+  look into what it takes to become an Edify Provider.`
 }
   }
 
