@@ -46,12 +46,13 @@
 #creAccBut {
     bottom:0;
     right:0;
-    position: absolute;
-    float: right;
+    left: 0;
+    position: relative;
+    width: 100%;
+    margin: 0;
 }
 
 #create_acc {
-    height:28vh;
     width:22vw;
     background-color: white;
     padding:20px;
@@ -108,7 +109,6 @@
 #box4 {
     float:right;
     top:50px;
-    height:30vh;
     width:20vw;
     padding:20px;
     position:relative;
