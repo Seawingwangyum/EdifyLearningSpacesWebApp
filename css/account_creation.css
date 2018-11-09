@@ -117,9 +117,11 @@ body {
 }
 
 #edudiv {
+  text-align: center;
   width:38%;
   display: inline-block;
 }
+
 
 .container hr {
   border: 1px solid #f1f1f1;
