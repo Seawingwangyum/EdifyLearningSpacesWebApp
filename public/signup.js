@@ -10,6 +10,7 @@ var address = document.getElementById("address")
 var speechbubbble = document.getElementById("bubble");
 
 var errmsg = "OH NO!"
+var instructions = document.getElementById("instructions");
 
 document.getElementById("backbtn").addEventListener("click", function(){
     document.getElementById("tccontainer").style.display = "none";
@@ -22,7 +23,8 @@ document.getElementById("finishsignup").addEventListener("click", function(){
         send_prep();
     }
     else {
-        swal("please check the box")
+        document.getElementById("ninjadiv").innerHTML = "Please check the box to continue";
+        document.getElementById("ninjadiv").style.color = "red";
     }
 })
 
@@ -44,33 +46,42 @@ function verification(){
     var pass_msg = check_characters(password.value);
 
     if(fname.value == "" || lname.value==""){
-        swal(errmsg, "Please enter in your full name", "warning");
+        instructions.innerHTML="Please fill out your name"
+        instructions.style.color = "red"
     }
     else if(emailValidation(email.value) == false){
-        swal(errmsg, "please enter in your email", "warning");
+        instructions.innerHTML="Please enter a valid Email Address"
+        instructions.style.color = "red"
     }
     else if(educationbg.value == ""){
-        swal(errmsg, "Please select your education background", "warning");
+        instructions.innerHTML="Please fill out your education"
+        instructions.style.color = "red"
     }
     else if(password.value == ""){
-        swal(errmsg, "Please enter in your password", "warning");
+        instructions.innerHTML="Please enter a valid password"
+        instructions.style.color = "red"
     }
     else if(password_length(password.value) == false){
-        swal(errmsg, "Password is under 8 characters", "warning");
+        instructions.innerHTML="Password is under 8 characters"
+        instructions.style.color = "red"
     }
     else if(pass_msg != "0"){
         if(pass_msg == "1"){
-            swal(errmsg, "Password contains no capital characters", "warning")
+            instructions.innerHTML="Password contains no uppercase letters"
+            instructions.style.color = "red"
         }
         else if(pass_msg == "2"){
-            swal(errmsg, "Password does not contain any numbers", "warning");
+            instructions.innerHTML="Password does not contain any numbers"
+            instructions.style.color = "red"
         }
     }
     else if(password.value != passwordcheck.value){
-        swal(errmsg, "Passwords do not match", "warning");
+        instructions.innerHTML="Passwords do not match"
+        instructions.style.color = "red"
     }
     else if(address.value == ""){
-        swal(errmsg, "Please enter in your address", "warning");
+        instructions.innerHTML="Please fill out your address"
+        instructions.style.color = "red"
     }
     else{
         document.getElementById("tccontainer").style.display = "block";
@@ -105,11 +116,9 @@ function check_characters(pw){
         return "0";
     }
     else if(cap != true){
-        swal(errmsg,"Password does not have an uppercase letter", "warning")
         return "1";
     }
     else if(num != true){
-        swal(errmsg, "Password does not have a number", "warning");
         return "2";
     }
 }
