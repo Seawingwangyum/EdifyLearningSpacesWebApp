@@ -53,7 +53,7 @@ const provider_edit_data = {
 }
 
 const notes = {
-	content: "This is the content of the notes. This is also the content of the notes. This is still the content of the notes. Notes notes notes notes notes."
+	content: "This is the content. This is also the content. This is the content of the notes. Notes notes notes notes notes.  This is still the content of the notes. Trust me."
 }
 
 const provider_list_data = {
