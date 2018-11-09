@@ -108,6 +108,10 @@ app.get('/landing_page', (req, res) => {
 	res.render('landing_page.hbs')
 });
 
+app.get('/edify_quiz', (req, res) => {
+    res.render('edify_quiz.hbs')
+});
+
 app.get('/requirements', (req, res) => {
 	res.render('requirements.hbs')
 });
