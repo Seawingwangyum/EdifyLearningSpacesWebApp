@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head> 
+    <title> Licensing Information </title>
+    <link href = "style.css" type = "text/css" rel = "stylesheet"/>
+    <link href = "navbar1.css" type = "text/css" rel = "stylesheet"/>
+    <link href = "navbar2.css" type = "text/css" rel = "stylesheet"/>
+</head>
+
+<body>
+
+    {{> navbar_logout}}
+    {{> navbar2}}
+
+    <div id="mainarea">
+    
+   <div class="bigcontainer">
+        <div class="mainbuttons" id="crimCheck">Criminal Record Check</div>
+            <div id="crInfo" class="textarea">
+            <h2>Why?</h2>
+                We need a criminal record check because you will be working with a vulnerable group.
+            <h2>What?</h2>
+                You will need to fill out a consent to the criminal record check form, provide two pieces of ID, and payment for the check 
+            <h2>How?</h2>
+                Fill out the criminal record check form and submit it to your licensing officer. They are available online at www2.gov.bc.ca/gov/content/safety/crime-prevention/criminal-record-check           
+            </div>
+            <div id="crInfo2" class="submitarea">
+                <h3>Upload a file...</h3>
+                <input type="file" name="pic" accept="image/*" style='width:100%;'>
+                <input type="submit" value="Submit" class="purple_button">
+            </div>
+        </div>
+    <div class="bigcontainer" >
+        <div id="siteCheck" class="mainbuttons">Site Plan</div>
+            <div id="siteInfo"class="textarea">
+                <h2>Why?</h2>
+                    We need to verify whether the outdoor areas of the care facility are a safe environment.
+                <h2>What?</h2>
+                    A site plan is a drawn plan of the premise, surround outdoor areas, and the property boundaries. 
+                    It needs to include major physical features such as roads, bodies of water, outdoor play areas or structures. 
+                <h2>How?</h2>
+                    Digitally create a drawing to scale. Alternatively, you may use graph paper and hand draw the site plan, including measurements. 
+                </div>
+                
+                <div id="siteInfo2" class="submitarea">
+                    <h3>Upload a file...</h3>
+                    <input type="file" name="pic" accept="image/*">
+                    <input type="submit" value="Submit" class="purple_button" />
+            </div>
+        </div>
+        <div class="bigcontainer">
+        <div id="floorCheck" class="mainbuttons">Floor Plan</div>
+            <div id="floorInfo" class="textarea">
+                <h2>Why?</h2>
+                We need to verify whether the premise has the necessary facilities and sufficient space for child care. 
+                <h2>What?</h2>
+                A floor plan is a drawn to scale plan which accurately reflects the layout of the building and rooms. It should the room dimensions as well as features such as the location of toilets, exits, and fixed appliances/equipment among other things. 
+                <h2>How?</h2>
+                Digitally create a drawing to scale. Alternatively, you may use graph paper and hand draw the site plan, including measurements. 
+                </div>
+                
+            <div id="floorInfo2" class="submitarea">
+                <h3>Upload a file...</h3>
+                <input type="file" name="doc" accept="image/*">
+                <input type="submit" value="Submit" class="purple_button" />    
+            </div>
+        </div>
+        
+        <div class="bigcontainer">
+        <div id="refCheck" class="mainbuttons">References</div>
+            <div id="refInfo" class="textarea">
+                <h2>Why?</h2>
+                  To determine whether you are a suitable person to be a child care provider
+                <h2>What?</h2>
+                  3 references who can talk about your skills, personality, interests. 
+                <h2>How?</h2>
+                  Provide their name, mailing address, and phone number. 
+                </div>
+                
+            <div id="refInfo2" class="submitarea">
+              <h3>Upload a file...</h3>
+              <input type="file" name="doc" accept="image/*">
+            <input type="submit" value="Submit" class="purple_button" />
+            </div>
+        </div>
+        
+        <div class="bigcontainer">
+        <div id="firePlan" class="mainbuttons">Fire Safety Plan</div>
+            <div id="fireInfo" class="textarea">
+                <h2>Why?</h2>
+                To ensure there is an escape plan in the case of a fire in the building. 
+                <h2>What?</h2>
+                  A plan with instructions on how to evacuate the building with main exit and alternative exit. This plan also needs to include the floor plan.  
+                <h2>How?</h2>
+                Provide a drawn floor plan and written procedure. Will need to practice and record the escape plan at least once a month.
+                </div>
+                
+                <div id="fireInfo2" class="submitarea">
+                    <h3>Upload a file...</h3>
+                    <input type="file" name="doc" accept="image/*">
+                    <input type="submit" value="Submit" class="purple_button" />
+                </div>
+        </div>
+        
+        <div class="bigcontainer">
+            <div id="immunStat" class="mainbuttons">Immunization Status</div>
+                <div id="immunInfo" class="textarea">
+                <h2>Why?</h2>
+                To ensure you have up-to-date vaccinations to protect yourself and the children you work with. 
+                <h2>What?</h2>
+                  <ul>
+                    <li>Tetanus and Diphtheria (Td)</li>    
+                    <li>Poliomyelitis (OPV/IPV)</li>    
+                    <li>Measles (MMR)</li>    
+                    <li>Rubella (MMR)</li>    
+                    <li>Mumps (MMR)</li>    
+                    <li>Hepatitis B</li>    
+                    <li>Varicella (Chickenpox)</li>    
+                    <li>Influenza</li>    
+                    </ul>
+                </div>
+        </div>
+        
+        <div class="bigcontainer">
+        <div id="empplan" class="mainbuttons">Employee Plan</div>
+        </div>
+    </div>
+    
+</body>
+        <script src='license_page.js'></script>
+</html>
