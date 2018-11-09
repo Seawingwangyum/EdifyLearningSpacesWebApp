@@ -1,6 +1,7 @@
 @import 'navbar1.css';
 
 
+
 #leftland {
     float:left;
     width:35vw;
@@ -16,26 +17,30 @@
 }
 
 
-
 #adpage {
+    padding-top:20px;
+    padding-bottom: 90px;
+    height:auto;
+    width: 90vw;
     background-image: url("img5.PNG");
     position: relative;
     background-repeat: repeat;
     background-position: center;
     background-size:900px;
     margin:0 auto;
-    width: 90vw;
-    display:block;
-    height:930px;
     background-color: #e4e2f7;
     overflow:none;
     
 }
 
+#buttonboxLP {
+    text-align: center;
+}
+
 #creAccBut {
-    float:right;
-    bottom:0px;
     right:0px;
+    left: 0px;
+    bottom: 0px;
     position: relative;
     margin-top:30px;
     
@@ -47,7 +52,7 @@
 }
 
 #create_acc {
-    width:22vw;
+    width:auto;
     background-color: white;
     padding:20px;
     left:40px;
@@ -75,8 +80,8 @@
 #box2 {
     left:50px;
     float:left;
-    top:130px;
-    width:20vw;
+    top:80px;
+    width:18vw;
     padding:20px;
     position:relative;
     background-color: white;
@@ -87,7 +92,7 @@
 }
 
 #box3{
-    top:130px;
+    top:90px;
     width:50vw;
     padding:20px;
     position:relative;
@@ -103,7 +108,7 @@
 #box4 {
     float:right;
     top:50px;
-    width:20vw;
+    width:23vw;
     padding:20px;
     position:relative;
     background-color: white;
