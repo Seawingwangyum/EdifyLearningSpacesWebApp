@@ -7,7 +7,7 @@
     <link href = "navbar2.css" type = "text/css" rel = "stylesheet"/>
 </head>
 
-<body>
+<body id="licensebody">
 
     {{> navbar_logout}}
     {{> navbar2}}
@@ -22,7 +22,7 @@
             <h2>What?</h2>
                 You will need to fill out a consent to the criminal record check form, provide two pieces of ID, and payment for the check 
             <h2>How?</h2>
-                Fill out the criminal record check form and submit it to your licensing officer. They are available online at www2.gov.bc.ca/gov/content/safety/crime-prevention/criminal-record-check           
+                Fill out the criminal record check form and submit it to your licensing officer. They are available online at <a href="www2.gov.bc.ca/gov/content/safety/crime-prevention/criminal-record-check">BC Governement website</a>           
             </div>
             <div id="crInfo2" class="submitarea">
                 <h3>Upload a file...</h3>
@@ -105,9 +105,9 @@
         <div class="bigcontainer">
             <div id="immunStat" class="mainbuttons">Immunization Status</div>
                 <div id="immunInfo" class="textarea">
-                <h2>Why?</h2>
-                To ensure you have up-to-date vaccinations to protect yourself and the children you work with. 
                 <h2>What?</h2>
+                Ensure you have up-to-date vaccinations to protect yourself and the children you work with.
+                <h2>Which?</h2>
                   <ul>
                     <li>Tetanus and Diphtheria (Td)</li>    
                     <li>Poliomyelitis (OPV/IPV)</li>    
@@ -122,7 +122,10 @@
         </div>
         
         <div class="bigcontainer">
-        <div id="empplan" class="mainbuttons">Employee Plan</div>
+        <div id="empPlan" class="mainbuttons">Employee Plan</div>
+            <div id="empInfo">
+            Currently is optional
+            </div>
         </div>
     </div>
     
