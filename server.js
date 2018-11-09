@@ -150,6 +150,11 @@ app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
 });
 
+app.post('/account_creation',(req, res)=> {
+    console.log(req.body);
+    res.send();
+})
+
 app.get('/provider_list_page', (req, res) => {
 	res.render('provider list page.hbs')
 });
