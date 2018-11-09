@@ -14,7 +14,6 @@ body{
 
 .bigcontainer {
     width: 65vw;
-
     background-color: white;
     margin-bottom: 20px;
     overflow: hidden;
@@ -83,15 +82,33 @@ body{
 #floorInfo {
     display:none;
 }
+#floorInfo2 {
+    display:none;
+}
 
 #siteInfo {
+    display: none;
+}
+#siteInfo2 {
     display: none;
 }
 
 #refInfo {
     display: none; 
 }
+#refInfo2 {
+    display: none; 
+}
 
 #fireInfo {
     display: none;
+}
+#fireInfo2 {
+    display: none;
+}
+
+#immunInfo {
+    display: none;
+    text-align: center;
+    width: 100%;
 }
