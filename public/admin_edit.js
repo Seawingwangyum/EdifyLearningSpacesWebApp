@@ -1,27 +1,48 @@
-var passchange = document.getElementById("passchange");
-var accountdelete = document.getElementById("account_delete")
-var del_cancel = document.getElementById("del_cancel");
-var pass_cancel = document.getElementById("pass_cancel");
+function verify(name, password) {
+	if (name != '' && password != '') {
+		swal(
+			'Success!',
+			'Admin account created',
+			'success'
+			);
+	} else {
+		swal (
+			'Failed',
+			'Name or password not entered',
+			'error'
+			)
+	}
+}
 
-//Closes windows
-function close(){
-    passchange.style.display = "none";
-    accountdelete.style.display = "none";
-};
+function getInputs() {
+	swal({
+		title: 'Change Password',
+		html:
+		'Change the admins password</h2>'+
+		'<input id="swal-input1" class="swal2-input" autofocus placeholder="New Password">' +
+		'<input id="swal-input2" class="swal2-input" placeholder="Confirm Password">',
+		 preConfirm: function() {
+		   return new Promise(function(resolve) {
+			   if (true) {
+			    resolve([
+					document.getElementById('swal-input1').value,
+					document.getElementById('swal-input2').value
+			    ]);
+			   }
+			});
+		}
+	}).then(function(result) {
+		verify(result.value[0], result.value[1])
+	})
+}
 
-document.getElementById("password_change").addEventListener("click", function(){
-    passchange.style.display = "block";
-});
-
-document.getElementById("delete_button").addEventListener("click", function(){
-    accountdelete.style.display = "block";
-});
-
-del_cancel.addEventListener("click", function(){
-    close();
-});
-
-pass_cancel.addEventListener("click", function(){
-    close();
-});
-
+function deleteAdmin() {
+	swal({
+		title: 'Delete Admin?',
+		html:
+		"You won't be able to revert this!",
+		showCancelButton: 'Cancel',
+		cancelButtonColor: 'red',
+		confirmButtonText: 'Delete'
+	})
+}

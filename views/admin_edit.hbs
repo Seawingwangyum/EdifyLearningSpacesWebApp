@@ -6,22 +6,6 @@
 
 <body>
 	{{> navbar_logout}}
-	<div id='main'>
-		<div id ='options'>
-            <div id="parameters">
-                <div id="leftbox">
-                    <form method='GET' action='admin_list'>
-                        <input class="purple_button" type="submit" value="Back"/>
-                    </form>
-                </div>
-                <div id="rightbox2">
-                        <button id="password_change" class="purple_button2" type="submit" value="Change Password">Change password</button>
-                        <br>
-                        <button id="delete_button" class="purple_button2" type="submit" value="Delete">Delete account</button>
-                </div>
-            </div>    
-        </div>
-
     <div id='main'>
         <div id='header'>
             <form class='row' method='get' action='/admin_list'>
@@ -45,13 +29,6 @@
                 <h2 class='lname'>{{userData.lastName}}</h2>
             </div>
         </div>
-
-    </div>
-        <div id="account_delete" class="popup">
-        <div id="label">Delete account</div>
-        <div id="text">Are you sure you want to delete this account?</div>
-        <button class="purple_button confirmbutton" id="del_confirm">Confirm</button>
-        <button class="purple_button cancelbutton" id="del_cancel">Cancel</button>
-    </div>
+    <script src="sweetalert2.all.min.js"></script>
     <script src="admin_edit.js"></script>
 </body>
