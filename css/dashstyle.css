@@ -30,7 +30,7 @@ body{
     width: 65vw;
     right: 0px;
     left: 0px;
-    top: 100px;
+    top: 200px;
     bottom:0px;
 }
 
@@ -60,6 +60,7 @@ body{
     padding:5px;
     position: relative;
     border-radius: 5px;
+    font-size: 20px;
 }
 
 .submitarea {
