@@ -66,7 +66,7 @@ h3 {
     top: 0px;
 }
 
-p,a{
+p,a, option, select{
     margin:0px;
     font-family: Baloobhai,sans-serif;
 
@@ -79,7 +79,7 @@ p,a{
     border-radius: 6px;
     border:0px;
     display: inline-block;
-    padding:15px 80px;
+    padding: 15px 35px;
     color: white;
     font-family: Baloo Bhai, sans-serif;
 	margin-left: 20px;
@@ -88,17 +88,19 @@ p,a{
     font-size: 20px;
 	font-weight: bold;
 	position: relative;
+	text-align: center;
 }
 
 .purple_button:hover {
   opacity:1;
 }
 
+/*licenses page submit butotn */
 #mainarea .purple_button{
     position: relative;
 }
 
-
+/*settings buttons*/
 #backPage .purple_button{
 	top: 50px;
 }
@@ -107,7 +109,13 @@ p,a{
     background-color: #e4e2f7
 }
 
-
+/*acc creation page*/
+#button_bar .purple_button{
+	padding-left: 50px;
+	padding-right: 50px;
+	margin-left: 40px;
+	margin-right: 40px;
+}
 
 
 

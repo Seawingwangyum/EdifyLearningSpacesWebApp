@@ -44,6 +44,7 @@ function createOptions(id, name) {
 		filename_button = createNewElement('div', 'filename_button');
 		download = createNewElement('button', 'download_but', 'Download');
 		filename_name = createNewElement('div', 'filename_name', 'Filename...');
+		filename_date = createNewElement('div', 'filename_date', '00/00/0000')
 
 		file_submit = createNewElement('form', 'file_submit');
 		file_submit.method = 'post';
@@ -61,6 +62,7 @@ function createOptions(id, name) {
 				filename.appendChild(filename_button);
 					filename_button.appendChild(download);
 				filename.appendChild(filename_name);
+				filename.appendChild(filename_date);
 			license_options.appendChild(file_submit);
 				file_submit.appendChild(form_left);
 					form_left.appendChild(form_left_padding);
@@ -74,13 +76,13 @@ function createOptions(id, name) {
 			deny_but = CreateNewInput('submit', 'Deny');
 			form_right.appendChild(deny_but);
 		} else if (name == 'Approved') {
-			filename_approved_by = createNewElement('div', 'filename_approved_by', 'Approved by:')
+			filename_approved_by = createNewElement('div', 'filename_changed_by', 'Approved by:')
 			filename.appendChild(filename_approved_by);
 
 			unapprove_but = CreateNewInput('submit', 'Un-Approve');
 			form_right.appendChild(unapprove_but)
 		} else if (name == 'Denied') {
-			filename_denied_by = createNewElement('div', 'filename_denied_by', 'Denied by:')
+			filename_denied_by = createNewElement('div', 'filename_changed_by', 'Denied by:')
 			filename.appendChild(filename_denied_by);
 
 			undeny_but = CreateNewInput('submit', 'Un-Deny');

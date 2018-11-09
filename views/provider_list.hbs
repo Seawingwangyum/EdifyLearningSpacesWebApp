@@ -9,53 +9,43 @@
 	{{> navbar_logout}}
 
 	<div id='main'>
-		<div id ='options'>
-            <form method="POST" action="/provider_list" id="parameters">
-                <div id="leftbox">
-                    <div>
-                        <input class="inputbox" type="number" name="Idsearch" placeholder="ID Number"/>
-                    </div>
-                    <div>
-                        <input class="inputbox" type="text" name="fnamesearch" placeholder="First Name"/>
-                        <input class="inputbox" type="text" name="lnamesearch" placeholder="Last Name"/>
-                    </div>
-                </div>
-                <div id="rightbox">
-                    <div>
-                    <select id="optionbox" class="inputbox" name="querytype">
-                        <option id="dropdown" value="all">All applicants</option>
-                        <option id="dropdown" value="Awaiting Approval">Awaiting approval</option>
-                        <option id="dropdown" value="Awaiting Submission">Awaiting submission</option>
-                        <option id="dropdown" value="Approved Granted">Approval granted</option>
-                        <option id="dropdown" value="Approval Denied">Approval denied</option>
-                    </select>
-                    </div>
-                    <div>
-                        <input class="purple_button" type="submit" value="Search"/>
-                    </div>
-                </div>
-            </form>    
-        </div>
+        <div id='title'>Providers</div>
+        <form id='header' method='POST' action='/provider_list'>
+            <div class='row'>
+                <input type="number" name="Idsearch" placeholder="ID Number"/>
+                <select id="optionbox" name="querytype">
+                    <option value="all">All applicants</option>
+                    <option value="Awaiting Approval">Awaiting approval</option>
+                    <option value="Awaiting Submission">Awaiting submission</option>
+                    <option value="Approved Granted">Approval granted</option>
+                    <option value="Approval Denied">Approval denied</option>
+                </select>
+            </div>
+            <div class='row'>
+                <input type="text" name="fnamesearch" placeholder="First Name"/>
+                <input type="text" name="lnamesearch" placeholder="Last Name"/>
+                <input class="purple_button" type="submit" value="Search"/>
+            </div>
+            <div class='row'>
+                <h2 class='id'>Id number</h2>
+                <h2 class='fname'>First name</h2>
+                <h2 class='lname'>Last name</h2>
+                <h2 class='status'>Status</h2>
+                <h2 class='city'>City</h2>
+            </div>
+        </form>
 
         <div id='list'>
             {{#each userData.providers as |provider|}}
                 <form class='providers' method='GET' action='provider_edit'>
                     <input type='submit'  value='{{provider.id}}' class='goto_provider'/>
-                    <h2 class='textentry'></h2>
-                    <h2 class='textentry'>{{provider.firstName}}</h2>
-                    <h2 class='textentry'>{{provider.lastName}}</h2>
-                    <h2 class='applicationentry'>{{provider.status}}</h2>
+                    <h2 class='id'></h2>
+                    <h2 class='fname'>{{provider.firstName}}</h2>
+                    <h2 class='lname'>{{provider.lastName}}</h2>
+                    <h2 class='status'>{{provider.status}}</h2>
+                    <h2 class='city'>{{provider.city}}</h2>
                 </form>
             {{/each}}
         </div>
 	</div>
 </body>
-
-<script> 
-    // function openProviderEdit() {
-        // console.log('test');
-        // var xhr = new XMLHttpRequest();
-        // xhr.open('GET', '/redirect');
-        // xhr.send();
-    // }
-</script>
