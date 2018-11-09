@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <head>
-	<title>Admin Edit</title>
-	<link href='admin_list_page.css' rel='stylesheet' type='text/css'/>
-    <link href="pass_change.css" type="text/css" rel = "stylesheet"/>
-	
+    <title>Admins</title>
+    <link href='adminEdit.css' rel='stylesheet' type='text/css'/>
 </head>
 
 <body>
@@ -24,33 +22,29 @@
             </div>    
         </div>
 
+    <div id='main'>
+        <div id='header'>
+            <form class='row' method='get' action='/admin_list'>
+                <input id='back' class='purple_button' type='submit' value='back'/>
+            </form>
+            <div class='row'>
+                <button class='purple_button' type='button' onclick='deleteAdmin()'>Delete Admin</button>
+                <button class='purple_button' type='submit' onclick='getInputs()'>Change Password</button>
+            </div>
+            <div class='row'>
+                <h2 class='id'>Id number</h2>
+                <h2 class='fname'>First name</h2>
+                <h2 class='lname'>Last name</h2>
+            </div>
+        </div>
+
         <div id='list'>
-            <div class="providers">
-                <h2 class='textentry'>id number</h2>
-                <h2 class='textentry'>FirstName</h2>
-                <h2 class='textentry'>LastName</h2>
+            <div class='providers' method='GET' action='admin_edit'>
+                <h2 class='id'>{{userData.id}}</h2>
+                <h2 class='fname'>{{userData.firstName}}</h2>
+                <h2 class='lname'>{{userData.lastName}}</h2>
             </div>
         </div>
-
-        <!DOCTYPE html>
-<head>
-    <link href = "Passchange.css" type="text/css" rel = 'stylesheet'/>
-</head>
-
-    <div id="passchange" class="popup" class>
-        <div id = "label">Change Password</div>
-        <div id="loginbox">
-                <form id="leftside">
-                    <input class="inputbox loginelements" type="text" name="Email" placeholder="Old Password"/>
-                    <input class="inputbox loginelements" type="text" name="Email" placeholder="New Password"/>
-                    <input class="inputbox loginelements" type="text" name="Email" placeholder="Retype New Password"/>
-                    <input class="purple_button confirmbutton" id="pass_confirm" type="submit" value="confirm"/>
-                </form>
-            <div id="rightside">
-                <button class="purple_button cancelbutton" id="pass_cancel">Cancel</button>
-            </div>
-        </div>
-	</div>
 
     </div>
         <div id="account_delete" class="popup">
