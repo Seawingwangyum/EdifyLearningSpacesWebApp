@@ -3,7 +3,8 @@ var crimtxtState = "close",
     floortxtState = "close",
     reftxtState = "close",
     firetxtState = "close",
-    immtxtState = "close";
+    immtxtState = "close",
+    emptxtState = "close";
 
 /**
 * Function to open and close criminal record check information box
@@ -82,7 +83,7 @@ function fireOC() {
 }
 
 /**
-* Function to open and close childcare licensing information box
+* Function to open and close References information box
 */
 function refOC() {
     var text = document.getElementById("refInfo"),
@@ -103,7 +104,7 @@ function refOC() {
 /**
 * Function to open and close immunication information box
 */
-function refOC() {
+function immunOC() {
     var text = document.getElementById("immunInfo");
     document.getElementById("immunStat").addEventListener("click", () =>{
     if (immtxtState == "close"){
@@ -116,9 +117,27 @@ function refOC() {
 });
 }
 
+/**
+* Function to open and close immunication information box
+*/
+function empOC() {
+    var text = document.getElementById("empInfo");
+    document.getElementById("empPlan").addEventListener("click", () =>{
+    if (emptxtState == "close"){
+        text.style.display = "block";
+        emptxtState = "open";
+    } else if (reftxtState = "open"){
+       text.style.display = "none";
+       emptxtState = "close";
+    }
+});
+}
+
+
 crimOC();
 siteOC();
 floorOC();
 refOC();
 fireOC();
 immunOC();
+empOC();
