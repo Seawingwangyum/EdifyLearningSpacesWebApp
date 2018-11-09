@@ -46,7 +46,7 @@ function verification(){
     if(fname.value == "" || lname.value==""){
         swal(errmsg, "Please enter in your full name", "warning");
     }
-    else if(email.value == ""){
+    else if(emailValidation(email.value) == false){
         swal(errmsg, "please enter in your email", "warning");
     }
     else if(educationbg.value == ""){
@@ -123,6 +123,14 @@ function send_prep(){
     response["password"] = password.value; 
     response["address"] = address.value; 
     ajax_function(response);
+}
+//verifies email
+function emailValidation(emails) {
+    if ((/^[^@]+@[a-z]+\.[a-z]{2,4}$/).test(emails)) {
+        return true
+    } else {
+        return false
+    }
 }
 
 //sends data to server
