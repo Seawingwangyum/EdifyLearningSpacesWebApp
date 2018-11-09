@@ -15,23 +15,23 @@
 
     <div>
       <div class="double">
-        <label for="fname"><b>First Name*</b></label>
+        <label for="fname"><b>First Name</b></label>
         <input class="inputbox doubleinput" id="fname" type="text" placeholder="Enter First Name" name="fname" required>
       </div>
       <div class="double">
-        <label for="email"><b>Last Name*</b></label>
-        <input class="inputbox" id="lname" type="text" placeholder="Enter last Name" name="lname" required>
+        <label for="email"><b>Last Name</b></label>
+        <input class="inputbox doubleinput" id="lname" type="text" placeholder="Enter Last Name" name="lname" required>
       </div>
     </div>
     <div>
       <div id="emaildiv">
-        <label for="email"><b>Email*</b></label>
+        <label for="email"><b>Email</b></label>
         <input class="inputbox loginelements doubleinput" id="email" type="text" placeholder="Enter Email" name="email"
           required>
       </div>
       <div id="edudiv">
-        <label for="edu"><b>Education*</b></label>
-        <select id="selectbox" class="inputbox loginelements">
+        <label for="edu"><b>Education</b></label>
+        <select id="selectbox" class="inputbox doubleinput loginelements">
           <option value="" class="inputbox">Choose one</option>
           <option value="nursing">Nursing</option>
           <option value="science">Science</option>
@@ -46,8 +46,8 @@
 
     <div>
       <div class="double">
-        <label for="psw"><b>Password*</b></label>
-        <input class="inputbox" id="password" type="password" placeholder="Minimum 8 Characters" name="psw" required>
+        <label for="psw"><b>Password</b></label>
+        <input class="inputbox" id="password" type="password" placeholder="Enter Password" name="psw" required>
       </div>
       <div class="double">
         <label for="psw-repeat"><b>Repeat Password*</b></label>
@@ -58,13 +58,10 @@
 
 
     <div>
-      <label for="email"><b>Your Address*</b></label>
+      <label for="email"><b>Your City</b></label>
       <input style="width:45vw;" class="inputbox loginelements" id="address" type="text" placeholder="Enter Address"
         name="address" required>
 
-      <!--
-      <p>By creating an account you agree to our <a href="/tandp" style="color:indigo"><Strong>Terms & Privacy</Strong></a>.</p>
-      --->
       <div id="button_bar">
         <button type="button" onclick="location.href ='/landing_page';" class="purple_button" id="cancelbtn">Cancel</button>
         <button id="signup" type="submit" class="purple_button">Next</button>
