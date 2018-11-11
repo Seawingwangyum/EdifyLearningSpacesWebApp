@@ -137,7 +137,7 @@ app.post('/login', (req, res) => {
     })
 	
 });
-
+ 
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
 });
