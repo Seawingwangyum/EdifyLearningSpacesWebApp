@@ -36,7 +36,7 @@ app.use(session({
 
 var testData = require('./public/testData')
 
-// Checks to see if the session is still active, if it isnt it redirects to '/provider_login'
+// Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
 function sessionCheck(req, res, next) {
     if (req.session && req.session.user) {
         next()
