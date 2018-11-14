@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <head>
 	<title>Admins</title>
+    <link href='style.css' rel='stylesheet' type='text/css'/>
 	<link href='adminList.css' rel='stylesheet' type='text/css'/>
 </head>
 
@@ -8,7 +9,7 @@
 	{{> navbar_logout}}
 
 	<div id='main'>
-        <div id='title'>Admins</div>
+        <h3 id='title'>Employees</h3>
         <form id='header' method='POST' action='/admin_list'>
             <div class='row'>
                 <input type="number" name="Idsearch" placeholder="ID Number"/>

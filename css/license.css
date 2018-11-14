@@ -119,3 +119,8 @@
     text-align: center;
     width: 100%;
 }
+
+.purple_button {
+  padding: 15px 35px;
+  margin: 0px 20px;
+}
