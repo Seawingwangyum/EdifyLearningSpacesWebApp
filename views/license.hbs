@@ -3,8 +3,8 @@
 <head> 
     <title> Licensing Information </title>
     <link href = "style.css" type = "text/css" rel = "stylesheet"/>
-    <link href = "navbar1.css" type = "text/css" rel = "stylesheet"/>
-    <link href = "navbar2.css" type = "text/css" rel = "stylesheet"/>
+    <link href = "license.css" type = "text/css" rel = "stylesheet"/>
+    
 </head>
 
 <body id="licensebody">
@@ -15,23 +15,24 @@
     <div id="mainarea">
     
    <div class="bigcontainer">
-        <div class="mainbuttons" id="crimCheck">Criminal Record Check</div>
+        <button class="mainbuttons" id="crimCheck">Criminal Record Check</button>
             <div id="crInfo" class="textarea">
             <h2>Why?</h2>
                 We need a criminal record check because you will be working with a vulnerable group.
             <h2>What?</h2>
                 You will need to fill out a consent to the criminal record check form, provide two pieces of ID, and payment for the check 
             <h2>How?</h2>
-                Fill out the criminal record check form and submit it to your licensing officer. They are available online at <a href="www2.gov.bc.ca/gov/content/safety/crime-prevention/criminal-record-check">BC Governement website</a>           
+                Fill out the criminal record check form and submit it to your licensing officer. They are available online at <a href="www2.gov.bc.ca/gov/content/safety/crime-prevention/criminal-record-check">BC Governement</a> website.            
             </div>
             <div id="crInfo2" class="submitarea">
                 <h3>Upload a file...</h3>
                 <input type="file" name="pic" accept="image/*" style='width:100%;'>
+                <textarea rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="crNotes"></textarea>
                 <input type="submit" value="Submit" class="purple_button">
             </div>
         </div>
     <div class="bigcontainer" >
-        <div id="siteCheck" class="mainbuttons">Site Plan</div>
+        <button id="siteCheck" class="mainbuttons">Site Plan</button>
             <div id="siteInfo"class="textarea">
                 <h2>Why?</h2>
                     We need to verify whether the outdoor areas of the care facility are a safe environment.
@@ -45,11 +46,12 @@
                 <div id="siteInfo2" class="submitarea">
                     <h3>Upload a file...</h3>
                     <input type="file" name="pic" accept="image/*">
+                    <textarea rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="siteNotes"></textarea>
                     <input type="submit" value="Submit" class="purple_button" />
             </div>
         </div>
         <div class="bigcontainer">
-        <div id="floorCheck" class="mainbuttons">Floor Plan</div>
+        <button id="floorCheck" class="mainbuttons">Floor Plan</button>
             <div id="floorInfo" class="textarea">
                 <h2>Why?</h2>
                 We need to verify whether the premise has the necessary facilities and sufficient space for child care. 
@@ -62,12 +64,13 @@
             <div id="floorInfo2" class="submitarea">
                 <h3>Upload a file...</h3>
                 <input type="file" name="doc" accept="image/*">
+                <textarea rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="floorNotes"></textarea>
                 <input type="submit" value="Submit" class="purple_button" />    
             </div>
         </div>
         
         <div class="bigcontainer">
-        <div id="refCheck" class="mainbuttons">References</div>
+        <button id="refCheck" class="mainbuttons">References</button>
             <div id="refInfo" class="textarea">
                 <h2>Why?</h2>
                   To determine whether you are a suitable person to be a child care provider
@@ -80,12 +83,13 @@
             <div id="refInfo2" class="submitarea">
               <h3>Upload a file...</h3>
               <input type="file" name="doc" accept="image/*">
+                <textarea rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="refNotes"></textarea>
             <input type="submit" value="Submit" class="purple_button" />
             </div>
         </div>
         
         <div class="bigcontainer">
-        <div id="firePlan" class="mainbuttons">Fire Safety Plan</div>
+        <button id="firePlan" class="mainbuttons">Fire Safety Plan</button>
             <div id="fireInfo" class="textarea">
                 <h2>Why?</h2>
                 To ensure there is an escape plan in the case of a fire in the building. 
@@ -98,12 +102,13 @@
                 <div id="fireInfo2" class="submitarea">
                     <h3>Upload a file...</h3>
                     <input type="file" name="doc" accept="image/*">
+                    <textarea rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="fireNotes"></textarea>
                     <input type="submit" value="Submit" class="purple_button" />
                 </div>
         </div>
         
         <div class="bigcontainer">
-            <div id="immunStat" class="mainbuttons">Immunization Status</div>
+            <button id="immunStat" class="mainbuttons">Immunization Status</button>
                 <div id="immunInfo" class="textarea">
                 <h2>What?</h2>
                 Ensure you have up-to-date vaccinations to protect yourself and the children you work with.
@@ -122,9 +127,9 @@
         </div>
         
         <div class="bigcontainer">
-        <div id="empPlan" class="mainbuttons">Employee Plan</div>
+            <button id="empPlan" class="mainbuttons">Employee Plan</button>
             <div id="empInfo">
-            Currently is optional
+            Currently is optional.
             </div>
         </div>
     </div>
