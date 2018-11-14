@@ -1,22 +1,21 @@
 @import 'navbar1.css';
 
-
+body {
+    margin: 0;
+    padding: 0;
+}
 #leftland {
     float:left;
     width:35vw;
     top:0px;
   
 }
-
 #rightland {
     float:right;
     width:45vw;
     top:0px;
  
 }
-
-
-
 #adpage {
     background-image: url("img5.PNG");
     position: relative;
@@ -31,7 +30,6 @@
     overflow:none;
     
 }
-
 #creAccBut {
     float:right;
     bottom:0px;
@@ -41,11 +39,9 @@
     
    
 }
-
 .landing_box {
     border:4px solid #9795b2;
 }
-
 #create_acc {
     width:22vw;
     background-color: white;
@@ -57,21 +53,17 @@
     float:left;
 }
 
-
 #box1 {
     right:40px;
     top:10vh;
     width:45vw;
     padding:20px;
-    position:relative;
-
-   
+    position:relative; 
     float:right;
     background-color: white;
     border-radius: 10px;
 
 }
-
 #box2 {
     left:50px;
     float:left;
@@ -81,11 +73,8 @@
     position:relative;
     background-color: white;
     border-radius: 10px;
-    
     display:block;
-
 }
-
 #box3{
     top:130px;
     width:50vw;
@@ -97,9 +86,7 @@
     border-radius: 10px;
     display:block;
     margin-bottom: 40px;
-
 }
-
 #box4 {
     float:right;
     top:50px;
@@ -110,17 +97,14 @@
     border-radius: 10px;
     display:block;
 }
-
 .ptext {
     color:#9795b2;
 }
-
 #video {
     text-align: center;
     margin:0 auto;
     padding:10px;
 }
-
 .clear {
   clear: both;
 }
@@ -129,9 +113,7 @@
     border-bottom-style: none;
     font-family: 'BalooBhai', sans-serif;
     text-transform: lowercase;
-
 }
-
 .w-button {
     display: inline-block;
     padding: 9px 15px;
@@ -142,5 +124,4 @@
     text-decoration: none;
     cursor: pointer;
     border-radius: 0;
-
 }
