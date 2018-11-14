@@ -18,6 +18,10 @@ input, select, button {
     float: left;
 }
 
+input[type=submit]{
+    font-family: 'BalooBhai', sans-serif;
+}
+
 #main {
     background-color: #f5f8fa;
     height: 100vh;

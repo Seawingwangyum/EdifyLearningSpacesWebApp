@@ -15,6 +15,7 @@ input[type=submit], .download_but {
 	color: white;
 	margin: 20px 5px;
 	font-size: 18px;
+	font-family: 'BalooBhai', sans-serif;
 }
 input[type=submit]:hover, .download_but:hover {
 	background-color: #916cc6;

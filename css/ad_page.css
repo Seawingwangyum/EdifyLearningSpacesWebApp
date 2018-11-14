@@ -4,6 +4,17 @@ body {
     margin: 0;
     padding: 0;
 }
+input[type=submit]{
+    background-color: #5f59a5;
+    border-radius: 6px;
+    border: 0px;
+    color: white;
+    font-family: 'BalooBhai', sans-serif;
+    font-size: 20px;
+}
+input[type=submit]:hover {
+    background-color: #916cc6;
+}
 #leftland {
     float:left;
     width:35vw;
@@ -124,4 +135,8 @@ body {
     text-decoration: none;
     cursor: pointer;
     border-radius: 0;
+}
+.purple_button {
+  padding: 15px 35px;
+  margin: 0px 20px;
 }

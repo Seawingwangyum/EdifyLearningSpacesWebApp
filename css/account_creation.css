@@ -158,4 +158,7 @@ label {
     border-bottom-color: #ced7db;
     font-size: 18px;
 }
-
+.purple_button {
+  padding: 15px 35px;
+  margin: 0px 20px;
+}
