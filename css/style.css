@@ -25,6 +25,8 @@ div {
 h1 {
     color: #48456b;
     margin-bottom: 10px;
+    text-align: center;
+    font-size: 30px;
 }
 h2 {
 	font-size: 27px;
