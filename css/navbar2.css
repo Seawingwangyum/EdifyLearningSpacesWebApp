@@ -19,6 +19,7 @@
 	display: inline-block;
 	position: relative;
 	width: 130px;
+	line-height: 35px;
 	height: 30px;
 	text-decoration: none;
     font-size: 25px;

@@ -18,6 +18,10 @@ input, select, button {
     float: left;
 }
 
+input[type=submit]{
+    font-family: 'BalooBhai', sans-serif;
+}
+
 #main {
     background-color: #f5f8fa;
     height: 100vh;
@@ -56,7 +60,7 @@ input, select, button {
                 border: none;
                 text-align: left;
             }
-            .id {width: 10%;}
+            .id {width: 15%;}
             .fname {width: 16%;}
             .lname {width: 16%;}
             .status {width: 25%;}
