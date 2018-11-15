@@ -6,7 +6,8 @@ const session = require('client-sessions');
 
 const app = express();
 
-const password_check = require("./components/password_check");
+const send_email = require("./components/send_email")
+const verify_signup = require("./components/verify_signup");
 const login_check = require("./components/login_check");
 
 app.set('view engine', 'hbs')
@@ -131,7 +132,6 @@ app.post('/login', (req, res) => {
         console.log(error)
         res.send(JSON.stringify(error))
     })
-	
 });
 
 app.get('/tandp', (req, res) => {
@@ -152,7 +152,12 @@ app.get('/account_creation', (req, res) => {
 
 app.post('/account_creation',(req, res)=> {
     console.log(req.body);
-    res.send();
+    //send_email.send_email();
+    verify_signup.verify_signup(req.body).then((data) =>{
+        res.send(data)
+    }, (error) =>{
+        res.send(error)
+    })
 })
 
 app.get('/provider_list_page', (req, res) => {
