@@ -5,8 +5,7 @@
     <meta charset='utf-8'>
     <title>{{title}}</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
-    <link href = "navbar1.css" type = "text/css" rel = "stylesheet"/>
-  <link href = "navbar2.css" type = "text/css" rel = "stylesheet"/>
+    <link href="status.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body id="body">
@@ -20,7 +19,7 @@
         <div class="redbuttons" id="crimCheckSS">Criminal Record Check</div>
             <div class="hiddenspaceSS" id="crInfoSS">
                 <div class="textareaSS">
-                    <h3 class="checkingcontent">Status: &nbsp {{userData1.status}} <br> <small> &nbsp Notes</small> </h3>
+                    <h3 class="checkingcontent">Status: &nbsp <font size="+3"> {{userData1.status}} </font> <br> <small> &nbsp Notes</small> </h3>
                     <div class="notesbox">
                         <div class="notescontent">{{userData4.content}}</div>
                     </div>

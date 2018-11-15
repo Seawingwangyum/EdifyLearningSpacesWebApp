@@ -18,13 +18,14 @@
   },
   "homepage": "https://github.com/EdifyLearningSpacesWebAPP/EdifyLearningSpacesWebApp#readme",
   "dependencies": {
+    "bcrypt": "^3.0.2",
+    "body-parser": "^1.18.3",
     "client-sessions": "^0.8.0",
     "express": "^4.16.3",
     "fs": "0.0.1-security",
     "hbs": "^4.0.1",
     "jsdoc": "^3.5.5",
     "nodemailer": "^4.6.8",
-    "sweetalert": "^2.1.2",
     "sweetalert2": "^7.28.12"
   }
 }

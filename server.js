@@ -109,6 +109,10 @@ app.get('/landing_page', (req, res) => {
 	res.render('landing_page.hbs')
 });
 
+app.get('/edify_quiz', (req, res) => {
+    res.render('edify_quiz.hbs')
+});
+
 app.get('/requirements', (req, res) => {
 	res.render('requirements.hbs')
 });
@@ -133,7 +137,7 @@ app.post('/login', (req, res) => {
         res.send(JSON.stringify(error))
     })
 });
-
+ 
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
 });
@@ -143,7 +147,7 @@ app.get('/test', (req, res) => {
 });
 
 app.get('/licenses', (req, res) => {
-	res.render('dashboard.hbs')
+	res.render('license.hbs')
 });
 
 app.get('/account_creation', (req, res) => {
@@ -159,10 +163,6 @@ app.post('/account_creation',(req, res)=> {
         res.send(error)
     })
 })
-
-app.get('/provider_list_page', (req, res) => {
-	res.render('provider list page.hbs')
-});
 
 app.get('/passchange', (req, res)=>{
     res.render('PassChange_window.hbs')

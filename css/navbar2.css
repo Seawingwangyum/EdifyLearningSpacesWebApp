@@ -2,7 +2,7 @@
 	
 	display: inline-block;
 	height: 30px;
-	width: 100vw;
+	width: 100%;
 	background-color: #d0c4ee;
 	left: 0px;
 	top: 50px;
@@ -19,6 +19,7 @@
 	display: inline-block;
 	position: relative;
 	width: 130px;
+	line-height: 35px;
 	height: 30px;
 	text-decoration: none;
     font-size: 25px;
