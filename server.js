@@ -9,6 +9,7 @@ const app = express();
 const send_email = require("./components/send_email")
 const verify_signup = require("./components/verify_signup");
 const login_check = require("./components/login_check");
+const check = require("./public/credentialErrorChecking");
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
@@ -92,24 +93,30 @@ app.get('/settings', (request, response) => {
 });
 
 app.post('/settings_name', (req, res) => {
-    //error checking
-    //db function call here
+    var newName = req.body.name
+    if (check.checkForBlankEntry(newName) && check.checkForOnlyAlphabet(newName)) {
+        //db function here
+        res.send('ok')
+    }
     console.log(req.body.name);
-    res.send('ok')
 });
 
 app.post('/settings_email', (req, res) => {
-    //error checking
-    //db function call here
+    var newEmail = req.body.email
+    if (check.checkForBlankEntry(newEmail) && check.checkForEmailFormat(newEmail)) {
+        //db function call here
+        res.send('ok')
+    }
     console.log(req.body.email);
-    res.send('ok')
 });
 
 app.post('/settings_password', (req, res) => {
-    //error checking
-    //db function call here
+    var newPassword = req.body.password
+    if (check.checkForBlankEntry(newPassword) && check.checkForPasswordFormat(newPassword)) {
+        //db function call here
+        res.send('ok')
+    }
     console.log(req.body.password);
-    res.send('ok')
 });
 
 app.get('/provider_edit', (req, res) => {
