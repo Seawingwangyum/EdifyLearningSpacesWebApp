@@ -314,7 +314,7 @@ app.post('/pass_forgot', function(req, res, next) {
       var mailOptions = {
         to: 'edifyprovidersreset@gmail.com',
         from: 'edifyprovidersreset@gmail.com',
-        subject: 'Node.js Password Reset',
+        subject: 'Edify Providers Password Reset',
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your Edify Providers account.\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
           'http://' + req.headers.host + '/reset/' + token + '\n\n' +
