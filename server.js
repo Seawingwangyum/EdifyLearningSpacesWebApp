@@ -10,6 +10,7 @@ const send_email = require("./components/send_email")
 const verify_signup = require("./components/verify_signup");
 const login_check = require("./components/login_check");
 const check = require("./public/credentialErrorChecking");
+const db = require('./test_mysql.js')
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
@@ -93,28 +94,47 @@ app.get('/settings', (request, response) => {
 });
 
 app.post('/settings_name', (req, res) => {
-    var newName = req.body.name
-    if (check.checkForBlankEntry(newName) && check.checkForOnlyAlphabet(newName)) {
-        //db function here
-        res.send('ok')
+    // send user id aswell instead of hardcode it.
+    var fname = req.body.fname
+    var lname = req.body.lname
+    console.log(fname, lname);
+    if (check.checkForBlankEntry([fname, lname]) && check.checkForOnlyAlphabet(fname, lname)) {
+        db.changeName(fname, lname)
+        .then((resolved) => {
+            res.send(resolved)
+        }, (error) => {
+            res.sendStatus(500)
+            console.log(error);
+        })
     }
-    console.log(req.body.name);
 });
 
 app.post('/settings_email', (req, res) => {
+    // send user id as well instead of hardcode it
     var newEmail = req.body.email
-    if (check.checkForBlankEntry(newEmail) && check.checkForEmailFormat(newEmail)) {
-        //db function call here
-        res.send('ok')
+    console.log(newEmail);
+    if (check.checkForBlankEntry([newEmail]) && check.checkForEmailFormat(newEmail)) {
+        db.changeEmail(newEmail)
+        .then((resolved) => {
+            res.send(resolved)
+        }, (error) => {
+            res.sendStatus(500)
+            console.log(error);
+        })
     }
-    console.log(req.body.email);
 });
 
 app.post('/settings_password', (req, res) => {
+    // send user id as well instead of hardcode it
     var newPassword = req.body.password
-    if (check.checkForBlankEntry(newPassword) && check.checkForPasswordFormat(newPassword)) {
-        //db function call here
-        res.send('ok')
+    if (check.checkForBlankEntry([newPassword]) && check.checkForPasswordFormat(newPassword)) {
+        db.changeEmail(newPassword)
+        .then((resolved) => {
+            res.send(resolved)
+        }, (error) => {
+            res.sendStatus(500)
+            console.log(error);
+        })
     }
     console.log(req.body.password);
 });
@@ -148,12 +168,14 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     login_check.login_check(req.body).then((info) =>{
-        console.log(info)
+        // add req.session.user = json file of user data which includes
+        // name, id, whetever else id needed
+        // console.log(info)
         res.send(JSON.stringify(info))
     }, (error) =>{
-        console.log(error)
+        // console.log(error)
         res.send(JSON.stringify(error))
     })
 });

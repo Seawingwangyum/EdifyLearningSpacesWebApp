@@ -82,7 +82,8 @@ function changeName() {
 		        	}
 		        };
 		        xhr.send(JSON.stringify({
-		        	'name': name
+		        	'fname': entry[0],
+		        	'lname': entry[1]
 		        }))
 			} else {
 				failed('Incorrect name format', 'warning', 'alphabetical characters only')
