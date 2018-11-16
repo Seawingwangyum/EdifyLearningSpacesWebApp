@@ -86,7 +86,7 @@ input[type=submit]:hover, .download_but:hover {
 
 /*The following are divs created when the user clicks one of the license buttons*/
 				.license_options {
-					height: 130px;
+					height: 200px;
 					background-color: white;
 					padding: 5px 0px 0px 25px;
 				}
@@ -124,7 +124,7 @@ input[type=submit]:hover, .download_but:hover {
 						.form_left {
 							float: left;
 							height: 100%;
-							width: 70%;
+							width: 60%;
 						}
 							.form_left_padding {
 								padding-top: 25px;
@@ -135,5 +135,5 @@ input[type=submit]:hover, .download_but:hover {
 						.form_right {
 							float: right;
 							height: 100%;
-							width: 30%;
+							width: 40%;
 						}

@@ -1,3 +1,5 @@
+var response = {}
+var x=0;
 /**
 * Function to create new HTML element
 * @param {string} element - The type of element to create
@@ -18,10 +20,14 @@ function createNewElement(element, class_name, innerHTML = '') {
 * @param {string} value - The text on the input that will appear 
 * @return {string} newInput - the HTML that will create inputs
 */
-function CreateNewInput(type, value) {
+function CreateNewInput(type, class_name, value) {
 	var newInput = document.createElement('input');
 	newInput.type = type;
+	newInput.className = class_name
 	newInput.value = value;
+
+	console.log('value'+value);
+
 	return newInput;
 }
 
@@ -48,7 +54,7 @@ function createOptions(id, name) {
 
 		file_submit = createNewElement('form', 'file_submit');
 		file_submit.method = 'post';
-		file_submit.action = 'make_data_button';
+		file_submit.action = 'provider_edit';
 
 		form_left = createNewElement('div', 'form_left');
 		form_right = createNewElement('div', 'form_right');
@@ -70,23 +76,115 @@ function createOptions(id, name) {
 				file_submit.appendChild(form_right);
 
 		if (name == 'Awaiting approval') {
-			accept_but = CreateNewInput('submit', 'Approve');
+			accept_but = CreateNewInput('submit', 'acceptBut', 'Approve');
+			var abutlist = document.getElementsByClassName('acceptBut');
+			// for (i = 0; i < abutlist.length; i++) { 
+    			// abutlist[x].id="accept_but_id" + x;
+			// }
+			x+=1;
 			form_right.appendChild(accept_but);
 			
-			deny_but = CreateNewInput('submit', 'Deny');
+			deny_but = CreateNewInput('submit', 'denyBut', 'Deny');
+			deny_but.id="deny_but_id";
 			form_right.appendChild(deny_but);
 		} else if (name == 'Approved') {
 			filename_approved_by = createNewElement('div', 'filename_changed_by', 'Approved by:')
 			filename.appendChild(filename_approved_by);
 
-			unapprove_but = CreateNewInput('submit', 'Un-Approve');
+			unapprove_but = CreateNewInput('submit', 'unapproveBut', 'Un-Approve');
 			form_right.appendChild(unapprove_but)
 		} else if (name == 'Denied') {
 			filename_denied_by = createNewElement('div', 'filename_changed_by', 'Denied by:')
 			filename.appendChild(filename_denied_by);
 
-			undeny_but = CreateNewInput('submit', 'Un-Deny');
+			undeny_but = CreateNewInput('submit', 'undenyBut', 'Un-Deny');
 			form_right.appendChild(undeny_but) 
 		};
 	}
+
 }
+
+
+//-------------------------------------
+//--------------my sql-----------------
+//-------------------------------------
+
+function send_prep_0(){
+	response["accept"] = 0;
+    ajax_function(response);
+}
+
+function send_prep_1(){
+	response["accept"] = 1;
+	ajax_function(response);
+}
+
+
+function ajax_function(json_obj){
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(json_obj),
+        contentType: 'application/json',
+        url: 'http://localhost:8080/account_creation',
+        success: function(data){
+            console.log(data)
+            if(data.Error == "0"){
+                location.href="/licenses"
+            }
+            else{
+                swal("Whoops, Something went wrong", "Please reload your page", "error")
+            }
+        }
+    })
+}
+
+
+
+	// var mysql = require('mysql');
+
+	// var con = mysql.createConnection({
+	//   host: "localhost",
+	//   user: "root",
+	//   password: "password",
+	//   database: "edify"
+	// });
+
+	// con.connect(function(err) {
+	//   if (err) throw err;
+	//   console.log("Connected!");
+	// });
+
+
+	// var approve_update = "UPDATE license SET status = 'Aprroved', admin_notes = 'The new notes' WHERE license_id = 12345";
+	//   con.query(approve_update, function approve_update_func(err, result) {
+	//     if (err) throw err;
+	//     console.log(result.affectedRows + " record(s) updated");
+	//   });
+
+	// var deny_update = "UPDATE license SET status = 'Denied', admin_notes = 'The very new notes' WHERE license_id = 12345";
+	//   con.query(deny_update, function deny_update_func(err, result) {
+	//     if (err) throw err;
+	//     console.log(result.affectedRows + " record(s) updated");
+	//   });
+
+	// var file_download = "SELECT file FROM license WHERE license_id = 12345";
+	//   con.query(file_download, function file_download_func(err, result) {
+	//     if (err) throw err;
+	//     console.log(result.affectedRows + " record(s) updated");
+	//   });
+
+
+	// document.getElementById('accept_but_id').addEventListener("click", send_prep_0);
+	// document.getElementById('deny_but_id').addEventListener("click", send_prep_1);
+
+
+
+
+// con.query("INSERT INTO license(license_id, type, file, status, user_notes, admin_notes, frn_user_id) values ('fred', 'jeff', 'password', 'fred@jeff.com', 'Surrey', '0')", function insert_license_info (err, result) {
+// 	if (err) throw err;
+// 	console.log("Insert Successful");
+// });
+
+
+
+

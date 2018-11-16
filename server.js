@@ -3,6 +3,14 @@ const express = require('express');
 const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
+const mysql = require('mysql');
+
+var con = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "Password",
+      database: "edify"
+    });
 
 const app = express();
 
@@ -103,6 +111,36 @@ app.get('/provider_edit', (req, res) => {
 	res.render('provider_edit.hbs', {
 		userData: testData.provider_edit_data
 	})
+});
+
+app.post('/provider_edit', (req, res) => {
+    // var approve_update = "UPDATE license SET status = 'Aprroved', admin_notes = 'The new notes' WHERE license_id = 12345";
+    // var deny_update = "UPDATE license SET status = 'Denied', admin_notes = 'The very new notes' WHERE license_id = 12345";
+    // var file_download = "SELECT file FROM license WHERE license_id = 12345";
+
+    // con.query(approve_update, function(err, result) {
+    //     if (err) throw err;
+    //     console.log(result.affectedRows + " record(s) updated");
+    //   });
+
+    // con.query(deny_update, function(err, result) {
+    //     if (err) throw err;
+    //     console.log(result.affectedRows + " record(s) updated");
+    //   });
+
+    // con.query(file_download, function(err, result) {
+    //     if (err) throw err;
+    //     console.log(result.affectedRows + " record(s) updated");
+    //   });
+    
+    // console.log(req.body);
+    // console.log(res.body);
+
+
+
+    res.render('provider_edit.hbs', {
+        userData: testData.provider_edit_data
+    })
 });
 
 app.get('/landing_page', (req, res) => {
@@ -233,6 +271,13 @@ app.get('/quizresults', (request, response) => {
         title: 'Quiz Page'
     });
 });
+
+
+con.connect(function(err) {
+      if (err) throw err;
+      console.log("Connected!");
+    });
+
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`server up on port ${port}`)
