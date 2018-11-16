@@ -167,8 +167,13 @@ function ajax_function(json_obj){
         contentType: 'application/json',
         url: 'http://localhost:8080/account_creation',
         success: function(data){
-            location.href="/licenses"
-            //window.location.replace('/licenses');
+            console.log(data)
+            if(data.Error == "0"){
+                location.href="/licenses"
+            }
+            else{
+                swal("Whoops, Something went wrong", "Please reload your page", "error")
+            }
         }
     })
 }
