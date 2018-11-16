@@ -155,23 +155,27 @@ function changePassword() {
 		//max password size?
 		var password = result.value
 		if (checkForBlankEntry(password)) {
-			if (checkForPasswordFormat(password)) {
-				var xhr = new XMLHttpRequest();
-				xhr.open('POST', '/settings_password');
-		        xhr.setRequestHeader('Content-Type', 'application/json');
-		        xhr.onload = function() {
-		        	if (xhr.status === 200) {
-						console.log('password changed');
-						success('Password change successful!');
-		        	} else {
-		        		failed('Unable to change password', 'failed', 'Please try again later')
-		        	}
-		        };
-		        xhr.send(JSON.stringify({
-		        	'password': password[0]
-		        }))
+			if(password[0] === password[1]) {
+				if (checkForPasswordFormat(password)) {
+					var xhr = new XMLHttpRequest();
+					xhr.open('POST', '/settings_password');
+			        xhr.setRequestHeader('Content-Type', 'application/json');
+			        xhr.onload = function() {
+			        	if (xhr.status === 200) {
+							console.log('password changed');
+							success('Password change successful!');
+			        	} else {
+			        		failed('Unable to change password', 'failed', 'Please try again later')
+			        	}
+			        };
+			        xhr.send(JSON.stringify({
+			        	'password': password[0]
+			        }))
+				} else {
+					failed('Incorrect password format', 'warning', 'Requires upper and lowercase, a number, and must be 8 characters long ');
+				}
 			} else {
-				failed('Incorrect password format', 'warning', 'Requires upper and lowercase, a number, and must be 8 characters long ');
+				failed('Password do not match', 'warning', 'Please type the same password for both entrys')
 			}
 		} else {
 			failed('Please fill all forms', 'warning');
