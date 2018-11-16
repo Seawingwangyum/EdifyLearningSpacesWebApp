@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Forgot your password.</title>
+    <link href="style.css" type="text/css" rel="stylesheet" />
+    <link href="pass_forgot.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+    {{> navbar}}
+    <form method="POST">
+  <legend>Forgot Password</legend>
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input class="form-control" type="text" name="email" autofocus="autofocus"/>
+  </div>
+  <button class="btn btn-primary" type="submit">Reset Password</button>
+</form>
+<script src="pass_forgot.js"></script>
+</body>
+
+</html>
