@@ -26,6 +26,7 @@
     "hbs": "^4.0.1",
     "jsdoc": "^3.5.5",
     "sweetalert": "^2.1.2",
-    "sweetalert2": "^7.28.12"
+    "sweetalert2": "^7.28.12",
+    "zlib": "^1.0.5"
   }
 }

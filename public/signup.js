@@ -12,6 +12,9 @@ var speechbubbble = document.getElementById("bubble");
 var errmsg = "OH NO!"
 var instructions = document.getElementById("instructions");
 
+const cryptPassword = require("./cryptPassword");
+
+
 document.getElementById("backbtn").addEventListener("click", function(){
     document.getElementById("tccontainer").style.display = "none";
     document.getElementById("signupcontainer").style.display = "block";
@@ -123,13 +126,27 @@ function check_characters(pw){
     }
 }
 
+function cryptPassword(password, callback) {
+   bcrypt.genSalt(10, function(err, salt) {
+    if (err) 
+      return callback(err);
+
+    bcrypt.hash(password, salt, function(err, hash) {
+      console.log('hash' + hash);
+      return callback(err, hash);
+    });
+  });
+};
+
 //prepares data to send to server
 function send_prep(){
+    
+    console.log('SOMETHING IS HAPPENING');
     response["fname"] = fname.value;
     response["lname"] = lname.value;
     response["email"] = email.value; 
     response["edubg"] = educationbg.value; 
-    response["password"] = password.value; 
+    
     response["address"] = address.value; 
     ajax_function(response);
 }

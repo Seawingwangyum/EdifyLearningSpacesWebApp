@@ -7,6 +7,7 @@ module.exports.login_check = function(info) {
     return new Promise((resolve, reject) => {
         for (i = 0; i < data.users.length; i++) {
 
+            
             if (info.Email == data.users[i].username && info.Passwd == data.users[i].password && data.users[i].is_admin == 0) {
                 to_return['error'] = 1;
                 reject(to_return);
