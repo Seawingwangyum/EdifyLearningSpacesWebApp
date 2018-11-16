@@ -1,6 +1,7 @@
 @import 'navbar1.css';
+@import 'navbar2.css';
 
-#license{
+#licensebody{
     overflow: scroll;
 }
 

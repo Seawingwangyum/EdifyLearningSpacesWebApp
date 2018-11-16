@@ -1,5 +1,21 @@
+//forgot_pass
+var mysql = require('mysql');
+var nodemailer = require('nodemailer');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+var bcrypt = require('bcrypt-nodejs');
+var async = require('async');
+var crypto = require('crypto');
+
+
+
 const port = process.env.port || 8080;
 const express = require('express');
+//forgot_pass
+const path = require('path');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+
 const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
@@ -19,6 +35,9 @@ app.use(express.static(__dirname + '/fonts'));
 
 app.use(express.static(__dirname + '/node_modules/sweetalert/dist'))
 app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
+//forgot_pass
+app.use(logger('dev'));
+app.use(cookieParser());
 
 // bodyparser setup
 var bodyParser = require('body-parser')
@@ -92,15 +111,29 @@ app.post('/status', (req, res) => {
 
 app.get('/settings', (request, response) => {
     response.render('settings.hbs', {
-        title: 'Settings Page',
         userData: testData.user_data
     });
 });
 
-app.post('/settings', (req, res) => {
-    res.render('settings.hbs', {
-        userData: testData.user_data
-    })
+app.post('/settings_name', (req, res) => {
+    //error checking
+    //db function call here
+    console.log(req.body.name);
+    res.send('ok')
+});
+
+app.post('/settings_email', (req, res) => {
+    //error checking
+    //db function call here
+    console.log(req.body.email);
+    res.send('ok')
+});
+
+app.post('/settings_password', (req, res) => {
+    //error checking
+    //db function call here
+    console.log(req.body.password);
+    res.send('ok')
 });
 
 app.get('/provider_edit', (req, res) => {
@@ -111,6 +144,10 @@ app.get('/provider_edit', (req, res) => {
 
 app.get('/landing_page', (req, res) => {
     res.render('landing_page.hbs')
+});
+
+app.get('/pass_forgot', (req, res) => {
+    res.render('pass_forgot.hbs')
 });
 
 app.get('/edify_quiz', (req, res) => {
@@ -255,4 +292,61 @@ app.get('/quizresults', (request, response) => {
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`server up on port ${port}`)
+
 });
+
+
+//forgot_pass
+app.post('/pass_forgot', function(req, res, next) {
+  async.waterfall([
+    function(done) {
+      crypto.randomBytes(20, function(err, buf) {
+        var token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+/**
+    function(token, done) {
+      User.findOne({ email: req.body.email }, function(err, user) {
+        if (!user) {
+          req.flash('error', 'No account with that email address exists.');
+          return res.redirect('/pass_forgot');
+        }
+
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+        user.save(function(err) {
+          done(err, token, user);
+        });
+      });
+    },
+**/
+    function(token, user, done) {
+      var smtpTransport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: 'edifyprovidersreset@gmail.com',
+          pass: 'EdifySpaces'
+        }
+      });
+      var mailOptions = {
+        to: 'edifyprovidersreset@gmail.com',
+        from: 'edifyprovidersreset@gmail.com',
+        subject: 'Edify Providers Password Reset',
+        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your Edify Providers account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://' + req.headers.host + '/pass_forgot\n' /**+ token + '\n\n'**/ +
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+      };
+      smtpTransport.sendMail(mailOptions, function(err) {
+        console.log('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+        //done(err, 'done');
+      });
+    }
+  ], function(err) {
+    if (err) return next(err);
+    res.redirect('/pass_forgot');
+  });
+});
+
