@@ -145,7 +145,7 @@
   }
 
   function goHome() {
-    return res.redirect('/landing_page')
+    location.href = '/landing_page'
   }
 
   function showPreviousSlide() {
