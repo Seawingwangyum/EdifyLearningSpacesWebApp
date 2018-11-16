@@ -87,15 +87,29 @@ app.post('/status', (req, res) => {
 
 app.get('/settings', (request, response) => {
     response.render('settings.hbs', {
-        title: 'Settings Page',
         userData: testData.user_data
     });
 });
 
-app.post('/settings', (req, res) => {
-    res.render('settings.hbs', {
-        userData: testData.user_data
-    })
+app.post('/settings_name', (req, res) => {
+    //error checking
+    //db function call here
+    console.log(req.body.name);
+    res.send('ok')
+});
+
+app.post('/settings_email', (req, res) => {
+    //error checking
+    //db function call here
+    console.log(req.body.email);
+    res.send('ok')
+});
+
+app.post('/settings_password', (req, res) => {
+    //error checking
+    //db function call here
+    console.log(req.body.password);
+    res.send('ok')
 });
 
 app.get('/provider_edit', (req, res) => {
