@@ -1,12 +1,26 @@
 var mysql = require('mysql');
 
-//open only when needed - make a function and then close after
-var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "Staffs55",
-    database: "edify"
-});
+function createConnection() {
+    var con = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "password",
+        database: "edify"
+    });
+    return con
+}
+
+function connect(con) {
+    return new Promise((resolve, reject) =>{
+        con.connect(err => {
+            if (err) { 
+                reject(err)
+            } else {
+                resolve();
+            }
+        })
+    })
+}
 
 function addUser() {
     con.connect(function(err) {
@@ -17,24 +31,26 @@ function addUser() {
             if (err) throw err;
             console.log("Insert Successful");
     	})
-
     });
 }
 
 function changeName(fname, lname) {
     return new Promise((resolve, reject) =>{
-        con.connect(err => {
-            if (err) { 
-                reject('failed to connect')
-            }
-            console.log('connected');
-
-            con.query("UPDATE user SET first_name ='" +fname+ "', last_name ='" +lname+ "' WHERE user_id = 3;"), function (err, result) {
-                if (err){
-                    reject("failed to update name")
-                } else {
-                    resolve('ok')
+        var con = createConnection();
+        connect(con)
+        .then((resolved) => {
+            con.connect(err => {
+                
+                con.query("UPDATE user SET first_name ='" +fname+ "', last_name ='" +lname+ "' WHERE user_id = 3;"), function (err, result) {
+                    if (err){
+                        reject(err)
+                    }
                 }
+                con.end();
+                resolve('ok')
+
+            }), (err) => {
+                reject(err)
             }
         })
     })     
@@ -42,35 +58,43 @@ function changeName(fname, lname) {
 
 function changeEmail(email) {
     return new Promise((resolve, reject) =>{
-        con.connect(err => {
-            if (err) { 
-                reject('failed to connect')
-            }
-            console.log('connected');
-            con.query("UPDATE user SET email ='" +email+ "' WHERE user_id = 3;"), function (err, result) {
+        var con = createConnection();
+        connect(con)
+        .then((resolved) => {
+            con.connect(err => {
+                
+                con.query("UPDATE user SET email ='" +email+ "' WHERE user_id = 3;"), function (err, result) {
                 if (err){
-                    reject("failed to update email")
-                } else {
-                    resolve('ok')
+                    reject(err)
+                    }
                 }
+                con.end();
+                resolve('ok')
+                
+            }), (err) => {
+                reject(err)
             }
         })
     })     
 }
 
-function changePassword() {
+function changePassword(password) {
     return new Promise((resolve, reject) =>{
-        con.connect(err => {
-            if (err) { 
-                reject('failed to connect')
-            }
-            console.log('connected');
-            con.query("UPDATE user SET password ='" +password+ "' WHERE user_id = 3;"), function (err, result) {
+        var con = createConnection();
+        connect(con)
+        .then((resolved) => {
+            con.connect(err => {
+                
+                con.query("UPDATE user SET password ='" +password+ "' WHERE user_id = 3;"), function (err, result) {
                 if (err){
-                    reject("failed to update email")
-                } else {
-                    resolve('ok')
+                    reject(err)
+                    }
                 }
+                con.end();
+                resolve('ok')
+
+            }), (err) => {
+                reject(err)
             }
         })
     })   

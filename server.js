@@ -38,7 +38,7 @@ app.use(session({
 
 var testData = require('./public/testData')
 
-// Checks to see if the session is still active, if it isnt it redirects to '/provider_login'
+// Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
 function sessionCheck(req, res, next) {
     if (req.session && req.session.user) {
         next()
@@ -97,8 +97,9 @@ app.post('/settings_name', (req, res) => {
     // send user id aswell instead of hardcode it.
     var fname = req.body.fname
     var lname = req.body.lname
-    console.log(fname, lname);
-    if (check.checkForBlankEntry([fname, lname]) && check.checkForOnlyAlphabet(fname, lname)) {
+    var name = [fname, lname]
+    
+    if (check.checkForBlankEntry(name) && check.checkForOnlyAlphabet(name)) {
         db.changeName(fname, lname)
         .then((resolved) => {
             res.send(resolved)
@@ -128,7 +129,7 @@ app.post('/settings_password', (req, res) => {
     // send user id as well instead of hardcode it
     var newPassword = req.body.password
     if (check.checkForBlankEntry([newPassword]) && check.checkForPasswordFormat(newPassword)) {
-        db.changeEmail(newPassword)
+        db.changePassword(newPassword)
         .then((resolved) => {
             res.send(resolved)
         }, (error) => {
@@ -179,7 +180,12 @@ app.post('/login', (req, res) => {
         res.send(JSON.stringify(error))
     })
 });
- 
+
+app.get('/logout', (req, res) => {
+    req.session.reset();
+    res.redirect('/landing_page');
+});
+    
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
 });

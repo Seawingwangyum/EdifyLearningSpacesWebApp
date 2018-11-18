@@ -8,7 +8,6 @@ function checkForBlankEntry(entry) {
 }
 
 function checkForOnlyAlphabet(entry) {
-	console.log(entry);
 	for (i = 0; i < entry.length; i++) {
 		if (!/^[a-zA-Z]+$/.test(entry[i])) {
 			return false
