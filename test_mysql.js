@@ -1,5 +1,9 @@
 var mysql = require('mysql');
 
+/**
+* Creates a connection to the database.
+* @returns {array} con - connection details
+*/
 function createConnection() {
     var con = mysql.createConnection({
         host: "localhost",
@@ -10,6 +14,11 @@ function createConnection() {
     return con
 }
 
+/**
+* Connects to the database.
+* @param {array} con - connection details.
+* @returns {Promise} returns void.
+*/
 function connect(con) {
     return new Promise((resolve, reject) =>{
         con.connect(err => {
@@ -21,7 +30,7 @@ function connect(con) {
         })
     })
 }
-
+// Now broken
 function addUser() {
     con.connect(function(err) {
         if (err) throw err;
@@ -34,6 +43,12 @@ function addUser() {
     });
 }
 
+/**
+* Sends a query to the database to update first and last name.
+* @param {string} fname - First name.
+* @param {string} lname - Last name.
+* @returns {Promise} returns "ok".
+*/
 function changeName(fname, lname) {
     return new Promise((resolve, reject) =>{
         var con = createConnection();
@@ -56,6 +71,11 @@ function changeName(fname, lname) {
     })     
 }
 
+/**
+* Sends a query to the database to update email.
+* @param {string} email.
+* @returns {Promise} returns "ok".
+*/
 function changeEmail(email) {
     return new Promise((resolve, reject) =>{
         var con = createConnection();
@@ -78,6 +98,11 @@ function changeEmail(email) {
     })     
 }
 
+/**
+* Sends a query to the database to update password.
+* @param {string} password.
+* @returns {Promise} returns "ok".
+*/
 function changePassword(password) {
     return new Promise((resolve, reject) =>{
         var con = createConnection();
