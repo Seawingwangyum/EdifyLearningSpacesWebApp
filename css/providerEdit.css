@@ -87,11 +87,11 @@ input[type=submit]:hover, .download_but:hover {
 /*The following are divs created when the user clicks one of the license buttons*/
 				.license_options {
 					height: 130px;
-					background-color: white;
+					background-color: #ecd8ff;
 					padding: 5px 0px 0px 25px;
 				}
 					.filename {
-						height: 20%;
+						height: 30%;
 						width: 100%;
 					}
 						.filename_button {
@@ -119,7 +119,7 @@ input[type=submit]:hover, .download_but:hover {
 					.file_submit {
 						position: relative;
 						width: 100%;
-						height: 80%;
+						height: 70%;
 					}
 						.form_left {
 							float: left;
@@ -127,7 +127,7 @@ input[type=submit]:hover, .download_but:hover {
 							width: 70%;
 						}
 							.form_left_padding {
-								padding-top: 25px;
+								padding-top: 10px;
 							}
 							.note_input {
 								width: 95%;
