@@ -25,6 +25,8 @@ const app = express();
 const send_email = require("./components/send_email")
 const verify_signup = require("./components/verify_signup");
 const login_check = require("./components/login_check");
+const check = require("./public/credentialErrorChecking");
+const db = require('./test_mysql.js')
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
@@ -33,7 +35,6 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/assets'));
 app.use(express.static(__dirname + '/fonts'));
 
-app.use(express.static(__dirname + '/node_modules/sweetalert/dist'))
 app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
 //forgot_pass
 app.use(logger('dev'));
@@ -56,7 +57,7 @@ app.use(session({
 
 var testData = require('./public/testData')
 
-// Checks to see if the session is still active, if it isnt it redirects to '/provider_login'
+// Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
 function sessionCheck(req, res, next) {
     if (req.session && req.session.user) {
         next()
@@ -112,24 +113,50 @@ app.get('/settings', (request, response) => {
 });
 
 app.post('/settings_name', (req, res) => {
-    //error checking
-    //db function call here
-    console.log(req.body.name);
-    res.send('ok')
+    // send user id aswell instead of hardcode it.
+    var fname = req.body.fname
+    var lname = req.body.lname
+    var name = [fname, lname]
+    
+    if (check.checkForBlankEntry(name) && check.checkForOnlyAlphabet(name)) {
+        db.changeName(fname, lname)
+        .then((resolved) => {
+            res.send(resolved)
+        }, (error) => {
+            res.sendStatus(500)
+            console.log(error);
+        })
+    }
 });
 
 app.post('/settings_email', (req, res) => {
-    //error checking
-    //db function call here
-    console.log(req.body.email);
-    res.send('ok')
+    // send user id as well instead of hardcode it
+    var newEmail = req.body.email
+    console.log(newEmail);
+    if (check.checkForBlankEntry([newEmail]) && check.checkForEmailFormat(newEmail)) {
+        db.changeEmail(newEmail)
+        .then((resolved) => {
+            res.send(resolved)
+        }, (error) => {
+            res.sendStatus(500)
+            console.log(error);
+        })
+    }
 });
 
 app.post('/settings_password', (req, res) => {
-    //error checking
-    //db function call here
+    // send user id as well instead of hardcode it
+    var newPassword = req.body.password
+    if (check.checkForBlankEntry([newPassword]) && check.checkForPasswordFormat(newPassword)) {
+        db.changePassword(newPassword)
+        .then((resolved) => {
+            res.send(resolved)
+        }, (error) => {
+            res.sendStatus(500)
+            console.log(error);
+        })
+    }
     console.log(req.body.password);
-    res.send('ok')
 });
 
 app.get('/provider_edit', (req, res) => {
@@ -165,16 +192,23 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     login_check.login_check(req.body).then((info) =>{
-        console.log(info)
+        // add req.session.user = json file of user data which includes
+        // name, id, whetever else id needed
+        // console.log(info)
         res.send(JSON.stringify(info))
     }, (error) =>{
-        console.log(error)
+        // console.log(error)
         res.send(JSON.stringify(error))
     })
 });
- 
+
+app.get('/logout', (req, res) => {
+    req.session.reset();
+    res.redirect('/landing_page');
+});
+    
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
 });

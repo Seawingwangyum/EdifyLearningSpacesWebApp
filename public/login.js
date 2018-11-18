@@ -20,14 +20,16 @@ document.getElementById('Passwd').addEventListener("keyup", function(event) {
 
 
 function loggedIn(json_obj){
+    console.log(json_obj);
     $.ajax({
         type: 'POST',
         data: JSON.stringify(json_obj),
         contentType: 'application/json',
         url: 'http://localhost:8080/login',
         success: function(data){
-            console.log(returned)
+            console.log(data);
             var returned = JSON.parse(data)
+            console.log(returned)
             console.log(returned.error)
             if (returned.error == 0){
                 alert("Please enter valid credentials.")

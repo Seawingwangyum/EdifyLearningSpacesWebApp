@@ -49,7 +49,7 @@ input, select, button {
                 border: none;
                 text-align: left;
             }
-            .id {width: 15%;}
+            .id {width: 20%;}
             .fname {width: 16%;}
             .lname {width: 16%;}
             .status {width: 25%;}
