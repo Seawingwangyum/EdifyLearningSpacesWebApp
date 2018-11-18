@@ -12,7 +12,7 @@ var speechbubbble = document.getElementById("bubble");
 var errmsg = "OH NO!"
 var instructions = document.getElementById("instructions");
 
-const cryptPassword = require("./cryptPassword");
+
 
 
 document.getElementById("backbtn").addEventListener("click", function(){
@@ -126,17 +126,7 @@ function check_characters(pw){
     }
 }
 
-function cryptPassword(password, callback) {
-   bcrypt.genSalt(10, function(err, salt) {
-    if (err) 
-      return callback(err);
 
-    bcrypt.hash(password, salt, function(err, hash) {
-      console.log('hash' + hash);
-      return callback(err, hash);
-    });
-  });
-};
 
 //prepares data to send to server
 function send_prep(){
