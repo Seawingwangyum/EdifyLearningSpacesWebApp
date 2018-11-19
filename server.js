@@ -7,8 +7,6 @@ var bcrypt = require('bcrypt-nodejs');
 var async = require('async');
 var crypto = require('crypto');
 
-
-
 const port = process.env.port || 8080;
 const express = require('express');
 //forgot_pass
@@ -49,17 +47,38 @@ app.use(bodyParser.json())
 
 // creates a session
 app.use(session({
-    cookieName: 'edify_session',
+    cookieName: 'session',
     secret: 'edify_apple_sauce',
     duration: 1 * 60 * 60 * 1000,
     activeDuration: 1 * 30 * 60 * 1000
 }));
 
+
 var testData = require('./public/testData')
 
 // Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
-function sessionCheck(req, res, next) {
-    if (req.session && req.session.user) {
+function userSessionCheck(req, res, next) {
+    console.log('user session');
+    console.log(req.session.user);
+    if (req.session.user.admin === 0) {
+        next()
+    } else {
+        res.redirect('/landing_page')
+    }
+}
+
+function adminSessionCheck(req, res, next) {
+        console.log('admin session');
+    if (req.session.user.admin === 1) {
+        next()
+    } else {
+        res.redirect('/landing_page')
+    }
+}
+
+function superSessionCheck(req, res, next) {
+        console.log('super session');
+    if (req.session.user.admin === 2) {
         next()
     } else {
         res.redirect('/landing_page')
@@ -89,7 +108,7 @@ function filterList(list, id, fname, lname, status) {
 }
 
 
-app.get('/status', (request, response) => {
+app.get('/status', userSessionCheck, (request, response) => {
     response.render('status.hbs', {
         title: 'Status Page',
         userData1: testData.provider_list_data.providers[3],
@@ -109,7 +128,7 @@ app.post('/status', (req, res) => {
     })
 });
 
-app.get('/settings', (request, response) => {
+app.get('/settings', userSessionCheck, (request, response) => {
     response.render('settings.hbs', {
         userData: testData.user_data
     });
@@ -135,7 +154,6 @@ app.post('/settings_name', (req, res) => {
 app.post('/settings_email', (req, res) => {
     // send user id as well instead of hardcode it
     var newEmail = req.body.email
-    console.log(newEmail);
     if (check.checkForBlankEntry([newEmail]) && check.checkForEmailFormat(newEmail)) {
         db.changeEmail(newEmail)
         .then((resolved) => {
@@ -159,13 +177,12 @@ app.post('/settings_password', (req, res) => {
             console.log(error);
         })
     }
-    console.log(req.body.password);
 });
 
-app.get('/provider_edit', (req, res) => {
-    res.render('provider_edit.hbs', {
-        userData: testData.provider_edit_data
-    })
+app.get('/provider_edit', adminSessionCheck, (req, res) => {
+	res.render('provider_edit.hbs', {
+		userData: testData.provider_edit_data
+	})
 });
 
 app.get('/landing_page', (req, res) => {
@@ -195,25 +212,21 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-
-    login_check.login_check(req.body).then((info) => {
-        res.send(JSON.stringify(info))
-    }, (error) => {
+    db.getUser(req.body.Email, req.body.Passwd).then((resolved) => {
+        var user = resolved
+        console.log(user);
+        req.session.user = user;
+        if (user.admin === 0) {
+            res.redirect('/licenses')
+        } else if (user.admin === 1) {
+            res.redirect('/provider_list')
+        } else if (user.admin === 2) {
+            res.redirect('/admin_list')
+        }
+    }).catch ((error) => {
         console.log(error)
-
-    // console.log(req.body);
-    login_check.login_check(req.body).then((info) =>{
-        // add req.session.user = json file of user data which includes
-        // name, id, whetever else id needed
-        // console.log(info)
-        res.send(JSON.stringify(info))
-    }, (error) =>{
-        // console.log(error)
-
-        res.send(JSON.stringify(error))
+        res.redirect('/login')
     })
-
-});
 });
 
 app.get('/logout', (req, res) => {
@@ -230,8 +243,8 @@ app.get('/test', (req, res) => {
     res.render('testingnavbar.hbs')
 });
 
-app.get('/licenses', (req, res) => {
-    res.render('license.hbs')
+app.get('/licenses', userSessionCheck, (req, res) => {
+	res.render('license.hbs')
 });
 
 app.get('/account_creation', (req, res) => {
@@ -269,10 +282,10 @@ app.get('/passchange', (req, res) => {
 
 app.get('/deleteaccount', (req, res) => {
     res.render('accountdelete.hbs')
-})
+});
 
-app.get('/provider_list', (req, res, list) => {
-    res.render('provider_list.hbs', {
+app.get('/provider_list', adminSessionCheck, (req, res, list) => {
+	res.render('provider_list.hbs', {
         userData: testData.provider_list_data
     })
 })
@@ -290,7 +303,7 @@ app.post('/provider_list', (req, res) => {
     })
 });
 
-app.get('/admin_list', (req, res) => {
+app.get('/admin_list', superSessionCheck, (req, res) => {
     res.render('admin_list.hbs', {
         userData: testData.admin_list_data
     })
@@ -309,7 +322,7 @@ app.post('/admin_list', (req, res) => {
     })
 });
 
-app.get('/admin_edit', (req, res) => {
+app.get('/admin_edit', superSessionCheck, (req, res) => {
     res.render('admin_edit.hbs', {
         userData: testData.admin_edit_data
     })
