@@ -30,6 +30,37 @@ function connect(con) {
         })
     })
 }
+
+/**
+* Sends a query to the database to get the users info.
+* @param {string} email.
+* @param {string} password.
+* @returns {Promise} returns "ok".
+*/
+function getUser(email, password) {
+    return new Promise ((resolve,reject) => {
+        var con = createConnection()
+        connect(con)
+        .then((resolved) => {
+
+            con.query("SELECT * FROM user WHERE email = '"+email+"' AND password = '"+password+"'", function (err, row) {
+                if (err){
+                    reject(err)
+                }
+                if (row.length > 0) {
+                    var user = {id: row[0].user_id, fname: row[0].first_name, lname: row[0].last_name, email: row[0].email, admin: row[0].is_admin}
+                    resolve(user);
+                } else {
+                    reject('Email not found!')
+                }      
+            })
+            con.end();
+        }), (err) => {
+            reject(err)
+        }
+    })    
+}
+
 // Now broken
 function addUser() {
     con.connect(function(err) {
@@ -56,14 +87,13 @@ function changeName(fname, lname) {
         .then((resolved) => {
             con.connect(err => {
                 
-                con.query("UPDATE user SET first_name ='" +fname+ "', last_name ='" +lname+ "' WHERE user_id = 3;"), function (err, result) {
+                con.query("UPDATE user SET first_name ='" +fname+ "', last_name ='" +lname+ "' WHERE user_id = 3;", function (err, result) {
                     if (err){
                         reject(err)
                     }
-                }
-                con.end();
-                resolve('ok')
-
+                    con.end();
+                    resolve('ok')
+                })
             }), (err) => {
                 reject(err)
             }
@@ -83,14 +113,13 @@ function changeEmail(email) {
         .then((resolved) => {
             con.connect(err => {
                 
-                con.query("UPDATE user SET email ='" +email+ "' WHERE user_id = 3;"), function (err, result) {
-                if (err){
-                    reject(err)
-                    }
-                }
-                con.end();
-                resolve('ok')
-                
+                con.query("UPDATE user SET email ='" +email+ "' WHERE user_id = 3;", function (err, result) {
+                    if (err){
+                        reject(err)
+                        }
+                    con.end();
+                    resolve('ok')
+                })
             }), (err) => {
                 reject(err)
             }
@@ -110,14 +139,13 @@ function changePassword(password) {
         .then((resolved) => {
             con.connect(err => {
                 
-                con.query("UPDATE user SET password ='" +password+ "' WHERE user_id = 3;"), function (err, result) {
-                if (err){
-                    reject(err)
-                    }
-                }
-                con.end();
-                resolve('ok')
-
+                con.query("UPDATE user SET password ='" +password+ "' WHERE user_id = 3;", function (err, result) {
+                    if (err){
+                        reject(err)
+                        }
+                    con.end();
+                    resolve('ok')
+                })
             }), (err) => {
                 reject(err)
             }
@@ -126,6 +154,7 @@ function changePassword(password) {
 }
 
 module.exports = {
+    getUser,
     changeName,
     changeEmail,
     changePassword
