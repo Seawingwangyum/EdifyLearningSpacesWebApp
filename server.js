@@ -40,7 +40,7 @@ app.use(cookieParser());
 
 // bodyparser setup
 var bodyParser = require('body-parser')
-app.use(bodyParser.urlencoded ({
+app.use(bodyParser.urlencoded({
     extended: true
 }));
 app.use(bodyParser.json())
@@ -90,13 +90,16 @@ function filterList(list, id, fname, lname, status) {
     if (id != '') {
         filteredList = list.filter(provider => provider.id == id);
         console.log(1, filteredList);
-    } if (fname != '') {
+    }
+    if (fname != '') {
         filteredList = filteredList.filter(provider => provider.firstName == fname);
         console.log(2, filteredList);
-    } if (lname != '') {
+    }
+    if (lname != '') {
         filteredList = filteredList.filter(provider => provider.lastName == lname);
         console.log(3, filteredList);
-    } if (status != '' && status != null) {
+    }
+    if (status != '' && status != null) {
         if (status != 'all') {
             filteredList = filteredList.filter(provider => provider.status == status);
         }
@@ -183,7 +186,7 @@ app.get('/provider_edit', adminSessionCheck, (req, res) => {
 });
 
 app.get('/landing_page', (req, res) => {
-	res.render('landing_page.hbs')
+    res.render('landing_page.hbs')
 });
 
 app.get('/pass_forgot', (req, res) => {
@@ -195,12 +198,12 @@ app.get('/edify_quiz', (req, res) => {
 });
 
 app.get('/requirements', (req, res) => {
-	res.render('requirements.hbs')
+    res.render('requirements.hbs')
 });
 
 /*
 app.get('/ad_page', (req, res) => {
-	res.render('ad_page.hbs')
+    res.render('ad_page.hbs')
 });
 */
 
@@ -231,6 +234,7 @@ app.get('/logout', (req, res) => {
     res.redirect('/landing_page');
 });
     
+
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
 });
@@ -244,10 +248,25 @@ app.get('/licenses', userSessionCheck, (req, res) => {
 });
 
 app.get('/account_creation', (req, res) => {
-	res.render('account_creation.hbs')
+    res.render('account_creation.hbs')
 });
 
-app.post('/account_creation',(req, res)=> {
+app.post('/account_creation', (req, res) => {
+    /*fs.readFile("./components/userData.js", function(err, data) {
+        var json = JSON.parse(data)
+        console.log(json);
+        json.push({ first_name: req.body.fname, 
+                    last_name: req.body.lname, 
+                    username: req.body.email, 
+                    education: req.body.edubg, 
+                    password: req.body.password, 
+                    address: req.body.address,
+                    is_admin: 0 })
+        console.log(json);
+        fs.writeFile("./components/userData.js", JSON.stringify(json), function(err){
+            if (err) throw err;
+        })
+    })*/
     console.log(req.body);
     //send_email.send_email();
     verify_signup.verify_signup(req.body).then((data) =>{
@@ -257,13 +276,13 @@ app.post('/account_creation',(req, res)=> {
     })
 })
 
-app.get('/passchange', (req, res)=>{
+app.get('/passchange', (req, res) => {
     res.render('PassChange_window.hbs')
 });
 
-app.get('/deleteaccount', (req, res)=>{
+app.get('/deleteaccount', (req, res) => {
     res.render('accountdelete.hbs')
-})
+});
 
 app.get('/provider_list', adminSessionCheck, (req, res, list) => {
 	res.render('provider_list.hbs', {
@@ -278,7 +297,7 @@ app.post('/provider_list', (req, res) => {
     var status = req.body.querytype
     var list = testData.provider_list_data.providers;
 
-    var filteredList = {providers: filterList(list, id, fname, lname, status)}
+    var filteredList = { providers: filterList(list, id, fname, lname, status) }
     res.render('provider_list.hbs', {
         userData: filteredList
     })
@@ -297,7 +316,7 @@ app.post('/admin_list', (req, res) => {
     var status = req.body.querytype
     var list = testData.admin_list_data.admins;
 
-    var filteredList = {admins: filterList(list, id, fname, lname, status)}
+    var filteredList = { admins: filterList(list, id, fname, lname, status) }
     res.render('admin_list.hbs', {
         userData: filteredList
     })
@@ -329,7 +348,9 @@ app.get('/quizresults', (request, response) => {
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`server up on port ${port}`)
+
 });
+
 
 
 
@@ -386,3 +407,4 @@ app.post('/pass_forgot', function(req, res, next) {
     res.redirect('/pass_forgot');
   });
 });
+

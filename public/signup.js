@@ -12,6 +12,9 @@ var speechbubbble = document.getElementById("bubble");
 var errmsg = "OH NO!"
 var instructions = document.getElementById("instructions");
 
+
+
+
 document.getElementById("backbtn").addEventListener("click", function(){
     document.getElementById("tccontainer").style.display = "none";
     document.getElementById("signupcontainer").style.display = "block";
@@ -123,13 +126,17 @@ function check_characters(pw){
     }
 }
 
+
+
 //prepares data to send to server
 function send_prep(){
+    
+    console.log('SOMETHING IS HAPPENING');
     response["fname"] = fname.value;
     response["lname"] = lname.value;
     response["email"] = email.value; 
     response["edubg"] = educationbg.value; 
-    response["password"] = password.value; 
+    
     response["address"] = address.value; 
     ajax_function(response);
 }
