@@ -1,10 +1,1 @@
-const users = [
-	{user_id:2, username:'user', password:'u', is_admin:0},
-	{user_id:1, username:'super', password:'s', is_admin:1},
-	{user_id:3, username:'admin', password:'a', is_admin:1}
-]
-
-module.exports = {
-	users: users
-	
-}
+module.exports.users = [{"first_name":"ffds","last_name":"fdsfds","username":"dfs@afj.com","education":"science","password":"Fjqwlieji34l323#","address":"afas","is_admin":0},{"first_name":"adf","last_name":"asda","username":"abc@abc.com","education":"science","password":"Fjqwlieji34l323#","address":"addsa","is_admin":0}]
