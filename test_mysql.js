@@ -6,9 +6,12 @@ var mysql = require('mysql');
  */
 function createConnection() {
     var con = mysql.createConnection({
+        connectionLimit : 100,
+        host     : '54.244.61.15',
+        port     :  3306,
         host: "localhost",
-        user: "root",
-        password: "password",
+        user: "user",
+        password: "Password1@",
         database: "edify"
     });
     return con
@@ -72,6 +75,36 @@ function addUser() {
             console.log("Insert Successful");
         })
     });
+}
+
+/**
+* Sends a query to the database to get the users info.
+* @param {string} email.
+* @param {string} password.
+* @returns {Promise} returns "ok".
+*/
+function getUser(email, password) {
+    return new Promise ((resolve,reject) => {
+        var con = createConnection()
+        connect(con)
+        .then((resolved) => {
+
+            con.query("SELECT * FROM user WHERE email = '"+email+"' AND password = '"+password+"'", function (err, row) {
+                if (err){
+                    reject(err)
+                }
+                if (row.length > 0) {
+                    var user = {id: row[0].user_id, fname: row[0].first_name, lname: row[0].last_name, email: row[0].email, admin: row[0].is_admin}
+                    resolve(user);
+                } else {
+                    reject('Email not found!')
+                }      
+            })
+            con.end();
+        }), (err) => {
+            reject(err)
+        }
+    })    
 }
 
 /**
@@ -161,6 +194,7 @@ function changePassword(password) {
 
 function addLicense(file, type, notes, user_id) {
     return new Promise((resolve, reject) => {
+
         var con = createConnection();
         connect(con)
         .then((resolved) => {
@@ -242,3 +276,4 @@ module.exports = {
     getLicense,
     addLicense
 }
+

@@ -25,18 +25,25 @@
     "client-sessions": "^0.8.0",
     "cookie-parser": "^1.4.3",
     "express": "^4.16.3",
+    "express-fileupload": "^1.0.0",
     "express-session": "^1.15.6",
     "fs": "0.0.1-security",
     "hbs": "^4.0.1",
     "jsdoc": "^3.5.5",
+
     "express-fileupload": "^1.0.0",
     "morgan": "^1.9.1",
     "multer": "^1.4.1",
-    "zlib": "^1.0.5",
+
     "mysql": "^2.16.0",
     "nodemailer": "^4.6.8",
     "passport": "^0.4.0",
     "passport-local": "^1.0.0",
+
+ 
+    "zlib": "^1.0.5",
+
     "sweetalert2": "^7.28.12"
+
   }
 }
