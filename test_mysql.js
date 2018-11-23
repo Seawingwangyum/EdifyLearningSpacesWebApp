@@ -23,12 +23,12 @@ function connect(con) {
     return new Promise((resolve, reject) => {
         con.connect(err => {
             if (err) {
-                reject(err)
+                reject(err);
             } else {
                 resolve();
             }
-        })
-    })
+        });
+    });
 }
 
 /**
@@ -39,26 +39,26 @@ function connect(con) {
 */
 function getUser(email, password) {
     return new Promise ((resolve,reject) => {
-        var con = createConnection()
+        var con = createConnection();
         connect(con)
         .then((resolved) => {
 
-            con.query("SELECT * FROM user WHERE email = '"+email+"' AND password = '"+password+"'", function (err, row) {
-                if (err){
-                    reject(err)
-                }
-                if (row.length > 0) {
+            con.query("SELECT * FROM user WHERE email = '"+email+"' AND password = '"+password+"'", function (error, row) {
+                if (error){
+                    reject(err);
+                } else if (row.length > 0) {
                     var user = {id: row[0].user_id, fname: row[0].first_name, lname: row[0].last_name, email: row[0].email, admin: row[0].is_admin}
                     resolve(user);
                 } else {
-                    reject('Email not found!')
+                    reject('Email not found!');
                 }      
-            })
-            con.end();
-        }), (err) => {
-            reject(err)
-        }
-    })    
+            });
+            
+        }).catch ((error) => {
+            reject(error);
+        });
+    });
+    con.end();
 }
 
 // Now broken
@@ -70,7 +70,7 @@ function addUser() {
         con.query("INSERT INTO user(first_name, last_name, password, email, location, is_admin) values ('fred', 'jeff', 'password', 'fred@jeff.com', 'Surrey', '0')", function(err, result) {
             if (err) throw err;
             console.log("Insert Successful");
-        })
+        });
     });
 }
 
@@ -85,22 +85,21 @@ function changeName(fname, lname) {
         var con = createConnection();
         connect(con)
         .then((resolved) => {
-            con.connect(err => {
 
-                con.query("UPDATE user SET first_name ='" + fname + "', last_name ='" + lname + "' WHERE user_id = 3;"),
-                    function(err, result) {
-                        if (err) {
-                            reject(err)
-                        }
-                    }
-                con.end();
-                resolve('ok')
+            con.query("UPDATE user SET first_name ='" + fname + "', last_name ='" + lname + "' WHERE user_id = 3;", 
+            function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve('ok');
+                }
+            });
 
-            }), (err) => {
-                reject(err)
-            }
-        })
-    })
+        }).catch ((error) => {
+            reject(error);
+        });
+    });
+    con.end();
 }
 
 /**
@@ -113,22 +112,21 @@ function changeEmail(email) {
         var con = createConnection();
         connect(con)
         .then((resolved) => {
-            con.connect(err => {
 
-                con.query("UPDATE user SET email ='" + email + "' WHERE user_id = 3;"),
-                    function(err, result) {
-                        if (err) {
-                            reject(err)
-                        }
-                    }
-                con.end();
-                resolve('ok')
+            con.query("UPDATE user SET email ='" + email + "' WHERE user_id = 3;",
+            function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve('ok');
+                }
+            });
 
-            }), (err) => {
-                reject(err)
-            }
-        })
-    })
+        }).catch((error) => {
+            reject(error);
+        });
+    });
+    con.end();
 }
 
 /**
@@ -141,22 +139,21 @@ function changePassword(password) {
         var con = createConnection();
         connect(con)
         .then((resolved) => {
-            con.connect(err => {
 
-                con.query("UPDATE user SET password ='" + password + "' WHERE user_id = 3;"),
-                    function(err, result) {
-                        if (err) {
-                            reject(err)
-                        }
-                    }
-                con.end();
-                resolve('ok')
+            con.query("UPDATE user SET password ='" + password + "' WHERE user_id = 3;",
+            function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve('ok');
+                }
+            });
 
-            }), (err) => {
-                reject(err)
-            }
-        })
-    })
+        }).catch((error) => {
+            reject(error);
+        });
+    });
+    con.end();
 }
 
 function addLicense(file, type, notes, user_id) {
@@ -164,22 +161,20 @@ function addLicense(file, type, notes, user_id) {
         var con = createConnection();
         connect(con)
         .then((resolved) => {
-            con.connect(err => {
-                console.log('add license is connected!');
-                con.query("INSERT INTO license(file, type, user_notes, frn_user_id) values ('"+file+"', '" + type + "', '" + notes + "', " + user_id +")"),
-                    function(err, result) {
-                        if (err) {
-                            reject(err)
-                        }
-                    }
-                con.end();
-                resolve('ok')
-
-            }), (err) => {
-                reject(err)
-            }
-        })
-    })
+            con.query("INSERT INTO license(file, type, user_notes, frn_user_id) values ('"+file+"', '" + type + "', '" + notes + "', " + user_id +")",
+            function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve('ok');
+                }
+            });
+                
+        }).catch((error) => {
+            reject(error);
+        });
+    });
+    con.end();
 }
 
 function getLicense(license_id) {
@@ -187,23 +182,21 @@ function getLicense(license_id) {
         var con = createConnection();
         connect(con)
         .then((resolved) => {
-            con.connect(err => {
-                console.log('get license is connected!');
-                con.query("select * from license where license_id = "+ license_id + ";"),
-                    function(err, result) {
-                        if (err) {
-                            console.log('it didnt work');
-                            reject(err)
-                        }
-                        console.log(result);
-                        con.end();
-                        resolve(result)
-                    }
-            }), (err) => {
-                reject(err)
-            }
-        })
-    })
+
+            con.query("select * from license where license_id = "+ license_id + ";",
+            function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+
+        }).catch((error) => {
+            reject(error);
+        });
+    });
+    con.end();
 }
 
 
@@ -213,23 +206,23 @@ function retrievelicenses(user_id) {
         var con = createConnection();
         connect(con)
         .then((resolved) => {
-            con.connect(err => {
                 
-                con.query("SELECT * FROM license WHERE frn_user_id = " + user_id + ";", function (err, result) {
-                    if (err){
-                        reject(err)
-                        }
-                    con.end();
-                    for(i = 0; i < result.length; i++){
+            con.query("SELECT * FROM license WHERE frn_user_id = " + user_id + ";", function (err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    for(i = 0; i < result.length; i++) {
                         status_data[result[i].type] = [result[i].status] 
                     }
-                    resolve(status_data)
-                })
-            }), (err) => {
-                reject(err)
-            }
-        })
-    })   
+                    resolve(status_data);
+                }
+                
+            })
+        }).catch((error) => {
+            reject(error);
+        });
+    });
+    con.end();
 }
 
 
