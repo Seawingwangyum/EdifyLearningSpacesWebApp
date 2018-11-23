@@ -73,7 +73,7 @@ function userSessionCheck(req, res, next) {
 }
 
 function adminSessionCheck(req, res, next) {
-        console.log('admin session');
+    console.log('admin session');
     if (req.session.user.admin === 1) {
         next()
     } else {
@@ -82,7 +82,7 @@ function adminSessionCheck(req, res, next) {
 }
 
 function superSessionCheck(req, res, next) {
-        console.log('super session');
+    console.log('super session');
     if (req.session.user.admin === 2) {
         next()
     } else {
@@ -136,49 +136,48 @@ app.get('/settings', userSessionCheck, (request, response) => {
 });
 
 app.post('/settings_name', (req, res) => {
-    // send user id aswell instead of hardcode it
+    // send user id aswell instead of hardcode it.
     var fname = req.body.fname
     var lname = req.body.lname
     var name = [fname, lname]
-    
+
     if (check.checkForBlankEntry(name) && check.checkForOnlyAlphabet(name)) {
         db.changeName(fname, lname)
         .then((resolved) => {
             res.send(resolved)
-        }, (error) => {
+        }).catch ((error) => {
             res.sendStatus(500)
             console.log(error);
         })
     }
-
 });
 
 app.post('/settings_email', (req, res) => {
-  // send user id as well instead of hardcode it
-  var newEmail = req.body.email
-  if (check.checkForBlankEntry([newEmail]) && check.checkForEmailFormat(newEmail)) {
-    db.changeEmail(newEmail)
-    .then((resolved) => {
-      res.send(resolved)
-    }, (error) => {
-      res.sendStatus(500)
-      console.log(error);
-    })
-  }
+    // send user id as well instead of hardcode it
+    var newEmail = req.body.email
+    if (check.checkForBlankEntry([newEmail]) && check.checkForEmailFormat(newEmail)) {
+        db.changeEmail(newEmail)
+        .then((resolved) => {
+            send(resolved)
+        }).catch ((error) => {
+            res.sendStatus(500)
+            log(error);
+        })
+    }
 });
 
 app.post('/settings_password', (req, res) => {
-  // send user id as well instead of hardcode it
-  var newPassword = req.body.password
-  if (check.checkForBlankEntry([newPassword]) && check.checkForPasswordFormat(newPassword)) {
-    db.changePassword(newPassword)
-    .then((resolved) => {
-      res.send(resolved)
-    }, (error) => {
-      res.sendStatus(500)
-      console.log(error);
-    })
-  }
+    // send user id as well instead of hardcode it
+    var newPassword = req.body.password
+    if (check.checkForBlankEntry([newPassword]) && check.checkForPasswordFormat(newPassword)) {
+        db.changePassword(newPassword)
+        .then((resolved) => {
+            res.send(resolved)
+        }).catch ((error) => {
+            res.sendStatus(500)
+            console.log(error);
+        })
+    }
 });
 
 app.get('/provider_edit', adminSessionCheck, (req, res) => {
