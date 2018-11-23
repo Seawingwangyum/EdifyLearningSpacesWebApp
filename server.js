@@ -1,18 +1,18 @@
 //forgot_pass
-var mysql = require('mysql');
-var nodemailer = require('nodemailer');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var bcrypt = require('bcrypt-nodejs');
-var async = require('async');
-var crypto = require('crypto');
+
+// var nodemailer = require('nodemailer');
+// var passport = require('passport');
+// var LocalStrategy = require('passport-local').Strategy;
+// var bcrypt = require('bcrypt-nodejs');
+// var async = require('async');
+// var crypto = require('crypto');
 
 const port = process.env.port || 8080;
 const express = require('express');
 //forgot_pass
 const path = require('path');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
+// const logger = require('morgan');
+// const cookieParser = require('cookie-parser');
 
 const hbs = require('hbs');
 const fs = require('fs');
@@ -43,8 +43,8 @@ app.use(express.static(__dirname + '/fonts'));
 
 app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
 //forgot_pass
-app.use(logger('dev'));
-app.use(cookieParser());
+// app.use(logger('dev'));
+// app.use(cookieParser());
 
 // bodyparser setup
 var bodyParser = require('body-parser')
@@ -117,13 +117,28 @@ function filterList(list, id, fname, lname, status) {
 
 
 app.get('/status', userSessionCheck, (request, response) => {
-    response.render('status.hbs', {
-        title: 'Status Page',
-        userData1: testData.provider_list_data.providers[3],
-        userData2: testData.provider_list_data.providers[6],
-        userData3: testData.provider_list_data.providers[0],
-        userData4: testData.notes
-    });
+    db.loadStatus(12345)
+    .then((resolved) => {
+             response.render('status.hbs', {
+                data1: resolved.type,
+                data2: resolved.status,
+                data3: resolved.admin_notes,
+
+            })});
+    // db.loadStatus(22345);
+    // db.loadStatus(32345);
+
+    // console.log(data);
+    // console.log(resolved);
+
+
+    // response.render('status.hbs', {
+    //     title: 'Status Page',
+    //     userData1: testData.provider_list_data.providers[3],
+    //     userData2: testData.provider_list_data.providers[6],
+    //     userData3: testData.provider_list_data.providers[0],
+    //     userData4: testData.notes
+    // });
 });
 
 app.post('/status', (req, res) => {
@@ -157,6 +172,7 @@ app.post('/settings_name', (req, res) => {
             console.log(error);
         })
     }
+
 });
 
 app.post('/settings_email', (req, res) => {
@@ -193,7 +209,31 @@ app.get('/provider_edit', adminSessionCheck, (req, res) => {
 	})
 });
 
-app.post('/provider_edit', (req, res) => {
+app.post('/provider_edit', adminSessionCheck, (req, res) => {
+
+    console.log(req.body);
+
+    var noteValue = req.body.noteValue;
+
+    var acceptAction = req.body.acceptAction;
+    if (acceptAction == 0){
+        var ActionValue = "Accepted";
+    } else if (acceptAction == 1){
+        var ActionValue = "Denied";
+    }
+
+    // db.getFile();
+
+    db.changeStatus(ActionValue, noteValue)
+        .then((resolved) => {
+            res.send(resolved)
+        }, (error) => {
+            res.sendStatus(500)
+            console.log(error);
+        })
+
+
+
     // var approve_update = "UPDATE license SET status = 'Aprroved', admin_notes = 'The new notes' WHERE license_id = 12345";
     // var deny_update = "UPDATE license SET status = 'Denied', admin_notes = 'The very new notes' WHERE license_id = 12345";
     // var file_download = "SELECT file FROM license WHERE license_id = 12345";
@@ -213,14 +253,12 @@ app.post('/provider_edit', (req, res) => {
     //     console.log(result.affectedRows + " record(s) updated");
     //   });
     
-    // console.log(req.body);
-    // console.log(res.body);
 
 
 
-    res.render('provider_edit.hbs', {
-        userData: testData.provider_edit_data
-    })
+    // res.render('provider_edit.hbs', {
+    //     userData: testData.provider_edit_data
+    // })
 });
 
 app.get('/landing_page', (req, res) => {

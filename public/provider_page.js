@@ -1,5 +1,6 @@
-var response = {}
-var x=0;
+var response = {};
+var x = 0;
+var y = 0;
 /**
 * Function to create new HTML element
 * @param {string} element - The type of element to create
@@ -9,8 +10,10 @@ var x=0;
 */
 function createNewElement(element, class_name, innerHTML = '') {
 	var newElement = document.createElement(element);
+	newElement.setAttribute("id", "element"+x);
 	newElement.className = class_name;
 	newElement.innerHTML = innerHTML;
+	x += 1;
 	return newElement;
 }
 
@@ -20,13 +23,14 @@ function createNewElement(element, class_name, innerHTML = '') {
 * @param {string} value - The text on the input that will appear 
 * @return {string} newInput - the HTML that will create inputs
 */
-function CreateNewInput(type, class_name, value) {
+function CreateNewInput(type, value) {
 	var newInput = document.createElement('input');
+	newInput.setAttribute("id", "input"+y);
 	newInput.type = type;
-	newInput.className = class_name
 	newInput.value = value;
+	y += 1;
 
-	console.log('value'+value);
+	console.log(value);
 
 	return newInput;
 }
@@ -49,8 +53,12 @@ function createOptions(id, name) {
 		filename = createNewElement('div', 'filename');
 		filename_button = createNewElement('div', 'filename_button');
 		download = createNewElement('button', 'download_but', 'Download');
+
+		// fixed element id
+		// document.getElementById('element3').addEventListener("click", send_conf);
+
 		filename_name = createNewElement('div', 'filename_name', 'Filename...');
-		filename_date = createNewElement('div', 'filename_date', '00/00/0000')
+		filename_date = createNewElement('div', 'filename_date', '00/00/0000');
 
 		file_submit = createNewElement('form', 'file_submit');
 		file_submit.method = 'post';
@@ -76,17 +84,21 @@ function createOptions(id, name) {
 				file_submit.appendChild(form_right);
 
 		if (name == 'Awaiting approval') {
-			accept_but = CreateNewInput('submit', 'acceptBut', 'Approve');
-			var abutlist = document.getElementsByClassName('acceptBut');
-			// for (i = 0; i < abutlist.length; i++) { 
-    			// abutlist[x].id="accept_but_id" + x;
-			// }
-			x+=1;
+			accept_but = CreateNewInput('submit', 'Approve');
+			
 			form_right.appendChild(accept_but);
 			
-			deny_but = CreateNewInput('submit', 'denyBut', 'Deny');
-			deny_but.id="deny_but_id";
+			deny_but = CreateNewInput('submit', 'Deny');
+		
 			form_right.appendChild(deny_but);
+
+
+
+			//fixed element id
+
+			document.getElementById('input0').addEventListener("click", send_prep_1);
+			document.getElementById('input1').addEventListener("click", send_prep_0);
+
 		} else if (name == 'Approved') {
 			filename_approved_by = createNewElement('div', 'filename_changed_by', 'Approved by:')
 			filename.appendChild(filename_approved_by);
@@ -110,14 +122,21 @@ function createOptions(id, name) {
 //-------------------------------------
 
 function send_prep_0(){
-	response["accept"] = 0;
+	response["acceptAction"] = 0;
+	response["noteValue"] = note_input.value;
     ajax_function(response);
 }
 
 function send_prep_1(){
-	response["accept"] = 1;
+	response["acceptAction"] = 1;
+	response["noteValue"] = note_input.value;
 	ajax_function(response);
 }
+
+// function send_conf(){
+// 	response["confDownload"] = "filename";
+// 	ajax_function(response);
+// }
 
 
 function ajax_function(json_obj){
@@ -129,7 +148,7 @@ function ajax_function(json_obj){
         success: function(data){
             console.log(data)
             if(data.Error == "0"){
-                location.href="/licenses"
+                location.href="/provider_edit"
             }
             else{
                 swal("Whoops, Something went wrong", "Please reload your page", "error")
@@ -137,6 +156,10 @@ function ajax_function(json_obj){
         }
     })
 }
+
+// function print(){
+// 	console.log('test');
+// }
 
 
 
@@ -174,8 +197,9 @@ function ajax_function(json_obj){
 	//   });
 
 
-	// document.getElementById('accept_but_id').addEventListener("click", send_prep_0);
-	// document.getElementById('deny_but_id').addEventListener("click", send_prep_1);
+	
+	// document.getElementById('input0').addEventListener("click", send_prep_1);
+	// document.getElementById('input1').addEventListener("click", send_prep_0);
 
 
 

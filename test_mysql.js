@@ -17,7 +17,7 @@ function createConnection() {
     var con = mysql.createConnection({
         host: "localhost",
         user: "root",
-        password: "password",
+        password: "Password",
         database: "edify"
     });
     return con
@@ -162,9 +162,79 @@ function changePassword(password) {
     })   
 }
 
+
+function changeStatus(status, notes) {
+    return new Promise((resolve, reject) =>{
+        var con = createConnection();
+        connect(con)
+        .then((resolved) => {
+            con.connect(err => {
+                
+                con.query("UPDATE license SET status ='" +status+ "' WHERE license_id = 12345;", function (err, result) {
+                    if (err){
+                        reject(err)
+                        }
+                    con.end();
+                    resolve('ok')
+                }),
+
+                con.query("UPDATE license SET admin_notes ='" +notes+ "' WHERE license_id = 12345;", function (err, result) {
+                    if (err){
+                        reject(err)
+                        }
+                    con.end();
+                    resolve('ok')
+                })
+            }), (err) => {
+                reject(err)
+            }
+        })
+    })   
+}
+
+function getFile() {
+    con.connect(function(err) {
+        if (err) throw err;
+
+        console.log(con.query("SELECT file FROM license WHERE license_id = 12345;", function (err, result) {
+            if (err) throw err;
+        }))
+    });
+}
+
+// should put array of id?
+function loadStatus(id) {
+     return new Promise((resolve, reject) =>{
+        var con = createConnection();
+        connect(con)
+        .then((resolved) => {
+            con.connect(err => {
+                
+                //need a for loop
+
+                con.query("SELECT type, status, admin_notes FROM license WHERE license_id ="+id +";", function (err, result) {
+                
+            if (err){
+                        reject(err)
+                        }
+                    con.end();
+                    var status = {type: result[0].type, status: result[0].status, admin_notes: result[0].admin_notes}
+                    resolve(status)
+                })
+            }), (err) => {
+                reject(err)
+            }
+        })
+    })   
+}
+
+
 module.exports = {
     getUser,
     changeName,
     changeEmail,
-    changePassword
+    changePassword,
+    changeStatus,
+    loadStatus,
+    //getFile
 }

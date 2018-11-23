@@ -89,3 +89,9 @@ UNLOCK TABLES;
 
 -- Dump completed on 2018-11-09 18:46:44
 
+
+use edify;
+SELECT * from user;
+
+INSERT INTO `user` VALUES (1,'admin','jeff','password','admin@admin.com','Vancouver',NULL,1);
+
