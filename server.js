@@ -7,8 +7,6 @@ var bcrypt = require('bcrypt-nodejs');
 var async = require('async');
 var crypto = require('crypto');
 
-
-
 const port = process.env.port || 8080;
 const express = require('express');
 //forgot_pass
@@ -72,20 +70,10 @@ app.use(session({
     activeDuration: 1 * 30 * 60 * 1000
 }));
 
-<<<<<<< HEAD
-
-
-
-
-
 var testData = require('./public/testData')
 
 // Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
-=======
 var testData = require('./public/testData')
-
-// Checks to see if the session is still active, if it isnt it redirects to '/provider_login'
->>>>>>> 26e036f92494e3804791a5af58c2eca6fddb854c
 function sessionCheck(req, res, next) {
     if (req.session && req.session.user) {
         next()
@@ -141,7 +129,6 @@ app.get('/settings', (request, response) => {
 });
 
 app.post('/settings_name', (req, res) => {
-<<<<<<< HEAD
     // send user id aswell instead of hardcode it.
     var fname = req.body.fname
     var lname = req.body.lname
@@ -192,7 +179,6 @@ app.get('/provider_edit', (req, res) => {
     res.render('provider_edit.hbs', {
         userData: testData.provider_edit_data
     })
-=======
     //error checking
     //db function call here
     console.log(req.body.name);
@@ -217,7 +203,6 @@ app.get('/provider_edit', (req, res) => {
 	res.render('provider_edit.hbs', {
 		userData: testData.provider_edit_data
 	})
->>>>>>> 26e036f92494e3804791a5af58c2eca6fddb854c
 });
 
 app.get('/landing_page', (req, res) => {
@@ -236,36 +221,11 @@ app.get('/requirements', (req, res) => {
 	res.render('requirements.hbs')
 });
 
-/*
-app.get('/ad_page', (req, res) => {
-	res.render('ad_page.hbs')
-});
-*/
-
 app.get('/login', (req, res) => {
     res.render('login.hbs')
 });
 
 app.post('/login', (req, res) => {
-<<<<<<< HEAD
-    // console.log(req.body);
-    login_check.login_check(req.body).then((info) => {
-        // add req.session.user = json file of user data which includes
-        // name, id, whetever else id needed
-        // console.log(info)
-        res.send(JSON.stringify(info))
-    }, (error) => {
-        // console.log(error)
-        res.send(JSON.stringify(error))
-    })
-});
-
-app.get('/logout', (req, res) => {
-    req.session.reset();
-    res.redirect('/landing_page');
-});
-
-=======
     console.log(req.body);
     login_check.login_check(req.body).then((info) =>{
         console.log(info)
@@ -276,17 +236,11 @@ app.get('/logout', (req, res) => {
     })
 });
  
->>>>>>> 26e036f92494e3804791a5af58c2eca6fddb854c
-app.get('/tandp', (req, res) => {
-    res.render('terms.hbs')
-});
-
 app.get('/test', (req, res) => {
     res.render('testingnavbar.hbs')
 });
 
 app.get('/licenses', (req, res) => {
-<<<<<<< HEAD
     res.render('license.hbs')
 });
 
@@ -308,61 +262,6 @@ app.post('/licenses', async (req, res, next) => {
           });
       });
   });
-    /*
-    if (Object.keys(req.files).length == 0) {
-    return res.status(400).send('No files were uploaded.');
-  }
-
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  let sampleFile = req.files.pic;
-  console.log(sampleFile);
-
-  crypto.pseudoRandomBytes(16, function(err, raw) {
-        if (err) return callback(err);
-        var filename = raw.toString('hex') + path.extname(req.files.pic.name);
-        sampleFile.mv('./file_storage/'+ filename, function(err) {
-
-            if (err)
-            return res.status(500).send(err);
-
-            res.send('File uploaded!');
-            encryptFile.encryptFile('./file_storage/'+ filename);
-        });
- 
-    });*/
-
-  
-
-
-  /* db stuff
-  verify_license.verify_license(req.body).then((data) => {
-        
-        db.addLicense(req.body.file, req.body.type, req.body.notes, 1)
-        .then((resolved) => {
-            res.send(resolved)
-        }, (error) => {
-            res.sendStatus(500)
-            console.log(error);
-        })
-    }, (error) => {
-=======
-	res.render('license.hbs')
-});
-
-app.get('/account_creation', (req, res) => {
-	res.render('account_creation.hbs')
-});
-
-app.post('/account_creation',(req, res)=> {
-    console.log(req.body);
-    //send_email.send_email();
-    verify_signup.verify_signup(req.body).then((data) =>{
-        res.send(data)
-    }, (error) =>{
->>>>>>> 26e036f92494e3804791a5af58c2eca6fddb854c
-        res.send(error)
-    })
-    */
 
     
 });
@@ -371,15 +270,15 @@ app.get('/account_creation', (req, res) => {
     res.render('account_creation.hbs')
 });
 
-// app.post('/account_creation', (req, res) => {
-//     console.log(req.body);
-//     //send_email.send_email();
-//     verify_signup.verify_signup(req.body).then((data) => {
-//         res.send(data)
-//     }, (error) => {
-//         res.send(error)
-//     })
-// })
+app.post('/account_creation', (req, res) => {
+    console.log(req.body);
+    //send_email.send_email();
+    verify_signup.verify_signup(req.body).then((data) => {
+        res.send(data)
+    }, (error) => {
+        res.send(error)
+    })
+})
 
 app.get('/passchange', (req, res)=>{
     res.render('PassChange_window.hbs')
@@ -390,11 +289,7 @@ app.get('/deleteaccount', (req, res)=>{
 })
 
 app.get('/provider_list', (req, res, list) => {
-<<<<<<< HEAD
     res.render('provider_list.hbs', {
-=======
-	res.render('provider_list.hbs', {
->>>>>>> 26e036f92494e3804791a5af58c2eca6fddb854c
         userData: testData.provider_list_data
     })
 })
@@ -463,57 +358,6 @@ app.listen(process.env.PORT || 8080, () => {
 
 //forgot_pass
 app.post('/pass_forgot', function(req, res, next) {
-<<<<<<< HEAD
-    async.waterfall([
-        function(done) {
-            crypto.randomBytes(20, function(err, buf) {
-                var token = buf.toString('hex');
-                done(err, token);
-            });
-        },
-        /**
-            function(token, done) {
-              User.findOne({ email: req.body.email }, function(err, user) {
-                if (!user) {
-                  req.flash('error', 'No account with that email address exists.');
-                  return res.redirect('/pass_forgot');
-                }
-                user.resetPasswordToken = token;
-                user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-                user.save(function(err) {
-                  done(err, token, user);
-                });
-              });
-            },
-        **/
-        function(token, user, done) {
-            var smtpTransport = nodemailer.createTransport({
-                service: 'Gmail',
-                auth: {
-                    user: 'edifyprovidersreset@gmail.com',
-                    pass: 'EdifySpaces'
-                }
-            });
-            var mailOptions = {
-                to: 'edifyprovidersreset@gmail.com',
-                from: 'edifyprovidersreset@gmail.com',
-                subject: 'Edify Providers Password Reset',
-                text: 'You are receiving this because you (or someone else) have requested the reset of the password for your Edify Providers account.\n\n' +
-                    'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-                    'http://' + req.headers.host + '/pass_forgot\n' /**+ token + '\n\n'**/ +
-                    'If you did not request this, please ignore this email and your password will remain unchanged.\n'
-            };
-            smtpTransport.sendMail(mailOptions, function(err) {
-                console.log('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
-                //done(err, 'done');
-            });
-        }
-    ], function(err) {
-        if (err) return next(err);
-        res.redirect('/pass_forgot');
-    });
-});
-=======
   async.waterfall([
     function(done) {
       crypto.randomBytes(20, function(err, buf) {
@@ -573,4 +417,3 @@ app.post('/pass_forgot', function(req, res, next) {
     res.redirect('/landing_page');
   });
 });
->>>>>>> 26e036f92494e3804791a5af58c2eca6fddb854c
