@@ -61,15 +61,22 @@ function getUser(email, password) {
     con.end();
 }
 
-// Now broken
 function addUser() {
-    con.connect(function(err) {
-        if (err) throw err;
-        console.log("Connected!");
+    return new Promise ((resolve, reject) => {
+        var con = net.createConnection();
+        connect(con)
+        .then((resolved) => {
+            con.query("INSERT INTO user(first_name, last_name, password, email, location, is_admin) values ('fred', 'jeff', 'password', 'fred@jeff.com', 'Surrey', '0')", 
+            function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve('ok');
+                }
+            });
 
-        con.query("INSERT INTO user(first_name, last_name, password, email, location, is_admin) values ('fred', 'jeff', 'password', 'fred@jeff.com', 'Surrey', '0')", function(err, result) {
-            if (err) throw err;
-            console.log("Insert Successful");
+        }).catch((error) => {
+            reject(error);
         });
     });
 }
