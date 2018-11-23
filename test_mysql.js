@@ -209,7 +209,6 @@ function loadStatus(id) {
         connect(con)
         .then((resolved) => {
             con.connect(err => {
-                
                 //need a for loop
 
                 con.query("SELECT type, status, admin_notes FROM license WHERE license_id ="+id +";", function (err, result) {
