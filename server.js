@@ -127,7 +127,7 @@ app.post('/status', (req, res) => {
     })
 });
 
-app.get('/settings', userSessionCheck (request, response) => {
+app.get('/settings', userSessionCheck, (request, response) => {
     response.render('settings.hbs', {
         userData: testData.user_data
     });
@@ -150,7 +150,7 @@ app.post('/settings_name', (req, res) => {
     }
 
 });
-​
+
 app.post('/settings_email', (req, res) => {
   // send user id as well instead of hardcode it
   var newEmail = req.body.email
@@ -164,7 +164,7 @@ app.post('/settings_email', (req, res) => {
     })
   }
 });
-​
+
 app.post('/settings_password', (req, res) => {
   // send user id as well instead of hardcode it
   var newPassword = req.body.password
@@ -212,13 +212,20 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    console.log(req.body);
-    login_check.login_check(req.body).then((info) =>{
-        console.log(info)
-        res.send(JSON.stringify(info))
-    }, (error) =>{
+    db.getUser(req.body.Email, req.body.Passwd).then((resolved) => {
+        var user = resolved
+        console.log(user);
+        req.session.user = user;
+        if (user.admin === 0) {
+            res.redirect('/licenses')
+        } else if (user.admin === 1) {
+            res.redirect('/provider_list')
+        } else if (user.admin === 2) {
+            res.redirect('/admin_list')
+        }
+    }).catch ((error) => {
         console.log(error)
-        res.send(JSON.stringify(error))
+        res.redirect('/login')
     })
 });
  
@@ -228,6 +235,11 @@ app.get('/tandp', (req, res) => {
 
 app.get('/test', (req, res) => {
     res.render('testingnavbar.hbs')
+});
+
+app.get('/logout', (req, res) => {
+    req.session.reset();
+    res.redirect('/landing_page');
 });
 
 app.get('/licenses', (req, res) => {
