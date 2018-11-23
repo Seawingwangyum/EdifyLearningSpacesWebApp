@@ -6,6 +6,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt-nodejs');
 var async = require('async');
 var crypto = require('crypto');
+//comment
 
 const port = process.env.port || 8080;
 const express = require('express');
@@ -134,7 +135,7 @@ app.get('/settings', userSessionCheck, (request, response) => {
 });
 
 app.post('/settings_name', (req, res) => {
-    // send user id aswell instead of hardcode it.
+    // send user id aswell instead of hardcode it
     var fname = req.body.fname
     var lname = req.body.lname
     var name = [fname, lname]
