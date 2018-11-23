@@ -60,17 +60,17 @@
   ];
 
   function buildQuiz() {
-    // we'll need a place to store the HTML output
+    
     const output = [];
 
-    // for each question...
+    
     myQuestions.forEach((currentQuestion, questionNumber) => {
-      // we'll want to store the list of answer choices
+      
       const answers = [];
 
-      // and for each available answer...
+      
       for (letter in currentQuestion.answers) {
-        // ...add an HTML radio button
+        
         answers.push(
           `<label>
              <input type="radio" name="question${questionNumber}" value="${letter}">
@@ -80,7 +80,7 @@
         );
       }
 
-      // add this question and its answers to the output
+      
       output.push(
         `<div class="slide">
            <div class="question"> ${currentQuestion.question} </div>
@@ -89,44 +89,33 @@
       );
     });
 
-    // finally combine our output list into one string of HTML and put it on the page
+    
     quizContainer.innerHTML = output.join("");
   }
 
   function showResults() {
-    // gather answer containers from our quiz
+   
     const answerContainers = quizContainer.querySelectorAll(".answers");
 
-    // keep track of user's answers
+    
     let numCorrect = 0;
 
-    // for each question...
+    
     myQuestions.forEach((currentQuestion, questionNumber) => {
-      // find selected answer
+      
       const answerContainer = answerContainers[questionNumber];
       const selector = `input[name=question${questionNumber}]:checked`;
       const userAnswer = (answerContainer.querySelector(selector) || {}).value;
 
-      // if answer is correct
-      if (userAnswer === currentQuestion.correctAnswer) {
-        // add to the number of correct answers
-        numCorrect++;
-
-        // color the answers green
-        answerContainers[questionNumber].style.color = "lightgreen";
-      } else {
-        // if answer is wrong or blank
-        // color the answers red
-        answerContainers[questionNumber].style.color = "red";
-      }
+      
     });
 
-    // show number of correct answers out of total
+    
     if (numCorrect >= 5 ){
-    resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}, you are
+    resultsContainer.innerHTML = `You are
     a great candidate to become an Edify Provider, apply today!`;
 }else{
-  resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}, you should
+  resultsContainer.innerHTML = `You should
   look into what it takes to become an Edify Provider.`
 }
   }
@@ -155,6 +144,10 @@
     showSlide(currentSlide + 1);
   }
 
+  function goHome() {
+    location.href = '/landing_page'
+  }
+
   function showPreviousSlide() {
     showSlide(currentSlide - 1);
   }
@@ -163,18 +156,20 @@
   const resultsContainer = document.getElementById("results");
   const submitButton = document.getElementById("submit");
 
-  // display quiz right away
+  
   buildQuiz();
 
   const previousButton = document.getElementById("previous");
   const nextButton = document.getElementById("next");
+  const homeButton = document.getElementById("home");
   const slides = document.querySelectorAll(".slide");
   let currentSlide = 0;
 
   showSlide(0);
 
-  // on submit, show results
+  
   submitButton.addEventListener("click", showResults);
   previousButton.addEventListener("click", showPreviousSlide);
   nextButton.addEventListener("click", showNextSlide);
+  homeButton.addEventListener("click", goHome);
 })();
