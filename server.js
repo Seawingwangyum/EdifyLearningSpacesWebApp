@@ -4,6 +4,7 @@ var nodemailer = require('nodemailer');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt-nodejs');
+var bcrypt2 = require('bcrypt');
 var async = require('async');
 var crypto = require('crypto');
 
@@ -19,12 +20,16 @@ const cookieParser = require('cookie-parser');
 const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
+const fileUpload = require('express-fileupload');
 
 const app = express();
 
 const send_email = require("./components/send_email")
 const verify_signup = require("./components/verify_signup");
 const login_check = require("./components/login_check");
+const check = require("./public/credentialErrorChecking");
+const verify_license = require("./components/verify_license");
+const db = require('./test_mysql.js')
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
@@ -32,12 +37,13 @@ app.use(express.static(__dirname + '/css'))
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/assets'));
 app.use(express.static(__dirname + '/fonts'));
+app.use(express.static('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads'));
 
-app.use(express.static(__dirname + '/node_modules/sweetalert/dist'))
 app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
 //forgot_pass
 app.use(logger('dev'));
 app.use(cookieParser());
+app.use(fileUpload());
 
 // bodyparser setup
 var bodyParser = require('body-parser')
@@ -55,7 +61,6 @@ app.use(session({
 }));
 
 var testData = require('./public/testData')
-
 
 // Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
 function sessionCheck(req, res, next) {
@@ -116,24 +121,50 @@ app.get('/settings', (request, response) => {
 });
 
 app.post('/settings_name', (req, res) => {
-    //error checking
-    //db function call here
-    console.log(req.body.name);
-    res.send('ok')
+    // send user id aswell instead of hardcode it.
+    var fname = req.body.fname
+    var lname = req.body.lname
+    var name = [fname, lname]
+    
+    if (check.checkForBlankEntry(name) && check.checkForOnlyAlphabet(name)) {
+        db.changeName(fname, lname)
+        .then((resolved) => {
+            res.send(resolved)
+        }, (error) => {
+            res.sendStatus(500)
+            console.log(error);
+        })
+    }
 });
 
 app.post('/settings_email', (req, res) => {
-    //error checking
-    //db function call here
-    console.log(req.body.email);
-    res.send('ok')
+    // send user id as well instead of hardcode it
+    var newEmail = req.body.email
+    console.log(newEmail);
+    if (check.checkForBlankEntry([newEmail]) && check.checkForEmailFormat(newEmail)) {
+        db.changeEmail(newEmail)
+        .then((resolved) => {
+            res.send(resolved)
+        }, (error) => {
+            res.sendStatus(500)
+            console.log(error);
+        })
+    }
 });
 
 app.post('/settings_password', (req, res) => {
-    //error checking
-    //db function call here
+    // send user id as well instead of hardcode it
+    var newPassword = req.body.password
+    if (check.checkForBlankEntry([newPassword]) && check.checkForPasswordFormat(newPassword)) {
+        db.changePassword(newPassword)
+        .then((resolved) => {
+            res.send(resolved)
+        }, (error) => {
+            res.sendStatus(500)
+            console.log(error);
+        })
+    }
     console.log(req.body.password);
-    res.send('ok')
 });
 
 app.get('/provider_edit', (req, res) => {
@@ -169,26 +200,89 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    
+
     login_check.login_check(req.body).then((info) => {
         res.send(JSON.stringify(info))
     }, (error) => {
         console.log(error)
+
+    // console.log(req.body);
+    login_check.login_check(req.body).then((info) =>{
+        // add req.session.user = json file of user data which includes
+        // name, id, whetever else id needed
+        // console.log(info)
+        res.send(JSON.stringify(info))
+    }, (error) =>{
+        // console.log(error)
+
         res.send(JSON.stringify(error))
     })
 
 });
+});
+
+app.get('/logout', (req, res) => {
+    req.session.reset();
+    res.redirect('/landing_page');
+});
+    
 
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
 });
 
-app.get('/test', (req, res) => {
-    res.render('testingnavbar.hbs')
-});
 
 app.get('/licenses', (req, res) => {
     res.render('license.hbs')
+});
+
+app.post('/licenses', (req, res) => {
+    if (Object.keys(req.files).length == 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
+
+    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+    let sampleFile = req.files.pic;
+    console.log(req.files);
+
+    crypto.pseudoRandomBytes(16, function(err, raw) {
+        if (err) return callback(err);
+        var filename = raw.toString('hex') + path.extname(req.files.pic.name);
+
+        verify_license.verify_license(req.body).then((data) => {
+
+            sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
+
+                if (err) {
+
+                res.status(500).send(err);
+                }
+                
+            });
+        db.addLicense(filename, req.body.type, req.body.notes, 1)
+            .then((resolved) => {
+                res.send('File uploaded!');
+            }, (error) => {
+                res.sendStatus(500)
+                console.log(error);
+            })
+        }, (error) => {
+            res.send(error)
+        })
+    })
+    });
+
+
+
+app.get('/test', (req, res) => {
+    db.getLicense(2).then(function(resolved) {
+        console.log(resolved);
+
+        res.render('test.hbs', {
+        //license: testData.provider_list_data
+    })
+    })
+    
 });
 
 app.get('/account_creation', (req, res) => {
@@ -211,10 +305,22 @@ app.post('/account_creation', (req, res) => {
             if (err) throw err;
         })
     })*/
+
     console.log(req.body);
     //send_email.send_email();
     verify_signup.verify_signup(req.body).then((data) =>{
-        res.send(data)
+        console.log('data:' + JSON.stringify(data));
+        bcrypt2.genSalt(10, function(err, salt) {
+            if (err) return next(err);
+            bcrypt2.hash(req.body.password, salt, function(err, hash) {
+                if (err) return next(err);
+                req.body.password = hash; 
+                console.log(req.body.password);
+            // send to db
+            res.send(data)
+        });
+    });
+        
     }, (error) =>{
         res.send(error)
     })
@@ -296,6 +402,8 @@ app.listen(process.env.PORT || 8080, () => {
 });
 
 
+
+
 //forgot_pass
 app.post('/pass_forgot', function(req, res, next) {
   async.waterfall([
@@ -312,10 +420,8 @@ app.post('/pass_forgot', function(req, res, next) {
           req.flash('error', 'No account with that email address exists.');
           return res.redirect('/pass_forgot');
         }
-
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-
         user.save(function(err) {
           done(err, token, user);
         });
@@ -349,4 +455,3 @@ app.post('/pass_forgot', function(req, res, next) {
     res.redirect('/pass_forgot');
   });
 });
-

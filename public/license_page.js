@@ -1,3 +1,6 @@
+var response = {};
+
+
 var crimtxtState = "close",
     sitetxtState = "close",
     floortxtState = "close",
@@ -5,6 +8,20 @@ var crimtxtState = "close",
     firetxtState = "close",
     immtxtState = "close",
     emptxtState = "close";
+
+
+var crimfile = document.getElementById("crimfile");
+var floorfile = document.getElementById("floorfile")
+var sitefile = document.getElementById("sitefile")
+var reffile = document.getElementById("reffile")
+var firefile = document.getElementById("firefile")
+
+
+var crimnotes = document.getElementById("crimnotes");
+var floornotes = document.getElementById("floornotes")
+var sitenotes = document.getElementById("sitenotes")
+var refnotes = document.getElementById("refnotes")
+var firenotes = document.getElementById("firenotes")
 
 /**
 * Function to open and close criminal record check information box
@@ -132,6 +149,73 @@ function empOC() {
     }
 });
 }
+
+function send_prep(filetype){
+    console.log('SOMETHING IS HAPPENING');
+    if (filetype == 'crimfile') {
+        response["type"] = 'criminal';
+        response["file"] = crimfile.value;
+        response["notes"] = crimnotes.value;
+        
+    } else if (filetype == 'sitefile') {
+        response["type"] = 'siteplan';
+        response["file"] = sitefile.value;
+        response["notes"] = sitenotes.value;
+    } else if (filetype == 'floorfile') {
+        response["type"] = 'floorplan';
+        response["file"] = floorfile.value;
+        response["notes"] = floornotes.value;
+    } else if (filetype == 'reffile') {
+        response["type"] = 'reference';
+        response["file"] = reffile.value;
+        response["notes"] = refnotes.value;
+    } else if (filetype == 'firefile') {
+        response["type"] = 'fireplan';
+        response["file"] = firefile.value;
+        response["notes"] = firenotes.value;
+    }
+
+    
+    
+    
+    ajax_function(response);
+}
+
+function ajax_function(json_obj){
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(json_obj),
+        contentType: 'application/json',
+        url: 'http://localhost:8080/licenses',
+        success: function(data){
+            console.log(data)
+            if(data.Error == "0"){
+                location.href="/licenses"
+            }
+            else{
+
+                alert("Whoops, something went wrong")
+            }
+        }
+    })
+}
+
+
+document.getElementById('crimsubmit').addEventListener("click",function(){
+    send_prep('crimfile');
+})
+document.getElementById('sitesubmit').addEventListener("click",function(){
+    send_prep('sitefile');
+})
+document.getElementById('floorsubmit').addEventListener("click",function(){
+    send_prep('floorfile');
+})
+document.getElementById('refsubmit').addEventListener("click",function(){
+    send_prep('reffile');
+})
+document.getElementById('firesubmit').addEventListener("click",function(){
+    send_prep('firefile');
+})
 
 crimOC();
 siteOC();
