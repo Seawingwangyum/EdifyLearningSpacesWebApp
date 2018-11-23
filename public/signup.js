@@ -16,6 +16,9 @@ var instructions = document.getElementById("instructions");
 
 
 
+
+
+
 document.getElementById("backbtn").addEventListener("click", function(){
     document.getElementById("tccontainer").style.display = "none";
     document.getElementById("signupcontainer").style.display = "block";
