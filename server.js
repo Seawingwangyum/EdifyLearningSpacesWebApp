@@ -62,9 +62,29 @@ app.use(session({
 
 var testData = require('./public/testData')
 
-// Checks to see if the session is still active, if it isnt it redirects to '/provider_login'
-function sessionCheck(req, res, next) {
-    if (req.session && req.session.user) {
+// Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
+function userSessionCheck(req, res, next) {
+    console.log('user session');
+    console.log(req.session.user);
+    if (req.session.user.admin === 0) {
+        next()
+    } else {
+        res.redirect('/landing_page')
+    }
+}
+
+function adminSessionCheck(req, res, next) {
+        console.log('admin session');
+    if (req.session.user.admin === 1) {
+        next()
+    } else {
+        res.redirect('/landing_page')
+    }
+}
+
+function superSessionCheck(req, res, next) {
+        console.log('super session');
+    if (req.session.user.admin === 2) {
         next()
     } else {
         res.redirect('/landing_page')
