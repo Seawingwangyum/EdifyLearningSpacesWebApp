@@ -6,6 +6,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt-nodejs');
 var async = require('async');
 var crypto = require('crypto');
+var bcrypt2 = require('bcrypt');
 
 
 
@@ -19,12 +20,15 @@ const cookieParser = require('cookie-parser');
 const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
+const fileUpload = require('express-fileupload');
 
 const app = express();
 
 const send_email = require("./components/send_email")
 const verify_signup = require("./components/verify_signup");
-const login_check = require("./components/login_check");
+const check = require("./public/credentialErrorChecking");
+const db = require('./test_mysql.js')
+
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
@@ -32,12 +36,14 @@ app.use(express.static(__dirname + '/css'))
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/assets'));
 app.use(express.static(__dirname + '/fonts'));
+app.use(express.static('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads'));
 
-app.use(express.static(__dirname + '/node_modules/sweetalert/dist'))
+
 app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
 //forgot_pass
 app.use(logger('dev'));
 app.use(cookieParser());
+app.use(fileUpload());
 
 // bodyparser setup
 var bodyParser = require('body-parser')
@@ -187,15 +193,62 @@ app.get('/licenses', (req, res) => {
 	res.render('license.hbs')
 });
 
+app.post('/licenses', (req, res) => {
+    if (Object.keys(req.files).length == 0) {
+    return res.status(400).send('No files were uploaded.');
+  }
+
+    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+    let sampleFile = req.files.pic;
+    console.log(req.files);
+
+    crypto.pseudoRandomBytes(16, function(err, raw) {
+        if (err) return callback(err);
+        var filename = raw.toString('hex') + path.extname(req.files.pic.name);
+
+        verify_license.verify_license(req.body).then((data) => {
+
+            sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
+
+                if (err) {
+
+                res.status(500).send(err);
+                }
+                
+            });
+        db.addLicense(filename, req.body.type, req.body.notes, 1)
+            .then((resolved) => {
+                res.send('File uploaded!');
+            }, (error) => {
+                res.sendStatus(500)
+                console.log(error);
+            })
+        }, (error) => {
+            res.send(error)
+        })
+    })
+    });
+
 app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
 });
-
-app.post('/account_creation',(req, res)=> {
+app.post('/account_creation', (req, res) => {
+    
     console.log(req.body);
     //send_email.send_email();
     verify_signup.verify_signup(req.body).then((data) =>{
-        res.send(data)
+        console.log('data:' + JSON.stringify(data));
+        bcrypt2.genSalt(10, function(err, salt) {
+            if (err) return next(err);
+            bcrypt2.hash(req.body.password, salt, function(err, hash) {
+                if (err) return next(err);
+                req.body.password = hash; 
+                console.log(req.body.password);
+            // send to db
+            res.send(data)
+        });
+    });
+        
     }, (error) =>{
         res.send(error)
     })
@@ -251,14 +304,6 @@ app.get('/admin_edit', (req, res) => {
     res.render('admin_edit.hbs', {
         userData: testData.admin_edit_data
     })
-});
-
-app.get('/quiz', (request, response) => {
-    /**
-     * Displays the status page
-     */
-
-    response.render('quiz.hbs');
 });
 
 app.get('/quizresults', (request, response) => {
