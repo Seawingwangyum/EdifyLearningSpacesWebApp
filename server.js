@@ -1,4 +1,4 @@
-//forgot_pass
+//forgot_pass_modules
 var mysql = require('mysql');
 var nodemailer = require('nodemailer');
 var passport = require('passport');
@@ -38,12 +38,9 @@ const app = express();
 
 const send_email = require("./components/send_email")
 const verify_signup = require("./components/verify_signup");
-//const login_check = require("./components/login_check");
-//const check = require("./public/credentialErrorChecking");
-//const encryptFile = require("./public/encryptFile");
-
-
 const db = require('./test_mysql.js')
+const login_check = require("./components/login_check");
+
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
@@ -53,6 +50,7 @@ app.use(express.static(__dirname + '/assets'));
 app.use(express.static(__dirname + '/fonts'));
 app.use(express.static(__dirname + '/file_storage'));
 
+app.use(express.static(__dirname + '/node_modules/sweetalert/dist'))
 app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
 //forgot_pass
 app.use(logger('dev'));
@@ -61,7 +59,7 @@ app.use(fileUpload());
 
 // bodyparser setup
 var bodyParser = require('body-parser')
-app.use(bodyParser.urlencoded({
+app.use(bodyParser.urlencoded ({
     extended: true
 }));
 app.use(bodyParser.json())
@@ -74,6 +72,7 @@ app.use(session({
     activeDuration: 1 * 30 * 60 * 1000
 }));
 
+<<<<<<< HEAD
 
 
 
@@ -82,6 +81,11 @@ app.use(session({
 var testData = require('./public/testData')
 
 // Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
+=======
+var testData = require('./public/testData')
+
+// Checks to see if the session is still active, if it isnt it redirects to '/provider_login'
+>>>>>>> 26e036f92494e3804791a5af58c2eca6fddb854c
 function sessionCheck(req, res, next) {
     if (req.session && req.session.user) {
         next()
@@ -95,16 +99,13 @@ function filterList(list, id, fname, lname, status) {
     if (id != '') {
         filteredList = list.filter(provider => provider.id == id);
         console.log(1, filteredList);
-    }
-    if (fname != '') {
+    } if (fname != '') {
         filteredList = filteredList.filter(provider => provider.firstName == fname);
         console.log(2, filteredList);
-    }
-    if (lname != '') {
+    } if (lname != '') {
         filteredList = filteredList.filter(provider => provider.lastName == lname);
         console.log(3, filteredList);
-    }
-    if (status != '' && status != null) {
+    } if (status != '' && status != null) {
         if (status != 'all') {
             filteredList = filteredList.filter(provider => provider.status == status);
         }
@@ -140,6 +141,7 @@ app.get('/settings', (request, response) => {
 });
 
 app.post('/settings_name', (req, res) => {
+<<<<<<< HEAD
     // send user id aswell instead of hardcode it.
     var fname = req.body.fname
     var lname = req.body.lname
@@ -190,10 +192,36 @@ app.get('/provider_edit', (req, res) => {
     res.render('provider_edit.hbs', {
         userData: testData.provider_edit_data
     })
+=======
+    //error checking
+    //db function call here
+    console.log(req.body.name);
+    res.send('ok')
+});
+
+app.post('/settings_email', (req, res) => {
+    //error checking
+    //db function call here
+    console.log(req.body.email);
+    res.send('ok')
+});
+
+app.post('/settings_password', (req, res) => {
+    //error checking
+    //db function call here
+    console.log(req.body.password);
+    res.send('ok')
+});
+
+app.get('/provider_edit', (req, res) => {
+	res.render('provider_edit.hbs', {
+		userData: testData.provider_edit_data
+	})
+>>>>>>> 26e036f92494e3804791a5af58c2eca6fddb854c
 });
 
 app.get('/landing_page', (req, res) => {
-    res.render('landing_page.hbs')
+	res.render('landing_page.hbs')
 });
 
 app.get('/pass_forgot', (req, res) => {
@@ -205,12 +233,12 @@ app.get('/edify_quiz', (req, res) => {
 });
 
 app.get('/requirements', (req, res) => {
-    res.render('requirements.hbs')
+	res.render('requirements.hbs')
 });
 
 /*
 app.get('/ad_page', (req, res) => {
-    res.render('ad_page.hbs')
+	res.render('ad_page.hbs')
 });
 */
 
@@ -219,6 +247,7 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
+<<<<<<< HEAD
     // console.log(req.body);
     login_check.login_check(req.body).then((info) => {
         // add req.session.user = json file of user data which includes
@@ -236,6 +265,18 @@ app.get('/logout', (req, res) => {
     res.redirect('/landing_page');
 });
 
+=======
+    console.log(req.body);
+    login_check.login_check(req.body).then((info) =>{
+        console.log(info)
+        res.send(JSON.stringify(info))
+    }, (error) =>{
+        console.log(error)
+        res.send(JSON.stringify(error))
+    })
+});
+ 
+>>>>>>> 26e036f92494e3804791a5af58c2eca6fddb854c
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
 });
@@ -245,6 +286,7 @@ app.get('/test', (req, res) => {
 });
 
 app.get('/licenses', (req, res) => {
+<<<<<<< HEAD
     res.render('license.hbs')
 });
 
@@ -303,6 +345,21 @@ app.post('/licenses', async (req, res, next) => {
             console.log(error);
         })
     }, (error) => {
+=======
+	res.render('license.hbs')
+});
+
+app.get('/account_creation', (req, res) => {
+	res.render('account_creation.hbs')
+});
+
+app.post('/account_creation',(req, res)=> {
+    console.log(req.body);
+    //send_email.send_email();
+    verify_signup.verify_signup(req.body).then((data) =>{
+        res.send(data)
+    }, (error) =>{
+>>>>>>> 26e036f92494e3804791a5af58c2eca6fddb854c
         res.send(error)
     })
     */
@@ -324,16 +381,20 @@ app.get('/account_creation', (req, res) => {
 //     })
 // })
 
-app.get('/passchange', (req, res) => {
+app.get('/passchange', (req, res)=>{
     res.render('PassChange_window.hbs')
 });
 
-app.get('/deleteaccount', (req, res) => {
+app.get('/deleteaccount', (req, res)=>{
     res.render('accountdelete.hbs')
 })
 
 app.get('/provider_list', (req, res, list) => {
+<<<<<<< HEAD
     res.render('provider_list.hbs', {
+=======
+	res.render('provider_list.hbs', {
+>>>>>>> 26e036f92494e3804791a5af58c2eca6fddb854c
         userData: testData.provider_list_data
     })
 })
@@ -345,7 +406,7 @@ app.post('/provider_list', (req, res) => {
     var status = req.body.querytype
     var list = testData.provider_list_data.providers;
 
-    var filteredList = { providers: filterList(list, id, fname, lname, status) }
+    var filteredList = {providers: filterList(list, id, fname, lname, status)}
     res.render('provider_list.hbs', {
         userData: filteredList
     })
@@ -364,7 +425,7 @@ app.post('/admin_list', (req, res) => {
     var status = req.body.querytype
     var list = testData.admin_list_data.admins;
 
-    var filteredList = { admins: filterList(list, id, fname, lname, status) }
+    var filteredList = {admins: filterList(list, id, fname, lname, status)}
     res.render('admin_list.hbs', {
         userData: filteredList
     })
@@ -402,6 +463,7 @@ app.listen(process.env.PORT || 8080, () => {
 
 //forgot_pass
 app.post('/pass_forgot', function(req, res, next) {
+<<<<<<< HEAD
     async.waterfall([
         function(done) {
             crypto.randomBytes(20, function(err, buf) {
@@ -451,3 +513,64 @@ app.post('/pass_forgot', function(req, res, next) {
         res.redirect('/pass_forgot');
     });
 });
+=======
+  async.waterfall([
+    function(done) {
+      crypto.randomBytes(20, function(err, buf) {
+        var token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+/**
+    function(token, done) {
+      User.findOne({ email: req.body.email }, function(err, user) {
+        if (!user) {
+          req.flash('error', 'No account with that email address exists.');
+          return res.redirect('/pass_forgot');
+        }
+
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+        user.save(function(err) {
+          done(err, token, user);
+        });
+      });
+    },
+**/
+    /**
+     * Function that provides a unique token to a user through e-mail
+     * for the purposes of password recovery.
+     * @param  {string}   token [unique token that is sent to user email]
+     * @param  {string}   user  [user that the email will be sent to]
+     * @param  {Function} done  [confirmation that email was sent]
+     * @return {Function}       [redirects user to password change page after clicking email link]
+     */
+    function(token, user, done) {
+      var smtpTransport = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: 'edifyprovidersreset@gmail.com',
+          pass: 'EdifySpaces'
+        }
+      });
+      var mailOptions = {
+        to: 'edifyprovidersreset@gmail.com',
+        from: 'edifyprovidersreset@gmail.com',
+        subject: 'Edify Providers Password Reset',
+        text: 'You are receiving this because you (or someone else) have requested the reset of the password for your Edify Providers account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+          'http://' + req.headers.host + '/landing_page\n' /**+ token + '\n\n'**/ + 
+          'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+      };
+      smtpTransport.sendMail(mailOptions, function(err) {
+        console.log('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+        //done(err, 'done');
+      });
+    }
+  ], function(err) {
+    if (err) return next(err);
+    res.redirect('/landing_page');
+  });
+});
+>>>>>>> 26e036f92494e3804791a5af58c2eca6fddb854c
