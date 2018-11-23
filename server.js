@@ -142,8 +142,8 @@ app.get('/landing_page', (req, res) => {
 	res.render('landing_page.hbs')
 });
 
-app.get('/pass_forgot', (req, res) => {
-    res.render('pass_forgot.hbs')
+app.get('/pass_recovery', (req, res) => {
+    res.render('pass_recovery.hbs')
 });
 
 app.get('/edify_quiz', (req, res) => {
