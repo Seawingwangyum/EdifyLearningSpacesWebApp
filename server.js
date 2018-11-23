@@ -1,4 +1,4 @@
-//forgot_pass
+//forgot_pass_modules
 var mysql = require('mysql');
 var nodemailer = require('nodemailer');
 var passport = require('passport');
