@@ -7,9 +7,8 @@ var bcrypt = require('bcrypt-nodejs');
 var bcrypt2 = require('bcrypt');
 var async = require('async');
 var crypto = require('crypto');
+
 var bcrypt2 = require('bcrypt');
-
-
 
 const port = process.env.port || 8080;
 const express = require('express');
@@ -30,7 +29,6 @@ const verify_signup = require("./components/verify_signup");
 const check = require("./public/credentialErrorChecking");
 const verify_license = require("./components/verify_license");
 const db = require('./test_mysql.js')
-
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
@@ -55,7 +53,7 @@ app.use(bodyParser.json())
 
 // creates a session
 app.use(session({
-    cookieName: 'edify_session',
+    cookieName: 'session',
     secret: 'edify_apple_sauce',
     duration: 1 * 60 * 60 * 1000,
     activeDuration: 1 * 30 * 60 * 1000
@@ -111,8 +109,7 @@ function filterList(list, id, fname, lname, status) {
     return filteredList
 }
 
-
-app.get('/status', (request, response) => {
+app.get('/status', userSessionCheck, (request, response) => {
     response.render('status.hbs', {
         title: 'Status Page',
         userData1: testData.provider_list_data.providers[3],
@@ -132,34 +129,59 @@ app.post('/status', (req, res) => {
     })
 });
 
-app.get('/settings', (request, response) => {
+app.get('/settings', userSessionCheck, (request, response) => {
     response.render('settings.hbs', {
         userData: testData.user_data
     });
 });
 
 app.post('/settings_name', (req, res) => {
-    //error checking
-    //db function call here
-    console.log(req.body.name);
-    res.send('ok')
+    // send user id aswell instead of hardcode it
+    var fname = req.body.fname
+    var lname = req.body.lname
+    var name = [fname, lname]
+    
+    if (check.checkForBlankEntry(name) && check.checkForOnlyAlphabet(name)) {
+        db.changeName(fname, lname)
+        .then((resolved) => {
+            res.send(resolved)
+        }, (error) => {
+            res.sendStatus(500)
+            console.log(error);
+        })
+    }
+
 });
 
 app.post('/settings_email', (req, res) => {
-    //error checking
-    //db function call here
-    console.log(req.body.email);
-    res.send('ok')
+  // send user id as well instead of hardcode it
+  var newEmail = req.body.email
+  if (check.checkForBlankEntry([newEmail]) && check.checkForEmailFormat(newEmail)) {
+    db.changeEmail(newEmail)
+    .then((resolved) => {
+      res.send(resolved)
+    }, (error) => {
+      res.sendStatus(500)
+      console.log(error);
+    })
+  }
 });
 
 app.post('/settings_password', (req, res) => {
-    //error checking
-    //db function call here
-    console.log(req.body.password);
-    res.send('ok')
+  // send user id as well instead of hardcode it
+  var newPassword = req.body.password
+  if (check.checkForBlankEntry([newPassword]) && check.checkForPasswordFormat(newPassword)) {
+    db.changePassword(newPassword)
+    .then((resolved) => {
+      res.send(resolved)
+    }, (error) => {
+      res.sendStatus(500)
+      console.log(error);
+    })
+  }
 });
 
-app.get('/provider_edit', (req, res) => {
+app.get('/provider_edit', adminSessionCheck, (req, res) => {
 	res.render('provider_edit.hbs', {
 		userData: testData.provider_edit_data
 	})
@@ -192,13 +214,20 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    console.log(req.body);
-    login_check.login_check(req.body).then((info) =>{
-        console.log(info)
-        res.send(JSON.stringify(info))
-    }, (error) =>{
+    db.getUser(req.body.Email, req.body.Passwd).then((resolved) => {
+        var user = resolved
+        console.log(user);
+        req.session.user = user;
+        if (user.admin === 0) {
+            res.redirect('/licenses')
+        } else if (user.admin === 1) {
+            res.redirect('/provider_list')
+        } else if (user.admin === 2) {
+            res.redirect('/admin_list')
+        }
+    }).catch ((error) => {
         console.log(error)
-        res.send(JSON.stringify(error))
+        res.redirect('/login')
     })
 });
  
@@ -206,6 +235,11 @@ app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
 });
 
+
+app.get('/logout', (req, res) => {
+    req.session.reset();
+    res.redirect('/landing_page');
+});
 
 app.get('/licenses', (req, res) => {
 	res.render('license.hbs')
@@ -295,7 +329,7 @@ app.get('/deleteaccount', (req, res)=>{
     res.render('accountdelete.hbs')
 })
 
-app.get('/provider_list', (req, res, list) => {
+app.get('/provider_list', adminSessionCheck, (req, res, list) => {
 	res.render('provider_list.hbs', {
         userData: testData.provider_list_data
     })
@@ -314,7 +348,7 @@ app.post('/provider_list', (req, res) => {
     })
 });
 
-app.get('/admin_list', (req, res) => {
+app.get('/admin_list', superSessionCheck, (req, res) => {
     res.render('admin_list.hbs', {
         userData: testData.admin_list_data
     })
@@ -333,7 +367,7 @@ app.post('/admin_list', (req, res) => {
     })
 });
 
-app.get('/admin_edit', (req, res) => {
+app.get('/admin_edit', superSessionCheck, (req, res) => {
     res.render('admin_edit.hbs', {
         userData: testData.admin_edit_data
     })
