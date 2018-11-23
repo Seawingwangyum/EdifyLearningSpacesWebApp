@@ -4,8 +4,10 @@ var nodemailer = require('nodemailer');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bcrypt = require('bcrypt-nodejs');
+var bcrypt2 = require('bcrypt');
 var async = require('async');
 var crypto = require('crypto');
+
 var bcrypt2 = require('bcrypt');
 
 const port = process.env.port || 8080;
@@ -25,6 +27,7 @@ const app = express();
 const send_email = require("./components/send_email")
 const verify_signup = require("./components/verify_signup");
 const check = require("./public/credentialErrorChecking");
+const verify_license = require("./components/verify_license");
 const db = require('./test_mysql.js')
 
 app.set('view engine', 'hbs')
@@ -137,7 +140,7 @@ app.post('/settings_name', (req, res) => {
     var fname = req.body.fname
     var lname = req.body.lname
     var name = [fname, lname]
-  
+
     if (check.checkForBlankEntry(name) && check.checkForOnlyAlphabet(name)) {
         db.changeName(fname, lname)
         .then((resolved) => {
@@ -231,9 +234,6 @@ app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
 });
 
-app.get('/test', (req, res) => {
-    res.render('testingnavbar.hbs')
-});
 
 app.get('/logout', (req, res) => {
     req.session.reset();
@@ -280,10 +280,25 @@ app.post('/licenses', (req, res) => {
     })
     });
 
+
+
+
+app.get('/test', (req, res) => {
+    db.getLicense(2).then(function(resolved) {
+        console.log(resolved);
+
+        res.render('test.hbs', {
+        //license: testData.provider_list_data
+    })
+    })
+    
+});
+
 app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
 });
 app.post('/account_creation', (req, res) => {
+
     
     console.log(req.body);
     //send_email.send_email();
@@ -389,10 +404,8 @@ app.post('/pass_forgot', function(req, res, next) {
           req.flash('error', 'No account with that email address exists.');
           return res.redirect('/pass_forgot');
         }
-
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-
         user.save(function(err) {
           done(err, token, user);
         });
