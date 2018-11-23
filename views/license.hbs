@@ -26,7 +26,7 @@
             <div id="crInfo2" class="submitarea">
                 <h3>Upload a file...</h3>
                 <input type="file" name="pic" accept="image/*" style='width:100%;'>
-                <textarea rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="crNotes"></textarea>
+                <textarea rows="4" cols="35" placeholder="Any comments about your submission?" name="crNotes"></textarea>
                 <input type="submit" value="Submit" class="purple_button">
             </div>
         </div>
@@ -34,7 +34,7 @@
         <button id="siteCheck" class="mainbuttons">Site Plan</button>
             <div id="siteInfo"class="textarea">
                 <h2>Why?</h2>
-                    We need to verify whether the outdoor areas of the care facility are a safe environment.
+                    We need to verify whether the indoor and outdoor areas of the care facility are a safe environment.
                 <h2>What?</h2>
                     A site plan is a drawn plan of the premise, surround outdoor areas, and the property boundaries. 
                     It needs to include major physical features such as roads, bodies of water, outdoor play areas or structures. 
@@ -45,7 +45,7 @@
                 <div id="siteInfo2" class="submitarea">
                     <h3>Upload a file...</h3>
                     <input type="file" name="pic" accept="image/*">
-                    <textarea rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="siteNotes"></textarea>
+                    <textarea rows="4" cols="35" placeholder="Any comments about your submission?" name="siteNotes"></textarea>
                     <input type="submit" value="Submit" class="purple_button" />
             </div>
         </div>
@@ -63,7 +63,7 @@
             <div id="floorInfo2" class="submitarea">
                 <h3>Upload a file...</h3>
                 <input type="file" name="doc" accept="image/*">
-                <textarea rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="floorNotes"></textarea>
+                <textarea rows="4" cols="35" placeholder="Any comments about your submission?" name="floorNotes"></textarea>
                 <input type="submit" value="Submit" class="purple_button" />    
             </div>
         </div>
@@ -82,7 +82,7 @@
             <div id="refInfo2" class="submitarea">
               <h3>Upload a file...</h3>
               <input type="file" name="doc" accept="image/*">
-                <textarea rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="refNotes"></textarea>
+                <textarea rows="4" cols="35" placeholder="Any comments about your submission?" name="refNotes"></textarea>
             <input type="submit" value="Submit" class="purple_button" />
             </div>
         </div>
@@ -101,7 +101,7 @@
                 <div id="fireInfo2" class="submitarea">
                     <h3>Upload a file...</h3>
                     <input type="file" name="doc" accept="image/*">
-                    <textarea rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="fireNotes"></textarea>
+                    <textarea rows="4" cols="35" placeholder="Any comments about your submission?" name="fireNotes"></textarea>
                     <input type="submit" value="Submit" class="purple_button" />
                 </div>
         </div>
@@ -111,8 +111,8 @@
                 <div id="immunInfo" class="textarea">
                 <h2>What?</h2>
                 Ensure you have up-to-date vaccinations to protect yourself and the children you work with.
-                <h2>Which?</h2>
-                  <ul>
+                <h2>Which ones?</h2>
+                  <ul id="vaclist">
                     <li>Tetanus and Diphtheria (Td)</li>    
                     <li>Poliomyelitis (OPV/IPV)</li>    
                     <li>Measles (MMR)</li>    
@@ -128,7 +128,8 @@
         <div class="bigcontainer">
             <button id="empPlan" class="mainbuttons">Employee Plan</button>
             <div id="empInfo">
-            Currently is optional.
+            Who would be the substitute educator? How will children be picked up from school? 
+                Who else will be present?
             </div>
         </div>
     </div>

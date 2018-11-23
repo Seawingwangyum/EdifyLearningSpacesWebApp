@@ -74,6 +74,14 @@
     border-radius: 6px;
 }
 
+#vaclist {
+    list-style-type:square;
+    margin: 0;
+    padding: 0;
+    list-style-position: inside;
+    text-align: left;
+}
+
 #crInfo {
     display: none;
 }
@@ -110,7 +118,6 @@
 
 #immunInfo {
     display: none;
-    text-align: center;
     width: 100%;
 }
 
