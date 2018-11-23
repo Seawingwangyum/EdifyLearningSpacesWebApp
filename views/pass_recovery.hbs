@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Forgot your password.</title>
+    <link href="style.css" type="text/css" rel="stylesheet" />
+    <link href="login.css" type="text/css" rel="stylesheet" />
+</head>
+
+<body>
+    {{> navbar}}
+    <form id="panel" method="POST">
+  <legend>Enter your e-mail below to reset your password.</legend>
+  <div id="signupcontainer" class="container">
+    <label for="email">Email</label>
+    <input class="inputbox doubleinput" type="text" name="email" autofocus="autofocus"/>
+  </div>
+  <button id="loginButton" class="purple_button" type="submit">Reset Password</button>
+</form>
+<script src="pass_forgot.js"></script>
+</body>
+
+</html>
