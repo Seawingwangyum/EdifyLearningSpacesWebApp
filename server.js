@@ -109,22 +109,21 @@ function filterList(list, id, fname, lname, status) {
 
 
 app.get('/status', userSessionCheck, (request, response) => {
-    response.render('status.hbs', {
-        title: 'Status Page',
-        userData1: testData.provider_list_data.providers[3],
-        userData2: testData.provider_list_data.providers[6],
-        userData3: testData.provider_list_data.providers[0],
-        userData4: testData.notes
-    });
+        response.render('status.hbs', {
+            title: 'Status Page',
+            userData1: testData.provider_list_data.providers[3],
+            userData2: testData.provider_list_data.providers[6],
+            userData3: testData.provider_list_data.providers[0],
+            userData4: testData.notes,
+    })
 });
 
 app.post('/status', (req, res) => {
-    res.render('status.hbs', {
-        userData1: testData.provider_list_data.providers[3],
-        userData2: testData.provider_list_data.providers[6],
-        userData3: testData.provider_list_data.providers[0],
-        userData4: testData.notes
-
+    db.retrievelicenses(req.body.user)
+    .then((response) =>{
+        res.send(response)
+    },(error) =>{
+        console.log(response)
     })
 });
 

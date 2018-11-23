@@ -8,7 +8,7 @@ function createConnection() {
     var con = mysql.createConnection({
         host: "localhost",
         user: "root",
-        password: "password",
+        password: "Password",
         database: "edify"
     });
     return con
@@ -153,9 +153,36 @@ function changePassword(password) {
     })   
 }
 
+function retrievelicenses(user_id) {
+    status_data = {}
+    return new Promise((resolve, reject) =>{
+        var con = createConnection();
+        connect(con)
+        .then((resolved) => {
+            con.connect(err => {
+                
+                con.query("SELECT * FROM license WHERE frn_user_id = " + user_id + ";", function (err, result) {
+                    if (err){
+                        reject(err)
+                        }
+                    con.end();
+                    for(i = 0; i < result.length; i++){
+                        status_data[result[i].type] = [result[i].status] 
+                    }
+                    resolve(status_data)
+                })
+            }), (err) => {
+                reject(err)
+            }
+        })
+    })   
+}
+
+
 module.exports = {
     getUser,
     changeName,
     changeEmail,
-    changePassword
+    changePassword,
+    retrievelicenses
 }
