@@ -29,11 +29,10 @@
     "fs": "0.0.1-security",
     "hbs": "^4.0.1",
     "jsdoc": "^3.5.5",
-<<<<<<< HEAD
+    "express-fileupload": "^1.0.0",
     "morgan": "^1.9.1",
-=======
+    "multer": "^1.4.1",
     "zlib": "^1.0.5",
->>>>>>> 26c2a08256c865e22d9e096316b16f9ddca55511
     "mysql": "^2.16.0",
     "nodemailer": "^4.6.8",
     "passport": "^0.4.0",

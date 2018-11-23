@@ -25,14 +25,15 @@ DROP TABLE IF EXISTS `license`;
 CREATE TABLE `license` (
   `license_id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(45) DEFAULT NULL,
-  `file` varchar(45) DEFAULT NULL,
-  `user_notes` varchar(45) DEFAULT NULL,
-  `admin_notes` varchar(45) DEFAULT NULL,
+  `file` varchar(100) DEFAULT NULL,
+  `user_notes` varchar(200) DEFAULT NULL,
+  `admin_notes` varchar(200) DEFAULT NULL,
   `frn_user_id` int(11) NOT NULL,
   PRIMARY KEY (`license_id`),
+  UNIQUE KEY `file_UNIQUE` (`file`),
   KEY `frn_user_id_idx` (`frn_user_id`),
   CONSTRAINT `frn_user_id` FOREIGN KEY (`frn_user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +42,7 @@ CREATE TABLE `license` (
 
 LOCK TABLES `license` WRITE;
 /*!40000 ALTER TABLE `license` DISABLE KEYS */;
+INSERT INTO `license` VALUES (26,'criminal',NULL,'love it',NULL,1),(27,'criminal',NULL,'',NULL,1),(28,'criminal','d859dcba693685cda9d0fd39b142d64b.png','I LOVE UPLOADING',NULL,1);
 /*!40000 ALTER TABLE `license` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,4 +84,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-09 18:46:44
+-- Dump completed on 2018-11-23 11:04:57
