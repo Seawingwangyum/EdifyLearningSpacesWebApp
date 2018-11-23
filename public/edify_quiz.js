@@ -1,7 +1,6 @@
 /**
  * function that builds all the quiz question, handles
  * scoring and displays a final message to user.
- *
  */
 (function() {
   const myQuestions = [
