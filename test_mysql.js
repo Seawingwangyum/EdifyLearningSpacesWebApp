@@ -6,12 +6,9 @@ var mysql = require('mysql');
  */
 function createConnection() {
     var con = mysql.createConnection({
-        connectionLimit : 100,
-        host     : '54.244.61.15',
-        port     :  3306,
         host: "localhost",
-        user: "user",
-        password: "Password1@",
+        user: "root",
+        password: "password",
         database: "edify"
     });
     return con
