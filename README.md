@@ -7,7 +7,7 @@ This is a github repo for the Edify Learning Spaces providers page.
 
 ## Built With
 * [Node.js](https://nodejs.org/en/) - The web framework
-* mySQL - The database 
+* [mySQL](https://www.mysql.com/) - The database 
 
 ## Authors
 * **Sorina Chirhei** 

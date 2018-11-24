@@ -19,6 +19,9 @@ const fs = require('fs');
 const session = require('client-sessions');
 const fileUpload = require('express-fileupload');
 
+const check = require('./public/credentialErrorChecking');
+const db = require('./test_mysql');
+
 const upload = multer({
     storage: multer.diskStorage({
         destination: 'file_storage',
@@ -36,9 +39,6 @@ const app = express();
 
 const send_email = require("./components/send_email")
 const verify_signup = require("./components/verify_signup");
-const db = require('./test_mysql.js')
-const login_check = require("./components/login_check");
-
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
