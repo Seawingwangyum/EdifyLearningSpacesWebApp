@@ -1,5 +1,7 @@
 var response = {};
 
+
+
 var fname = document.getElementById("fname");
 var lname = document.getElementById("lname")
 var email = document.getElementById("email");
@@ -11,6 +13,8 @@ var speechbubbble = document.getElementById("bubble");
 
 var errmsg = "OH NO!"
 var instructions = document.getElementById("instructions");
+
+
 
 
 
@@ -136,7 +140,7 @@ function send_prep(){
     response["lname"] = lname.value;
     response["email"] = email.value; 
     response["edubg"] = educationbg.value; 
-    
+    response["password"] = password.value; 
     response["address"] = address.value; 
     ajax_function(response);
 }

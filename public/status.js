@@ -2,6 +2,11 @@ var crimtxtStateSS = "close",
     sitetxtStateSS = "close",
     floortxtStateSS = "close";
 
+var user = 1;
+
+var windows = ["crimCheckSS", "siteCheckSS","floorCheckSS"]
+var statuses = ["CRC", "SP", "FP"]
+
 /**
 * Function to open and close criminal record check information box
 * 
@@ -48,10 +53,41 @@ function floorOCSS() {
 });
 }
 
+function request_status(){
+    console.log("hellothere");
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify({user:1}),
+        contentType: 'application/json',
+        url: 'http://localhost:8080/status',
+        success: function(data){
+            //console.log(data["CRC"][0])
+            for(var item in data){
+                //console.log(data[item][0])
+                var cur = windows[statuses.indexOf(item)]
+                console.log(cur)
+                switch (data[item][0]){
+                    case "approved":
+                        document.getElementById(cur).className = "greenbuttons"
+                        break;
+                    case "pending":
+                        document.getElementById(cur).className = "yellowbuttons"
+                        break;
+                    case "rejected":
+                        document.getElementById(cur).className = "redbuttons"
+                }
+            }
+        }
+    })
+}
+
+//yellowbuttons greenbuttons redbuttons
+
 
 crimOCSS();
 siteOCSS();
 floorOCSS();
+<<<<<<< HEAD
 
 
 
@@ -98,3 +134,8 @@ floorOCSS();
 // };
 
 // run_mysqlSS()
+=======
+document.addEventListener("DOMContentLoaded", function(){
+    request_status()
+}, false)
+>>>>>>> 6df5eacf4a1d67abb18ed5d53e5b0e65e561be95
