@@ -1,6 +1,4 @@
 var response = {};
-var x = 0;
-var y = 0;
 /**
 * Function to create new HTML element
 * @param {string} element - The type of element to create
@@ -10,10 +8,8 @@ var y = 0;
 */
 function createNewElement(element, class_name, innerHTML = '') {
 	var newElement = document.createElement(element);
-	newElement.setAttribute("id", "element"+x);
 	newElement.className = class_name;
 	newElement.innerHTML = innerHTML;
-	x += 1;
 	return newElement;
 }
 
@@ -25,10 +21,8 @@ function createNewElement(element, class_name, innerHTML = '') {
 */
 function CreateNewInput(type, value) {
 	var newInput = document.createElement('input');
-	newInput.setAttribute("id", "input"+y);
 	newInput.type = type;
 	newInput.value = value;
-	y += 1;
 
 	console.log(value);
 
@@ -53,6 +47,7 @@ function createOptions(id, name) {
 		filename = createNewElement('div', 'filename');
 		filename_button = createNewElement('div', 'filename_button');
 		download = createNewElement('button', 'download_but', 'Download');
+		download.id = id + '_DLbut';
 
 		// fixed element id
 		// document.getElementById('element3').addEventListener("click", send_conf);
@@ -60,9 +55,8 @@ function createOptions(id, name) {
 		filename_name = createNewElement('div', 'filename_name', 'Filename...');
 		filename_date = createNewElement('div', 'filename_date', '00/00/0000');
 
-		file_submit = createNewElement('form', 'file_submit');
-		file_submit.method = 'post';
-		file_submit.action = 'provider_edit';
+		file_submit = createNewElement('div', 'file_submit');
+		
 
 		form_left = createNewElement('div', 'form_left');
 		form_right = createNewElement('div', 'form_right');
@@ -70,6 +64,8 @@ function createOptions(id, name) {
 
 		note_input = createNewElement('textarea', 'note_input');
 		note_input.rows = '3';
+		note_input.id = id + '_NInput';
+		// var notesValue = document.getElementById(id +'_NInput').value;
 
 		license.appendChild(license_options);
 			license_options.appendChild(filename);
@@ -83,53 +79,76 @@ function createOptions(id, name) {
 					form_left.appendChild(note_input);
 				file_submit.appendChild(form_right);
 
+
 		if (name == 'Awaiting approval') {
-			accept_but = CreateNewInput('submit', 'Approve');
 			
+			accept_but = CreateNewInput('submit', 'Approve');
+			accept_but.id = id +'_Abut'
 			form_right.appendChild(accept_but);
+			document.getElementById(id +'_Abut').addEventListener("click", send_prep_1);
 			
 			deny_but = CreateNewInput('submit', 'Deny');
-		
+			deny_but.id = id +'_Dbut'
+
 			form_right.appendChild(deny_but);
-
-
-
-			//fixed element id
-
-			document.getElementById('input0').addEventListener("click", send_prep_1);
-			document.getElementById('input1').addEventListener("click", send_prep_0);
-
+			
+			document.getElementById(id +'_Dbut').addEventListener("click", send_prep_0);
 		} else if (name == 'Approved') {
+			
 			filename_approved_by = createNewElement('div', 'filename_changed_by', 'Approved by:')
 			filename.appendChild(filename_approved_by);
 
-			unapprove_but = CreateNewInput('submit', 'unapproveBut', 'Un-Approve');
+			unapprove_but = CreateNewInput('submit', 'Un-Approve');
+			unapprove_but.id = id +'_UAbut'
 			form_right.appendChild(unapprove_but)
+			console.log('APPROVED IS: ' + id +'_UAbut')
+			document.getElementById(id +'_UAbut').addEventListener("click", send_prep_UA);
 		} else if (name == 'Denied') {
+			
 			filename_denied_by = createNewElement('div', 'filename_changed_by', 'Denied by:')
 			filename.appendChild(filename_denied_by);
 
-			undeny_but = CreateNewInput('submit', 'undenyBut', 'Un-Deny');
+			undeny_but = CreateNewInput('submit', 'Un-Deny');
+			undeny_but.id = id +'_UDbut'
 			form_right.appendChild(undeny_but) 
+			console.log('DENIED IS: ' + id +'_UDbut')
+			//document.getElementById(id +'_UDbut').addEventListener("click", send_prep_UD);
 		};
 	}
 
 }
 
 
+// document.getElementById('input1').addEventListener("click", send_prep_0);
 //-------------------------------------
 //--------------my sql-----------------
 //-------------------------------------
 
 function send_prep_0(){
+	alert("1")
 	response["acceptAction"] = 0;
-	response["noteValue"] = note_input.value;
+	// response["noteValue"] = notesValue;
     ajax_function(response);
 }
 
 function send_prep_1(){
+	alert("2")
 	response["acceptAction"] = 1;
-	response["noteValue"] = note_input.value;
+	// response["noteValue"] = notesValue;
+	ajax_function(response);
+}
+
+function send_prep_UA(){
+	alert("3")
+	response["UAAction"] = 1;
+	// response["noteValue"] = notesValue;
+	ajax_function(response);
+}
+
+function send_prep_UD(){
+	alert("4")
+	response["UDAction"] = 1;
+	// response["noteValue"] = notesValue;
 	ajax_function(response);
 }
 
@@ -144,14 +163,16 @@ function ajax_function(json_obj){
         type: 'POST',
         data: JSON.stringify(json_obj),
         contentType: 'application/json',
-        url: 'http://localhost:8080/account_creation',
+        url: 'http://localhost:8080/provider_edit',
         success: function(data){
-            console.log(data)
+            
             if(data.Error == "0"){
-                location.href="/provider_edit"
-            }
-            else{
-                swal("Whoops, Something went wrong", "Please reload your page", "error")
+                console.log('its good');
+            }else{
+
+            
+                // swal("Whoops, Something went wrong", "Please reload your page", "error")
+                console.log('swal will pop up');
             }
         }
     })

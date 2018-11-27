@@ -142,13 +142,14 @@ app.get('/status', userSessionCheck, (request, response) => {
 });
 
 app.post('/status', (req, res) => {
-    res.render('status.hbs', {
-        userData1: testData.provider_list_data.providers[3],
-        userData2: testData.provider_list_data.providers[6],
-        userData3: testData.provider_list_data.providers[0],
-        userData4: testData.notes
+    db.loadStatus(12345)
+    .then((resolved) => {
+             response.render('status.hbs', {
+                data1: resolved.type,
+                data2: resolved.status,
+                data3: resolved.admin_notes,
 
-    })
+            })});
 });
 
 app.get('/settings', userSessionCheck, (request, response) => {
@@ -203,6 +204,21 @@ app.post('/settings_password', (req, res) => {
     }
 });
 
+//just added
+// app.post('/after_pro_edit', (req, res) => {
+//     // db.changeStatus(ActionValue, noteValue)
+//      db.changeStatus('ActionValue-test', 'noteValue-test')
+//     .then((resolved) => {
+//         res.send(resolved)
+//     }, (error) => {
+//         res.sendStatus(500)
+//         console.log(error);
+//     })
+    
+
+// });
+//end
+
 app.get('/provider_edit', adminSessionCheck, (req, res) => {
 	res.render('provider_edit.hbs', {
 		userData: testData.provider_edit_data
@@ -210,27 +226,29 @@ app.get('/provider_edit', adminSessionCheck, (req, res) => {
 });
 
 app.post('/provider_edit', adminSessionCheck, (req, res) => {
-
+    res.send(JSON.stringify(req.body))
+    console.log("Why")
     console.log(req.body);
 
     var noteValue = req.body.noteValue;
 
-    var acceptAction = req.body.acceptAction;
-    if (acceptAction == 0){
-        var ActionValue = "Accepted";
-    } else if (acceptAction == 1){
-        var ActionValue = "Denied";
-    }
+    // var acceptAction = req.body.acceptAction;
+    // if (acceptAction == 0){
+    //     var ActionValue = "Accepted";
+    // } else if (acceptAction == 1){
+    //     var ActionValue = "Denied";
+    // }
 
-    // db.getFile();
+    // // db.getFile();
 
-    db.changeStatus(ActionValue, noteValue)
-        .then((resolved) => {
-            res.send(resolved)
-        }, (error) => {
-            res.sendStatus(500)
-            console.log(error);
-        })
+    // db.changeStatus(ActionValue, noteValue)
+    //     .then((resolved) => {
+    //         res.send(resolved)
+    //     }, (error) => {
+    //         res.sendStatus(500)
+    //         console.log(error);
+    //     })
+
 
 
 
