@@ -1,4 +1,6 @@
 var response = {};
+var license_ID = 11111;
+var notesValue = '';
 /**
 * Function to create new HTML element
 * @param {string} element - The type of element to create
@@ -35,6 +37,8 @@ function CreateNewInput(type, value) {
 * @param {string} name - the specific name of the HTML element
 */
 function createOptions(id, name) {
+	console.log(id);
+	license_ID = id;
 	var license = document.getElementById(id);
 	var licenseOptions = document.getElementById(license.id + '_options');
 	if (licenseOptions) {
@@ -62,10 +66,12 @@ function createOptions(id, name) {
 		form_right = createNewElement('div', 'form_right');
 		form_left_padding = createNewElement('div', 'form_left_padding', 'Add a note');
 
-		note_input = createNewElement('textarea', 'note_input');
+		note_input = createNewElement('textarea', 'note_input', 'No notes.');
 		note_input.rows = '3';
 		note_input.id = id + '_NInput';
-		// var notesValue = document.getElementById(id +'_NInput').value;
+		// why do I keep getting NULL error for notes??????????
+		// notesValue = document.getElementById(id +'_NInput').value;
+		console.log(id + '_NInput');
 
 		license.appendChild(license_options);
 			license_options.appendChild(filename);
@@ -91,7 +97,6 @@ function createOptions(id, name) {
 			deny_but.id = id +'_Dbut'
 
 			form_right.appendChild(deny_but);
-			
 			document.getElementById(id +'_Dbut').addEventListener("click", send_prep_D);
 		} else if (name == 'Approved') {
 			
@@ -126,28 +131,32 @@ function createOptions(id, name) {
 function send_prep_D(){
 	alert("1")
 	response["Action"] = 'Denied';
-	// response["noteValue"] = notesValue;
+	response["L_ID"] = license_ID;
+	response["noteValue"] = notesValue;
     ajax_function(response);
 }
 
 function send_prep_A(){
 	alert("2")
 	response["Action"] = 'Accepted';
-	// response["noteValue"] = notesValue;
+	response["L_ID"] = license_ID;
+	response["noteValue"] = notesValue;
 	ajax_function(response);
 }
 
 function send_prep_UA(){
 	alert("3")
 	response["Action"] = 'Awaiting Approval';
-	// response["noteValue"] = notesValue;
+	response["L_ID"] = license_ID;
+	response["noteValue"] = notesValue;
 	ajax_function(response);
 }
 
 function send_prep_UD(){
 	alert("4")
 	response["Action"] = 'Awaiting Approval';
-	// response["noteValue"] = notesValue;
+	response["L_ID"] = license_ID;
+	response["noteValue"] = notesValue;
 	ajax_function(response);
 }
 

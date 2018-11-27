@@ -168,12 +168,13 @@ app.get('/provider_edit', adminSessionCheck, (request, response) => {
 app.post('/provider_edit', adminSessionCheck, (request, response) => {
     // res.send(JSON.stringify(req.body))
     console.log(request.body.Action);
+    console.log(request.body.L_ID);
 
     // var noteValue = req.body.noteValue;
 
     // db.getFile();
 
-    db.changeStatus(request.body.Action, 'noteValue11')
+    db.changeStatus(request.body.L_ID, request.body.Action, request.body.notesValue)
         .then((resolved) => {
             response.send(resolved)
         }, (error) => {

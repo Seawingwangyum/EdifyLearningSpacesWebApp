@@ -9,10 +9,10 @@ const provider_edit_data = {
 			name: 'Awaiting approval',
 			licenses: {
 				license1: {
-					name: 'license1'
+					name: 101
 				},
 				license2: {
-					name: 'license2'
+					name: 102
 				}
 			}
 		},
@@ -20,13 +20,13 @@ const provider_edit_data = {
 			name: 'Awaiting submission',
 			licenses: {
 				license3: {
-					name: 'license3'
+					name: 103
 				},
 				license4: {
-					name: 'license4'
+					name: 104
 				},
 				license5: {
-					name: 'license5'
+					name: 105
 				}
 			}
 		},
@@ -34,7 +34,7 @@ const provider_edit_data = {
 			name: 'Approved',
 			licenses: {
 				license6: {
-					name: 'license6'
+					name: 106
 				}
 			}
 		},
@@ -42,10 +42,10 @@ const provider_edit_data = {
 			name: 'Denied',
 			licenses: {
 				license7: {
-					name: 'license7'
+					name: 107
 				},
 				license8: {
-					name: 'license8'
+					name: 108
 				}
 			}
 		}

@@ -274,13 +274,13 @@ function retrievelicenses(user_id) {
 
 
 
-function changeStatus(status, notes) {
+function changeStatus(id, status, notes) {
     return new Promise((resolve, reject) =>{
         var con = createConnection();
         connect(con)
         .then((resolved) => {
             con.connect(err => {
-                con.query("UPDATE license SET status='"+status+ "', admin_notes ='" +notes+ "' WHERE license_id = 12345;", function (err, result) {
+                con.query("UPDATE license SET status='"+status+ "', admin_notes ='" +notes+ "' WHERE license_id ="+id+" ;", function (err, result) {
                     if (err){
                         reject(err)
                         }
