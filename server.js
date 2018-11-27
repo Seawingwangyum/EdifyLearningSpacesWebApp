@@ -137,15 +137,18 @@ app.get('/settings', userSessionCheck, (req, res) => {
 });
 
 app.post('/settings_name', (req, res) => {
-    // send user id aswell instead of hardcode it.
     var fname = req.body.fname
     var lname = req.body.lname
     var name = [fname, lname]
+    var id = req.session.user.id
+    console.log(id);
 
     if (check.checkForBlankEntry(name) && check.checkForOnlyAlphabet(name)) {
-        db.changeName(fname, lname)
+        db.changeName(fname, lname, id)
         .then((resolved) => {
-            res.send(resolved)
+            req.session.user.fname = fname;
+            req.session.user.lname = lname;
+            res.send(resolved);
         }).catch ((error) => {
             res.sendStatus(500)
             console.log(error);
@@ -154,28 +157,31 @@ app.post('/settings_name', (req, res) => {
 });
 
 app.post('/settings_email', (req, res) => {
-    // send user id as well instead of hardcode it
     var newEmail = req.body.email
+    var id = req.session.user.id
+
     if (check.checkForBlankEntry([newEmail]) && check.checkForEmailFormat(newEmail)) {
-        db.changeEmail(newEmail)
+        db.changeEmail(newEmail, id)
         .then((resolved) => {
-            send(resolved)
+            req.session.user.email = newEmail;
+            res.send(resolved);
         }).catch ((error) => {
-            res.sendStatus(500)
-            log(error);
+            res.sendStatus(500);
+            console.log(error);
         })
     }
 });
 
 app.post('/settings_password', (req, res) => {
-    // send user id as well instead of hardcode it
     var newPassword = req.body.password
+    var id = req.session.user.id
+
     if (check.checkForBlankEntry([newPassword]) && check.checkForPasswordFormat(newPassword)) {
-        db.changePassword(newPassword)
+        db.changePassword(newPassword, id)
         .then((resolved) => {
-            res.send(resolved)
+            res.send(resolved);
         }).catch ((error) => {
-            res.sendStatus(500)
+            res.sendStatus(500);
             console.log(error);
         })
     }
