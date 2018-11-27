@@ -85,14 +85,14 @@ function createOptions(id, name) {
 			accept_but = CreateNewInput('submit', 'Approve');
 			accept_but.id = id +'_Abut'
 			form_right.appendChild(accept_but);
-			document.getElementById(id +'_Abut').addEventListener("click", send_prep_1);
+			document.getElementById(id +'_Abut').addEventListener("click", send_prep_A);
 			
 			deny_but = CreateNewInput('submit', 'Deny');
 			deny_but.id = id +'_Dbut'
 
 			form_right.appendChild(deny_but);
 			
-			document.getElementById(id +'_Dbut').addEventListener("click", send_prep_0);
+			document.getElementById(id +'_Dbut').addEventListener("click", send_prep_D);
 		} else if (name == 'Approved') {
 			
 			filename_approved_by = createNewElement('div', 'filename_changed_by', 'Approved by:')
@@ -112,42 +112,41 @@ function createOptions(id, name) {
 			undeny_but.id = id +'_UDbut'
 			form_right.appendChild(undeny_but) 
 			console.log('DENIED IS: ' + id +'_UDbut')
-			//document.getElementById(id +'_UDbut').addEventListener("click", send_prep_UD);
+			document.getElementById(id +'_UDbut').addEventListener("click", send_prep_UD);
 		};
 	}
 
 }
 
 
-// document.getElementById('input1').addEventListener("click", send_prep_0);
 //-------------------------------------
 //--------------my sql-----------------
 //-------------------------------------
 
-function send_prep_0(){
+function send_prep_D(){
 	alert("1")
-	response["acceptAction"] = 0;
+	response["Action"] = 'Denied';
 	// response["noteValue"] = notesValue;
     ajax_function(response);
 }
 
-function send_prep_1(){
+function send_prep_A(){
 	alert("2")
-	response["acceptAction"] = 1;
+	response["Action"] = 'Accepted';
 	// response["noteValue"] = notesValue;
 	ajax_function(response);
 }
 
 function send_prep_UA(){
 	alert("3")
-	response["UAAction"] = 1;
+	response["Action"] = 'Awaiting Approval';
 	// response["noteValue"] = notesValue;
 	ajax_function(response);
 }
 
 function send_prep_UD(){
 	alert("4")
-	response["UDAction"] = 1;
+	response["Action"] = 'Awaiting Approval';
 	// response["noteValue"] = notesValue;
 	ajax_function(response);
 }
@@ -219,8 +218,8 @@ function ajax_function(json_obj){
 
 
 	
-	// document.getElementById('input0').addEventListener("click", send_prep_1);
-	// document.getElementById('input1').addEventListener("click", send_prep_0);
+	// document.getElementById('input0').addEventListener("click", send_prep_A);
+	// document.getElementById('input1').addEventListener("click", send_prep_D);
 
 
 

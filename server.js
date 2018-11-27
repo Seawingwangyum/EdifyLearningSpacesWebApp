@@ -1,15 +1,15 @@
 //forgot_pass_modules
 var mysql = require('mysql');
-var nodemailer = require('nodemailer');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var bcrypt = require('bcrypt-nodejs');
-var bcrypt2 = require('bcrypt');
-var async = require('async');
-var crypto = require('crypto');
+// var nodemailer = require('nodemailer');
+// var passport = require('passport');
+// var LocalStrategy = require('passport-local').Strategy;
+// var bcrypt = require('bcrypt-nodejs');
+// var bcrypt2 = require('bcrypt');
+// var async = require('async');
+// var crypto = require('crypto');
 
 
-var bcrypt2 = require('bcrypt');
+// var bcrypt2 = require('bcrypt');
 
 const port = process.env.port || 8080;
 const express = require('express');
@@ -30,7 +30,7 @@ var con = mysql.createConnection({
       database: "edify"
     });
 
-const fileUpload = require('express-fileupload');
+// const fileUpload = require('express-fileupload');
 
 
 const app = express();
@@ -54,10 +54,7 @@ app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
 
 // app.use(logger('dev'));
 // app.use(cookieParser());
-
-app.use(logger('dev'));
-app.use(cookieParser());
-app.use(fileUpload());
+// app.use(fileUpload());
 
 
 // bodyparser setup
@@ -89,7 +86,7 @@ function userSessionCheck(req, res, next) {
 }
 
 function adminSessionCheck(req, res, next) {
-    console.log('admin session');
+    // console.log('admin session');
     if (req.session.user.admin === 1) {
         next()
     } else {
@@ -150,7 +147,7 @@ app.get('/status', userSessionCheck, (request, response) => {
     // });
 });
 
-app.post('/status', (req, res) => {
+app.post('/status', (request, response) => {
     db.loadStatus(12345)
     .then((resolved) => {
              response.render('status.hbs', {
@@ -159,6 +156,34 @@ app.post('/status', (req, res) => {
                 data3: resolved.admin_notes,
 
             })});
+});
+
+
+app.get('/provider_edit', adminSessionCheck, (request, response) => {
+    response.render('provider_edit.hbs', {
+        userData: testData.provider_edit_data
+    })
+});
+
+app.post('/provider_edit', adminSessionCheck, (request, response) => {
+    // res.send(JSON.stringify(req.body))
+    console.log(request.body.Action);
+
+    // var noteValue = req.body.noteValue;
+
+    // db.getFile();
+
+    db.changeStatus(request.body.Action, 'noteValue11')
+        .then((resolved) => {
+            response.send(resolved)
+        }, (error) => {
+            response.sendStatus(500)
+            console.log(error);
+        })
+
+    // res.render('provider_edit.hbs', {
+    //     userData: testData.provider_edit_data
+    // })
 });
 
 app.get('/settings', userSessionCheck, (request, response) => {
@@ -213,80 +238,7 @@ app.post('/settings_password', (req, res) => {
     }
 });
 
-//just added
-// app.post('/after_pro_edit', (req, res) => {
-//     // db.changeStatus(ActionValue, noteValue)
-//      db.changeStatus('ActionValue-test', 'noteValue-test')
-//     .then((resolved) => {
-//         res.send(resolved)
-//     }, (error) => {
-//         res.sendStatus(500)
-//         console.log(error);
-//     })
-    
 
-// });
-//end
-
-app.get('/provider_edit', adminSessionCheck, (req, res) => {
-	res.render('provider_edit.hbs', {
-		userData: testData.provider_edit_data
-	})
-});
-
-app.post('/provider_edit', adminSessionCheck, (req, res) => {
-    res.send(JSON.stringify(req.body))
-    console.log("Why")
-    console.log(req.body);
-
-    var noteValue = req.body.noteValue;
-
-    // var acceptAction = req.body.acceptAction;
-    // if (acceptAction == 0){
-    //     var ActionValue = "Accepted";
-    // } else if (acceptAction == 1){
-    //     var ActionValue = "Denied";
-    // }
-
-    // // db.getFile();
-
-    // db.changeStatus(ActionValue, noteValue)
-    //     .then((resolved) => {
-    //         res.send(resolved)
-    //     }, (error) => {
-    //         res.sendStatus(500)
-    //         console.log(error);
-    //     })
-
-
-
-
-    // var approve_update = "UPDATE license SET status = 'Aprroved', admin_notes = 'The new notes' WHERE license_id = 12345";
-    // var deny_update = "UPDATE license SET status = 'Denied', admin_notes = 'The very new notes' WHERE license_id = 12345";
-    // var file_download = "SELECT file FROM license WHERE license_id = 12345";
-
-    // con.query(approve_update, function(err, result) {
-    //     if (err) throw err;
-    //     console.log(result.affectedRows + " record(s) updated");
-    //   });
-
-    // con.query(deny_update, function(err, result) {
-    //     if (err) throw err;
-    //     console.log(result.affectedRows + " record(s) updated");
-    //   });
-
-    // con.query(file_download, function(err, result) {
-    //     if (err) throw err;
-    //     console.log(result.affectedRows + " record(s) updated");
-    //   });
-    
-
-
-
-    // res.render('provider_edit.hbs', {
-    //     userData: testData.provider_edit_data
-    // })
-});
 
 app.get('/landing_page', (req, res) => {
 	res.render('landing_page.hbs')

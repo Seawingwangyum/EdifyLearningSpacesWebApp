@@ -280,16 +280,7 @@ function changeStatus(status, notes) {
         connect(con)
         .then((resolved) => {
             con.connect(err => {
-                
-                con.query("UPDATE license SET status ='" +status+ "' WHERE license_id = 12345;", function (err, result) {
-                    if (err){
-                        reject(err)
-                        }
-                    con.end();
-                    resolve('ok')
-                }),
-
-                con.query("UPDATE license SET admin_notes ='" +notes+ "' WHERE license_id = 12345;", function (err, result) {
+                con.query("UPDATE license SET status='"+status+ "', admin_notes ='" +notes+ "' WHERE license_id = 12345;", function (err, result) {
                     if (err){
                         reject(err)
                         }
@@ -303,6 +294,7 @@ function changeStatus(status, notes) {
     })   
 }
 
+//needa make it look like retrievelicense
 function getFile() {
     con.connect(function(err) {
         if (err) throw err;
