@@ -129,9 +129,10 @@ app.post('/status', (req, res) => {
     })
 });
 
-app.get('/settings', userSessionCheck, (request, response) => {
-    response.render('settings.hbs', {
-        userData: testData.user_data
+app.get('/settings', userSessionCheck, (req, res) => {
+    res.render('settings.hbs', {
+        name: req.session.user.fname + ' ' + req.session.user.lname,
+        email: req.session.user.email
     });
 });
 
