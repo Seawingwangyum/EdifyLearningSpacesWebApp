@@ -8,7 +8,7 @@ function createConnection() {
     var con = mysql.createConnection({
         host: "localhost",
         user: "root",
-        password: "Password",
+        password: "password",
         database: "edify"
     });
     return con
