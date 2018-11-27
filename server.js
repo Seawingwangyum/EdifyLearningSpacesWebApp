@@ -65,7 +65,7 @@ var testData = require('./public/testData')
 function userSessionCheck(req, res, next) {
     console.log('user session');
     console.log(req.session.user);
-    if (req.session.user.admin === 0) {
+    if (req.session.user && req.session.user.admin === 0) {
         next()
     } else {
         res.redirect('/landing_page')
@@ -74,7 +74,7 @@ function userSessionCheck(req, res, next) {
 
 function adminSessionCheck(req, res, next) {
     console.log('admin session');
-    if (req.session.user.admin === 1) {
+    if (req.session.user && req.session.user.admin === 1) {
         next()
     } else {
         res.redirect('/landing_page')
@@ -83,7 +83,7 @@ function adminSessionCheck(req, res, next) {
 
 function superSessionCheck(req, res, next) {
     console.log('super session');
-    if (req.session.user.admin === 2) {
+    if (req.session.user && req.session.user.admin === 2) {
         next()
     } else {
         res.redirect('/landing_page')
@@ -295,6 +295,8 @@ app.get('/test', (req, res) => {
 });
 
 app.get('/account_creation', (req, res) => {
+    // goto db
+    
 	res.render('account_creation.hbs')
 });
 app.post('/account_creation', (req, res) => {

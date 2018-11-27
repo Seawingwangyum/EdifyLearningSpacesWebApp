@@ -6,17 +6,13 @@ var mysql = require('mysql');
  */
 function createConnection() {
     var con = mysql.createConnection({
-        connectionLimit : 100,
-        host     : '54.244.61.15',
-        port     :  3306,
         host: "localhost",
-        user: "user",
-        password: "Password1@",
+        user: "root",
+        password: "Password",
         database: "edify"
     });
     return con
 }
-
 /**
  * Connects to the database.
  * @param {array} con - connection details.
@@ -85,48 +81,18 @@ function addUser() {
 }
 
 /**
-* Sends a query to the database to get the users info.
-* @param {string} email.
-* @param {string} password.
-* @returns {Promise} returns "ok".
-*/
-function getUser(email, password) {
-    return new Promise ((resolve,reject) => {
-        var con = createConnection()
-        connect(con)
-        .then((resolved) => {
-
-            con.query("SELECT * FROM user WHERE email = '"+email+"' AND password = '"+password+"'", function (err, row) {
-                if (err){
-                    reject(err)
-                }
-                if (row.length > 0) {
-                    var user = {id: row[0].user_id, fname: row[0].first_name, lname: row[0].last_name, email: row[0].email, admin: row[0].is_admin}
-                    resolve(user);
-                } else {
-                    reject('Email not found!')
-                }      
-            })
-            con.end();
-        }), (err) => {
-            reject(err)
-        }
-    })    
-}
-
-/**
  * Sends a query to the database to update first and last name.
  * @param {string} fname - First name.
  * @param {string} lname - Last name.
  * @returns {Promise} returns "ok".
  */
-function changeName(fname, lname) {
+function changeName(fname, lname, id) {
     return new Promise((resolve, reject) => {
         var con = createConnection();
         connect(con)
         .then((resolved) => {
 
-            con.query("UPDATE user SET first_name ='" + fname + "', last_name ='" + lname + "' WHERE user_id = 3;", 
+            con.query("UPDATE user SET first_name ='" + fname + "', last_name ='" + lname + "' WHERE user_id = "+ id +";", 
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -147,13 +113,13 @@ function changeName(fname, lname) {
  * @param {string} email.
  * @returns {Promise} returns "ok".
  */
-function changeEmail(email) {
+function changeEmail(email, id) {
     return new Promise((resolve, reject) => {
         var con = createConnection();
         connect(con)
         .then((resolved) => {
 
-            con.query("UPDATE user SET email ='" + email + "' WHERE user_id = 3;",
+            con.query("UPDATE user SET email ='" + email + "' WHERE user_id ="+ id +";",
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -174,13 +140,13 @@ function changeEmail(email) {
  * @param {string} password.
  * @returns {Promise} returns "ok".
  */
-function changePassword(password) {
+function changePassword(password, id) {
     return new Promise((resolve, reject) => {
         var con = createConnection();
         connect(con)
         .then((resolved) => {
 
-            con.query("UPDATE user SET password ='" + password + "' WHERE user_id = 3;",
+            con.query("UPDATE user SET password ='" + password + "' WHERE user_id ="+ id +";",
             function(err, result) {
                 if (err) {
                     reject(err);
