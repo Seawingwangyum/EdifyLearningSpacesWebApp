@@ -84,6 +84,7 @@ function addUser() {
  * Sends a query to the database to update first and last name.
  * @param {string} fname - First name.
  * @param {string} lname - Last name.
+ * @param {int} id - user id.
  * @returns {Promise} returns "ok".
  */
 function changeName(fname, lname, id) {
@@ -111,6 +112,7 @@ function changeName(fname, lname, id) {
 /**
  * Sends a query to the database to update email.
  * @param {string} email.
+ * @param {int} id - user id.
  * @returns {Promise} returns "ok".
  */
 function changeEmail(email, id) {
@@ -138,6 +140,7 @@ function changeEmail(email, id) {
 /**
  * Sends a query to the database to update password.
  * @param {string} password.
+ * @param {int} id - user id.
  * @returns {Promise} returns "ok".
  */
 function changePassword(password, id) {
@@ -232,6 +235,34 @@ function retrievelicenses(user_id) {
     con.end();
 }
 
+/**
+ * Sends a query to the database to update password.
+ * @param {string} note - the note entered by a user or admin.
+ * @param {string} type - user or admin.
+ * @param {int} id - users id.
+ * @returns {Promise} returns "ok".
+ */
+function addNote(note, type, id) {
+    return new Promise((resolve, reject) => {
+        var con = createConnection();
+        connect(con)
+        .then((resolved) => {
+
+            con.query("UPDATE license SET "+ type +" = '"+ note +"' WHERE frn_user_id = "+ id,
+            function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+
+        }).catch((error) => {
+            reject(error);
+        });
+    });
+    con.end();
+}
 
 module.exports = {
     getUser,
@@ -240,6 +271,7 @@ module.exports = {
     changePassword,
     retrievelicenses,
     getLicense,
-    addLicense
+    addLicense,
+    addNote
 }
 

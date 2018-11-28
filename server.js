@@ -253,39 +253,46 @@ app.get('/licenses', (req, res) => {
 
 app.post('/licenses', (req, res) => {
     if (Object.keys(req.files).length == 0) {
-    return res.status(400).send('No files were uploaded.');
-  }
+        return res.status(400).send('No files were uploaded.');
+    } else {
+        // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+        let sampleFile = req.files.pic;
+        var note = req.body.notes
+        console.log(req.files);
 
-    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    let sampleFile = req.files.pic;
-    console.log(req.files);
+        crypto.pseudoRandomBytes(16, function(err, raw) {
+            if (err) return callback(err);
+            var filename = raw.toString('hex') + path.extname(req.files.pic.name);
 
-    crypto.pseudoRandomBytes(16, function(err, raw) {
-        if (err) return callback(err);
-        var filename = raw.toString('hex') + path.extname(req.files.pic.name);
+            verify_license.verify_license(req.body).then((data) => {
 
-        verify_license.verify_license(req.body).then((data) => {
+                sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
 
-            sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
-
-                if (err) {
-
-                res.status(500).send(err);
-                }
-                
+                    if (err) {
+                    res.status(500).send(err);
+                    }
+                    
+                });
+            db.addNote(note, 'user_notes', req.session.user.id)
+                .then((resolved) => {
+                    res.send('File uploaded!');
+                }).catch((error) => {
+                    res.sendStatus(500)
+                    console.log(error);
+                });
+            db.addLicense(filename, req.body.type, req.body.notes, 1)
+                .then((resolved) => {
+                    res.send('File uploaded!');
+                }).catch((error) => {
+                    res.sendStatus(500)
+                    console.log(error);
+                });
+            }).catch((error) => {
+                res.send(error)
             });
-        db.addLicense(filename, req.body.type, req.body.notes, 1)
-            .then((resolved) => {
-                res.send('File uploaded!');
-            }, (error) => {
-                res.sendStatus(500)
-                console.log(error);
-            })
-        }, (error) => {
-            res.send(error)
         })
-    })
-    });
+    }    
+});
 
 
 
