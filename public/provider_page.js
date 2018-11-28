@@ -66,7 +66,7 @@ function createOptions(id, name) {
 		form_right = createNewElement('div', 'form_right');
 		form_left_padding = createNewElement('div', 'form_left_padding', 'Add a note');
 
-		note_input = createNewElement('textarea', 'note_input', 'No notes.');
+		note_input = createNewElement('textarea', 'note_input');
 		note_input.rows = '3';
 		note_input.id = id + '_NInput';
 		// why do I keep getting NULL error for notes??????????

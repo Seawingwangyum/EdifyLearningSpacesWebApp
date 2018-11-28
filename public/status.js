@@ -53,7 +53,7 @@ function floorOCSS() {
 });
 }
 
-function request_status(){
+function request_status(json_obj){
     console.log("hellothere");
     $.ajax({
         type: 'POST',
@@ -62,18 +62,19 @@ function request_status(){
         url: 'http://localhost:8080/status',
         success: function(data){
             //console.log(data["CRC"][0])
+
             for(var item in data){
-                //console.log(data[item][0])
+                console.log('data: ' + data[item][0])
                 var cur = windows[statuses.indexOf(item)]
                 console.log(cur)
                 switch (data[item][0]){
-                    case "approved":
+                    case "Accepted":
                         document.getElementById(cur).className = "greenbuttons"
                         break;
-                    case "pending":
+                    case "Awaiting Approval":
                         document.getElementById(cur).className = "yellowbuttons"
                         break;
-                    case "rejected":
+                    case "Denied":
                         document.getElementById(cur).className = "redbuttons"
                 }
             }
@@ -87,7 +88,7 @@ function request_status(){
 crimOCSS();
 siteOCSS();
 floorOCSS();
-<<<<<<< HEAD
+
 
 
 
@@ -134,8 +135,8 @@ floorOCSS();
 // };
 
 // run_mysqlSS()
-=======
+
 document.addEventListener("DOMContentLoaded", function(){
     request_status()
 }, false)
->>>>>>> 6df5eacf4a1d67abb18ed5d53e5b0e65e561be95
+

@@ -123,12 +123,20 @@ function filterList(list, id, fname, lname, status) {
 }
 
 app.get('/status', userSessionCheck, (request, response) => {
-    db.loadStatus(12345)
+    db.retrievelicenses(1)
     .then((resolved) => {
+        console.log(resolved);
              response.render('status.hbs', {
-                data1: resolved.type,
-                data2: resolved.status,
-                data3: resolved.admin_notes,
+                fireplanStatus: resolved['fireplan'].status,
+                fireplanNotes: resolved['fireplan'].admin_notes,
+                criminalStatus: resolved['criminal'].status,
+                criminalNotes: resolved['criminal'].admin_notes,
+                siteplanStatus: resolved['siteplan'].status,
+                siteplanNotes: resolved['siteplan'].admin_notes,
+                refStatus: resolved['references'].status,
+                refNotes: resolved['references'].admin_notes,
+                floorplanStatus: resolved['floorplan'].status,
+                floorplanNotes: resolved['floorplan'].admin_notes,
 
             })});
     // db.loadStatus(22345);
@@ -148,13 +156,10 @@ app.get('/status', userSessionCheck, (request, response) => {
 });
 
 app.post('/status', (request, response) => {
-    db.loadStatus(12345)
+    db.retrievelicenses(1)
     .then((resolved) => {
              response.render('status.hbs', {
-                data1: resolved.type,
-                data2: resolved.status,
-                data3: resolved.admin_notes,
-
+                data: resolved
             })});
 });
 
@@ -169,8 +174,6 @@ app.post('/provider_edit', adminSessionCheck, (request, response) => {
     // res.send(JSON.stringify(req.body))
     console.log(request.body.Action);
     console.log(request.body.L_ID);
-
-    // var noteValue = req.body.noteValue;
 
     // db.getFile();
 

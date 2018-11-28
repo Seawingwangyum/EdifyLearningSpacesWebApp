@@ -248,7 +248,7 @@ function getLicense(license_id) {
 
 
 function retrievelicenses(user_id) {
-    status_data = {}
+    status_data = []
     return new Promise((resolve, reject) =>{
         var con = createConnection();
         connect(con)
@@ -259,9 +259,53 @@ function retrievelicenses(user_id) {
                     reject(err);
                 } else {
                     for(i = 0; i < result.length; i++) {
-                        status_data[result[i].type] = [result[i].status] 
-                    }
+                       
+                        if (result[i].type == 'Criminal Record Check'){
+                            status_data['criminal'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                            
+                                                         admin_notes:result[i].admin_notes,
+                                            
+                                        } 
+                        } else if (result[i].type == 'Site Plan'){
+                            status_data['siteplan'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                            
+                                                         admin_notes:result[i].admin_notes,
+                                            
+                                        } 
+                            
+                        } else if (result[i].type == 'Floor Plan') {
+                            status_data['floorplan'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                            
+                                                         admin_notes:result[i].admin_notes,
+                                            
+                                        } 
+
+                        } else if (result[i].type == 'References') {
+                            status_data['references'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                            
+                                                         admin_notes:result[i].admin_notes,
+                                            
+                                        } 
+                        } else if (result[i].type == 'Fire Safety Plan'){
+                            status_data['fireplan'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                            
+                                                         admin_notes:result[i].admin_notes,
+                                            
+                                        } 
+                        }
+                        }
                     resolve(status_data);
+                    console.log(status_data);
                 }
                 
             })
