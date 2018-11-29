@@ -172,7 +172,7 @@ function ajax_function(json_obj){
         contentType: 'application/json',
         url: '/account_creation',
         success: function(data){
-            console.log(data)
+            // console.log(data)
             if(data.Error == "0"){
                 location.href="/landing_page"
             }
