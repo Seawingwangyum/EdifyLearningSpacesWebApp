@@ -5,7 +5,7 @@ var crimtxtStateSS = "close",
 var user = 1;
 
 var windows = ["crimCheckSS", "siteCheckSS","floorCheckSS"]
-var statuses = ["CRC", "SP", "FP"]
+var statuses = ["criminal", "siteplan", "floorplan"]
 
 /**
 * Function to open and close criminal record check information box
@@ -53,8 +53,12 @@ function floorOCSS() {
 });
 }
 
-function request_status(json_obj){
-    console.log("hellothere");
+
+/**
+ * request information from the database to determine what color each tab is
+ */
+function request_status(){
+    //console.log("hellothere");
     $.ajax({
         type: 'POST',
         data: JSON.stringify({user:1}),
@@ -66,9 +70,8 @@ function request_status(json_obj){
             for(var item in data){
 
                 var cur = windows[statuses.indexOf(item)]
-                console.log(cur)
                 switch (data[item][0]){
-                    case "Accepted":
+                    case "approved":
                         document.getElementById(cur).className = "greenbuttons"
                         break;
                     case "Awaiting Approval":
@@ -81,9 +84,6 @@ function request_status(json_obj){
         }
     })
 }
-
-//yellowbuttons greenbuttons redbuttons
-
 
 crimOCSS();
 siteOCSS();

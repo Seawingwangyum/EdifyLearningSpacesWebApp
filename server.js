@@ -158,10 +158,14 @@ app.post('/status', (request, response) => {
 });
 
 
-app.get('/provider_edit', adminSessionCheck, (request, response) => {
-    response.render('provider_edit.hbs', {
-        userData: testData.provider_edit_data
-    })
+app.post('/status', (req, res) => {
+   console.log(req.body)
+   db.retrievelicenses(req.body.user).then((resolved)=>{
+       //console.log(resolved)
+        res.send(resolved)
+   },(error)=>{
+       console.log(error)
+   })
 });
 
 app.post('/provider_edit', adminSessionCheck, (request, response) => {
@@ -365,8 +369,14 @@ app.post('/account_creation', (req, res) => {
             bcrypt2.hash(req.body.password, salt, function(err, hash) {
                 if (err) return next(err);
                 req.body.password = hash; 
-                console.log(req.body.password);
-            // send to db
+                //console.log(req.body.password);
+                //console.log(req.body.password.length)
+                db.addUser(req.body)
+                .then((resolve)=>{
+
+                }, (error) =>{
+                    console.log(error)
+                })
             res.send(data)
         });
     });

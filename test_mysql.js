@@ -8,22 +8,29 @@ var mysql = require('mysql');
  * @returns {array} con - connection details
  */
 function createConnection() {
+    var con = mysql.createConnection({
+        connectionLimit : 100,
+        host     : '54.212.70.68',
+        port     :  3306,
+        user: "edifyuser",
+        password: "EdifyPassword1!",
+        database: "edify"
+    });
+ 
+    return con
+ 
+ }
 
-
+/*
  var con = mysql.createConnection({
         host: "localhost",
         user: "root",
         password: "password",
         database: "edify"
 });
-
-
-
   return con
-
-
-
 }
+*/
 
 /**
  * Connects to the database.
@@ -71,13 +78,16 @@ function getUser(email, password) {
     });
     con.end();
 }
-
-function addUser() {
+/**
+ * Receives information from account_creation and creates entry into the database
+ * @param {JSON} info - The information revieved from the website when creating an account
+ */
+function addUser(info) {
     return new Promise ((resolve, reject) => {
-        var con = net.createConnection();
+        var con = createConnection();
         connect(con)
         .then((resolved) => {
-            con.query("INSERT INTO user(first_name, last_name, password, email, location, is_admin) values ('fred', 'jeff', 'password', 'fred@jeff.com', 'Surrey', '0')", 
+            con.query(`INSERT INTO user(first_name, last_name, password, email, location, is_admin) values ('${info.fname}', '${info.lname}', '${info.password}', '${info.email}', '${info.address}', '0')`, 
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -226,6 +236,11 @@ function addLicense(file, type, notes, user_id) {
     con.end();
 }
 
+
+/**
+ * Gets information about a license using an id number.
+ * @param {*} license_id - The Id Number of the selected licenses.
+ */
 function getLicense(license_id) {
     return new Promise((resolve, reject) => {
         var con = createConnection();
@@ -248,7 +263,10 @@ function getLicense(license_id) {
     con.end();
 }
 
-
+/**
+ * Gets status information using the identification number of a user.
+ * @param {*} user_id - The identification number of the user.
+ */
 function retrievelicenses(user_id) {
     status_data = []
     return new Promise((resolve, reject) =>{
@@ -257,11 +275,15 @@ function retrievelicenses(user_id) {
         .then((resolved) => {
                 
             con.query("SELECT * FROM license WHERE frn_user_id = " + user_id + ";", function (err, result) {
+                //console.log(result)
                 if (err) {
                     reject(err);
                 } else {
                     for(i = 0; i < result.length; i++) {
-                       
+                        //console.log(result[i])
+                        status_data[result[i].type] = [result[i].status] 
+                    }
+                       /*
                         if (result[i].type == 'Criminal Record Check'){
                             status_data['criminal'] = {  type:result[i].type,
                                                          status:result[i].status,
@@ -306,10 +328,10 @@ function retrievelicenses(user_id) {
                                         } 
                         }
                         }
+                        */
                     resolve(status_data);
                     console.log(status_data);
                 }
-                
             })
         }).catch((error) => {
             reject(error);
@@ -317,8 +339,6 @@ function retrievelicenses(user_id) {
     });
     con.end();
 }
-
-
 
 function changeStatus(id, status, notes) {
     return new Promise((resolve, reject) =>{
@@ -376,7 +396,6 @@ function loadStatus(id) {
     })   
 }
 
-
 module.exports = {
     getUser,
     changeName,
@@ -387,6 +406,7 @@ module.exports = {
     //getFile
     retrievelicenses,
     getLicense,
-    addLicense
+    addLicense,
+    addUser
 }
 
