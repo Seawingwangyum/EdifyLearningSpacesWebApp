@@ -265,21 +265,35 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    db.getUser(req.body.Email, req.body.Passwd).then((resolved) => {
-        var user = resolved
-        console.log(user);
-        req.session.user = user;
-        if (user.admin === 0) {
-            res.redirect('/licenses')
-        } else if (user.admin === 1) {
-            res.redirect('/provider_list')
-        } else if (user.admin === 2) {
-            res.redirect('/admin_list')
+
+        
+    bcrypt2.genSalt(10, function(err, salt) {
+        if (err) return (err);
+        bcrypt2.hash(req.body.password, salt, function(err, hash) {
+            if (err) return (err);
+                req.body.password = hash; 
+                console.log(req.body.password);
+            db.getUser(req.body.Email, req.body.Passwd).then((resolved) => {
+            var user = resolved
+            console.log(user);
+            req.session.user = user;
+                if (user.admin === 0) {
+                    res.redirect('/licenses')
+                } else if (user.admin === 1) {
+                    res.redirect('/provider_list')
+                } else if (user.admin === 2) {
+                res.redirect('/admin_list')
         }
     }).catch ((error) => {
         console.log(error)
         res.redirect('/login')
     })
+            res.send(data)
+        });
+    });
+        
+    
+    
 });
  
 app.get('/tandp', (req, res) => {
