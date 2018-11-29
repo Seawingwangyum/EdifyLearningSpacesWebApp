@@ -97,6 +97,5 @@ use edify;
 SELECT * from user;
 SELECT * from license;
 
-
 -- Dump completed on 2018-11-23 11:04:57
 

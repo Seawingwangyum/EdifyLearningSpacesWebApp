@@ -3,32 +3,25 @@ var mysql = require('mysql');
 // var nodemailer = require('nodemailer');
 // var passport = require('passport');
 // var LocalStrategy = require('passport-local').Strategy;
-// var bcrypt = require('bcrypt-nodejs');
-// var bcrypt2 = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
+var bcrypt2 = require('bcrypt');
 // var async = require('async');
-// var crypto = require('crypto');
+var crypto = require('crypto');
 
 
-// var bcrypt2 = require('bcrypt');
 
 const port = process.env.port || 8080;
 const express = require('express');
 //forgot_pass
 const path = require('path');
-// const logger = require('morgan');
-// const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
 
 const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
+const fileUpload = require('express-fileupload');
 
-
-var con = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "Password",
-      database: "edify"
-    });
 
 // const fileUpload = require('express-fileupload');
 
@@ -54,7 +47,7 @@ app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
 
 // app.use(logger('dev'));
 // app.use(cookieParser());
-// app.use(fileUpload());
+app.use(fileUpload());
 
 
 // bodyparser setup
@@ -77,7 +70,7 @@ var testData = require('./public/testData')
 // Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
 function userSessionCheck(req, res, next) {
     console.log('user session');
-    console.log(req.session.user);
+    // console.log(req.session.user);
     if (req.session.user.admin === 0) {
         next()
     } else {
@@ -125,7 +118,7 @@ function filterList(list, id, fname, lname, status) {
 app.get('/status', userSessionCheck, (request, response) => {
     db.retrievelicenses(1)
     .then((resolved) => {
-        console.log(resolved);
+        // console.log(resolved);
              response.render('status.hbs', {
                 criminalStatus: resolved['criminal'].status,
                 criminalNotes: resolved['criminal'].admin_notes,
@@ -137,17 +130,23 @@ app.get('/status', userSessionCheck, (request, response) => {
                 refNotes: resolved['references'].admin_notes,
                 fireplanStatus: resolved['fireplan'].status,
                 fireplanNotes: resolved['fireplan'].admin_notes,
-            })});
+            })
+    }).catch((error) => {
+        console.log(error);
+        response.send('error');
+    });
 });
 
-app.post('/status', (request, response) => {
-    db.retrievelicenses(1)
-    .then((resolved) => {
-             response.render('status.hbs', {
-                data: resolved
-            })});
-});
 
+app.post('/status', (req, res) => {
+        db.retrievelicenses(1)
+    .then((resolved) =>{
+        res.send(resolved)
+    }).catch((error) => {
+        console.log(error);
+        response.send('error');
+    });
+});
 
 app.get('/provider_edit', adminSessionCheck, (request, response) => {
     response.render('provider_edit.hbs', {
@@ -158,8 +157,9 @@ app.get('/provider_edit', adminSessionCheck, (request, response) => {
     // .then((resolved) => {
     //          response.render('provider_edit.hbs', {
     //             data: resolved
-    //         })});
+            // })
 });
+
 
 app.post('/provider_edit', adminSessionCheck, (request, response) => {
     // res.send(JSON.stringify(req.body))
@@ -292,10 +292,10 @@ app.get('/licenses', (req, res) => {
 });
 
 app.post('/licenses', (req, res) => {
-    if (Object.keys(req.files).length == 0) {
+  
+    if (req.files == undefined) {
     return res.status(400).send('No files were uploaded.');
-  }
-
+  } else {
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
     let sampleFile = req.files.pic;
     console.log(req.files);
@@ -324,7 +324,11 @@ app.post('/licenses', (req, res) => {
         }, (error) => {
             res.send(error)
         })
-    })
+    }) 
+
+  }
+
+    
     });
 
 
@@ -354,8 +358,14 @@ app.post('/account_creation', (req, res) => {
             bcrypt2.hash(req.body.password, salt, function(err, hash) {
                 if (err) return next(err);
                 req.body.password = hash; 
-                console.log(req.body.password);
-            // send to db
+                //console.log(req.body.password);
+                //console.log(req.body.password.length)
+                db.addUser(req.body)
+                .then((resolve)=>{
+
+                }, (error) =>{
+                    console.log(error)
+                })
             res.send(data)
         });
     });
@@ -424,10 +434,6 @@ app.get('/quizresults', (request, response) => {
 });
 
 
-con.connect(function(err) {
-      if (err) throw err;
-      console.log("Connected!");
-    });
 
 
 app.listen(process.env.PORT || 8080, () => {

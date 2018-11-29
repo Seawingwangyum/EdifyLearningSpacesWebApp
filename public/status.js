@@ -4,8 +4,8 @@ var crimtxtStateSS = "close",
 
 var user = 1;
 
-var windows = ["crimCheckSS", "siteCheckSS","floorCheckSS"]
-var statuses = ["CRC", "SP", "FP"]
+var windows = ["crimCheckSS", "siteCheckSS","floorCheckSS", "referencesSS", "firePlanSS"]
+var statuses = ["criminal", "siteplan", "floorplan", "references", "fireplan"]
 
 /**
 * Function to open and close criminal record check information box
@@ -53,6 +53,7 @@ function floorOCSS() {
 });
 }
 
+
 function refOCSS() {
     document.getElementById("referencesSS").addEventListener("click", () =>{
     if (floortxtStateSS == "close"){
@@ -79,21 +80,26 @@ function fireOCSS() {
 }
 
 
-function request_status(json_obj){
-    console.log("hellothere");
+
+/**
+ * request information from the database to determine what color each tab is
+ */
+function request_status(){
+    //console.log("hellothere");
+
     $.ajax({
         type: 'POST',
         data: JSON.stringify({user:1}),
         contentType: 'application/json',
         url: 'http://localhost:8080/status',
         success: function(data){
-            //console.log(data["CRC"][0])
+            console.log(data)
 
             for(var item in data){
-                console.log('data: ' + data[item][0])
+
                 var cur = windows[statuses.indexOf(item)]
-                console.log(cur)
-                switch (data[item][0]){
+                console.log(data[item].status);
+                switch (data[item].status){
                     case "Accepted":
                         document.getElementById(cur).className = "greenbuttons"
                         break;

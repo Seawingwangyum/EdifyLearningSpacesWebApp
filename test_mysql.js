@@ -1,27 +1,50 @@
 require('dotenv').config();
 var mysql = require('mysql');
 
-var con = mysql.createPool({
-  host: process.env.DBHOST,
-  user: process.env.DBUSER,
-  password: process.env.DBPASSWORD,
-  database: process.env.DBNAME,
-  port: process.env.DBPORT
-});
+
 
 /**
  * Creates a connection to the database.
  * @returns {array} con - connection details
  */
 function createConnection() {
-    var con = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "Password",
-        database: "edify"
-    });
-    return con
+
+
+  var con = mysql.createConnection({
+
+      connectionLimit : 100,
+
+      host     : '54.202.177.36',
+
+      port     :  3306,
+
+
+
+      user: "edifyuser",
+
+      password: "EdifyPassword1!",
+
+      database: "edify"
+
+  });
+
+  return con
+
 }
+
+
+
+
+
+//  var con = mysql.createConnection({
+//         host: "localhost",
+//         user: "root",
+//         password: "Password",
+//         database: "edify"
+// });
+//   return con
+// }
+
 
 /**
  * Connects to the database.
@@ -69,13 +92,16 @@ function getUser(email, password) {
     });
     con.end();
 }
-
-function addUser() {
+/**
+ * Receives information from account_creation and creates entry into the database
+ * @param {JSON} info - The information revieved from the website when creating an account
+ */
+function addUser(info) {
     return new Promise ((resolve, reject) => {
-        var con = net.createConnection();
+        var con = createConnection();
         connect(con)
         .then((resolved) => {
-            con.query("INSERT INTO user(first_name, last_name, password, email, location, is_admin) values ('fred', 'jeff', 'password', 'fred@jeff.com', 'Surrey', '0')", 
+            con.query(`INSERT INTO user(first_name, last_name, password, email, location, is_admin) values ('${info.fname}', '${info.lname}', '${info.password}', '${info.email}', '${info.address}', '0')`, 
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -208,7 +234,7 @@ function addLicense(file, type, notes, user_id) {
         var con = createConnection();
         connect(con)
         .then((resolved) => {
-            con.query("INSERT INTO license(file, type, user_notes, frn_user_id) values ('"+file+"', '" + type + "', '" + notes + "', " + user_id +")",
+            con.query("INSERT INTO license(file, type, user_notes, frn_user_id, status) values ('"+file+"', '" + type + "', '" + notes + "', " + user_id +", 'pending')",
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -224,6 +250,11 @@ function addLicense(file, type, notes, user_id) {
     con.end();
 }
 
+
+/**
+ * Gets information about a license using an id number.
+ * @param {*} license_id - The Id Number of the selected licenses.
+ */
 function getLicense(license_id) {
     return new Promise((resolve, reject) => {
         var con = createConnection();
@@ -246,9 +277,20 @@ function getLicense(license_id) {
     con.end();
 }
 
-
+/**
+ * Gets status information using the identification number of a user.
+ * @param {*} user_id - The identification number of the user.
+ */
 function retrievelicenses(user_id) {
-    status_data = []
+    var defaultJSON = {
+        criminal: {status: null, adminnotes: ''},
+        siteplan: {status: null, adminnotes: ''},
+        floorplan: {status: null, adminnotes: ''},
+        references: {status: null, adminnotes: ''},
+        fireplan: {status: null, adminnotes: ''},
+    }
+
+    status_data = {}
     return new Promise((resolve, reject) =>{
         var con = createConnection();
         connect(con)
@@ -260,7 +302,7 @@ function retrievelicenses(user_id) {
                 } else {
                     for(i = 0; i < result.length; i++) {
                        
-                        if (result[i].type == 'Criminal Record Check'){
+                        if (result[i].type == 'criminal'){
                             status_data['criminal'] = {  type:result[i].type,
                                                          status:result[i].status,
                                                          license_id:result[i].license_id,
@@ -268,7 +310,7 @@ function retrievelicenses(user_id) {
                                                          admin_notes:result[i].admin_notes,
                                             
                                         } 
-                        } else if (result[i].type == 'Site Plan'){
+                        } else if (result[i].type == 'siteplan'){
                             status_data['siteplan'] = {  type:result[i].type,
                                                          status:result[i].status,
                                                          license_id:result[i].license_id,
@@ -277,7 +319,7 @@ function retrievelicenses(user_id) {
                                             
                                         } 
                             
-                        } else if (result[i].type == 'Floor Plan') {
+                        } else if (result[i].type == 'floorplan') {
                             status_data['floorplan'] = {  type:result[i].type,
                                                          status:result[i].status,
                                                          license_id:result[i].license_id,
@@ -286,16 +328,16 @@ function retrievelicenses(user_id) {
                                             
                                         } 
 
-                        } else if (result[i].type == 'References') {
-                            status_data['references'] = {  type:result[i].type,
+                        } else if (result[i].type == 'reffile') {
+                            status_data['reffile'] = {  type:result[i].type,
                                                          status:result[i].status,
                                                          license_id:result[i].license_id,
                                             
                                                          admin_notes:result[i].admin_notes,
                                             
                                         } 
-                        } else if (result[i].type == 'Fire Safety Plan'){
-                            status_data['fireplan'] = {  type:result[i].type,
+                        } else if (result[i].type == 'firefile'){
+                            status_data['firefile'] = {  type:result[i].type,
                                                          status:result[i].status,
                                                          license_id:result[i].license_id,
                                             
@@ -303,7 +345,18 @@ function retrievelicenses(user_id) {
                                             
                                         } 
                         }
+
+                        var license_type = result[i].type
+                        defaultJSON[license_type].status = result[i].status
+                        defaultJSON[license_type].adminnotes = result[i].admin_notes
+
+
                         }
+                        
+                    
+                    resolve(defaultJSON)
+
+
                     resolve(status_data);
                     // console.log(status_data);
                 }
@@ -315,8 +368,6 @@ function retrievelicenses(user_id) {
     });
     con.end();
 }
-
-
 
 function changeStatus(id, status, notes) {
     return new Promise((resolve, reject) =>{
@@ -374,7 +425,6 @@ function loadStatus(id) {
     })   
 }
 
-
 module.exports = {
     getUser,
     changeName,
@@ -385,6 +435,7 @@ module.exports = {
     //getFile
     retrievelicenses,
     getLicense,
-    addLicense
+    addLicense,
+    addUser
 }
 
