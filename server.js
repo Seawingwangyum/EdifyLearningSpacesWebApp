@@ -7,6 +7,7 @@ var bcrypt = require('bcrypt-nodejs');
 var bcrypt2 = require('bcrypt');
 var async = require('async');
 var crypto = require('crypto');
+
 var bcrypt2 = require('bcrypt');
 
 const port = process.env.port || 8080;
@@ -15,7 +16,7 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
-const multer = require('multer');
+
 const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
@@ -36,6 +37,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/assets'));
 app.use(express.static(__dirname + '/fonts'));
 app.use(express.static('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads'));
+
 app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
 //forgot_pass
 app.use(logger('dev'));
@@ -200,6 +202,12 @@ app.get('/requirements', (req, res) => {
 	res.render('requirements.hbs')
 });
 
+/*
+app.get('/ad_page', (req, res) => {
+	res.render('ad_page.hbs')
+});
+*/
+
 app.get('/login', (req, res) => {
     res.render('login.hbs')
 });
@@ -222,35 +230,18 @@ app.post('/login', (req, res) => {
     })
 });
  
+app.get('/tandp', (req, res) => {
+    res.render('terms.hbs')
+});
+
+
 app.get('/logout', (req, res) => {
     req.session.reset();
     res.redirect('/landing_page');
 });
 
 app.get('/licenses', (req, res) => {
-    res.render('license.hbs')
-});
-
-
-app.post('/licenses', async (req, res, next) => {
-    crypto.pseudoRandomBytes(16, function(err, raw) {
-      if (err) return callback(err);
-      var filename = raw.toString('hex') + path.extname(req.files.pic.name);
-      upload(req, res, err => {
-          if (err) {
-              return res.status(400).send({
-                  error: 'The request was invalid',
-                  fileName: 'bad',
-              });
-          }
-          return res.status(200).send({
-
-              fileName: filename
-          });
-      });
-  });
-
-    
+	res.render('license.hbs')
 });
 
 app.post('/licenses', (req, res) => {
@@ -290,6 +281,8 @@ app.post('/licenses', (req, res) => {
     });
 
 
+
+
 app.get('/test', (req, res) => {
     db.getLicense(2).then(function(resolved) {
         console.log(resolved);
@@ -302,9 +295,11 @@ app.get('/test', (req, res) => {
 });
 
 app.get('/account_creation', (req, res) => {
-    res.render('account_creation.hbs')
+	res.render('account_creation.hbs')
 });
 app.post('/account_creation', (req, res) => {
+
+    
     console.log(req.body);
     //send_email.send_email();
     verify_signup.verify_signup(req.body).then((data) =>{
@@ -332,7 +327,6 @@ app.get('/passchange', (req, res)=>{
 app.get('/deleteaccount', (req, res)=>{
     res.render('accountdelete.hbs')
 })
-
 
 app.get('/provider_list', adminSessionCheck, (req, res, list) => {
 	res.render('provider_list.hbs', {
