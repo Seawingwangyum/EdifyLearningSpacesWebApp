@@ -7,6 +7,7 @@ var mysql = require('mysql');
  * Creates a connection to the database.
  * @returns {array} con - connection details
  */
+
 function createConnection() {
 
 
@@ -16,7 +17,7 @@ function createConnection() {
 
       host     : '',
 
-      port     :  3306,
+      port     :  ,
 
 
 
@@ -31,7 +32,6 @@ function createConnection() {
   return con
 
 }
-
 
 
 
