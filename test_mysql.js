@@ -260,12 +260,15 @@ function retrievelicenses(user_id) {
         .then((resolved) => {
                 
             con.query("SELECT * FROM license WHERE frn_user_id = " + user_id + ";", function (err, result) {
+                //console.log(result)
                 if (err) {
                     reject(err);
                 } else {
                     for(i = 0; i < result.length; i++) {
+                        //console.log(result[i])
                         status_data[result[i].type] = [result[i].status] 
                     }
+                    console.log(status_data)
                     resolve(status_data);
                 }
                 

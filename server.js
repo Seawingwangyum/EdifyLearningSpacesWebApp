@@ -122,7 +122,7 @@ app.get('/status', userSessionCheck, (request, response) => {
 app.post('/status', (req, res) => {
    console.log(req.body)
    db.retrievelicenses(req.body.user).then((resolved)=>{
-       console.log(resolved)
+       //console.log(resolved)
         res.send(resolved)
    },(error)=>{
        console.log(error)

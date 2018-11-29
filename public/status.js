@@ -5,7 +5,7 @@ var crimtxtStateSS = "close",
 var user = 1;
 
 var windows = ["crimCheckSS", "siteCheckSS","floorCheckSS"]
-var statuses = ["CRC", "SP", "FP"]
+var statuses = ["criminal", "siteplan", "floorplan"]
 
 /**
 * Function to open and close criminal record check information box
@@ -57,7 +57,7 @@ function floorOCSS() {
  * request information from the database to determine what color each tab is
  */
 function request_status(){
-    console.log("hellothere");
+    //console.log("hellothere");
     $.ajax({
         type: 'POST',
         data: JSON.stringify({user:1}),
@@ -66,10 +66,11 @@ function request_status(){
         success: function(data){
             //console.log(data["CRC"][0])
             for(var item in data){
-                console.log(data[item][0])
+                //console.log(data[item][0])
                 var cur = windows[statuses.indexOf(item)]
-                console.log(cur)
                 switch (data[item][0]){
+                    case null:
+                        break;
                     case "approved":
                         document.getElementById(cur).className = "greenbuttons"
                         break;
