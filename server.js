@@ -1,26 +1,37 @@
 //forgot_pass_modules
 var mysql = require('mysql');
-var nodemailer = require('nodemailer');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var bcrypt = require('bcrypt-nodejs');
-var bcrypt2 = require('bcrypt');
-var async = require('async');
-var crypto = require('crypto');
+// var nodemailer = require('nodemailer');
+// var passport = require('passport');
+// var LocalStrategy = require('passport-local').Strategy;
+// var bcrypt = require('bcrypt-nodejs');
+// var bcrypt2 = require('bcrypt');
+// var async = require('async');
+// var crypto = require('crypto');
 
-var bcrypt2 = require('bcrypt');
+
+// var bcrypt2 = require('bcrypt');
 
 const port = process.env.port || 8080;
 const express = require('express');
 //forgot_pass
 const path = require('path');
-const logger = require('morgan');
-const cookieParser = require('cookie-parser');
+// const logger = require('morgan');
+// const cookieParser = require('cookie-parser');
 
 const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
-const fileUpload = require('express-fileupload');
+
+
+var con = mysql.createConnection({
+      host: "localhost",
+      user: "root",
+      password: "Password",
+      database: "edify"
+    });
+
+// const fileUpload = require('express-fileupload');
+
 
 const app = express();
 
@@ -40,9 +51,11 @@ app.use(express.static('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads'));
 
 app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
 //forgot_pass
-app.use(logger('dev'));
-app.use(cookieParser());
-app.use(fileUpload());
+
+// app.use(logger('dev'));
+// app.use(cookieParser());
+// app.use(fileUpload());
+
 
 // bodyparser setup
 var bodyParser = require('body-parser')
@@ -73,7 +86,7 @@ function userSessionCheck(req, res, next) {
 }
 
 function adminSessionCheck(req, res, next) {
-    console.log('admin session');
+    // console.log('admin session');
     if (req.session.user.admin === 1) {
         next()
     } else {
@@ -110,23 +123,71 @@ function filterList(list, id, fname, lname, status) {
 }
 
 app.get('/status', userSessionCheck, (request, response) => {
-    response.render('status.hbs', {
-        title: 'Status Page',
-        userData1: testData.provider_list_data.providers[3],
-        userData2: testData.provider_list_data.providers[6],
-        userData3: testData.provider_list_data.providers[0],
-        userData4: testData.notes
-    });
+    db.retrievelicenses(1)
+    .then((resolved) => {
+        console.log(resolved);
+             response.render('status.hbs', {
+                fireplanStatus: resolved['fireplan'].status,
+                fireplanNotes: resolved['fireplan'].admin_notes,
+                criminalStatus: resolved['criminal'].status,
+                criminalNotes: resolved['criminal'].admin_notes,
+                siteplanStatus: resolved['siteplan'].status,
+                siteplanNotes: resolved['siteplan'].admin_notes,
+                refStatus: resolved['references'].status,
+                refNotes: resolved['references'].admin_notes,
+                floorplanStatus: resolved['floorplan'].status,
+                floorplanNotes: resolved['floorplan'].admin_notes,
+
+            })});
+    // db.loadStatus(22345);
+    // db.loadStatus(32345);
+
+    // console.log(data);
+    // console.log(resolved);
+
+
+    // response.render('status.hbs', {
+    //     title: 'Status Page',
+    //     userData1: testData.provider_list_data.providers[3],
+    //     userData2: testData.provider_list_data.providers[6],
+    //     userData3: testData.provider_list_data.providers[0],
+    //     userData4: testData.notes
+    // });
 });
 
-app.post('/status', (req, res) => {
-    res.render('status.hbs', {
-        userData1: testData.provider_list_data.providers[3],
-        userData2: testData.provider_list_data.providers[6],
-        userData3: testData.provider_list_data.providers[0],
-        userData4: testData.notes
+app.post('/status', (request, response) => {
+    db.retrievelicenses(1)
+    .then((resolved) => {
+             response.render('status.hbs', {
+                data: resolved
+            })});
+});
 
+
+app.get('/provider_edit', adminSessionCheck, (request, response) => {
+    response.render('provider_edit.hbs', {
+        userData: testData.provider_edit_data
     })
+});
+
+app.post('/provider_edit', adminSessionCheck, (request, response) => {
+    // res.send(JSON.stringify(req.body))
+    console.log(request.body.Action);
+    console.log(request.body.L_ID);
+
+    // db.getFile();
+
+    db.changeStatus(request.body.L_ID, request.body.Action, request.body.notesValue)
+        .then((resolved) => {
+            response.send(resolved)
+        }, (error) => {
+            response.sendStatus(500)
+            console.log(error);
+        })
+
+    // res.render('provider_edit.hbs', {
+    //     userData: testData.provider_edit_data
+    // })
 });
 
 app.get('/settings', userSessionCheck, (request, response) => {
@@ -150,6 +211,7 @@ app.post('/settings_name', (req, res) => {
             console.log(error);
         })
     }
+
 });
 
 app.post('/settings_email', (req, res) => {
@@ -180,11 +242,7 @@ app.post('/settings_password', (req, res) => {
     }
 });
 
-app.get('/provider_edit', adminSessionCheck, (req, res) => {
-	res.render('provider_edit.hbs', {
-		userData: testData.provider_edit_data
-	})
-});
+
 
 app.get('/landing_page', (req, res) => {
 	res.render('landing_page.hbs')
@@ -381,6 +439,13 @@ app.get('/quizresults', (request, response) => {
         title: 'Quiz Page'
     });
 });
+
+
+con.connect(function(err) {
+      if (err) throw err;
+      console.log("Connected!");
+    });
+
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`server up on port ${port}`)

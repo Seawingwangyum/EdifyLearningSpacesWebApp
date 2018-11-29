@@ -1,4 +1,13 @@
+require('dotenv').config();
 var mysql = require('mysql');
+
+var con = mysql.createPool({
+  host: process.env.DBHOST,
+  user: process.env.DBUSER,
+  password: process.env.DBPASSWORD,
+  database: process.env.DBNAME,
+  port: process.env.DBPORT
+});
 
 /**
  * Creates a connection to the database.
@@ -239,7 +248,7 @@ function getLicense(license_id) {
 
 
 function retrievelicenses(user_id) {
-    status_data = {}
+    status_data = []
     return new Promise((resolve, reject) =>{
         var con = createConnection();
         connect(con)
@@ -250,9 +259,53 @@ function retrievelicenses(user_id) {
                     reject(err);
                 } else {
                     for(i = 0; i < result.length; i++) {
-                        status_data[result[i].type] = [result[i].status] 
-                    }
+                       
+                        if (result[i].type == 'Criminal Record Check'){
+                            status_data['criminal'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                            
+                                                         admin_notes:result[i].admin_notes,
+                                            
+                                        } 
+                        } else if (result[i].type == 'Site Plan'){
+                            status_data['siteplan'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                            
+                                                         admin_notes:result[i].admin_notes,
+                                            
+                                        } 
+                            
+                        } else if (result[i].type == 'Floor Plan') {
+                            status_data['floorplan'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                            
+                                                         admin_notes:result[i].admin_notes,
+                                            
+                                        } 
+
+                        } else if (result[i].type == 'References') {
+                            status_data['references'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                            
+                                                         admin_notes:result[i].admin_notes,
+                                            
+                                        } 
+                        } else if (result[i].type == 'Fire Safety Plan'){
+                            status_data['fireplan'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                            
+                                                         admin_notes:result[i].admin_notes,
+                                            
+                                        } 
+                        }
+                        }
                     resolve(status_data);
+                    console.log(status_data);
                 }
                 
             })
@@ -264,11 +317,72 @@ function retrievelicenses(user_id) {
 }
 
 
+
+function changeStatus(id, status, notes) {
+    return new Promise((resolve, reject) =>{
+        var con = createConnection();
+        connect(con)
+        .then((resolved) => {
+            con.connect(err => {
+                con.query("UPDATE license SET status='"+status+ "', admin_notes ='" +notes+ "' WHERE license_id ="+id+" ;", function (err, result) {
+                    if (err){
+                        reject(err)
+                        }
+                    con.end();
+                    resolve('ok')
+                })
+            }), (err) => {
+                reject(err)
+            }
+        })
+    })   
+}
+
+//needa make it look like retrievelicense
+function getFile() {
+    con.connect(function(err) {
+        if (err) throw err;
+
+        console.log(con.query("SELECT file FROM license WHERE license_id = 12345;", function (err, result) {
+            if (err) throw err;
+        }))
+    });
+}
+
+// should put array of id?
+function loadStatus(id) {
+     return new Promise((resolve, reject) =>{
+        var con = createConnection();
+        connect(con)
+        .then((resolved) => {
+            con.connect(err => {
+                //need a for loop
+
+                con.query("SELECT type, status, admin_notes FROM license WHERE license_id ="+id +";", function (err, result) {
+                
+            if (err){
+                        reject(err)
+                        }
+                    con.end();
+                    var status = {type: result[0].type, status: result[0].status, admin_notes: result[0].admin_notes}
+                    resolve(status)
+                })
+            }), (err) => {
+                reject(err)
+            }
+        })
+    })   
+}
+
+
 module.exports = {
     getUser,
     changeName,
     changeEmail,
     changePassword,
+    changeStatus,
+    loadStatus,
+    //getFile
     retrievelicenses,
     getLicense,
     addLicense
