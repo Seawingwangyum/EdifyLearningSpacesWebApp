@@ -6,29 +6,23 @@ var mysql = require('mysql');
 // var bcrypt = require('bcrypt-nodejs');
 // var bcrypt2 = require('bcrypt');
 // var async = require('async');
-// var crypto = require('crypto');
+var crypto = require('crypto');
 
 
-// var bcrypt2 = require('bcrypt');
+var bcrypt2 = require('bcrypt');
 
 const port = process.env.port || 8080;
 const express = require('express');
 //forgot_pass
 const path = require('path');
-// const logger = require('morgan');
-// const cookieParser = require('cookie-parser');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
 
 const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
+const fileUpload = require('express-fileupload');
 
-
-var con = mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "Password",
-      database: "edify"
-    });
 
 // const fileUpload = require('express-fileupload');
 
@@ -54,7 +48,7 @@ app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
 
 // app.use(logger('dev'));
 // app.use(cookieParser());
-// app.use(fileUpload());
+app.use(fileUpload());
 
 
 // bodyparser setup
@@ -303,10 +297,10 @@ app.get('/licenses', (req, res) => {
 });
 
 app.post('/licenses', (req, res) => {
-    if (Object.keys(req.files).length == 0) {
+  
+    if (req.files == undefined) {
     return res.status(400).send('No files were uploaded.');
-  }
-
+  } else {
     // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
     let sampleFile = req.files.pic;
     console.log(req.files);
@@ -335,7 +329,11 @@ app.post('/licenses', (req, res) => {
         }, (error) => {
             res.send(error)
         })
-    })
+    }) 
+
+  }
+
+    
     });
 
 
@@ -441,10 +439,6 @@ app.get('/quizresults', (request, response) => {
 });
 
 
-con.connect(function(err) {
-      if (err) throw err;
-      console.log("Connected!");
-    });
 
 
 app.listen(process.env.PORT || 8080, () => {

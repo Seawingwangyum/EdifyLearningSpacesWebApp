@@ -1,26 +1,28 @@
 require('dotenv').config();
 var mysql = require('mysql');
 
-var con = mysql.createPool({
-  host: process.env.DBHOST,
-  user: process.env.DBUSER,
-  password: process.env.DBPASSWORD,
-  database: process.env.DBNAME,
-  port: process.env.DBPORT
-});
+
 
 /**
  * Creates a connection to the database.
  * @returns {array} con - connection details
  */
 function createConnection() {
-    var con = mysql.createConnection({
+
+
+ var con = mysql.createConnection({
         host: "localhost",
         user: "root",
-        password: "Password",
+        password: "password",
         database: "edify"
-    });
-    return con
+});
+
+
+
+  return con
+
+
+
 }
 
 /**
@@ -208,7 +210,7 @@ function addLicense(file, type, notes, user_id) {
         var con = createConnection();
         connect(con)
         .then((resolved) => {
-            con.query("INSERT INTO license(file, type, user_notes, frn_user_id, status) values ('"+file+"', '" + type + "', '" + notes + "', " + user_id +", pending)",
+            con.query("INSERT INTO license(file, type, user_notes, frn_user_id, status) values ('"+file+"', '" + type + "', '" + notes + "', " + user_id +", 'pending')",
             function(err, result) {
                 if (err) {
                     reject(err);
