@@ -14,17 +14,17 @@ function createConnection() {
 
       connectionLimit : 100,
 
-      host     : '54.202.177.36',
+      host     : '',
 
       port     :  3306,
 
 
 
-      user: "edifyuser",
+      user: "",
 
-      password: "EdifyPassword1!",
+      password: "",
 
-      database: "edify"
+      database: ""
 
   });
 
