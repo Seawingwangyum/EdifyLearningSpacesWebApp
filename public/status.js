@@ -53,6 +53,7 @@ function floorOCSS() {
 });
 }
 
+
 /**
  * request information from the database to determine what color each tab is
  */
@@ -65,19 +66,18 @@ function request_status(){
         url: 'http://localhost:8080/status',
         success: function(data){
             //console.log(data["CRC"][0])
+
             for(var item in data){
-                //console.log(data[item][0])
+
                 var cur = windows[statuses.indexOf(item)]
                 switch (data[item][0]){
-                    case null:
-                        break;
                     case "approved":
                         document.getElementById(cur).className = "greenbuttons"
                         break;
-                    case "pending":
+                    case "Awaiting Approval":
                         document.getElementById(cur).className = "yellowbuttons"
                         break;
-                    case "rejected":
+                    case "Denied":
                         document.getElementById(cur).className = "redbuttons"
                 }
             }
@@ -88,6 +88,55 @@ function request_status(){
 crimOCSS();
 siteOCSS();
 floorOCSS();
+
+
+
+
+
+// function run_mysqlSS() {
+
+//   var mysql = require('mysql');
+
+//   var con = mysql.createConnection({
+//     host: "localhost",
+//     user: "root",
+//     password: "password",
+//     database: "edify"
+//   });
+
+//   con.connect(function(err) {
+//     if (err) throw err;
+//     console.log("Connected!");
+//   });
+
+
+//   var approve_update = "UPDATE license SET status = 'Aprroved', admin_notes = 'The new notes' WHERE license_id = 12345";
+//     con.query(approve_update, function approve_update_func(err, result) {
+//       if (err) throw err;
+//       console.log(result.affectedRows + " record(s) updated");
+//     });
+
+//   var deny_update = "UPDATE license SET status = 'Denied', admin_notes = 'The very new notes' WHERE license_id = 12345";
+//     con.query(deny_update, function deny_update_func(err, result) {
+//       if (err) throw err;
+//       console.log(result.affectedRows + " record(s) updated");
+//     });
+
+//   var file_download = "SELECT file FROM license WHERE license_id = 12345";
+//     con.query(file_download, function file_download_func(err, result) {
+//       if (err) throw err;
+//       console.log(result.affectedRows + " record(s) updated");
+//     });
+
+
+//   document.getElementsByClassName('acceptBut').addEventListener("click", approve_update_func);
+//   document.getElementsByClassName('denyBut').addEventListener("click", deny_update_func);
+//   document.getElementsByClassName('download_but').addEventListener("click", file_download_func);
+// };
+
+// run_mysqlSS()
+
 document.addEventListener("DOMContentLoaded", function(){
     request_status()
 }, false)
+

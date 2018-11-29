@@ -1,4 +1,7 @@
+require('dotenv').config();
 var mysql = require('mysql');
+
+
 
 /**
  * Creates a connection to the database.
@@ -17,6 +20,18 @@ function createConnection() {
     return con
  
  }
+
+/*
+ var con = mysql.createConnection({
+        host: "localhost",
+        user: "root",
+        password: "password",
+        database: "edify"
+});
+  return con
+}
+*/
+
 /**
  * Connects to the database.
  * @param {array} con - connection details.
@@ -205,7 +220,7 @@ function addLicense(file, type, notes, user_id) {
         var con = createConnection();
         connect(con)
         .then((resolved) => {
-            con.query("INSERT INTO license(file, type, user_notes, frn_user_id) values ('"+file+"', '" + type + "', '" + notes + "', " + user_id +")",
+            con.query("INSERT INTO license(file, type, user_notes, frn_user_id, status) values ('"+file+"', '" + type + "', '" + notes + "', " + user_id +", 'pending')",
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -253,7 +268,7 @@ function getLicense(license_id) {
  * @param {*} user_id - The identification number of the user.
  */
 function retrievelicenses(user_id) {
-    status_data = {}
+    status_data = []
     return new Promise((resolve, reject) =>{
         var con = createConnection();
         connect(con)
@@ -268,10 +283,55 @@ function retrievelicenses(user_id) {
                         //console.log(result[i])
                         status_data[result[i].type] = [result[i].status] 
                     }
-                    console.log(status_data)
+                       /*
+                        if (result[i].type == 'Criminal Record Check'){
+                            status_data['criminal'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                            
+                                                         admin_notes:result[i].admin_notes,
+                                            
+                                        } 
+                        } else if (result[i].type == 'Site Plan'){
+                            status_data['siteplan'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                            
+                                                         admin_notes:result[i].admin_notes,
+                                            
+                                        } 
+                            
+                        } else if (result[i].type == 'Floor Plan') {
+                            status_data['floorplan'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                            
+                                                         admin_notes:result[i].admin_notes,
+                                            
+                                        } 
+
+                        } else if (result[i].type == 'References') {
+                            status_data['references'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                            
+                                                         admin_notes:result[i].admin_notes,
+                                            
+                                        } 
+                        } else if (result[i].type == 'Fire Safety Plan'){
+                            status_data['fireplan'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                            
+                                                         admin_notes:result[i].admin_notes,
+                                            
+                                        } 
+                        }
+                        }
+                        */
                     resolve(status_data);
+                    console.log(status_data);
                 }
-                
             })
         }).catch((error) => {
             reject(error);
@@ -280,11 +340,70 @@ function retrievelicenses(user_id) {
     con.end();
 }
 
+function changeStatus(id, status, notes) {
+    return new Promise((resolve, reject) =>{
+        var con = createConnection();
+        connect(con)
+        .then((resolved) => {
+            con.connect(err => {
+                con.query("UPDATE license SET status='"+status+ "', admin_notes ='" +notes+ "' WHERE license_id ="+id+" ;", function (err, result) {
+                    if (err){
+                        reject(err)
+                        }
+                    con.end();
+                    resolve('ok')
+                })
+            }), (err) => {
+                reject(err)
+            }
+        })
+    })   
+}
+
+//needa make it look like retrievelicense
+function getFile() {
+    con.connect(function(err) {
+        if (err) throw err;
+
+        console.log(con.query("SELECT file FROM license WHERE license_id = 12345;", function (err, result) {
+            if (err) throw err;
+        }))
+    });
+}
+
+// should put array of id?
+function loadStatus(id) {
+     return new Promise((resolve, reject) =>{
+        var con = createConnection();
+        connect(con)
+        .then((resolved) => {
+            con.connect(err => {
+                //need a for loop
+
+                con.query("SELECT type, status, admin_notes FROM license WHERE license_id ="+id +";", function (err, result) {
+                
+            if (err){
+                        reject(err)
+                        }
+                    con.end();
+                    var status = {type: result[0].type, status: result[0].status, admin_notes: result[0].admin_notes}
+                    resolve(status)
+                })
+            }), (err) => {
+                reject(err)
+            }
+        })
+    })   
+}
+
 module.exports = {
     getUser,
     changeName,
     changeEmail,
     changePassword,
+    changeStatus,
+    loadStatus,
+    //getFile
     retrievelicenses,
     getLicense,
     addLicense,
