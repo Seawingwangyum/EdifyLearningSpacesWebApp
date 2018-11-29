@@ -64,7 +64,7 @@ function request_status(json_obj){
             //console.log(data["CRC"][0])
 
             for(var item in data){
-                console.log('data: ' + data[item][0])
+
                 var cur = windows[statuses.indexOf(item)]
                 console.log(cur)
                 switch (data[item][0]){
