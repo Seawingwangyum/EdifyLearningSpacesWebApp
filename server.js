@@ -193,6 +193,17 @@ app.get('/provider_edit', adminSessionCheck, (req, res) => {
 	})
 });
 
+app.post('/provider_edit', (req, res) => {
+    var note = req.body.admin_note
+    db.addNote(note, 'admin_notes', req.session.user.id)
+    .then((resolved) => {
+        res.redirect('/provider_edit');
+    }).catch((error) => {
+        res.sendStatus(500)
+        console.log(error);
+    });
+})
+
 app.get('/landing_page', (req, res) => {
 	res.render('landing_page.hbs')
 });
@@ -293,9 +304,6 @@ app.post('/licenses', (req, res) => {
         })
     }    
 });
-
-
-
 
 app.get('/test', (req, res) => {
     db.getLicense(2).then(function(resolved) {
