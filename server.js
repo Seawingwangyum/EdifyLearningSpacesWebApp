@@ -66,9 +66,8 @@ app.use(session({
 
 var testData = require('./public/testData')
 
-// Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
+// Checks to see if the session is active, if it isnt it redirects to '/landing_page'
 function userSessionCheck(req, res, next) {
-    console.log(req.session.user);
     if (req.session.user && req.session.user.admin === 0) {
         next()
     } else {
@@ -85,7 +84,6 @@ function adminSessionCheck(req, res, next) {
 }
 
 function superSessionCheck(req, res, next) {
-    console.log('super session');
     if (req.session.user && req.session.user.admin === 2) {
         next()
     } else {
@@ -115,7 +113,6 @@ function filterList(list, id, fname, lname, status) {
 app.get('/status', userSessionCheck, (request, response) => {
     db.retrievelicenses(1)
     .then((resolved) => {
-        console.log(resolved);
          response.render('status.hbs', {
             fireplanStatus: resolved['fireplan'].status,
             fireplanNotes: resolved['fireplan'].admin_notes,
@@ -133,20 +130,6 @@ app.get('/status', userSessionCheck, (request, response) => {
         console.log(error);
         response.send('error');
     });
-    // db.loadStatus(22345);
-    // db.loadStatus(32345);
-
-    // console.log(data);
-    // console.log(resolved);
-
-
-    // response.render('status.hbs', {
-    //     title: 'Status Page',
-    //     userData1: testData.provider_list_data.providers[3],
-    //     userData2: testData.provider_list_data.providers[6],
-    //     userData3: testData.provider_list_data.providers[0],
-    //     userData4: testData.notes
-    // });
 });
 
 app.post('/status', (request, response) => {
