@@ -7,30 +7,26 @@ var mysql = require('mysql');
  * Creates a connection to the database.
  * @returns {array} con - connection details
  */
+
 function createConnection() {
-    var con = mysql.createConnection({
-        connectionLimit : 100,
-        host     : '54.202.177.36',
-        port     :  3306,
-        user: "edifyuser",
-        password: "EdifyPassword1!",
+
+
+
+  var con = mysql.createConnection({
+
+      host: "localhost",
+        user: "root",
+        password: "password",
         database: "edify"
-    });
- 
+
+  });
+
+
     return con
  
  }
 
-/*
- var con = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "password",
-        database: "edify"
-});
-  return con
-}
-*/
+
 
 /**
  * Connects to the database.
@@ -241,83 +237,100 @@ function getLicense(license_id) {
  * @param {*} user_id - The identification number of the user.
  */
 function retrievelicenses(user_id) {
+
     var defaultJSON = {
+
         criminal: {status: null, adminnotes: ''},
         siteplan: {status: null, adminnotes: ''},
         floorplan: {status: null, adminnotes: ''},
         references: {status: null, adminnotes: ''},
         fireplan: {status: null, adminnotes: ''},
+
     }
-    status_data = []
+
+    status_data = {}
+
     return new Promise((resolve, reject) =>{
+
         var con = createConnection();
         connect(con)
         .then((resolved) => {
-                
             con.query("SELECT * FROM license WHERE frn_user_id = " + user_id + ";", function (err, result) {
-                console.log('starting license dump')
-                console.log(result)
                 if (err) {
                     reject(err);
+
                 } else {
+
                     for(i = 0; i < result.length; i++) {
+                        if (result[i].type == 'criminal'){
+
+                            status_data['criminal'] = {  type:result[i].type,
+
+                                                         status:result[i].status,
+
+                                                         license_id:result[i].license_id,
+
+                                                         admin_notes:result[i].admin_notes,
+                                        } 
+
+                        } else if (result[i].type == 'siteplan'){
+
+                            status_data['siteplan'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                                         admin_notes:result[i].admin_notes,
+                                        } 
+
+                            
+
+                        } else if (result[i].type == 'floorplan') {
+
+                            status_data['floorplan'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                                         admin_notes:result[i].admin_notes,
+                                        } 
+                        } else if (result[i].type == 'reffile') {
+
+                            status_data['reffile'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                                         admin_notes:result[i].admin_notes,
+                                        } 
+
+                        } else if (result[i].type == 'firefile'){
+
+                            status_data['firefile'] = {  type:result[i].type,
+                                                         status:result[i].status,
+                                                         license_id:result[i].license_id,
+                                                         admin_notes:result[i].admin_notes,
+                                        } 
+
+                        }
+
                         var license_type = result[i].type
-                        // console.log(defaultJSON);
-                        console.log(license_type);
-                        console.log(defaultJSON[license_type]);
+
                         defaultJSON[license_type].status = result[i].status
+
                         defaultJSON[license_type].adminnotes = result[i].admin_notes
-                        console.log(defaultJSON);
-                    }
+
+                        }
                     resolve(defaultJSON)
-                        // console.log(result[i])
-                        // status_data[result[i].type] = [result[i].status]    
-                        // if (result[i].type == 'criminal') {
-                        //     status_data['criminal'] = {  
-                        //         type:result[i].type,
-                        //         status:result[i].status,
-                        //         license_id:result[i].license_id,
-                        //         admin_notes:result[i].admin_notes,
-                        //     } 
-                        // } else if (result[i].type == 'siteplan') {
-                        //     status_data['siteplan'] = {  
-                        //         type:result[i].type,
-                        //         status:result[i].status,
-                        //         license_id:result[i].license_id,
-                        //         admin_notes:result[i].admin_notes,
-                        //     }
-                        // } else if (result[i].type == 'floorplan') {
-                        //     status_data['floorplan'] = { 
-                        //         type:result[i].type,
-                        //         status:result[i].status,
-                        //         license_id:result[i].license_id,
-                        //         admin_notes:result[i].admin_notes,
-                        //     } 
-                        // } else if (result[i].type == 'References') {
-                        //     status_data['references'] = {  
-                        //         type:result[i].type,
-                        //         status:result[i].status,
-                        //         license_id:result[i].license_id,
-                        //         admin_notes:result[i].admin_notes,
-                        //     } 
-                        // } else if (result[i].type == 'Fire Safety Plan'){
-                        //     status_data['fireplan'] = {  type:result[i].type,
-                        //         status:result[i].status,
-                        //         license_id:result[i].license_id,
-                        //         admin_notes:result[i].admin_notes,
-                        //     }
-                        // }
-                    
-                    console.log('end');
                     resolve(status_data);
                     // console.log(status_data);
+
                 }
             })
+
         }).catch((error) => {
             reject(error);
+
         });
+
     });
+
     con.end();
+
 }
 
 /**
