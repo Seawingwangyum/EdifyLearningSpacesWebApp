@@ -131,14 +131,14 @@ app.get('/status', userSessionCheck, (request, response) => {
 });
 
 app.post('/status', (req, res) => {
-        db.retrievelicenses(1)
+        db.retrievelicenses(req.session.user.id)
     .then((resolved) =>{
         res.send(resolved)
     }).catch((error) => {
         console.log(error);
         response.send('error');
     });
-});
+}); 
 
 app.get('/provider_edit', adminSessionCheck, (request, response) => {
     response.render('provider_edit.hbs', {
@@ -371,7 +371,7 @@ app.post('/account_creation', (req, res) => {
             bcrypt2.hash(req.body.password, salt, function(err, hash) {
                 if (err) return next(err);
                 req.body.password = hash; 
-                //console.log(req.body.password);
+                console.log(req.body.password);
                 //console.log(req.body.password.length)
                 db.addUser(req.body)
                 .then((resolve)=>{
