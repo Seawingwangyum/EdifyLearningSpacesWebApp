@@ -227,11 +227,11 @@ function getLicense(license_id) {
  */
 function retrievelicenses(user_id) {
     var defaultJSON = {
-        criminal: {status: 'submission is required', adminnotes: ''},
-        siteplan: {status: 'submission is required', adminnotes: ''},
-        floorplan: {status: 'submission is required', adminnotes: ''},
-        references: {status: 'submission is required', adminnotes: ''},
-        fireplan: {status: 'submission is required', adminnotes: ''},
+        criminal: {status: 'submission is required', admin_notes: ''},
+        siteplan: {status: 'submission is required', admin_notes: ''},
+        floorplan: {status: 'submission is required', admin_notes: ''},
+        references: {status: 'submission is required', admin_notes: ''},
+        fireplan: {status: 'submission is required', admin_notes: ''},
     }
     status_data = {}
 
@@ -247,7 +247,7 @@ function retrievelicenses(user_id) {
                     for(i = 0; i < result.length; i++) {
                         var license_type = result[i].type
                         defaultJSON[license_type].status = result[i].status
-                        defaultJSON[license_type].adminnotes = result[i].admin_notes
+                        defaultJSON[license_type].admin_notes = result[i].admin_notes
                     }
                     resolve(defaultJSON)
                     resolve(status_data);
