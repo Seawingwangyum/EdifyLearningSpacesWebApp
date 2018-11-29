@@ -186,7 +186,7 @@ function ajax_function(json_obj){
         type: 'POST',
         data: JSON.stringify(json_obj),
         contentType: 'application/json',
-        url: 'http://localhost:8080/licenses',
+        url: '/licenses',
         success: function(data){
             console.log(data)
             if(data.Error == "0"){

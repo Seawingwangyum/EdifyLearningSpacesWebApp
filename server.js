@@ -23,9 +23,7 @@ const fs = require('fs');
 const session = require('client-sessions');
 const fileUpload = require('express-fileupload');
 
-
 // const fileUpload = require('express-fileupload');
-
 
 const app = express();
 
@@ -70,9 +68,8 @@ var testData = require('./public/testData')
 
 // Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
 function userSessionCheck(req, res, next) {
-    console.log('user session');
     console.log(req.session.user);
-    if (req.session.user.admin === 0) {
+    if (req.session.user && req.session.user.admin === 0) {
         next()
     } else {
         res.redirect('/landing_page')
@@ -80,8 +77,7 @@ function userSessionCheck(req, res, next) {
 }
 
 function adminSessionCheck(req, res, next) {
-    // console.log('admin session');
-    if (req.session.user.admin === 1) {
+    if (req.session.user && req.session.user.admin === 1) {
         next()
     } else {
         res.redirect('/landing_page')
@@ -90,7 +86,7 @@ function adminSessionCheck(req, res, next) {
 
 function superSessionCheck(req, res, next) {
     console.log('super session');
-    if (req.session.user.admin === 2) {
+    if (req.session.user && req.session.user.admin === 2) {
         next()
     } else {
         res.redirect('/landing_page')
@@ -120,19 +116,23 @@ app.get('/status', userSessionCheck, (request, response) => {
     db.retrievelicenses(1)
     .then((resolved) => {
         console.log(resolved);
-             response.render('status.hbs', {
-                fireplanStatus: resolved['fireplan'].status,
-                fireplanNotes: resolved['fireplan'].admin_notes,
-                criminalStatus: resolved['criminal'].status,
-                criminalNotes: resolved['criminal'].admin_notes,
-                siteplanStatus: resolved['siteplan'].status,
-                siteplanNotes: resolved['siteplan'].admin_notes,
-                refStatus: resolved['references'].status,
-                refNotes: resolved['references'].admin_notes,
-                floorplanStatus: resolved['floorplan'].status,
-                floorplanNotes: resolved['floorplan'].admin_notes,
+         response.render('status.hbs', {
+            fireplanStatus: resolved['fireplan'].status,
+            fireplanNotes: resolved['fireplan'].admin_notes,
+            criminalStatus: resolved['criminal'].status,
+            criminalNotes: resolved['criminal'].admin_notes,
+            siteplanStatus: resolved['siteplan'].status,
+            siteplanNotes: resolved['siteplan'].admin_notes,
+            refStatus: resolved['references'].status,
+            refNotes: resolved['references'].admin_notes,
+            floorplanStatus: resolved['floorplan'].status,
+            floorplanNotes: resolved['floorplan'].admin_notes,
 
-            })});
+        })
+    }).catch((error) => {
+        console.log(error);
+        response.send('error');
+    });
     // db.loadStatus(22345);
     // db.loadStatus(32345);
 
@@ -188,22 +188,26 @@ app.post('/provider_edit', adminSessionCheck, (request, response) => {
     // })
 });
 
-app.get('/settings', userSessionCheck, (request, response) => {
-    response.render('settings.hbs', {
-        userData: testData.user_data
+app.get('/settings', userSessionCheck, (req, res) => {
+    res.render('settings.hbs', {
+        name: req.session.user.fname + ' ' + req.session.user.lname,
+        email: req.session.user.email
     });
 });
 
 app.post('/settings_name', (req, res) => {
-    // send user id aswell instead of hardcode it.
     var fname = req.body.fname
     var lname = req.body.lname
     var name = [fname, lname]
+    var id = req.session.user.id
+    console.log(id);
 
     if (check.checkForBlankEntry(name) && check.checkForOnlyAlphabet(name)) {
-        db.changeName(fname, lname)
+        db.changeName(fname, lname, id)
         .then((resolved) => {
-            res.send(resolved)
+            req.session.user.fname = fname;
+            req.session.user.lname = lname;
+            res.send(resolved);
         }).catch ((error) => {
             res.sendStatus(500)
             console.log(error);
@@ -213,34 +217,48 @@ app.post('/settings_name', (req, res) => {
 });
 
 app.post('/settings_email', (req, res) => {
-    // send user id as well instead of hardcode it
     var newEmail = req.body.email
+    var id = req.session.user.id
+
     if (check.checkForBlankEntry([newEmail]) && check.checkForEmailFormat(newEmail)) {
-        db.changeEmail(newEmail)
+        db.changeEmail(newEmail, id)
         .then((resolved) => {
-            send(resolved)
+            req.session.user.email = newEmail;
+            res.send(resolved);
         }).catch ((error) => {
-            res.sendStatus(500)
-            log(error);
+            res.sendStatus(500);
+            console.log(error);
         })
     }
 });
 
 app.post('/settings_password', (req, res) => {
-    // send user id as well instead of hardcode it
     var newPassword = req.body.password
+    var id = req.session.user.id
+
     if (check.checkForBlankEntry([newPassword]) && check.checkForPasswordFormat(newPassword)) {
-        db.changePassword(newPassword)
+        db.changePassword(newPassword, id)
         .then((resolved) => {
-            res.send(resolved)
+            res.send(resolved);
         }).catch ((error) => {
-            res.sendStatus(500)
+            res.sendStatus(500);
             console.log(error);
         })
     }
 });
 
 
+
+app.post('/provider_edit', (req, res) => {
+    var note = req.body.admin_note
+    db.addNote(note, 'admin_notes', req.session.user.id)
+    .then((resolved) => {
+        res.redirect('/provider_edit');
+    }).catch((error) => {
+        res.sendStatus(500)
+        console.log(error);
+    });
+})
 
 app.get('/landing_page', (req, res) => {
 	res.render('landing_page.hbs')
@@ -301,47 +319,47 @@ app.get('/licenses', (req, res) => {
 });
 
 app.post('/licenses', (req, res) => {
-  
-    if (req.files == undefined) {
-    return res.status(400).send('No files were uploaded.');
-  } else {
-    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    let sampleFile = req.files.pic;
-    console.log(req.files);
+    if (Object.keys(req.files).length == 0) {
+        return res.status(400).send('No files were uploaded.');
+    } else {
+        // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+        let sampleFile = req.files.pic;
+        var note = req.body.notes
+        console.log(req.files);
 
-    crypto.pseudoRandomBytes(16, function(err, raw) {
-        if (err) return callback(err);
-        var filename = raw.toString('hex') + path.extname(req.files.pic.name);
+        crypto.pseudoRandomBytes(16, function(err, raw) {
+            if (err) return callback(err);
+            var filename = raw.toString('hex') + path.extname(req.files.pic.name);
 
-        verify_license.verify_license(req.body).then((data) => {
+            verify_license.verify_license(req.body).then((data) => {
 
-            sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
+                sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
 
-                if (err) {
-
-                res.status(500).send(err);
-                }
-                
+                    if (err) {
+                    res.status(500).send(err);
+                    }
+                    
+                });
+            db.addNote(note, 'user_notes', req.session.user.id)
+                .then((resolved) => {
+                    res.send('File uploaded!');
+                }).catch((error) => {
+                    res.sendStatus(500)
+                    console.log(error);
+                });
+            db.addLicense(filename, req.body.type, req.body.notes, 1)
+                .then((resolved) => {
+                    res.send('File uploaded!');
+                }).catch((error) => {
+                    res.sendStatus(500)
+                    console.log(error);
+                });
+            }).catch((error) => {
+                res.send(error)
             });
-        db.addLicense(filename, req.body.type, req.body.notes, 1)
-            .then((resolved) => {
-                res.send('File uploaded!');
-            }, (error) => {
-                res.sendStatus(500)
-                console.log(error);
-            })
-        }, (error) => {
-            res.send(error)
         })
-    }) 
-
-  }
-
-    
-    });
-
-
-
+    }    
+});
 
 app.get('/test', (req, res) => {
     db.getLicense(2).then(function(resolved) {
@@ -355,6 +373,8 @@ app.get('/test', (req, res) => {
 });
 
 app.get('/account_creation', (req, res) => {
+    // goto db
+    
 	res.render('account_creation.hbs')
 });
 app.post('/account_creation', (req, res) => {
