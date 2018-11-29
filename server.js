@@ -153,6 +153,12 @@ app.get('/provider_edit', adminSessionCheck, (request, response) => {
     response.render('provider_edit.hbs', {
         userData: testData.provider_edit_data
     })
+
+    // db.retrievelicenses(1)
+    // .then((resolved) => {
+    //          response.render('provider_edit.hbs', {
+    //             data: resolved
+    //         })});
 });
 
 app.post('/provider_edit', adminSessionCheck, (request, response) => {
@@ -323,24 +329,22 @@ app.post('/licenses', (req, res) => {
 
 
 
-
+////??????????????????????
 app.get('/test', (req, res) => {
     db.getLicense(2).then(function(resolved) {
         console.log(resolved);
-
         res.render('test.hbs', {
         //license: testData.provider_list_data
     })
     })
-    
 });
+
 
 app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
 });
-app.post('/account_creation', (req, res) => {
 
-    
+app.post('/account_creation', (req, res) => {
     console.log(req.body);
     //send_email.send_email();
     verify_signup.verify_signup(req.body).then((data) =>{
@@ -414,10 +418,6 @@ app.get('/admin_edit', superSessionCheck, (req, res) => {
 });
 
 app.get('/quizresults', (request, response) => {
-    /**
-     * Displays the status page
-     */
-
     response.render('quizresults.hbs', {
         title: 'Quiz Page'
     });
