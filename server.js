@@ -120,13 +120,13 @@ app.get('/status', userSessionCheck, (request, response) => {
 });
 
 app.post('/status', (req, res) => {
-    res.render('status.hbs', {
-        userData1: testData.provider_list_data.providers[3],
-        userData2: testData.provider_list_data.providers[6],
-        userData3: testData.provider_list_data.providers[0],
-        userData4: testData.notes
-
-    })
+   console.log(req.body)
+   db.retrievelicenses(req.body.user).then((resolved)=>{
+       console.log(resolved)
+        res.send(resolved)
+   },(error)=>{
+       console.log(error)
+   })
 });
 
 app.get('/settings', userSessionCheck, (request, response) => {
@@ -309,8 +309,14 @@ app.post('/account_creation', (req, res) => {
             bcrypt2.hash(req.body.password, salt, function(err, hash) {
                 if (err) return next(err);
                 req.body.password = hash; 
-                console.log(req.body.password);
-            // send to db
+                //console.log(req.body.password);
+                //console.log(req.body.password.length)
+                db.addUser(req.body)
+                .then((resolve)=>{
+
+                }, (error) =>{
+                    console.log(error)
+                })
             res.send(data)
         });
     });

@@ -53,6 +53,9 @@ function floorOCSS() {
 });
 }
 
+/**
+ * request information from the database to determine what color each tab is
+ */
 function request_status(){
     console.log("hellothere");
     $.ajax({
@@ -63,7 +66,7 @@ function request_status(){
         success: function(data){
             //console.log(data["CRC"][0])
             for(var item in data){
-                //console.log(data[item][0])
+                console.log(data[item][0])
                 var cur = windows[statuses.indexOf(item)]
                 console.log(cur)
                 switch (data[item][0]){
@@ -80,9 +83,6 @@ function request_status(){
         }
     })
 }
-
-//yellowbuttons greenbuttons redbuttons
-
 
 crimOCSS();
 siteOCSS();
