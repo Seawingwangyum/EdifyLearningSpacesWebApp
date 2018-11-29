@@ -124,7 +124,7 @@ input[type=submit]:hover, .download_but:hover {
 						.form_left {
 							float: left;
 							height: 100%;
-							width: 70%;
+							width: 60%;
 						}
 							.form_left_padding {
 								padding-top: 10px;
@@ -135,5 +135,5 @@ input[type=submit]:hover, .download_but:hover {
 						.form_right {
 							float: right;
 							height: 100%;
-							width: 30%;
+							width: 40%;
 						}
