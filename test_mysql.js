@@ -1,8 +1,6 @@
 require('dotenv').config();
 var mysql = require('mysql');
 
-
-
 /**
  * Creates a connection to the database.
  * @returns {array} con - connection details
@@ -16,21 +14,8 @@ function createConnection() {
         password: "EdifyPassword1!",
         database: "edify"
     });
- 
     return con
- 
- }
-
-/*
- var con = mysql.createConnection({
-        host: "localhost",
-        user: "root",
-        password: "password",
-        database: "edify"
-});
-  return con
 }
-*/
 
 /**
  * Connects to the database.
@@ -242,17 +227,19 @@ function getLicense(license_id) {
  */
 function retrievelicenses(user_id) {
     var defaultJSON = {
-        criminal: {status: null, adminnotes: ''},
-        siteplan: {status: null, adminnotes: ''},
-        floorplan: {status: null, adminnotes: ''},
-        references: {status: null, adminnotes: ''},
-        fireplan: {status: null, adminnotes: ''},
+        criminal: {status: 'submission is required', adminnotes: ''},
+        siteplan: {status: 'submission is required', adminnotes: ''},
+        floorplan: {status: 'submission is required', adminnotes: ''},
+        references: {status: 'submission is required', adminnotes: ''},
+        fireplan: {status: 'submission is required', adminnotes: ''},
     }
+    status_data = {}
+
     return new Promise((resolve, reject) =>{
+
         var con = createConnection();
         connect(con)
         .then((resolved) => {
-                
             con.query("SELECT * FROM license WHERE frn_user_id = " + user_id + ";", function (err, result) {
                 if (err) {
                     reject(err);
@@ -263,6 +250,7 @@ function retrievelicenses(user_id) {
                         defaultJSON[license_type].adminnotes = result[i].admin_notes
                     }
                     resolve(defaultJSON)
+                    resolve(status_data);
                 }
             })
         }).catch((error) => {

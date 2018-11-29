@@ -3,13 +3,12 @@ var mysql = require('mysql');
 // var nodemailer = require('nodemailer');
 // var passport = require('passport');
 // var LocalStrategy = require('passport-local').Strategy;
-// var bcrypt = require('bcrypt-nodejs');
-// var bcrypt2 = require('bcrypt');
+var bcrypt = require('bcrypt-nodejs');
+var bcrypt2 = require('bcrypt');
 // var async = require('async');
 var crypto = require('crypto');
 
 
-var bcrypt2 = require('bcrypt');
 
 const port = process.env.port || 8080;
 const express = require('express');
@@ -124,7 +123,6 @@ app.get('/status', userSessionCheck, (request, response) => {
             refNotes: resolved['references'].admin_notes,
             floorplanStatus: resolved['floorplan'].status,
             floorplanNotes: resolved['floorplan'].admin_notes,
-
         })
     }).catch((error) => {
         console.log(error);
@@ -132,29 +130,31 @@ app.get('/status', userSessionCheck, (request, response) => {
     });
 });
 
-app.post('/status', (request, response) => {
-    db.retrievelicenses(1)
-    .then((resolved) => {
-             response.render('status.hbs', {
-                data: resolved
-            })});
-});
-
-
 app.post('/status', (req, res) => {
-   console.log(req.body)
-   db.retrievelicenses(req.body.user).then((resolved)=>{
-       //console.log(resolved)
+        db.retrievelicenses(1)
+    .then((resolved) =>{
         res.send(resolved)
-   },(error)=>{
-       console.log(error)
-   })
+    }).catch((error) => {
+        console.log(error);
+        response.send('error');
+    });
 });
+
+app.get('/provider_edit', adminSessionCheck, (request, response) => {
+    response.render('provider_edit.hbs', {
+        userData: testData.provider_edit_data
+    })
+
+    // db.retrievelicenses(1)
+    // .then((resolved) => {
+    //          response.render('provider_edit.hbs', {
+    //             data: resolved
+            // })
+});
+
 
 app.post('/provider_edit', adminSessionCheck, (request, response) => {
     // res.send(JSON.stringify(req.body))
-    console.log(request.body.Action);
-    console.log(request.body.L_ID);
 
     // db.getFile();
 
@@ -301,6 +301,7 @@ app.get('/licenses', (req, res) => {
 	res.render('license.hbs')
 });
 
+
 app.post('/licenses', (req, res) => {
     if (Object.keys(req.files).length == 0) {
         return res.status(400).send('No files were uploaded.');
@@ -341,28 +342,26 @@ app.post('/licenses', (req, res) => {
                 res.send(error)
             });
         })
-    }    
-});
 
+    }
+});
 app.get('/test', (req, res) => {
     db.getLicense(2).then(function(resolved) {
         console.log(resolved);
-
         res.render('test.hbs', {
         //license: testData.provider_list_data
     })
     })
-    
 });
+
 
 app.get('/account_creation', (req, res) => {
     // goto db
     
 	res.render('account_creation.hbs')
 });
-app.post('/account_creation', (req, res) => {
 
-    
+app.post('/account_creation', (req, res) => {
     console.log(req.body);
     //send_email.send_email();
     verify_signup.verify_signup(req.body).then((data) =>{
@@ -442,10 +441,6 @@ app.get('/admin_edit', superSessionCheck, (req, res) => {
 });
 
 app.get('/quizresults', (request, response) => {
-    /**
-     * Displays the status page
-     */
-
     response.render('quizresults.hbs', {
         title: 'Quiz Page'
     });
