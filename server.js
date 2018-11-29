@@ -118,19 +118,23 @@ app.get('/status', userSessionCheck, (request, response) => {
     db.retrievelicenses(1)
     .then((resolved) => {
         console.log(resolved);
-             response.render('status.hbs', {
-                fireplanStatus: resolved['fireplan'].status,
-                fireplanNotes: resolved['fireplan'].admin_notes,
-                criminalStatus: resolved['criminal'].status,
-                criminalNotes: resolved['criminal'].admin_notes,
-                siteplanStatus: resolved['siteplan'].status,
-                siteplanNotes: resolved['siteplan'].admin_notes,
-                refStatus: resolved['references'].status,
-                refNotes: resolved['references'].admin_notes,
-                floorplanStatus: resolved['floorplan'].status,
-                floorplanNotes: resolved['floorplan'].admin_notes,
+         response.render('status.hbs', {
+            fireplanStatus: resolved['fireplan'].status,
+            fireplanNotes: resolved['fireplan'].admin_notes,
+            criminalStatus: resolved['criminal'].status,
+            criminalNotes: resolved['criminal'].admin_notes,
+            siteplanStatus: resolved['siteplan'].status,
+            siteplanNotes: resolved['siteplan'].admin_notes,
+            refStatus: resolved['references'].status,
+            refNotes: resolved['references'].admin_notes,
+            floorplanStatus: resolved['floorplan'].status,
+            floorplanNotes: resolved['floorplan'].admin_notes,
 
-            })});
+        })
+    }).catch((error) => {
+        console.log(error);
+        response.send('error');
+    });
     // db.loadStatus(22345);
     // db.loadStatus(32345);
 
