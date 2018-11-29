@@ -23,12 +23,13 @@
             <h2>How?</h2>
                 Fill out the criminal record check form and submit it to your licensing officer. They are available online at <a href="www2.gov.bc.ca/gov/content/safety/crime-prevention/criminal-record-check">BC Governement</a> website.            
             </div>
-            <div id="crInfo2" class="submitarea">
-                <h3>Upload a file...</h3>
-                <input type="file" name="pic" accept="image/*" style='width:100%;'>
-                <textarea rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="crNotes"></textarea>
-                <input type="submit" value="Submit" class="purple_button">
-            </div>
+            <form ref="uploadCrim"  method="post" encType="multipart/form-data" id="crInfo2" class="submitarea" value="criminal" name="type">
+                <h3>Upload a file...</h3> 
+                <input style="display:none" value="criminal" name="type" />
+                <input id="crimfile" type="file" name="pic" accept="image/*" style='width:100%;'/>
+                <textarea id='crimnotes' rows="4" cols="35" placeholder="Any comments or questions about your submission?" type="criminal" name="notes"></textarea>
+                <input id="crimsubmit" type="submit" value="Submit" class="purple_button">
+            </form>
         </div>
     <div class="bigcontainer" >
         <button id="siteCheck" class="mainbuttons">Site Plan</button>
@@ -41,13 +42,13 @@
                 <h2>How?</h2>
                     Digitally create a drawing to scale. Alternatively, you may use graph paper and hand draw the site plan, including measurements. 
                 </div>
-                
-                <div id="siteInfo2" class="submitarea">
+                <form ref="uploadSite" id="siteInfo2"  method="post" encType="multipart/form-data" class="submitarea">
+                    <input style="display:none" value="siteplan" name="type" />
                     <h3>Upload a file...</h3>
-                    <input type="file" name="pic" accept="image/*">
-                    <textarea rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="siteNotes"></textarea>
-                    <input type="submit" value="Submit" class="purple_button" />
-            </div>
+                    <input id="sitefile"  type="file" name="pic" accept="image/*"/>
+                    <textarea id='sitenotes' rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="notes"></textarea>
+                    <input id="sitesubmit" type="submit" value="Submit" class="purple_button" />
+            </form>
         </div>
         <div class="bigcontainer">
         <button id="floorCheck" class="mainbuttons">Floor Plan</button>
@@ -59,13 +60,13 @@
                 <h2>How?</h2>
                 Digitally create a drawing to scale. Alternatively, you may use graph paper and hand draw the site plan, including measurements. 
                 </div>
-                
-            <div id="floorInfo2" class="submitarea">
+                <form ref="uploadFloor" method="post" encType="multipart/form-data" id="floorInfo2" class="submitarea"/>
+                <input style="display:none" value="floorplan" name="type" />
                 <h3>Upload a file...</h3>
-                <input type="file" name="doc" accept="image/*">
-                <textarea rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="floorNotes"></textarea>
-                <input type="submit" value="Submit" class="purple_button" />    
-            </div>
+                <input id="floorfile" type="file" name="pic" accept="image/*">
+                <textarea id='floornotes' rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="notes"></textarea>
+                <input id="floorsubmit" type="submit" value="Submit" class="purple_button" />    
+            </form>
         </div>
         
         <div class="bigcontainer">
@@ -78,13 +79,13 @@
                 <h2>How?</h2>
                   Provide their name, mailing address, and phone number. 
                 </div>
-                
-            <div id="refInfo2" class="submitarea">
+                <form ref="uploadFloor" method="post" encType="multipart/form-data" id="refInfo2"class="submitarea">
+                <input style="display:none" value="reference" name="type" />
               <h3>Upload a file...</h3>
-              <input type="file" name="doc" accept="image/*">
-                <textarea rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="refNotes"></textarea>
-            <input type="submit" value="Submit" class="purple_button" />
-            </div>
+              <input id="reffile" type="file" name="pic" accept="image/*"/>
+                <textarea id='refnotes' rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="notes"></textarea>
+            <input id="refsubmit" type="submit" value="Submit" class="purple_button" />
+            </form>
         </div>
         
         <div class="bigcontainer">
@@ -97,13 +98,13 @@
                 <h2>How?</h2>
                 Provide a drawn floor plan and written procedure. Will need to practice and record the escape plan at least once a month.
                 </div>
-                
-                <div id="fireInfo2" class="submitarea">
+                <form ref="uploadFloor" method="post" encType="multipart/form-data" id="fireInfo2"class="submitarea">
+                    <input style="display:none" value="fireplan" name="type" />
                     <h3>Upload a file...</h3>
-                    <input type="file" name="doc" accept="image/*">
-                    <textarea rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="fireNotes"></textarea>
-                    <input type="submit" value="Submit" class="purple_button" />
-                </div>
+                    <input id="firefile" type="file" name="pic" accept="image/*"/>
+                    <textarea id='firenotes' rows="4" cols="35" placeholder="Any comments or questions about your submission?" name="notes"></textarea>
+                    <input id="firesubmit" type="submit" value="Submit" class="purple_button" />
+                </form>
         </div>
         
         <div class="bigcontainer">
@@ -134,5 +135,7 @@
     </div>
     
 </body>
+
         <script src='license_page.js'></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </html>

@@ -2,7 +2,10 @@
 --
 -- Host: localhost    Database: edify
 -- ------------------------------------------------------
+
 -- Server version	8.0.13
+create database if not exists edify;
+use edify;
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,14 +28,16 @@ DROP TABLE IF EXISTS `license`;
 CREATE TABLE `license` (
   `license_id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(45) DEFAULT NULL,
-  `file` varchar(45) DEFAULT NULL,
-  `user_notes` varchar(45) DEFAULT NULL,
-  `admin_notes` varchar(45) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  `user_notes` varchar(300) DEFAULT NULL,
+  `admin_notes` varchar(300) DEFAULT NULL,
+  `file` varchar(100) DEFAULT NULL,
   `frn_user_id` int(11) NOT NULL,
   PRIMARY KEY (`license_id`),
+  UNIQUE KEY `file_UNIQUE` (`file`),
   KEY `frn_user_id_idx` (`frn_user_id`),
   CONSTRAINT `frn_user_id` FOREIGN KEY (`frn_user_id`) REFERENCES `user` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +46,7 @@ CREATE TABLE `license` (
 
 LOCK TABLES `license` WRITE;
 /*!40000 ALTER TABLE `license` DISABLE KEYS */;
+INSERT INTO `license` VALUES (26,'criminal',NULL,'love it',NULL,1),(27,'criminal',NULL,'',NULL,1),(28,'criminal','d859dcba693685cda9d0fd39b142d64b.png','I LOVE UPLOADING',NULL,1);
 /*!40000 ALTER TABLE `license` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -58,6 +64,7 @@ CREATE TABLE `user` (
   `password` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `location` varchar(45) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
   `is_admin` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -69,7 +76,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'fred','jeff','password','fred@jeff.com','Surrey',0),(2,'fred','jeff','password','fred@jeff.com','Surrey',0);
+INSERT INTO `user` VALUES (1,'fred','jeff','password','fred@jeff.com','Surrey','Awaiting Approval',0),(2,'fred2','jeff2','password2','fred2@jeff.com','Surrey2','Awaiting Approval2',0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -82,4 +89,15 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
+
 -- Dump completed on 2018-11-09 18:46:44
+
+
+use edify;
+SELECT * from user;
+SELECT * from license;
+-- INSERT INTO `user` VALUES (1,'admin','jeff','password','admin@admin.com','Vancouver',NULL,1);
+
+
+-- Dump completed on 2018-11-23 11:04:57
+

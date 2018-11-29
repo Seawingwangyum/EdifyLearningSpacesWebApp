@@ -32,16 +32,8 @@
       </div>
       <div id="edudiv">
         <label for="edu"><b>Education</b></label>
-        <select id="selectbox" class="inputbox doubleinput loginelements">
-          <option value="" class="inputbox">Choose one</option>
-          <option value="nursing">Nursing</option>
-          <option value="science">Science</option>
-          <option value="tech">Tech</option>
-          <option value="math">Math</option>
-          <option value="engineering">Engineering</option>
-          <option value="art">Art</option>
-          <option value="education">Education</option>
-        </select>
+        <input class="inputbox loginelements doubleinput" id="background" type="text" placeholder="Enter background" name="background"
+          required>
       </div>
     </div>
 
@@ -60,7 +52,7 @@
 
     <div>
       <label for="email"><b>Your City</b></label>
-      <input style="width:45vw;" class="inputbox loginelements" id="address" type="text" placeholder="Enter Address"
+      <input style="width:45vw;" class="inputbox loginelements" id="address" type="text" placeholder="Enter City"
         name="address" required>
 
       <div id="button_bar">
@@ -139,6 +131,7 @@
       </div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
       <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+      <script type="module" src="cryptPassword.js"></script>
       <script src="signup.js"></script>
     </div>
 

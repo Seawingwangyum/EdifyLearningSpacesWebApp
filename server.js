@@ -1,13 +1,15 @@
 //forgot_pass_modules
 var mysql = require('mysql');
-var nodemailer = require('nodemailer');
-var passport = require('passport');
-var LocalStrategy = require('passport-local').Strategy;
-var bcrypt = require('bcrypt-nodejs');
-var async = require('async');
+// var nodemailer = require('nodemailer');
+// var passport = require('passport');
+// var LocalStrategy = require('passport-local').Strategy;
+// var bcrypt = require('bcrypt-nodejs');
+// var bcrypt2 = require('bcrypt');
+// var async = require('async');
 var crypto = require('crypto');
 
 
+var bcrypt2 = require('bcrypt');
 
 const port = process.env.port || 8080;
 const express = require('express');
@@ -19,12 +21,19 @@ const cookieParser = require('cookie-parser');
 const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
+const fileUpload = require('express-fileupload');
+
+
+// const fileUpload = require('express-fileupload');
+
 
 const app = express();
 
 const send_email = require("./components/send_email")
 const verify_signup = require("./components/verify_signup");
-const login_check = require("./components/login_check");
+const check = require("./public/credentialErrorChecking");
+const verify_license = require("./components/verify_license");
+const db = require('./test_mysql.js')
 
 app.set('view engine', 'hbs')
 hbs.registerPartials(__dirname + '/views/partials')
@@ -32,12 +41,15 @@ app.use(express.static(__dirname + '/css'))
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/assets'));
 app.use(express.static(__dirname + '/fonts'));
+app.use(express.static('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads'));
 
-app.use(express.static(__dirname + '/node_modules/sweetalert/dist'))
 app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
 //forgot_pass
-app.use(logger('dev'));
-app.use(cookieParser());
+
+// app.use(logger('dev'));
+// app.use(cookieParser());
+app.use(fileUpload());
+
 
 // bodyparser setup
 var bodyParser = require('body-parser')
@@ -48,7 +60,7 @@ app.use(bodyParser.json())
 
 // creates a session
 app.use(session({
-    cookieName: 'edify_session',
+    cookieName: 'session',
     secret: 'edify_apple_sauce',
     duration: 1 * 60 * 60 * 1000,
     activeDuration: 1 * 30 * 60 * 1000
@@ -56,9 +68,29 @@ app.use(session({
 
 var testData = require('./public/testData')
 
-// Checks to see if the session is still active, if it isnt it redirects to '/provider_login'
-function sessionCheck(req, res, next) {
-    if (req.session && req.session.user) {
+// Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
+function userSessionCheck(req, res, next) {
+    console.log('user session');
+    console.log(req.session.user);
+    if (req.session.user.admin === 0) {
+        next()
+    } else {
+        res.redirect('/landing_page')
+    }
+}
+
+function adminSessionCheck(req, res, next) {
+    // console.log('admin session');
+    if (req.session.user.admin === 1) {
+        next()
+    } else {
+        res.redirect('/landing_page')
+    }
+}
+
+function superSessionCheck(req, res, next) {
+    console.log('super session');
+    if (req.session.user.admin === 2) {
         next()
     } else {
         res.redirect('/landing_page')
@@ -84,59 +116,131 @@ function filterList(list, id, fname, lname, status) {
     return filteredList
 }
 
+app.get('/status', userSessionCheck, (request, response) => {
+    db.retrievelicenses(1)
+    .then((resolved) => {
+        console.log(resolved);
+             response.render('status.hbs', {
+                fireplanStatus: resolved['fireplan'].status,
+                fireplanNotes: resolved['fireplan'].admin_notes,
+                criminalStatus: resolved['criminal'].status,
+                criminalNotes: resolved['criminal'].admin_notes,
+                siteplanStatus: resolved['siteplan'].status,
+                siteplanNotes: resolved['siteplan'].admin_notes,
+                refStatus: resolved['references'].status,
+                refNotes: resolved['references'].admin_notes,
+                floorplanStatus: resolved['floorplan'].status,
+                floorplanNotes: resolved['floorplan'].admin_notes,
 
-app.get('/status', (request, response) => {
-    response.render('status.hbs', {
-        title: 'Status Page',
-        userData1: testData.provider_list_data.providers[3],
-        userData2: testData.provider_list_data.providers[6],
-        userData3: testData.provider_list_data.providers[0],
-        userData4: testData.notes
-    });
+            })});
+    // db.loadStatus(22345);
+    // db.loadStatus(32345);
+
+    // console.log(data);
+    // console.log(resolved);
+
+
+    // response.render('status.hbs', {
+    //     title: 'Status Page',
+    //     userData1: testData.provider_list_data.providers[3],
+    //     userData2: testData.provider_list_data.providers[6],
+    //     userData3: testData.provider_list_data.providers[0],
+    //     userData4: testData.notes
+    // });
 });
+
+app.post('/status', (request, response) => {
+    db.retrievelicenses(1)
+    .then((resolved) => {
+             response.render('status.hbs', {
+                data: resolved
+            })});
+});
+
 
 app.post('/status', (req, res) => {
-    res.render('status.hbs', {
-        userData1: testData.provider_list_data.providers[3],
-        userData2: testData.provider_list_data.providers[6],
-        userData3: testData.provider_list_data.providers[0],
-        userData4: testData.notes
-
-    })
+   console.log(req.body)
+   db.retrievelicenses(req.body.user).then((resolved)=>{
+       //console.log(resolved)
+        res.send(resolved)
+   },(error)=>{
+       console.log(error)
+   })
 });
 
-app.get('/settings', (request, response) => {
+app.post('/provider_edit', adminSessionCheck, (request, response) => {
+    // res.send(JSON.stringify(req.body))
+    console.log(request.body.Action);
+    console.log(request.body.L_ID);
+
+    // db.getFile();
+
+    db.changeStatus(request.body.L_ID, request.body.Action, request.body.notesValue)
+        .then((resolved) => {
+            response.send(resolved)
+        }, (error) => {
+            response.sendStatus(500)
+            console.log(error);
+        })
+
+    // res.render('provider_edit.hbs', {
+    //     userData: testData.provider_edit_data
+    // })
+});
+
+app.get('/settings', userSessionCheck, (request, response) => {
     response.render('settings.hbs', {
         userData: testData.user_data
     });
 });
 
 app.post('/settings_name', (req, res) => {
-    //error checking
-    //db function call here
-    console.log(req.body.name);
-    res.send('ok')
+    // send user id aswell instead of hardcode it.
+    var fname = req.body.fname
+    var lname = req.body.lname
+    var name = [fname, lname]
+
+    if (check.checkForBlankEntry(name) && check.checkForOnlyAlphabet(name)) {
+        db.changeName(fname, lname)
+        .then((resolved) => {
+            res.send(resolved)
+        }).catch ((error) => {
+            res.sendStatus(500)
+            console.log(error);
+        })
+    }
+
 });
 
 app.post('/settings_email', (req, res) => {
-    //error checking
-    //db function call here
-    console.log(req.body.email);
-    res.send('ok')
+    // send user id as well instead of hardcode it
+    var newEmail = req.body.email
+    if (check.checkForBlankEntry([newEmail]) && check.checkForEmailFormat(newEmail)) {
+        db.changeEmail(newEmail)
+        .then((resolved) => {
+            send(resolved)
+        }).catch ((error) => {
+            res.sendStatus(500)
+            log(error);
+        })
+    }
 });
 
 app.post('/settings_password', (req, res) => {
-    //error checking
-    //db function call here
-    console.log(req.body.password);
-    res.send('ok')
+    // send user id as well instead of hardcode it
+    var newPassword = req.body.password
+    if (check.checkForBlankEntry([newPassword]) && check.checkForPasswordFormat(newPassword)) {
+        db.changePassword(newPassword)
+        .then((resolved) => {
+            res.send(resolved)
+        }).catch ((error) => {
+            res.sendStatus(500)
+            console.log(error);
+        })
+    }
 });
 
-app.get('/provider_edit', (req, res) => {
-	res.render('provider_edit.hbs', {
-		userData: testData.provider_edit_data
-	})
-});
+
 
 app.get('/landing_page', (req, res) => {
 	res.render('landing_page.hbs')
@@ -165,13 +269,20 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    console.log(req.body);
-    login_check.login_check(req.body).then((info) =>{
-        console.log(info)
-        res.send(JSON.stringify(info))
-    }, (error) =>{
+    db.getUser(req.body.Email, req.body.Passwd).then((resolved) => {
+        var user = resolved
+        console.log(user);
+        req.session.user = user;
+        if (user.admin === 0) {
+            res.redirect('/licenses')
+        } else if (user.admin === 1) {
+            res.redirect('/provider_list')
+        } else if (user.admin === 2) {
+            res.redirect('/admin_list')
+        }
+    }).catch ((error) => {
         console.log(error)
-        res.send(JSON.stringify(error))
+        res.redirect('/login')
     })
 });
  
@@ -179,23 +290,97 @@ app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
 });
 
-app.get('/test', (req, res) => {
-    res.render('testingnavbar.hbs')
+
+app.get('/logout', (req, res) => {
+    req.session.reset();
+    res.redirect('/landing_page');
 });
 
 app.get('/licenses', (req, res) => {
 	res.render('license.hbs')
 });
 
+app.post('/licenses', (req, res) => {
+  
+    if (req.files == undefined) {
+    return res.status(400).send('No files were uploaded.');
+  } else {
+    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+    let sampleFile = req.files.pic;
+    console.log(req.files);
+
+    crypto.pseudoRandomBytes(16, function(err, raw) {
+        if (err) return callback(err);
+        var filename = raw.toString('hex') + path.extname(req.files.pic.name);
+
+        verify_license.verify_license(req.body).then((data) => {
+
+            sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
+
+                if (err) {
+
+                res.status(500).send(err);
+                }
+                
+            });
+        db.addLicense(filename, req.body.type, req.body.notes, 1)
+            .then((resolved) => {
+                res.send('File uploaded!');
+            }, (error) => {
+                res.sendStatus(500)
+                console.log(error);
+            })
+        }, (error) => {
+            res.send(error)
+        })
+    }) 
+
+  }
+
+    
+    });
+
+
+
+
+app.get('/test', (req, res) => {
+    db.getLicense(2).then(function(resolved) {
+        console.log(resolved);
+
+        res.render('test.hbs', {
+        //license: testData.provider_list_data
+    })
+    })
+    
+});
+
 app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
 });
+app.post('/account_creation', (req, res) => {
 
-app.post('/account_creation',(req, res)=> {
+    
     console.log(req.body);
     //send_email.send_email();
     verify_signup.verify_signup(req.body).then((data) =>{
-        res.send(data)
+        console.log('data:' + JSON.stringify(data));
+        bcrypt2.genSalt(10, function(err, salt) {
+            if (err) return next(err);
+            bcrypt2.hash(req.body.password, salt, function(err, hash) {
+                if (err) return next(err);
+                req.body.password = hash; 
+                //console.log(req.body.password);
+                //console.log(req.body.password.length)
+                db.addUser(req.body)
+                .then((resolve)=>{
+
+                }, (error) =>{
+                    console.log(error)
+                })
+            res.send(data)
+        });
+    });
+        
     }, (error) =>{
         res.send(error)
     })
@@ -209,7 +394,7 @@ app.get('/deleteaccount', (req, res)=>{
     res.render('accountdelete.hbs')
 })
 
-app.get('/provider_list', (req, res, list) => {
+app.get('/provider_list', adminSessionCheck, (req, res, list) => {
 	res.render('provider_list.hbs', {
         userData: testData.provider_list_data
     })
@@ -228,7 +413,7 @@ app.post('/provider_list', (req, res) => {
     })
 });
 
-app.get('/admin_list', (req, res) => {
+app.get('/admin_list', superSessionCheck, (req, res) => {
     res.render('admin_list.hbs', {
         userData: testData.admin_list_data
     })
@@ -247,18 +432,10 @@ app.post('/admin_list', (req, res) => {
     })
 });
 
-app.get('/admin_edit', (req, res) => {
+app.get('/admin_edit', superSessionCheck, (req, res) => {
     res.render('admin_edit.hbs', {
         userData: testData.admin_edit_data
     })
-});
-
-app.get('/quiz', (request, response) => {
-    /**
-     * Displays the status page
-     */
-
-    response.render('quiz.hbs');
 });
 
 app.get('/quizresults', (request, response) => {
@@ -270,6 +447,9 @@ app.get('/quizresults', (request, response) => {
         title: 'Quiz Page'
     });
 });
+
+
+
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`server up on port ${port}`)
@@ -293,10 +473,8 @@ app.post('/pass_forgot', function(req, res, next) {
           req.flash('error', 'No account with that email address exists.');
           return res.redirect('/pass_forgot');
         }
-
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-
         user.save(function(err) {
           done(err, token, user);
         });
