@@ -305,7 +305,7 @@ function retrievelicenses(user_id) {
                         }
                         }
                     resolve(status_data);
-                    console.log(status_data);
+                    // console.log(status_data);
                 }
                 
             })

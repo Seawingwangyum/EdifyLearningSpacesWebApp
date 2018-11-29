@@ -127,32 +127,17 @@ app.get('/status', userSessionCheck, (request, response) => {
     .then((resolved) => {
         console.log(resolved);
              response.render('status.hbs', {
-                fireplanStatus: resolved['fireplan'].status,
-                fireplanNotes: resolved['fireplan'].admin_notes,
                 criminalStatus: resolved['criminal'].status,
                 criminalNotes: resolved['criminal'].admin_notes,
                 siteplanStatus: resolved['siteplan'].status,
                 siteplanNotes: resolved['siteplan'].admin_notes,
-                refStatus: resolved['references'].status,
-                refNotes: resolved['references'].admin_notes,
                 floorplanStatus: resolved['floorplan'].status,
                 floorplanNotes: resolved['floorplan'].admin_notes,
-
+                refStatus: resolved['references'].status,
+                refNotes: resolved['references'].admin_notes,
+                fireplanStatus: resolved['fireplan'].status,
+                fireplanNotes: resolved['fireplan'].admin_notes,
             })});
-    // db.loadStatus(22345);
-    // db.loadStatus(32345);
-
-    // console.log(data);
-    // console.log(resolved);
-
-
-    // response.render('status.hbs', {
-    //     title: 'Status Page',
-    //     userData1: testData.provider_list_data.providers[3],
-    //     userData2: testData.provider_list_data.providers[6],
-    //     userData3: testData.provider_list_data.providers[0],
-    //     userData4: testData.notes
-    // });
 });
 
 app.post('/status', (request, response) => {
@@ -172,8 +157,6 @@ app.get('/provider_edit', adminSessionCheck, (request, response) => {
 
 app.post('/provider_edit', adminSessionCheck, (request, response) => {
     // res.send(JSON.stringify(req.body))
-    console.log(request.body.Action);
-    console.log(request.body.L_ID);
 
     // db.getFile();
 
