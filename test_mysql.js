@@ -7,30 +7,7 @@ var mysql = require('mysql');
  * Creates a connection to the database.
  * @returns {array} con - connection details
  */
-function createConnection() {
 
-
-  var con = mysql.createConnection({
-
-      connectionLimit : 100,
-
-      host     : '',
-
-      port     :  ,
-
-
-
-      user: "",
-
-      password: "",
-
-      database: ""
-
-  });
-
-  return con
-
-}
 
 
 
