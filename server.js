@@ -120,8 +120,10 @@ app.get('/status', userSessionCheck, (request, response) => {
 });
 
 app.post('/status', (req, res) => {
-   console.log(req.body)
-   db.retrievelicenses(req.body.user).then((resolved)=>{
+   
+    var id = req.session.user.id;
+    console.log(id)
+   db.retrievelicenses(id).then((resolved)=>{
        //console.log(resolved)
         res.send(resolved)
    },(error)=>{
@@ -309,7 +311,7 @@ app.post('/account_creation', (req, res) => {
             bcrypt2.hash(req.body.password, salt, function(err, hash) {
                 if (err) return next(err);
                 req.body.password = hash; 
-                //console.log(req.body.password);
+                console.log(req.body.password);
                 //console.log(req.body.password.length)
                 db.addUser(req.body)
                 .then((resolve)=>{

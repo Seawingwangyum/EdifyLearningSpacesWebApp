@@ -7,7 +7,7 @@ var mysql = require('mysql');
 function createConnection() {
     var con = mysql.createConnection({
         connectionLimit : 100,
-        host     : '54.212.70.68',
+        host     : '54.202.177.36',
         port     :  3306,
         user: "edifyuser",
         password: "EdifyPassword1!",
