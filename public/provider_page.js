@@ -59,14 +59,16 @@ function createOptions(id, name) {
 		filename_name = createNewElement('div', 'filename_name', 'Filename...');
 		filename_date = createNewElement('div', 'filename_date', '00/00/0000');
 
-		file_submit = createNewElement('div', 'file_submit');
-		
+		file_submit = createNewElement('form', 'file_submit');
+		file_submit.method = 'post';
+		file_submit.action = '/provider_edit';
 
 		form_left = createNewElement('div', 'form_left');
 		form_right = createNewElement('div', 'form_right');
 		form_left_padding = createNewElement('div', 'form_left_padding', 'Add a note');
 
 		note_input = createNewElement('textarea', 'note_input');
+		note_input.name = 'admin_note';
 		note_input.rows = '3';
 		note_input.id = id + '_NInput';
 		console.log(id + '_NInput');

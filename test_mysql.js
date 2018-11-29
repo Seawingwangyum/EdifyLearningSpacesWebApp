@@ -11,39 +11,21 @@ var mysql = require('mysql');
 function createConnection() {
 
 
+
   var con = mysql.createConnection({
 
-      connectionLimit : 100,
-
-      host     : '',
-
-      port     :  ,
-
-
-
-      user: "",
-
-      password: "",
-
-      database: ""
+      host: "localhost",
+        user: "root",
+        password: "password",
+        database: "edify"
 
   });
 
-  return con
 
-}
+    return con
+ 
+ }
 
-
-
-
-//  var con = mysql.createConnection({
-//         host: "localhost",
-//         user: "root",
-//         password: "Password",
-//         database: "edify"
-// });
-//   return con
-// }
 
 
 /**
@@ -117,48 +99,19 @@ function addUser(info) {
 }
 
 /**
-* Sends a query to the database to get the users info.
-* @param {string} email.
-* @param {string} password.
-* @returns {Promise} returns "ok".
-*/
-function getUser(email, password) {
-    return new Promise ((resolve,reject) => {
-        var con = createConnection()
-        connect(con)
-        .then((resolved) => {
-
-            con.query("SELECT * FROM user WHERE email = '"+email+"' AND password = '"+password+"'", function (err, row) {
-                if (err){
-                    reject(err)
-                }
-                if (row.length > 0) {
-                    var user = {id: row[0].user_id, fname: row[0].first_name, lname: row[0].last_name, email: row[0].email, admin: row[0].is_admin}
-                    resolve(user);
-                } else {
-                    reject('Email not found!')
-                }      
-            })
-            con.end();
-        }), (err) => {
-            reject(err)
-        }
-    })    
-}
-
-/**
  * Sends a query to the database to update first and last name.
  * @param {string} fname - First name.
  * @param {string} lname - Last name.
+ * @param {int} id - user id.
  * @returns {Promise} returns "ok".
  */
-function changeName(fname, lname) {
+function changeName(fname, lname, id) {
     return new Promise((resolve, reject) => {
         var con = createConnection();
         connect(con)
         .then((resolved) => {
 
-            con.query("UPDATE user SET first_name ='" + fname + "', last_name ='" + lname + "' WHERE user_id = 3;", 
+            con.query("UPDATE user SET first_name ='" + fname + "', last_name ='" + lname + "' WHERE user_id = "+ id +";", 
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -177,15 +130,16 @@ function changeName(fname, lname) {
 /**
  * Sends a query to the database to update email.
  * @param {string} email.
+ * @param {int} id - user id.
  * @returns {Promise} returns "ok".
  */
-function changeEmail(email) {
+function changeEmail(email, id) {
     return new Promise((resolve, reject) => {
         var con = createConnection();
         connect(con)
         .then((resolved) => {
 
-            con.query("UPDATE user SET email ='" + email + "' WHERE user_id = 3;",
+            con.query("UPDATE user SET email ='" + email + "' WHERE user_id ="+ id +";",
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -204,15 +158,16 @@ function changeEmail(email) {
 /**
  * Sends a query to the database to update password.
  * @param {string} password.
+ * @param {int} id - user id.
  * @returns {Promise} returns "ok".
  */
-function changePassword(password) {
+function changePassword(password, id) {
     return new Promise((resolve, reject) => {
         var con = createConnection();
         connect(con)
         .then((resolved) => {
 
-            con.query("UPDATE user SET password ='" + password + "' WHERE user_id = 3;",
+            con.query("UPDATE user SET password ='" + password + "' WHERE user_id ="+ id +";",
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -282,86 +237,124 @@ function getLicense(license_id) {
  * @param {*} user_id - The identification number of the user.
  */
 function retrievelicenses(user_id) {
+
     var defaultJSON = {
+
         criminal: {status: null, adminnotes: ''},
         siteplan: {status: null, adminnotes: ''},
         floorplan: {status: null, adminnotes: ''},
         references: {status: null, adminnotes: ''},
         fireplan: {status: null, adminnotes: ''},
+
     }
 
     status_data = {}
+
     return new Promise((resolve, reject) =>{
+
         var con = createConnection();
         connect(con)
         .then((resolved) => {
-                
             con.query("SELECT * FROM license WHERE frn_user_id = " + user_id + ";", function (err, result) {
                 if (err) {
                     reject(err);
+
                 } else {
+
                     for(i = 0; i < result.length; i++) {
-                       
                         if (result[i].type == 'criminal'){
+
                             status_data['criminal'] = {  type:result[i].type,
+
                                                          status:result[i].status,
+
                                                          license_id:result[i].license_id,
-                                            
+
                                                          admin_notes:result[i].admin_notes,
-                                            
                                         } 
+
                         } else if (result[i].type == 'siteplan'){
+
                             status_data['siteplan'] = {  type:result[i].type,
                                                          status:result[i].status,
                                                          license_id:result[i].license_id,
-                                            
                                                          admin_notes:result[i].admin_notes,
-                                            
                                         } 
+
                             
+
                         } else if (result[i].type == 'floorplan') {
+
                             status_data['floorplan'] = {  type:result[i].type,
                                                          status:result[i].status,
                                                          license_id:result[i].license_id,
-                                            
                                                          admin_notes:result[i].admin_notes,
-                                            
                                         } 
-
                         } else if (result[i].type == 'reffile') {
+
                             status_data['reffile'] = {  type:result[i].type,
                                                          status:result[i].status,
                                                          license_id:result[i].license_id,
-                                            
                                                          admin_notes:result[i].admin_notes,
-                                            
                                         } 
+
                         } else if (result[i].type == 'firefile'){
+
                             status_data['firefile'] = {  type:result[i].type,
                                                          status:result[i].status,
                                                          license_id:result[i].license_id,
-                                            
                                                          admin_notes:result[i].admin_notes,
-                                            
                                         } 
+
                         }
 
                         var license_type = result[i].type
+
                         defaultJSON[license_type].status = result[i].status
+
                         defaultJSON[license_type].adminnotes = result[i].admin_notes
 
-
                         }
-                        
-                    
                     resolve(defaultJSON)
-
-
                     resolve(status_data);
                     // console.log(status_data);
+
                 }
-                
             })
+
+        }).catch((error) => {
+            reject(error);
+
+        });
+
+    });
+
+    con.end();
+
+}
+
+/**
+ * Sends a query to the database to update password.
+ * @param {string} note - the note entered by a user or admin.
+ * @param {string} type - user or admin.
+ * @param {int} id - users id.
+ * @returns {Promise} returns "ok".
+ */
+function addNote(note, type, id) {
+    return new Promise((resolve, reject) => {
+        var con = createConnection();
+        connect(con)
+        .then((resolved) => {
+
+            con.query("UPDATE license SET "+ type +" = '"+ note +"' WHERE frn_user_id = "+ id,
+            function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(result);
+                }
+            });
+
         }).catch((error) => {
             reject(error);
         });
@@ -436,6 +429,7 @@ module.exports = {
     retrievelicenses,
     getLicense,
     addLicense,
-    addUser
+    addNote,
+    addUser,
 }
 
