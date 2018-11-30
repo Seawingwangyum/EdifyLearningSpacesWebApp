@@ -1,5 +1,6 @@
 var response = {};
 var license_ID = 11111;
+var license_name = '';
 var notesValue = '';
 /**
 * Function to create new HTML element
@@ -36,9 +37,10 @@ function CreateNewInput(type, value) {
 * @param {string} id - the identifier for the HTML element
 * @param {string} name - the specific name of the HTML element
 */
-function createOptions(id, name) {
+function createOptions(id, name, l_id) {
 	console.log(id);
-	license_ID = id;
+	license_name = id;
+	license_ID = l_id
 	var license = document.getElementById(id);
 	var licenseOptions = document.getElementById(license.id + '_options');
 	if (licenseOptions) {
@@ -59,9 +61,9 @@ function createOptions(id, name) {
 		filename_name = createNewElement('div', 'filename_name', 'Filename...');
 		filename_date = createNewElement('div', 'filename_date', '00/00/0000');
 
-		file_submit = createNewElement('form', 'file_submit');
-		file_submit.method = 'post';
-		file_submit.action = '/provider_edit';
+		file_submit = createNewElement('div', 'file_submit');
+		// file_submit.method = 'post';
+		// file_submit.action = '/provider_edit';
 
 		form_left = createNewElement('div', 'form_left');
 		form_right = createNewElement('div', 'form_right');
@@ -133,8 +135,8 @@ function createOptions(id, name) {
 //-------------------------------------
 
 function send_prep_D(){
-	notesValue = document.getElementById(license_ID +'_NInput').value;
-	alert("1")
+	notesValue = document.getElementById(license_name +'_NInput').value;
+	alert("sent")
 	response["Action"] = 'Denied';
 	response["L_ID"] = license_ID;
 	response["notesValue"] = notesValue;
@@ -143,8 +145,8 @@ function send_prep_D(){
 }
 
 function send_prep_A(){
-	notesValue = document.getElementById(license_ID +'_NInput').value;
-	alert("2")
+	notesValue = document.getElementById(license_name +'_NInput').value;
+	alert("sent")
 	response["Action"] = 'Accepted';
 	response["L_ID"] = license_ID;
 	response["notesValue"] = notesValue;
@@ -153,7 +155,7 @@ function send_prep_A(){
 }
 
 function send_prep_UA(){
-	alert("3")
+	alert("sent")
 	response["Action"] = 'Awaiting Approval';
 	response["L_ID"] = license_ID;
 	response["notesValue"] = notesValue;
@@ -161,7 +163,7 @@ function send_prep_UA(){
 }
 
 function send_prep_UD(){
-	alert("4")
+	alert("sent")
 	response["Action"] = 'Awaiting Approval';
 	response["L_ID"] = license_ID;
 	response["notesValue"] = notesValue;

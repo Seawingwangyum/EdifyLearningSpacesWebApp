@@ -127,17 +127,64 @@ app.post('/status', (req, res) => {
 
 
 app.get('/provider_edit', adminSessionCheck, (request, response) => {
-    response.render('provider_edit.hbs', {
-        userData: testData.provider_edit_data
+    var id = request.query.user_id
+    db.retrievelicenses(id)
+    .then((resolved) => {
+        var sortedProviderLicenses = {
+            licenses: {
+                awaitingApproval: {
+                    name: 'Awaiting approval',
+                    licenses: []
+                },
+                approved: {
+                    name: 'Approved',
+                    licenses: []
+                },
+                denied: {
+                    name: 'Denied',
+                    licenses: []
+                },
+                awaitingSubmission: {
+                    name: 'Awaiting submission',
+                    licenses: []
+                },
+            }
+        }
+        for (key in resolved) {
+            if (resolved.hasOwnProperty(key)) {
+                if(resolved[key].status === 'Awaiting Approval') {
+                    sortedProviderLicenses.licenses.awaitingApproval.licenses.push(resolved[key]);
+                } else if (resolved[key].status === 'Accepted') {
+                    sortedProviderLicenses.licenses.approved.licenses.push(resolved[key]);
+                } else if (resolved[key].status === 'Denied') {
+                    sortedProviderLicenses.licenses.denied.licenses.push(resolved[key]);
+                } else if (resolved[key].status === 'submission is required') {
+                    sortedProviderLicenses.licenses.awaitingSubmission.licenses.push(resolved[key]);
+                }
+            }
+        }
+
+        // console.log(sortedProviderLicenses);
+        // console.log(sortedProviderLicenses.licenses.awaitingApproval);
+        response.render('provider_edit.hbs', {
+            id: id,
+            fname: request.query.fname,
+            lname: request.query.lname,
+            status: request.query.status,
+            userData: sortedProviderLicenses
+        })
+    }).catch((error) => {
+        console.log(error);
+        response.send('error');
     })
 });
 
 app.post('/provider_edit', adminSessionCheck, (request, response) => {
-    res.send(JSON.stringify(req.body))
-    console.log(request.body.Action);
+    // response.send(JSON.stringify(request.body))
+    // console.log('heeeelp');
     console.log(request.body.L_ID);
-
-    db.getFile();
+    console.log(request.body.Action);
+    console.log(request.body.notesValue);
 
     db.changeStatus(request.body.L_ID, request.body.Action, request.body.notesValue)
         .then((resolved) => {
@@ -147,9 +194,6 @@ app.post('/provider_edit', adminSessionCheck, (request, response) => {
             console.log(error);
         })
 
-    res.render('provider_edit.hbs', {
-        userData: testData.provider_edit_data
-    })
 });
 
 app.get('/settings', userSessionCheck, (req, res) => {
@@ -209,9 +253,6 @@ app.post('/settings_password', (req, res) => {
         })
     }
 });
-
-
-
 
 app.get('/landing_page', (req, res) => {
 	res.render('landing_page.hbs')
@@ -387,7 +428,7 @@ app.get('/deleteaccount', (req, res)=>{
 
 app.get('/provider_list', adminSessionCheck, (req, res, list) => {
     //get list of providers from the db
-    db.getUsers(0)
+    db.getUsers('user')
     .then((resolved) =>{
         res.render('provider_list.hbs', {
             userData: resolved
@@ -400,7 +441,7 @@ app.get('/provider_list', adminSessionCheck, (req, res, list) => {
 
 app.post('/provider_list', (req, res) => {
     console.log('prolist');
-    db.getUsers(0)
+    db.getUsers('users')
     .then((resolved) => {
         var id = req.body.Idsearch
         var fname = req.body.fnamesearch
