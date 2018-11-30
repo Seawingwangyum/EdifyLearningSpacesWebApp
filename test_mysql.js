@@ -44,15 +44,39 @@ function getUser(email, password) {
                     resolve(user);
                 } else {
                     reject('Email not found!');
-                }      
+                }
             });
-            
+
         }).catch ((error) => {
             reject(error);
         });
     });
     con.end();
 }
+
+function check_email(info){
+    returning_data = {}
+    return new Promise((resolve, reject) =>{
+        var con = createConnection.createConnection();
+        connect(con)
+        .then((resolved) => {
+            con.query(`select exists(select email from user where email='${info.email}') as 'in'`,
+            function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                        returning_data["used_email"] = result[0].in
+                        resolve(returning_data)
+                }
+            });
+
+        }).catch((error) => {
+            reject(error);
+        });
+    });
+
+}
+
 /**
  * Receives information from account_creation and creates entry into the database
  * @param {JSON} info - The information revieved from the website when creating an account
@@ -64,7 +88,7 @@ function addUser(info) {
 
         connect(con)
         .then((resolved) => {
-            con.query(`INSERT INTO user(first_name, last_name, password, email, location, is_admin) values ('${info.fname}', '${info.lname}', '${info.password}', '${info.email}', '${info.address}', '0')`, 
+            con.query(`INSERT INTO user(first_name, last_name, password, email, location, is_admin) values ('${info.fname}', '${info.lname}', '${info.password}', '${info.email}', '${info.address}', '0')`,
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -80,7 +104,6 @@ function addUser(info) {
 }
 
 /**
-
 * Sends a query to the database to get the users info.
 * @param {string} email.
 * @param {string} password.
@@ -101,17 +124,46 @@ function getUser(email, password) {
                     resolve(user);
                 } else {
                     reject('Email not found!')
-                }      
+                }
             })
             con.end();
         }), (err) => {
             reject(err)
         }
-    })    
+    })
 }
 
 /**
+* Sends a query to the database to get the users info.
+* @param {string} email.
+* @param {string} password.
+* @returns {Promise} returns "ok".
+*/
+function getUsers(type) {
+    return new Promise ((resolve,reject) => {
+        var con = createConnection.createConnection();
+        connect(con)
+        .then((resolved) => {
 
+            con.query("SELECT * FROM user WHERE is_admin = '"+type+"'", function (err, row) {
+                if (err){
+                    reject(err)
+                }
+                var users = []
+                for (i = 0; i < row.length; i++) {
+                    var user = {id: row[i].user_id, firstName: row[i].first_name, lastName: row[i].last_name, status: 'needs status', location: row[i].location}
+                    users.push(user)
+                }
+                resolve(users);
+            })
+            con.end();
+        }), (err) => {
+            reject(err)
+        }
+    })
+}
+
+/**
  * Sends a query to the database to update first and last name.
  * @param {string} fname - First name.
  * @param {string} lname - Last name.
@@ -124,7 +176,7 @@ function changeName(fname, lname, id) {
         connect(con)
         .then((resolved) => {
 
-            con.query("UPDATE user SET first_name ='" + fname + "', last_name ='" + lname + "' WHERE user_id = "+ id +";", 
+            con.query("UPDATE user SET first_name ='" + fname + "', last_name ='" + lname + "' WHERE user_id = "+ id +";",
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -210,7 +262,7 @@ function addLicense(file, type, notes, user_id) {
                     resolve('ok');
                 }
             });
-                
+
         }).catch((error) => {
             reject(error);
         });
@@ -335,7 +387,7 @@ function changeStatus(id, status, notes) {
                 reject(err)
             }
         })
-    })   
+    })
 }
 
 //needa make it look like retrievelicense
@@ -359,7 +411,7 @@ function loadStatus(id) {
                 //need a for loop
 
                 con.query("SELECT type, status, admin_notes FROM license WHERE license_id ="+id +";", function (err, result) {
-                
+
             if (err){
                         reject(err)
                         }
@@ -371,11 +423,12 @@ function loadStatus(id) {
                 reject(err)
             }
         })
-    })   
+    })
 }
 
 module.exports = {
     getUser,
+    getUsers,
     changeName,
     changeEmail,
     changePassword,
@@ -387,4 +440,5 @@ module.exports = {
     addLicense,
     addNote,
     addUser,
+    check_email,
 }

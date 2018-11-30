@@ -37,14 +37,14 @@
         </form>
 
         <div id='list'>
-            {{#each userData.providers as |provider|}}
-                <form class='providers' method='GET' action='provider_edit'>
-                    <input type='submit'  value='{{provider.id}}' class='goto_provider'/>
-                    <h2 class='id'></h2>
-                    <h2 class='fname'>{{provider.firstName}}</h2>
-                    <h2 class='lname'>{{provider.lastName}}</h2>
-                    <h2 class='status'>{{provider.status}}</h2>
-                    <h2 class='city'>{{provider.city}}</h2>
+            {{#each userData as |provider|}}
+                <form class='providers' method='POST' action='/provider_edit'>
+                    <input type='submit'  value='' class='goto_provider'/>
+                    <input class='id' name='user_id' value='{{provider.id}}'/>
+                    <input class='fname' name='fname' value='{{provider.firstName}}'/>
+                    <input class='lname' name='lname' value='{{provider.lastName}}'/>
+                    <input class='status' name='status' value='{{provider.status}}'/>
+                    <input class='city' name='location' value='{{provider.location}}'/>
                 </form>
             {{/each}}
         </div>
