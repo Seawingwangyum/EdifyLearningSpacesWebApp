@@ -110,7 +110,7 @@ function filterList(list, id, fname, lname, status) {
 }
 
 app.get('/status', userSessionCheck, (request, response) => {
-    db.retrievelicenses(req.session.user.id)
+    db.retrievelicenses(request.session.user.id)
     .then((resolved) => {
          response.render('status.hbs', {
             fireplanStatus: resolved['fireplan'].status,

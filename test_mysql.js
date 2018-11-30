@@ -227,11 +227,11 @@ function getLicense(license_id) {
  */
 function retrievelicenses(user_id) {
     var defaultJSON = {
-        criminal: {status: 'submission is required', admin_notes: ''},
-        siteplan: {status: 'submission is required', admin_notes: ''},
-        floorplan: {status: 'submission is required', admin_notes: ''},
-        references: {status: 'submission is required', admin_notes: ''},
-        fireplan: {status: 'submission is required', admin_notes: ''},
+        criminal: {status: 'submission is required', admin_notes: 'No note.'},
+        siteplan: {status: 'submission is required', admin_notes: 'No note.'},
+        floorplan: {status: 'submission is required', admin_notes: 'No note.'},
+        references: {status: 'submission is required', admin_notes: 'No note.'},
+        fireplan: {status: 'submission is required', admin_notes: 'No note.'},
     }
     status_data = {}
 
