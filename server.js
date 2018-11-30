@@ -170,9 +170,21 @@ app.post('/provider_edit', adminSessionCheck, (request, response) => {
 });
 
 app.get('/settings', userSessionCheck, (request, response) => {
-    response.render('settings.hbs', {
-        userData: testData.user_data
-    });
+    console.log('settings '+ request.session.user);
+    db.getUser('fred@jeff.com').then((resolved) => {
+      
+                    var user = resolved;
+                    console.log(user);
+                    
+                    response.render('settings.hbs', {
+            name: user.fname + ' '+ user.lname,
+            email: user.email
+        })
+
+        }).catch ((error) => {
+            console.log('db is bad' + error)
+            response.redirect('/login')
+        })
 });
 
 app.post('/settings_name', (req, res) => {
@@ -182,7 +194,7 @@ app.post('/settings_name', (req, res) => {
     var name = [fname, lname]
 
     if (check.checkForBlankEntry(name) && check.checkForOnlyAlphabet(name)) {
-        db.changeName(fname, lname)
+        db.changeName(fname, lname, 1)
         .then((resolved) => {
             res.send(resolved)
         }).catch ((error) => {
@@ -197,7 +209,7 @@ app.post('/settings_email', (req, res) => {
     // send user id as well instead of hardcode it
     var newEmail = req.body.email
     if (check.checkForBlankEntry([newEmail]) && check.checkForEmailFormat(newEmail)) {
-        db.changeEmail(newEmail)
+        db.changeEmail(newEmail, 1)
         .then((resolved) => {
             send(resolved)
         }).catch ((error) => {
@@ -211,7 +223,7 @@ app.post('/settings_password', (req, res) => {
     // send user id as well instead of hardcode it
     var newPassword = req.body.password
     if (check.checkForBlankEntry([newPassword]) && check.checkForPasswordFormat(newPassword)) {
-        db.changePassword(newPassword)
+        db.changePassword(newPassword, 1)
         .then((resolved) => {
             res.send(resolved)
         }).catch ((error) => {
