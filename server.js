@@ -65,21 +65,13 @@ app.use(session({
 
 var testData = require('./public/testData')
 
-// Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
+// Checks to see if the session is active, if it isnt it redirects to '/landing_page'
 function userSessionCheck(req, res, next) {
-
-    console.log(req.session.user);
-
     if (req.session.user && req.session.user.admin === 0) {
-
         next()
-
     } else {
-
         res.redirect('/landing_page')
-
     }
-
 }
 
 function adminSessionCheck(req, res, next) {
@@ -91,7 +83,6 @@ function adminSessionCheck(req, res, next) {
 }
 
 function superSessionCheck(req, res, next) {
-    console.log('super session');
     if (req.session.user && req.session.user.admin === 2) {
         next()
     } else {
@@ -119,10 +110,8 @@ function filterList(list, id, fname, lname, status) {
 }
 
 app.get('/status', userSessionCheck, (request, response) => {
-    db.retrievelicenses(1)
+    db.retrievelicenses(request.session.user.id)
     .then((resolved) => {
-
-        console.log(resolved);
          response.render('status.hbs', {
             fireplanStatus: resolved['fireplan'].status,
             fireplanNotes: resolved['fireplan'].admin_notes,
@@ -134,49 +123,22 @@ app.get('/status', userSessionCheck, (request, response) => {
             refNotes: resolved['references'].admin_notes,
             floorplanStatus: resolved['floorplan'].status,
             floorplanNotes: resolved['floorplan'].admin_notes,
-
         })
-
     }).catch((error) => {
         console.log(error);
         response.send('error');
     });
-
-    // db.loadStatus(22345);
-    // db.loadStatus(32345);
-
-    // console.log(data);
-    // console.log(resolved);
-
-
-    // response.render('status.hbs', {
-    //     title: 'Status Page',
-    //     userData1: testData.provider_list_data.providers[3],
-    //     userData2: testData.provider_list_data.providers[6],
-    //     userData3: testData.provider_list_data.providers[0],
-    //     userData4: testData.notes
-    // });
 });
-
-app.post('/status', (request, response) => {
-    db.retrievelicenses(1)
-    .then((resolved) => {
-             response.render('status.hbs', {
-                data: resolved
-            })});
-
-});
-
 
 app.post('/status', (req, res) => {
-        db.retrievelicenses(1)
+        db.retrievelicenses(req.session.user.id)
     .then((resolved) =>{
         res.send(resolved)
     }).catch((error) => {
         console.log(error);
         response.send('error');
     });
-});
+}); 
 
 app.get('/provider_edit', adminSessionCheck, (request, response) => {
     response.render('provider_edit.hbs', {
@@ -409,7 +371,7 @@ app.post('/account_creation', (req, res) => {
             bcrypt2.hash(req.body.password, salt, function(err, hash) {
                 if (err) return next(err);
                 req.body.password = hash; 
-                //console.log(req.body.password);
+                console.log(req.body.password);
                 //console.log(req.body.password.length)
                 db.addUser(req.body)
                 .then((resolve)=>{
