@@ -30,7 +30,7 @@ document.getElementById("finishsignup").addEventListener("click", function(){
 })
 
 document.getElementById('signup').addEventListener("click",function(){
-    verification();
+    verify_email(verification());
 })
 
 document.addEventListener("click", function(event) {
@@ -51,44 +51,74 @@ function verification(){
     if(fname.value == "" || lname.value==""){
         instructions.innerHTML="Please fill out your name"
         instructions.style.color = "red"
+        return false
     }
     else if(emailValidation(email.value) == false){
         instructions.innerHTML="Please enter a valid Email Address"
         instructions.style.color = "red"
+        return false
     }
     else if(educationbg.value == ""){
         instructions.innerHTML="Please fill out your education"
         instructions.style.color = "red"
+        return false;
     }
     else if(password.value == ""){
         instructions.innerHTML="Please enter a valid password"
         instructions.style.color = "red"
+        return false;
     }
     else if(password_length(password.value) == false){
         instructions.innerHTML="Password is under 8 characters"
         instructions.style.color = "red"
+        return false;
     }
     else if(pass_msg != "0"){
         if(pass_msg == "1"){
             instructions.innerHTML="Password contains no uppercase letters"
             instructions.style.color = "red"
+            return false;
         }
         else if(pass_msg == "2"){
             instructions.innerHTML="Password does not contain any numbers"
             instructions.style.color = "red"
+            return false;
         }
     }
     else if(password.value != passwordcheck.value){
         instructions.innerHTML="Passwords do not match"
         instructions.style.color = "red"
+        return false;
     }
     else if(address.value == ""){
         instructions.innerHTML="Please fill out your address"
         instructions.style.color = "red"
+        return false;
     }
+    
     else{
-        document.getElementById("tccontainer").style.display = "block";
-        document.getElementById("signupcontainer").style.display = "none";
+        return true;
+    }
+
+};
+
+function verify_email(validation_check){
+    if(validation_check == true){
+        var email_check = {};
+        email_check["type"] = "check_email";
+        email_check["email"] = email.value;
+        ajax_function(email_check)
+        .then((data)=>{
+            console.log(data["used_email"])
+            if(data["used_email"] != 0){
+                instructions.innerHTML="This Email address has already been registered"
+                instructions.style.color = "red"
+            }
+            else {
+                document.getElementById("tccontainer").style.display = "block";
+                document.getElementById("signupcontainer").style.display = "none";
+            }
+        })
     }
 
 }
@@ -142,15 +172,22 @@ function check_characters(pw){
  * prepares data and sends the prepaired data to server to server.
  */
 function send_prep(){
-    
-    console.log('SOMETHING IS HAPPENING');
     response["fname"] = fname.value;
     response["lname"] = lname.value;
     response["email"] = email.value; 
     response["edubg"] = educationbg.value; 
     response["password"] = password.value; 
     response["address"] = address.value; 
-    ajax_function(response);
+    ajax_function(response)
+    .then((returned)=>{
+        // console.log(data)
+        if(returned.Error == "0"){
+            location.href="/landing_page"
+        }
+        else{
+            swal("Whoops, Something went wrong", "Please reload your page", "error")
+        }
+    })
 }
 //verifies email
 function emailValidation(emails) {
@@ -166,19 +203,15 @@ function emailValidation(emails) {
  * @param {*} json_obj - The data that gets send to the node server.
  */
 function ajax_function(json_obj){
+    return new Promise((resolve)=>{
     $.ajax({
         type: 'POST',
         data: JSON.stringify(json_obj),
         contentType: 'application/json',
         url: '/account_creation',
         success: function(data){
-            // console.log(data)
-            if(data.Error == "0"){
-                location.href="/landing_page"
-            }
-            else{
-                swal("Whoops, Something went wrong", "Please reload your page", "error")
-            }
+            resolve(data)
         }
     })
+})
 }
