@@ -92,12 +92,12 @@ function getUser(email, password) {
         connect(con)
         .then((resolved) => {
 
-            con.query("SELECT * FROM user WHERE email = '"+email+"' AND password = '"+password+"'", function (err, row) {
+            con.query("SELECT * FROM user WHERE email = '"+email+"'", function (err, row) {
                 if (err){
                     reject(err)
                 }
                 if (row.length > 0) {
-                    var user = {id: row[0].user_id, fname: row[0].first_name, lname: row[0].last_name, email: row[0].email, admin: row[0].is_admin}
+                    var user = {id: row[0].user_id, fname: row[0].first_name, lname: row[0].last_name, email: row[0].email, admin: row[0].is_admin, password: row[0].password}
                     resolve(user);
                 } else {
                     reject('Email not found!')

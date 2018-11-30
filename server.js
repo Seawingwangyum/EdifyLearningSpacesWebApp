@@ -3,12 +3,13 @@ var mysql = require('mysql');
 // var nodemailer = require('nodemailer');
 // var passport = require('passport');
 // var LocalStrategy = require('passport-local').Strategy;
-var bcrypt = require('bcrypt-nodejs');
-var bcrypt2 = require('bcrypt');
+// var bcrypt = require('bcrypt-nodejs');
+// var bcrypt2 = require('bcrypt');
 // var async = require('async');
 var crypto = require('crypto');
 
 
+var bcrypt2 = require('bcrypt');
 
 const port = process.env.port || 8080;
 const express = require('express');
@@ -22,7 +23,9 @@ const fs = require('fs');
 const session = require('client-sessions');
 const fileUpload = require('express-fileupload');
 
+
 // const fileUpload = require('express-fileupload');
+
 
 const app = express();
 
@@ -65,9 +68,11 @@ app.use(session({
 
 var testData = require('./public/testData')
 
-// Checks to see if the session is active, if it isnt it redirects to '/landing_page'
+// Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
 function userSessionCheck(req, res, next) {
-    if (req.session.user && req.session.user.admin === 0) {
+    console.log('user session');
+    console.log(req.session.user);
+    if (req.session.user.admin === 0) {
         next()
     } else {
         res.redirect('/landing_page')
@@ -75,7 +80,8 @@ function userSessionCheck(req, res, next) {
 }
 
 function adminSessionCheck(req, res, next) {
-    if (req.session.user && req.session.user.admin === 1) {
+    // console.log('admin session');
+    if (req.session.user.admin === 1) {
         next()
     } else {
         res.redirect('/landing_page')
@@ -83,7 +89,8 @@ function adminSessionCheck(req, res, next) {
 }
 
 function superSessionCheck(req, res, next) {
-    if (req.session.user && req.session.user.admin === 2) {
+    console.log('super session');
+    if (req.session.user.admin === 2) {
         next()
     } else {
         res.redirect('/landing_page')
@@ -110,51 +117,57 @@ function filterList(list, id, fname, lname, status) {
 }
 
 app.get('/status', userSessionCheck, (request, response) => {
-    db.retrievelicenses(request.session.user.id)
+    db.retrievelicenses(1)
     .then((resolved) => {
-         response.render('status.hbs', {
-            fireplanStatus: resolved['fireplan'].status,
-            fireplanNotes: resolved['fireplan'].admin_notes,
-            criminalStatus: resolved['criminal'].status,
-            criminalNotes: resolved['criminal'].admin_notes,
-            siteplanStatus: resolved['siteplan'].status,
-            siteplanNotes: resolved['siteplan'].admin_notes,
-            refStatus: resolved['references'].status,
-            refNotes: resolved['references'].admin_notes,
-            floorplanStatus: resolved['floorplan'].status,
-            floorplanNotes: resolved['floorplan'].admin_notes,
-        })
-    }).catch((error) => {
-        console.log(error);
-        response.send('error');
-    });
+        console.log(resolved);
+             response.render('status.hbs', {
+                fireplanStatus: resolved['fireplan'].status,
+                fireplanNotes: resolved['fireplan'].admin_notes,
+                criminalStatus: resolved['criminal'].status,
+                criminalNotes: resolved['criminal'].admin_notes,
+                siteplanStatus: resolved['siteplan'].status,
+                siteplanNotes: resolved['siteplan'].admin_notes,
+                refStatus: resolved['references'].status,
+                refNotes: resolved['references'].admin_notes,
+                floorplanStatus: resolved['floorplan'].status,
+                floorplanNotes: resolved['floorplan'].admin_notes,
+
+            })});
+    // db.loadStatus(22345);
+    // db.loadStatus(32345);
+
+    // console.log(data);
+    // console.log(resolved);
+
+
+    // response.render('status.hbs', {
+    //     title: 'Status Page',
+    //     userData1: testData.provider_list_data.providers[3],
+    //     userData2: testData.provider_list_data.providers[6],
+    //     userData3: testData.provider_list_data.providers[0],
+    //     userData4: testData.notes
+    // });
 });
 
-app.post('/status', (req, res) => {
-        db.retrievelicenses(req.session.user.id)
-    .then((resolved) =>{
-        res.send(resolved)
-    }).catch((error) => {
-        console.log(error);
-        response.send('error');
-    });
-}); 
+app.post('/status', (request, response) => {
+    db.retrievelicenses(1)
+    .then((resolved) => {
+             response.render('status.hbs', {
+                data: resolved
+            })});
+});
+
 
 app.get('/provider_edit', adminSessionCheck, (request, response) => {
     response.render('provider_edit.hbs', {
         userData: testData.provider_edit_data
     })
-
-    // db.retrievelicenses(1)
-    // .then((resolved) => {
-    //          response.render('provider_edit.hbs', {
-    //             data: resolved
-            // })
 });
-
 
 app.post('/provider_edit', adminSessionCheck, (request, response) => {
     // res.send(JSON.stringify(req.body))
+    console.log(request.body.Action);
+    console.log(request.body.L_ID);
 
     // db.getFile();
 
@@ -171,26 +184,22 @@ app.post('/provider_edit', adminSessionCheck, (request, response) => {
     // })
 });
 
-app.get('/settings', userSessionCheck, (req, res) => {
-    res.render('settings.hbs', {
-        name: req.session.user.fname + ' ' + req.session.user.lname,
-        email: req.session.user.email
+app.get('/settings', userSessionCheck, (request, response) => {
+    response.render('settings.hbs', {
+        userData: testData.user_data
     });
 });
 
 app.post('/settings_name', (req, res) => {
+    // send user id aswell instead of hardcode it.
     var fname = req.body.fname
     var lname = req.body.lname
     var name = [fname, lname]
-    var id = req.session.user.id
-    console.log(id);
 
     if (check.checkForBlankEntry(name) && check.checkForOnlyAlphabet(name)) {
-        db.changeName(fname, lname, id)
+        db.changeName(fname, lname)
         .then((resolved) => {
-            req.session.user.fname = fname;
-            req.session.user.lname = lname;
-            res.send(resolved);
+            res.send(resolved)
         }).catch ((error) => {
             res.sendStatus(500)
             console.log(error);
@@ -200,48 +209,34 @@ app.post('/settings_name', (req, res) => {
 });
 
 app.post('/settings_email', (req, res) => {
+    // send user id as well instead of hardcode it
     var newEmail = req.body.email
-    var id = req.session.user.id
-
     if (check.checkForBlankEntry([newEmail]) && check.checkForEmailFormat(newEmail)) {
-        db.changeEmail(newEmail, id)
+        db.changeEmail(newEmail)
         .then((resolved) => {
-            req.session.user.email = newEmail;
-            res.send(resolved);
+            send(resolved)
         }).catch ((error) => {
-            res.sendStatus(500);
-            console.log(error);
+            res.sendStatus(500)
+            log(error);
         })
     }
 });
 
 app.post('/settings_password', (req, res) => {
+    // send user id as well instead of hardcode it
     var newPassword = req.body.password
-    var id = req.session.user.id
-
     if (check.checkForBlankEntry([newPassword]) && check.checkForPasswordFormat(newPassword)) {
-        db.changePassword(newPassword, id)
+        db.changePassword(newPassword)
         .then((resolved) => {
-            res.send(resolved);
+            res.send(resolved)
         }).catch ((error) => {
-            res.sendStatus(500);
+            res.sendStatus(500)
             console.log(error);
         })
     }
 });
 
 
-
-app.post('/provider_edit', (req, res) => {
-    var note = req.body.admin_note
-    db.addNote(note, 'admin_notes', req.session.user.id)
-    .then((resolved) => {
-        res.redirect('/provider_edit');
-    }).catch((error) => {
-        res.sendStatus(500)
-        console.log(error);
-    });
-})
 
 app.get('/landing_page', (req, res) => {
 	res.render('landing_page.hbs')
@@ -270,12 +265,59 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
+ 
+    
+        if(res) {
+            console.log('stuff is happene');
+            db.getUser(req.body.Email).then((resolved) => {
+                console.log('resolve'+ resolved.password);
+            
+                bcrypt2.compare(req.body.Passwd, resolved.password, function(err, rest) {
+                    console.log(rest);
+                    if (err){
+                        console.log('compare is bad ' + err);
+                    }
+                    else {
+                        console.log('yoooooo');
+                        var user = resolved;
+                        console.log(user);
+                        req.session.user = user;
+                        if (user.admin === 0) {
+                            res.redirect('/licenses')
+                        } else if (user.admin === 1) {
+                            res.redirect('/provider_list')
+                        } else if (user.admin === 2) {
+                            res.redirect('/admin_list')
+                        }
+                    } 
+                })
+                
+            }).catch ((error) => {
+                console.log('db is bad' + error)
+                res.redirect('/login')
+            })
+        } else {
+            console.log('login is bad ' + err);
+        } 
+  
+
 
         
+    
+        
+    
+    
+});
+
+app.post('/login', (req, res) => {
+
+    console.log(req.body);
     bcrypt2.genSalt(10, function(err, salt) {
-        if (err) return (err);
-        bcrypt2.hash(req.body.password, salt, function(err, hash) {
-            if (err) return (err);
+        if (err) {
+            console.log(err);
+        }
+        bcrypt2.hash(req.body.Passwd, salt, function(err, hash) {
+            if (err) return console.log(err);
                 req.body.password = hash; 
                 console.log(req.body.password);
             db.getUser(req.body.Email, req.body.Passwd).then((resolved) => {
@@ -293,12 +335,12 @@ app.post('/login', (req, res) => {
         console.log(error)
         res.redirect('/login')
     })
-            res.send(data)
-        });
+            
     });
         
     
     
+});
 });
  
 app.get('/tandp', (req, res) => {
@@ -315,67 +357,67 @@ app.get('/licenses', (req, res) => {
 	res.render('license.hbs')
 });
 
-
 app.post('/licenses', (req, res) => {
-    if (Object.keys(req.files).length == 0) {
-        return res.status(400).send('No files were uploaded.');
-    } else {
-        // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-        let sampleFile = req.files.pic;
-        var note = req.body.notes
-        console.log(req.files);
+  
+    if (req.files == undefined) {
+    return res.status(400).send('No files were uploaded.');
+  } else {
+    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+    let sampleFile = req.files.pic;
+    console.log(req.files);
 
-        crypto.pseudoRandomBytes(16, function(err, raw) {
-            if (err) return callback(err);
-            var filename = raw.toString('hex') + path.extname(req.files.pic.name);
+    crypto.pseudoRandomBytes(16, function(err, raw) {
+        if (err) return callback(err);
+        var filename = raw.toString('hex') + path.extname(req.files.pic.name);
 
-            verify_license.verify_license(req.body).then((data) => {
+        verify_license.verify_license(req.body).then((data) => {
 
-                sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
+            sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
 
-                    if (err) {
-                    res.status(500).send(err);
-                    }
-                    
-                });
-            db.addNote(note, 'user_notes', req.session.user.id)
-                .then((resolved) => {
-                    res.send('File uploaded!');
-                }).catch((error) => {
-                    res.sendStatus(500)
-                    console.log(error);
-                });
-            db.addLicense(filename, req.body.type, req.body.notes, 1)
-                .then((resolved) => {
-                    res.send('File uploaded!');
-                }).catch((error) => {
-                    res.sendStatus(500)
-                    console.log(error);
-                });
-            }).catch((error) => {
-                res.send(error)
+                if (err) {
+
+                res.status(500).send(err);
+                }
+                
             });
+        db.addLicense(filename, req.body.type, req.body.notes, 1)
+            .then((resolved) => {
+                res.send('File uploaded!');
+            }, (error) => {
+                res.sendStatus(500)
+                console.log(error);
+            })
+        }, (error) => {
+            res.send(error)
         })
+    }) 
 
-    }
-});
+  }
+
+    
+    });
+
+
+
+
 app.get('/test', (req, res) => {
     db.getLicense(2).then(function(resolved) {
         console.log(resolved);
+
         res.render('test.hbs', {
         //license: testData.provider_list_data
     })
     })
+    
 });
-
 
 app.get('/account_creation', (req, res) => {
-    // goto db
-    
 	res.render('account_creation.hbs')
 });
-
 app.post('/account_creation', (req, res) => {
+
+    
+    
     console.log(req.body);
     //send_email.send_email();
     verify_signup.verify_signup(req.body).then((data) =>{
@@ -385,7 +427,7 @@ app.post('/account_creation', (req, res) => {
             bcrypt2.hash(req.body.password, salt, function(err, hash) {
                 if (err) return next(err);
                 req.body.password = hash; 
-                console.log(req.body.password);
+                //console.log(req.body.password);
                 //console.log(req.body.password.length)
                 db.addUser(req.body)
                 .then((resolve)=>{
@@ -399,7 +441,7 @@ app.post('/account_creation', (req, res) => {
         
     }, (error) =>{
         res.send(error)
-    })
+})
 })
 
 app.get('/passchange', (req, res)=>{
@@ -455,6 +497,10 @@ app.get('/admin_edit', superSessionCheck, (req, res) => {
 });
 
 app.get('/quizresults', (request, response) => {
+    /**
+     * Displays the status page
+     */
+
     response.render('quizresults.hbs', {
         title: 'Quiz Page'
     });
@@ -528,3 +574,47 @@ app.post('/pass_forgot', function(req, res, next) {
     res.redirect('/landing_page');
   });
 });
+
+
+app.post('/licenses', (req, res) => {
+    if (Object.keys(req.files).length == 0) {
+        return res.status(400).send('No files were uploaded.');
+    } else {
+        // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+        let sampleFile = req.files.pic;
+        var note = req.body.notes
+        console.log(req.files);
+
+        crypto.pseudoRandomBytes(16, function(err, raw) {
+            if (err) return callback(err);
+            var filename = raw.toString('hex') + path.extname(req.files.pic.name);
+
+            verify_license.verify_license(req.body).then((data) => {
+
+                sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
+
+                    if (err) {
+                    res.status(500).send(err);
+                    }
+                    
+                });
+            db.addNote(note, 'user_notes', req.session.user.id)
+                .then((resolved) => {
+                    res.send('File uploaded!');
+                }).catch((error) => {
+                    res.sendStatus(500)
+                    console.log(error);
+                });
+            db.addLicense(filename, req.body.type, req.body.notes, 1)
+                .then((resolved) => {
+                    res.send('File uploaded!');
+                }).catch((error) => {
+                    res.sendStatus(500)
+                    console.log(error);
+                });
+            }).catch((error) => {
+                res.send(error)
+            });
+        })
+
+    }});
