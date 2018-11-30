@@ -40,7 +40,7 @@ function getUser(email, password) {
                 if (error){
                     reject(err);
                 } else if (row.length > 0) {
-                    var user = {id: row[0].user_id, fname: row[0].first_name, lname: row[0].last_name, email: row[0].email, admin: row[0].is_admin}
+                    var user = {id: row[0].user_id, fname: row[0].first_name, lname: row[0].last_name, email: row[0].email, admin: row[0].type}
                     resolve(user);
                 } else {
                     reject('Email not found!');
@@ -120,7 +120,7 @@ function getUser(email, password) {
                     reject(err)
                 }
                 if (row.length > 0) {
-                    var user = {id: row[0].user_id, fname: row[0].first_name, lname: row[0].last_name, email: row[0].email, admin: row[0].is_admin, password: row[0].password}
+                    var user = {id: row[0].user_id, fname: row[0].first_name, lname: row[0].last_name, email: row[0].email, admin: row[0].type, password: row[0].password}
                     resolve(user);
                 } else {
                     reject('Email not found!')
@@ -169,7 +169,7 @@ function getUsers(type) {
         connect(con)
         .then((resolved) => {
 
-            con.query("SELECT * FROM user WHERE is_admin = '"+type+"'", function (err, row) {
+            con.query("SELECT * FROM user WHERE type = '"+type+"'", function (err, row) {
                 if (err){
                     reject(err)
                 }
@@ -330,7 +330,7 @@ function retrievelicenses(user_id) {
         criminal: {status: 'submission is required', admin_notes: 'No note.'},
         siteplan: {status: 'submission is required', admin_notes: 'No note.'},
         floorplan: {status: 'submission is required', admin_notes: 'No note.'},
-        references: {status: 'submission is required', admin_notes: 'No note.'},
+        reference: {status: 'submission is required', admin_notes: 'No note.'},
         fireplan: {status: 'submission is required', admin_notes: 'No note.'},
     }
     status_data = {}
@@ -346,6 +346,8 @@ function retrievelicenses(user_id) {
                 if (err) {
                     reject(err);
                 } else {
+                                            console.log(result);
+
                     for(i = 0; i < result.length; i++) {
 
                         var license_type = result[i].type
