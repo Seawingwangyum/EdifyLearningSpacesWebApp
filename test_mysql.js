@@ -385,12 +385,8 @@ module.exports = {
     retrievelicenses,
     getLicense,
     addLicense,
-<<<<<<< HEAD
-    addUser
-}
-=======
     addNote,
     addUser,
 }
 
->>>>>>> 3f0c91c7aea298433a0e6fa643486650b86e6c00
+
