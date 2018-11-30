@@ -376,7 +376,7 @@ function retrievelicenses(user_id) {
  */
 function addNote(note, type, id) {
     return new Promise((resolve, reject) => {
-        var con = createConnection();
+        var con = createConnection.createConnection();
         connect(con)
         .then((resolved) => {
 
