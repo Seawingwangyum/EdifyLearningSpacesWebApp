@@ -3,6 +3,7 @@
 body {
     margin: 0;
     padding: 0;
+    background-color: #e8e6fb;
 }
 input[type=submit]{
     background-color: #5f59a5;
@@ -74,7 +75,7 @@ input[type=submit]:hover {
 
 #box1 {
     right:40px;
-    top:10vh;
+    top:5vh;
     width:45vw;
     padding:20px;
     position:relative; 
@@ -87,7 +88,7 @@ input[type=submit]:hover {
     left:50px;
     float:left;
     top:80px;
-    width:18vw;
+    width:28vw;
     padding:20px;
     position:relative;
     background-color: white;
@@ -147,4 +148,9 @@ input[type=submit]:hover {
 .purple_button {
   padding: 15px 35px;
   margin: 0px 20px;
+}
+
+h4 {
+    color: #646189;
+    font-weight: bold;
 }
