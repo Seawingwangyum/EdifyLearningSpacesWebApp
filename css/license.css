@@ -5,13 +5,6 @@
     overflow: scroll;
 }
 
-.buttbox {
-    width: 200px; 
-    height: 500px;
-    display: inline;
-    font-family: 'BalooBhai', sans-serif;
-}
-
 .bigcontainer {
     width: 65vw;
     background-color: white;
@@ -64,7 +57,7 @@
 
 .submitarea {
     width:20vw;
-    height:150px;
+    height:200px;
     float: right;
     text-align: center;
     margin: 8px;
@@ -72,6 +65,14 @@
     background-color: rgba(254, 205, 254, 0.5);
     position: relative;
     border-radius: 6px;
+}
+
+#vaclist {
+    list-style-type:square;
+    margin: 0;
+    padding: 0;
+    list-style-position: inside;
+    text-align: left;
 }
 
 #crInfo {
@@ -95,10 +96,10 @@
 }
 
 #refInfo {
-    display: none; 
+    display: none;
 }
 #refInfo2 {
-    display: none; 
+    display: none;
 }
 
 #fireInfo {
@@ -110,7 +111,6 @@
 
 #immunInfo {
     display: none;
-    text-align: center;
     width: 100%;
 }
 
@@ -123,4 +123,14 @@
 .purple_button {
   padding: 15px 35px;
   margin: 0px 20px;
+  background-color: #5f59a5;
+  border-radius: 6px;
+  border: 0px;
+  color: white;
+  font-family: 'BalooBhai', sans-serif;
+  font-size: 18px;
+}
+
+.purple_button:hover {
+  background-color: #916cc6;
 }
