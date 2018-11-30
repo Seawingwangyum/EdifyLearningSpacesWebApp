@@ -1,10 +1,6 @@
 @import 'navbar1.css';
 @import 'navbar2.css';
 
-#licensebody{
-    overflow: scroll;
-}
-
 .bigcontainer {
     width: 65vw;
     background-color: white;
