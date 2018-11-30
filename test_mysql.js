@@ -80,7 +80,6 @@ function addUser(info) {
 }
 
 /**
-
 * Sends a query to the database to get the users info.
 * @param {string} email.
 * @param {string} password.
@@ -111,7 +110,36 @@ function getUser(email, password) {
 }
 
 /**
+* Sends a query to the database to get the users info.
+* @param {string} email.
+* @param {string} password.
+* @returns {Promise} returns "ok".
+*/
+function getUsers(type) {
+    return new Promise ((resolve,reject) => {
+        var con = createConnection.createConnection();
+        connect(con)
+        .then((resolved) => {
 
+            con.query("SELECT * FROM user WHERE is_admin = '"+type+"'", function (err, row) {
+                if (err){
+                    reject(err)
+                }
+                var users = []
+                for (i = 0; i < row.length; i++) {
+                    var user = {id: row[i].user_id, firstName: row[i].first_name, lastName: row[i].last_name, status: 'needs status', location: row[i].location}
+                    users.push(user)
+                }
+                resolve(users);
+            })
+            con.end();
+        }), (err) => {
+            reject(err)
+        }
+    })    
+}
+
+/**
  * Sends a query to the database to update first and last name.
  * @param {string} fname - First name.
  * @param {string} lname - Last name.
@@ -376,6 +404,7 @@ function loadStatus(id) {
 
 module.exports = {
     getUser,
+    getUsers,
     changeName,
     changeEmail,
     changePassword,

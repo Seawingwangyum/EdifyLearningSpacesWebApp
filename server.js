@@ -70,7 +70,6 @@ var testData = require('./public/testData')
 
 // Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
 function userSessionCheck(req, res, next) {
-    console.log('user session');
     console.log(req.session.user);
     if (req.session.user.admin === 0) {
         next()
@@ -80,7 +79,6 @@ function userSessionCheck(req, res, next) {
 }
 
 function adminSessionCheck(req, res, next) {
-    // console.log('admin session');
     if (req.session.user.admin === 1) {
         next()
     } else {
@@ -89,7 +87,6 @@ function adminSessionCheck(req, res, next) {
 }
 
 function superSessionCheck(req, res, next) {
-    console.log('super session');
     if (req.session.user.admin === 2) {
         next()
     } else {
@@ -117,44 +114,32 @@ function filterList(list, id, fname, lname, status) {
 }
 
 app.get('/status', userSessionCheck, (request, response) => {
-    db.retrievelicenses(1)
+    db.retrievelicenses(req.session.user.id)
     .then((resolved) => {
         console.log(resolved);
-             response.render('status.hbs', {
-                fireplanStatus: resolved['fireplan'].status,
-                fireplanNotes: resolved['fireplan'].admin_notes,
-                criminalStatus: resolved['criminal'].status,
-                criminalNotes: resolved['criminal'].admin_notes,
-                siteplanStatus: resolved['siteplan'].status,
-                siteplanNotes: resolved['siteplan'].admin_notes,
-                refStatus: resolved['references'].status,
-                refNotes: resolved['references'].admin_notes,
-                floorplanStatus: resolved['floorplan'].status,
-                floorplanNotes: resolved['floorplan'].admin_notes,
-
-            })});
-    // db.loadStatus(22345);
-    // db.loadStatus(32345);
-
-    // console.log(data);
-    // console.log(resolved);
-
-
-    // response.render('status.hbs', {
-    //     title: 'Status Page',
-    //     userData1: testData.provider_list_data.providers[3],
-    //     userData2: testData.provider_list_data.providers[6],
-    //     userData3: testData.provider_list_data.providers[0],
-    //     userData4: testData.notes
-    // });
+        response.render('status.hbs', {
+            fireplanStatus: resolved['fireplan'].status,
+            fireplanNotes: resolved['fireplan'].admin_notes,
+            criminalStatus: resolved['criminal'].status,
+            criminalNotes: resolved['criminal'].admin_notes,
+            siteplanStatus: resolved['siteplan'].status,
+            siteplanNotes: resolved['siteplan'].admin_notes,
+            refStatus: resolved['references'].status,
+            refNotes: resolved['references'].admin_notes,
+            floorplanStatus: resolved['floorplan'].status,
+            floorplanNotes: resolved['floorplan'].admin_notes,
+        })
+    });
 });
 
-app.post('/status', (request, response) => {
-    db.retrievelicenses(1)
-    .then((resolved) => {
-             response.render('status.hbs', {
-                data: resolved
-            })});
+app.post('/status', (req, res) => {
+        db.retrievelicenses(req.session.user.id)
+    .then((resolved) =>{
+        res.send(resolved)
+    }).catch((error) => {
+        console.log(error);
+        response.send('error');
+    });
 });
 
 
@@ -166,18 +151,19 @@ app.get('/provider_edit', adminSessionCheck, (request, response) => {
 
 app.post('/provider_edit', adminSessionCheck, (request, response) => {
     // res.send(JSON.stringify(req.body))
-    console.log(request.body.Action);
-    console.log(request.body.L_ID);
+    console.log(request.body);
+    // console.log(request.body.Action);
+    // console.log(request.body.L_ID);
 
     // db.getFile();
 
-    db.changeStatus(request.body.L_ID, request.body.Action, request.body.notesValue)
-        .then((resolved) => {
-            response.send(resolved)
-        }, (error) => {
-            response.sendStatus(500)
-            console.log(error);
-        })
+    // db.changeStatus(request.body.L_ID, request.body.Action, request.body.notesValue)
+    //     .then((resolved) => {
+    //         response.send(resolved)
+    //     }, (error) => {
+    //         response.sendStatus(500)
+    //         console.log(error);
+    //     })
 
     // res.render('provider_edit.hbs', {
     //     userData: testData.provider_edit_data
@@ -265,82 +251,38 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
- 
-    
-        if(res) {
-            console.log('stuff is happene');
-            db.getUser(req.body.Email).then((resolved) => {
-                console.log('resolve'+ resolved.password);
-            
-                bcrypt2.compare(req.body.Passwd, resolved.password, function(err, rest) {
-                    console.log(rest);
-                    if (err){
-                        console.log('compare is bad ' + err);
+    if(res) {
+        console.log('stuff is happene');
+        db.getUser(req.body.Email).then((resolved) => {
+            console.log('resolve'+ resolved.password);
+        
+            bcrypt2.compare(req.body.Passwd, resolved.password, function(err, rest) {
+                console.log(rest);
+                if (err){
+                    console.log('compare is bad ' + err);
+                }
+                else {
+                    console.log('yoooooo');
+                    var user = resolved;
+                    console.log(user);
+                    req.session.user = user;
+                    if (user.admin === 0) {
+                        res.redirect('/licenses')
+                    } else if (user.admin === 1) {
+                        res.redirect('/provider_list')
+                    } else if (user.admin === 2) {
+                        res.redirect('/admin_list')
                     }
-                    else {
-                        console.log('yoooooo');
-                        var user = resolved;
-                        console.log(user);
-                        req.session.user = user;
-                        if (user.admin === 0) {
-                            res.redirect('/licenses')
-                        } else if (user.admin === 1) {
-                            res.redirect('/provider_list')
-                        } else if (user.admin === 2) {
-                            res.redirect('/admin_list')
-                        }
-                    } 
-                })
-                
-            }).catch ((error) => {
-                console.log('db is bad' + error)
-                res.redirect('/login')
+                } 
             })
-        } else {
-            console.log('login is bad ' + err);
-        } 
-  
-
-
-        
-    
-        
-    
-    
-});
-
-app.post('/login', (req, res) => {
-
-    console.log(req.body);
-    bcrypt2.genSalt(10, function(err, salt) {
-        if (err) {
-            console.log(err);
-        }
-        bcrypt2.hash(req.body.Passwd, salt, function(err, hash) {
-            if (err) return console.log(err);
-                req.body.password = hash; 
-                console.log(req.body.password);
-            db.getUser(req.body.Email, req.body.Passwd).then((resolved) => {
-            var user = resolved
-            console.log(user);
-            req.session.user = user;
-                if (user.admin === 0) {
-                    res.redirect('/licenses')
-                } else if (user.admin === 1) {
-                    res.redirect('/provider_list')
-                } else if (user.admin === 2) {
-                res.redirect('/admin_list')
-        }
-    }).catch ((error) => {
-        console.log(error)
-        res.redirect('/login')
-    })
             
-    });
-        
-    
-    
-});
+        }).catch ((error) => {
+            console.log('db is bad' + error)
+            res.redirect('/login')
+        })
+    } else {
+        console.log('login is bad ' + err);
+    } 
 });
  
 app.get('/tandp', (req, res) => {
@@ -360,45 +302,39 @@ app.get('/licenses', (req, res) => {
 app.post('/licenses', (req, res) => {
   
     if (req.files == undefined) {
-    return res.status(400).send('No files were uploaded.');
-  } else {
-    // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-    let sampleFile = req.files.pic;
-    console.log(req.files);
+        return res.status(400).send('No files were uploaded.');
+    } else {
+        // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+        let sampleFile = req.files.pic;
+        console.log(req.files);
 
-    crypto.pseudoRandomBytes(16, function(err, raw) {
-        if (err) return callback(err);
-        var filename = raw.toString('hex') + path.extname(req.files.pic.name);
+        crypto.pseudoRandomBytes(16, function(err, raw) {
+            if (err) return callback(err);
+            var filename = raw.toString('hex') + path.extname(req.files.pic.name);
 
-        verify_license.verify_license(req.body).then((data) => {
+            verify_license.verify_license(req.body).then((data) => {
 
-            sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
+                sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
 
-                if (err) {
+                    if (err) {
 
-                res.status(500).send(err);
-                }
-                
-            });
-        db.addLicense(filename, req.body.type, req.body.notes, 1)
-            .then((resolved) => {
-                res.send('File uploaded!');
+                    res.status(500).send(err);
+                    }
+                    
+                });
+            db.addLicense(filename, req.body.type, req.body.notes, 1)
+                .then((resolved) => {
+                    res.send('File uploaded!');
+                }, (error) => {
+                    res.sendStatus(500)
+                    console.log(error);
+                })
             }, (error) => {
-                res.sendStatus(500)
-                console.log(error);
+                res.send(error)
             })
-        }, (error) => {
-            res.send(error)
-        })
-    }) 
-
-  }
-
-    
-    });
-
-
-
+        }) 
+    }
+});
 
 app.get('/test', (req, res) => {
     db.getLicense(2).then(function(resolved) {
@@ -453,21 +389,36 @@ app.get('/deleteaccount', (req, res)=>{
 })
 
 app.get('/provider_list', adminSessionCheck, (req, res, list) => {
-	res.render('provider_list.hbs', {
-        userData: testData.provider_list_data
-    })
-})
+    //get list of providers from the db
+    db.getUsers(0)
+    .then((resolved) =>{
+        res.render('provider_list.hbs', {
+            userData: resolved
+        })
+    }).catch((error) => {
+        console.log(error);
+        res.send('error, please try again.')
+    });
+});
 
 app.post('/provider_list', (req, res) => {
-    var id = req.body.Idsearch
-    var fname = req.body.fnamesearch
-    var lname = req.body.lnamesearch
-    var status = req.body.querytype
-    var list = testData.provider_list_data.providers;
+    console.log('prolist');
+    db.getUsers(0)
+    .then((resolved) => {
+        var id = req.body.Idsearch
+        var fname = req.body.fnamesearch
+        var lname = req.body.lnamesearch
+        var status = req.body.querytype
+        var list = resolved;
 
-    var filteredList = {providers: filterList(list, id, fname, lname, status)}
-    res.render('provider_list.hbs', {
-        userData: filteredList
+        var filteredList = {providers: filterList(list, id, fname, lname, status)}
+        console.log(filteredList);
+        res.render('provider_list.hbs', {
+            userData: filteredList.providers
+        })
+    }).catch((error) => {
+        console.log(error);
+        res.send('error')
     })
 });
 
