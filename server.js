@@ -158,14 +158,10 @@ app.post('/status', (request, response) => {
 });
 
 
-app.post('/status', (req, res) => {
-   console.log(req.body)
-   db.retrievelicenses(req.body.user).then((resolved)=>{
-       //console.log(resolved)
-        res.send(resolved)
-   },(error)=>{
-       console.log(error)
-   })
+app.get('/provider_edit', adminSessionCheck, (request, response) => {
+    response.render('provider_edit.hbs', {
+        userData: testData.provider_edit_data
+    })
 });
 
 app.post('/provider_edit', adminSessionCheck, (request, response) => {
@@ -269,23 +265,44 @@ app.get('/login', (req, res) => {
 });
 
 app.post('/login', (req, res) => {
-    db.getUser(req.body.Email, req.body.Passwd).then((resolved) => {
-        var user = resolved
-        console.log(user);
-        req.session.user = user;
-        if (user.admin === 0) {
-            res.redirect('/licenses')
-        } else if (user.admin === 1) {
-            res.redirect('/provider_list')
-        } else if (user.admin === 2) {
-            res.redirect('/admin_list')
-        }
-    }).catch ((error) => {
-        console.log(error)
-        res.redirect('/login')
-    })
-});
  
+    
+        if(res) {
+            console.log('stuff is happene');
+            db.getUser(req.body.Email).then((resolved) => {
+                console.log('resolve'+ resolved.password);
+            
+                bcrypt2.compare(req.body.Passwd, resolved.password, function(err, rest) {
+                    console.log(rest);
+                    if (err){
+                        console.log('compare is bad ' + err);
+                    }
+                    else {
+                        console.log('yoooooo');
+                        var user = resolved;
+                        console.log(user);
+                        req.session.user = user;
+                        if (user.admin === 0) {
+                            res.redirect('/licenses')
+                        } else if (user.admin === 1) {
+                            res.redirect('/provider_list')
+                        } else if (user.admin === 2) {
+                            res.redirect('/admin_list')
+                        }
+                    } 
+                })
+                
+            }).catch ((error) => {
+                console.log('db is bad' + error)
+                res.redirect('/login')
+            })
+        } else {
+            console.log('login is bad ' + err);
+        } 
+    
+});
+
+
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
 });
@@ -360,6 +377,7 @@ app.get('/account_creation', (req, res) => {
 app.post('/account_creation', (req, res) => {
 
     
+    
     console.log(req.body);
     //send_email.send_email();
     verify_signup.verify_signup(req.body).then((data) =>{
@@ -383,7 +401,7 @@ app.post('/account_creation', (req, res) => {
         
     }, (error) =>{
         res.send(error)
-    })
+})
 })
 
 app.get('/passchange', (req, res)=>{
@@ -516,3 +534,47 @@ app.post('/pass_forgot', function(req, res, next) {
     res.redirect('/landing_page');
   });
 });
+
+
+app.post('/licenses', (req, res) => {
+    if (Object.keys(req.files).length == 0) {
+        return res.status(400).send('No files were uploaded.');
+    } else {
+        // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
+        let sampleFile = req.files.pic;
+        var note = req.body.notes
+        console.log(req.files);
+
+        crypto.pseudoRandomBytes(16, function(err, raw) {
+            if (err) return callback(err);
+            var filename = raw.toString('hex') + path.extname(req.files.pic.name);
+
+            verify_license.verify_license(req.body).then((data) => {
+
+                sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
+
+                    if (err) {
+                    res.status(500).send(err);
+                    }
+                    
+                });
+            db.addNote(note, 'user_notes', req.session.user.id)
+                .then((resolved) => {
+                    res.send('File uploaded!');
+                }).catch((error) => {
+                    res.sendStatus(500)
+                    console.log(error);
+                });
+            db.addLicense(filename, req.body.type, req.body.notes, 1)
+                .then((resolved) => {
+                    res.send('File uploaded!');
+                }).catch((error) => {
+                    res.sendStatus(500)
+                    console.log(error);
+                });
+            }).catch((error) => {
+                res.send(error)
+            });
+        })
+
+    }});

@@ -2,3 +2,6 @@
 .vscode
 
 .env
+createConnection
+
+package-lock.json
