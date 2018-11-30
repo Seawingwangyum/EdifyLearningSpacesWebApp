@@ -133,6 +133,30 @@ function getUser(email, password) {
     })
 }
 
+function getUsername(id) {
+    return new Promise ((resolve,reject) => {
+        var con = createConnection.createConnection();
+        connect(con)
+        .then((resolved) => {
+
+            con.query("SELECT * FROM user WHERE user_id = '"+id+"'", function (err, row) {
+                if (err){
+                    reject(err)
+                }
+                if (row.length > 0) {
+                    var user = {fname: row[0].first_name, lname: row[0].last_name, email: row[0].email}
+                    resolve(user);
+                } else {
+                    reject('Email not found!')
+                }
+            })
+            con.end();
+        }), (err) => {
+            reject(err)
+        }
+    })
+}
+
 /**
 * Sends a query to the database to get the users info.
 * @param {string} email.
