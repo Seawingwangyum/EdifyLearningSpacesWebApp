@@ -114,7 +114,7 @@ function filterList(list, id, fname, lname, status) {
 }
 
 app.get('/status', userSessionCheck, (request, response) => {
-    db.retrievelicenses(req.session.user.id)
+    db.retrievelicenses(request.session.user.id)
     .then((resolved) => {
         console.log(resolved);
         response.render('status.hbs', {
@@ -124,8 +124,8 @@ app.get('/status', userSessionCheck, (request, response) => {
             criminalNotes: resolved['criminal'].admin_notes,
             siteplanStatus: resolved['siteplan'].status,
             siteplanNotes: resolved['siteplan'].admin_notes,
-            refStatus: resolved['references'].status,
-            refNotes: resolved['references'].admin_notes,
+            refStatus: resolved['reference'].status,
+            refNotes: resolved['reference'].admin_notes,
             floorplanStatus: resolved['floorplan'].status,
             floorplanNotes: resolved['floorplan'].admin_notes,
         })

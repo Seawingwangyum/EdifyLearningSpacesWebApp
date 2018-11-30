@@ -306,7 +306,7 @@ function retrievelicenses(user_id) {
         criminal: {status: 'submission is required', admin_notes: 'No note.'},
         siteplan: {status: 'submission is required', admin_notes: 'No note.'},
         floorplan: {status: 'submission is required', admin_notes: 'No note.'},
-        references: {status: 'submission is required', admin_notes: 'No note.'},
+        reference: {status: 'submission is required', admin_notes: 'No note.'},
         fireplan: {status: 'submission is required', admin_notes: 'No note.'},
     }
     status_data = {}
@@ -322,6 +322,8 @@ function retrievelicenses(user_id) {
                 if (err) {
                     reject(err);
                 } else {
+                                            console.log(result);
+
                     for(i = 0; i < result.length; i++) {
 
                         var license_type = result[i].type
