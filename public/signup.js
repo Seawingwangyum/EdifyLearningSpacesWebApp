@@ -1,7 +1,5 @@
 var response = {};
 
-
-
 var fname = document.getElementById("fname");
 var lname = document.getElementById("lname")
 var email = document.getElementById("email");
@@ -182,7 +180,14 @@ function send_prep(){
     .then((returned)=>{
         // console.log(data)
         if(returned.Error == "0"){
-            location.href="/landing_page"
+            swal({
+                type: 'success',
+                title: 'Your account has been created',
+                text: 'You will be redirected to the home page',
+                confirmButtonText: 'Ok'
+            }).then((result)=>{
+                location.href="/landing_page"
+            })
         }
         else{
             swal("Whoops, Something went wrong", "Please reload your page", "error")
