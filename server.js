@@ -1,19 +1,9 @@
-//forgot_pass_modules
 var mysql = require('mysql');
-// var nodemailer = require('nodemailer');
-// var passport = require('passport');
-// var LocalStrategy = require('passport-local').Strategy;
-// var bcrypt = require('bcrypt-nodejs');
-// var bcrypt2 = require('bcrypt');
-// var async = require('async');
 var crypto = require('crypto');
-
-
 var bcrypt2 = require('bcrypt');
 
 const port = process.env.port || 8080;
 const express = require('express');
-//forgot_pass
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -22,11 +12,6 @@ const hbs = require('hbs');
 const fs = require('fs');
 const session = require('client-sessions');
 const fileUpload = require('express-fileupload');
-
-
-// const fileUpload = require('express-fileupload');
-
-
 const app = express();
 
 const send_email = require("./components/send_email")
@@ -44,12 +29,7 @@ app.use(express.static(__dirname + '/fonts'));
 app.use(express.static('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads'));
 
 app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
-//forgot_pass
-
-// app.use(logger('dev'));
-// app.use(cookieParser());
 app.use(fileUpload());
-
 
 // bodyparser setup
 var bodyParser = require('body-parser')
@@ -153,77 +133,83 @@ app.get('/provider_edit', adminSessionCheck, (request, response) => {
 });
 
 app.post('/provider_edit', adminSessionCheck, (request, response) => {
-    // res.send(JSON.stringify(req.body))
-    console.log(request.body);
-    // console.log(request.body.Action);
-    // console.log(request.body.L_ID);
+    res.send(JSON.stringify(req.body))
+    console.log(request.body.Action);
+    console.log(request.body.L_ID);
 
-    // db.getFile();
+    db.getFile();
 
-    // db.changeStatus(request.body.L_ID, request.body.Action, request.body.notesValue)
-    //     .then((resolved) => {
-    //         response.send(resolved)
-    //     }, (error) => {
-    //         response.sendStatus(500)
-    //         console.log(error);
-    //     })
+    db.changeStatus(request.body.L_ID, request.body.Action, request.body.notesValue)
+        .then((resolved) => {
+            response.send(resolved)
+        }, (error) => {
+            response.sendStatus(500)
+            console.log(error);
+        })
 
-    // res.render('provider_edit.hbs', {
-    //     userData: testData.provider_edit_data
-    // })
+    res.render('provider_edit.hbs', {
+        userData: testData.provider_edit_data
+    })
 });
 
-app.get('/settings', userSessionCheck, (request, response) => {
-    response.render('settings.hbs', {
-        userData: testData.user_data
+app.get('/settings', userSessionCheck, (req, res) => {
+    res.render('settings.hbs', {
+        name: req.session.user.fname + ' ' + req.session.user.lname,
+        email: req.session.user.email
     });
 });
 
 app.post('/settings_name', (req, res) => {
-    // send user id aswell instead of hardcode it.
     var fname = req.body.fname
     var lname = req.body.lname
     var name = [fname, lname]
+    var id = req.session.user.id
+    console.log(id);
 
     if (check.checkForBlankEntry(name) && check.checkForOnlyAlphabet(name)) {
-        db.changeName(fname, lname)
+        db.changeName(fname, lname, id)
         .then((resolved) => {
-            res.send(resolved)
+            req.session.user.fname = fname;
+            req.session.user.lname = lname;
+            res.send(resolved);
         }).catch ((error) => {
             res.sendStatus(500)
             console.log(error);
         })
     }
-
 });
 
 app.post('/settings_email', (req, res) => {
-    // send user id as well instead of hardcode it
     var newEmail = req.body.email
+    var id = req.session.user.id
+
     if (check.checkForBlankEntry([newEmail]) && check.checkForEmailFormat(newEmail)) {
-        db.changeEmail(newEmail)
+        db.changeEmail(newEmail, id)
         .then((resolved) => {
-            send(resolved)
+            req.session.user.email = newEmail;
+            res.send(resolved);
         }).catch ((error) => {
-            res.sendStatus(500)
-            log(error);
+            res.sendStatus(500);
+            console.log(error);
         })
     }
 });
 
 app.post('/settings_password', (req, res) => {
-    // send user id as well instead of hardcode it
     var newPassword = req.body.password
+    var id = req.session.user.id
+
     if (check.checkForBlankEntry([newPassword]) && check.checkForPasswordFormat(newPassword)) {
-        db.changePassword(newPassword)
+        db.changePassword(newPassword, id)
         .then((resolved) => {
-            res.send(resolved)
+            res.send(resolved);
         }).catch ((error) => {
-            res.sendStatus(500)
+            res.sendStatus(500);
             console.log(error);
         })
     }
 });
+
 
 
 
