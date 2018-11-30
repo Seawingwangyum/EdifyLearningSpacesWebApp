@@ -53,6 +53,30 @@ function getUser(email, password) {
     });
     con.end();
 }
+
+function check_email(info){
+    returning_data = {}
+    return new Promise((resolve, reject) =>{
+        var con = createConnection.createConnection();
+        connect(con)
+        .then((resolved) => {
+            con.query(`select exists(select email from user where email='${info.email}') as 'in'`, 
+            function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                        returning_data["used_email"] = result[0].in
+                        resolve(returning_data)
+                }
+            });
+
+        }).catch((error) => {
+            reject(error);
+        });
+    });
+
+}
+
 /**
  * Receives information from account_creation and creates entry into the database
  * @param {JSON} info - The information revieved from the website when creating an account
@@ -387,6 +411,7 @@ module.exports = {
     addLicense,
     addNote,
     addUser,
+    check_email,
 }
 
 

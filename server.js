@@ -149,12 +149,14 @@ app.get('/status', userSessionCheck, (request, response) => {
     // });
 });
 
-app.post('/status', (request, response) => {
-    db.retrievelicenses(1)
-    .then((resolved) => {
-             response.render('status.hbs', {
-                data: resolved
-            })});
+app.post('/status', (req, res) => {
+    db.retrievelicenses(req.session.user.is)
+.then((resolved) =>{
+    res.send(resolved)
+}).catch((error) => {
+    console.log(error);
+    response.send('error');
+});
 });
 
 
@@ -375,11 +377,15 @@ app.get('/account_creation', (req, res) => {
 	res.render('account_creation.hbs')
 });
 app.post('/account_creation', (req, res) => {
+    if(req.body.type =="check_email"){
+        db.check_email(req.body)
+        .then((resolved) =>{
+            res.send(resolved)
+        })
+    }
+    else{
 
-    
-    
-    console.log(req.body);
-    //send_email.send_email();
+            //send_email.send_email();
     verify_signup.verify_signup(req.body).then((data) =>{
         console.log('data:' + JSON.stringify(data));
         bcrypt2.genSalt(10, function(err, salt) {
@@ -402,6 +408,10 @@ app.post('/account_creation', (req, res) => {
     }, (error) =>{
         res.send(error)
 })
+
+    }
+
+
 })
 
 app.get('/passchange', (req, res)=>{
