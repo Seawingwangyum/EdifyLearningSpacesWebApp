@@ -1,0 +1,11 @@
+legend {
+    display: block;
+    padding-left: 2px;
+    padding-right: 2px;
+    border: none;
+    color: #48456b;
+}
+
+label {
+  color: #48456b;
+}
