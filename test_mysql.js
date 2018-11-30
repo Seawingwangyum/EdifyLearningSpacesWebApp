@@ -44,9 +44,9 @@ function getUser(email, password) {
                     resolve(user);
                 } else {
                     reject('Email not found!');
-                }      
+                }
             });
-            
+
         }).catch ((error) => {
             reject(error);
         });
@@ -60,7 +60,7 @@ function check_email(info){
         var con = createConnection.createConnection();
         connect(con)
         .then((resolved) => {
-            con.query(`select exists(select email from user where email='${info.email}') as 'in'`, 
+            con.query(`select exists(select email from user where email='${info.email}') as 'in'`,
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -88,7 +88,7 @@ function addUser(info) {
 
         connect(con)
         .then((resolved) => {
-            con.query(`INSERT INTO user(first_name, last_name, password, email, location, is_admin) values ('${info.fname}', '${info.lname}', '${info.password}', '${info.email}', '${info.address}', '0')`, 
+            con.query(`INSERT INTO user(first_name, last_name, password, email, location, is_admin) values ('${info.fname}', '${info.lname}', '${info.password}', '${info.email}', '${info.address}', '0')`,
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -124,13 +124,37 @@ function getUser(email, password) {
                     resolve(user);
                 } else {
                     reject('Email not found!')
-                }      
+                }
             })
             con.end();
         }), (err) => {
             reject(err)
         }
-    })    
+    })
+}
+
+function getUsername(id) {
+    return new Promise ((resolve,reject) => {
+        var con = createConnection.createConnection();
+        connect(con)
+        .then((resolved) => {
+
+            con.query("SELECT * FROM user WHERE user_id = '"+id+"'", function (err, row) {
+                if (err){
+                    reject(err)
+                }
+                if (row.length > 0) {
+                    var user = {fname: row[0].first_name, lname: row[0].last_name, email: row[0].email}
+                    resolve(user);
+                } else {
+                    reject('Email not found!')
+                }
+            })
+            con.end();
+        }), (err) => {
+            reject(err)
+        }
+    })
 }
 
 /**
@@ -160,7 +184,7 @@ function getUsers(type) {
         }), (err) => {
             reject(err)
         }
-    })    
+    })
 }
 
 /**
@@ -176,7 +200,7 @@ function changeName(fname, lname, id) {
         connect(con)
         .then((resolved) => {
 
-            con.query("UPDATE user SET first_name ='" + fname + "', last_name ='" + lname + "' WHERE user_id = "+ id +";", 
+            con.query("UPDATE user SET first_name ='" + fname + "', last_name ='" + lname + "' WHERE user_id = "+ id +";",
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -262,7 +286,7 @@ function addLicense(file, type, notes, user_id) {
                     resolve('ok');
                 }
             });
-                
+
         }).catch((error) => {
             reject(error);
         });
@@ -389,7 +413,7 @@ function changeStatus(id, status, notes) {
                 reject(err)
             }
         })
-    })   
+    })
 }
 
 //needa make it look like retrievelicense
@@ -413,7 +437,7 @@ function loadStatus(id) {
                 //need a for loop
 
                 con.query("SELECT type, status, admin_notes FROM license WHERE license_id ="+id +";", function (err, result) {
-                
+
             if (err){
                         reject(err)
                         }
@@ -425,7 +449,7 @@ function loadStatus(id) {
                 reject(err)
             }
         })
-    })   
+    })
 }
 
 module.exports = {
@@ -444,5 +468,3 @@ module.exports = {
     addUser,
     check_email,
 }
-
-
