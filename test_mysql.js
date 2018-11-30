@@ -88,7 +88,7 @@ function addUser(info) {
 
         connect(con)
         .then((resolved) => {
-            con.query(`INSERT INTO user(first_name, last_name, password, email, location, is_admin) values ('${info.fname}', '${info.lname}', '${info.password}', '${info.email}', '${info.address}', '0')`,
+            con.query(`INSERT INTO user(first_name, last_name, password, email, education,location, type) values ('${info.fname}', '${info.lname}', '${info.password}', '${info.email}', '${info.edubg}','${info.address}', 'user')`,
             function(err, result) {
                 if (err) {
                     reject(err);
