@@ -40,7 +40,7 @@ function getUser(email, password) {
                 if (error){
                     reject(err);
                 } else if (row.length > 0) {
-                    var user = {id: row[0].user_id, fname: row[0].first_name, lname: row[0].last_name, email: row[0].email, admin: row[0].is_admin}
+                    var user = {id: row[0].user_id, fname: row[0].first_name, lname: row[0].last_name, email: row[0].email, admin: row[0].type}
                     resolve(user);
                 } else {
                     reject('Email not found!');
@@ -88,7 +88,7 @@ function addUser(info) {
 
         connect(con)
         .then((resolved) => {
-            con.query(`INSERT INTO user(first_name, last_name, password, email, location, is_admin) values ('${info.fname}', '${info.lname}', '${info.password}', '${info.email}', '${info.address}', '0')`,
+            con.query(`INSERT INTO user(first_name, last_name, password, email, location, type) values ('${info.fname}', '${info.lname}', '${info.password}', '${info.email}', '${info.address}', 'user')`,
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -120,7 +120,7 @@ function getUser(email, password) {
                     reject(err)
                 }
                 if (row.length > 0) {
-                    var user = {id: row[0].user_id, fname: row[0].first_name, lname: row[0].last_name, email: row[0].email, admin: row[0].is_admin, password: row[0].password}
+                    var user = {id: row[0].user_id, fname: row[0].first_name, lname: row[0].last_name, email: row[0].email, admin: row[0].type, password: row[0].password}
                     resolve(user);
                 } else {
                     reject('Email not found!')
@@ -169,7 +169,7 @@ function getUsers(type) {
         connect(con)
         .then((resolved) => {
 
-            con.query("SELECT * FROM user WHERE is_admin = '"+type+"'", function (err, row) {
+            con.query("SELECT * FROM user WHERE type = '"+type+"'", function (err, row) {
                 if (err){
                     reject(err)
                 }
