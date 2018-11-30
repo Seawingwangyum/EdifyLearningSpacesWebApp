@@ -94,7 +94,7 @@
 .notesbox {
 	position: relative;
 	width: 90%;
-	height: 100%;
+	height: auto;
 	background-color: #d7d0ff;
 	bottom: 0px;
 	left: 0px;
@@ -140,5 +140,13 @@
 }
 
 #floorInfoSS {
+    display: none;
+}
+
+#refInfoSS {
+    display: none;
+}
+
+#fireInfoSS {
     display: none;
 }

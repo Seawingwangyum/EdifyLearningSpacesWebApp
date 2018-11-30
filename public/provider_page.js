@@ -59,18 +59,18 @@ function createOptions(id, name) {
 		filename_name = createNewElement('div', 'filename_name', 'Filename...');
 		filename_date = createNewElement('div', 'filename_date', '00/00/0000');
 
-		file_submit = createNewElement('div', 'file_submit');
-		
+		file_submit = createNewElement('form', 'file_submit');
+		file_submit.method = 'post';
+		file_submit.action = '/provider_edit';
 
 		form_left = createNewElement('div', 'form_left');
 		form_right = createNewElement('div', 'form_right');
 		form_left_padding = createNewElement('div', 'form_left_padding', 'Add a note');
 
 		note_input = createNewElement('textarea', 'note_input');
+		note_input.name = 'admin_note';
 		note_input.rows = '3';
 		note_input.id = id + '_NInput';
-		// why do I keep getting NULL error for notes??????????
-		// notesValue = document.getElementById(id +'_NInput').value;
 		console.log(id + '_NInput');
 
 		license.appendChild(license_options);
@@ -83,6 +83,8 @@ function createOptions(id, name) {
 				file_submit.appendChild(form_left);
 					form_left.appendChild(form_left_padding);
 					form_left.appendChild(note_input);
+
+
 				file_submit.appendChild(form_right);
 
 
@@ -91,6 +93,7 @@ function createOptions(id, name) {
 			accept_but = CreateNewInput('submit', 'Approve');
 			accept_but.id = id +'_Abut'
 			form_right.appendChild(accept_but);
+
 			document.getElementById(id +'_Abut').addEventListener("click", send_prep_A);
 			
 			deny_but = CreateNewInput('submit', 'Deny');
@@ -106,7 +109,7 @@ function createOptions(id, name) {
 			unapprove_but = CreateNewInput('submit', 'Un-Approve');
 			unapprove_but.id = id +'_UAbut'
 			form_right.appendChild(unapprove_but)
-			console.log('APPROVED IS: ' + id +'_UAbut')
+
 			document.getElementById(id +'_UAbut').addEventListener("click", send_prep_UA);
 		} else if (name == 'Denied') {
 			
@@ -116,7 +119,8 @@ function createOptions(id, name) {
 			undeny_but = CreateNewInput('submit', 'Un-Deny');
 			undeny_but.id = id +'_UDbut'
 			form_right.appendChild(undeny_but) 
-			console.log('DENIED IS: ' + id +'_UDbut')
+
+			notesValue = document.getElementById(id +'_NInput').value;
 			document.getElementById(id +'_UDbut').addEventListener("click", send_prep_UD);
 		};
 	}
@@ -129,18 +133,22 @@ function createOptions(id, name) {
 //-------------------------------------
 
 function send_prep_D(){
+	notesValue = document.getElementById(license_ID +'_NInput').value;
 	alert("1")
 	response["Action"] = 'Denied';
 	response["L_ID"] = license_ID;
-	response["noteValue"] = notesValue;
+	response["notesValue"] = notesValue;
+	console.log('note:' + notesValue);
     ajax_function(response);
 }
 
 function send_prep_A(){
+	notesValue = document.getElementById(license_ID +'_NInput').value;
 	alert("2")
 	response["Action"] = 'Accepted';
 	response["L_ID"] = license_ID;
-	response["noteValue"] = notesValue;
+	response["notesValue"] = notesValue;
+	console.log('note:' + notesValue);
 	ajax_function(response);
 }
 
@@ -148,7 +156,7 @@ function send_prep_UA(){
 	alert("3")
 	response["Action"] = 'Awaiting Approval';
 	response["L_ID"] = license_ID;
-	response["noteValue"] = notesValue;
+	response["notesValue"] = notesValue;
 	ajax_function(response);
 }
 
@@ -156,7 +164,7 @@ function send_prep_UD(){
 	alert("4")
 	response["Action"] = 'Awaiting Approval';
 	response["L_ID"] = license_ID;
-	response["noteValue"] = notesValue;
+	response["notesValue"] = notesValue;
 	ajax_function(response);
 }
 
@@ -173,14 +181,14 @@ function ajax_function(json_obj){
         contentType: 'application/json',
         url: 'http://localhost:8080/provider_edit',
         success: function(data){
-            
-            if(data.Error == "0"){
+            console.log(data);
+            if(data == "ok"){
                 console.log('its good');
             }else{
 
             
                 // swal("Whoops, Something went wrong", "Please reload your page", "error")
-                console.log('swal will pop up');
+                console.log(data);
             }
         }
     })
