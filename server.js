@@ -114,7 +114,7 @@ function filterList(list, id, fname, lname, status) {
 }
 
 app.get('/status', userSessionCheck, (request, response) => {
-    db.retrievelicenses(req.session.user.id)
+    db.retrievelicenses(request.session.user.id)
     .then((resolved) => {
         console.log(resolved);
         response.render('status.hbs', {
@@ -132,10 +132,10 @@ app.get('/status', userSessionCheck, (request, response) => {
     });
 });
 
-app.post('/status', (req, res) => {
-    db.retrievelicenses(req.session.user.id)
+app.post('/status', (request, response) => {
+    db.retrievelicenses(request.session.user.id)
     .then((resolved) =>{
-        res.send(resolved)
+        response.send(resolved)
     }).catch((error) => {
         console.log(error);
         response.send('error');

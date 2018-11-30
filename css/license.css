@@ -5,13 +5,6 @@
     overflow: scroll;
 }
 
-.buttbox {
-    width: 200px; 
-    height: 500px;
-    display: inline;
-    font-family: 'BalooBhai', sans-serif;
-}
-
 .bigcontainer {
     width: 65vw;
     background-color: white;
@@ -103,10 +96,10 @@
 }
 
 #refInfo {
-    display: none; 
+    display: none;
 }
 #refInfo2 {
-    display: none; 
+    display: none;
 }
 
 #fireInfo {
@@ -130,4 +123,14 @@
 .purple_button {
   padding: 15px 35px;
   margin: 0px 20px;
+  background-color: #5f59a5;
+  border-radius: 6px;
+  border: 0px;
+  color: white;
+  font-family: 'BalooBhai', sans-serif;
+  font-size: 18px;
+}
+
+.purple_button:hover {
+  background-color: #916cc6;
 }

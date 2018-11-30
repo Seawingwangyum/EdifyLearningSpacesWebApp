@@ -1,14 +1,14 @@
 
 #maincontent {
 	margin: auto;
-    padding: 10px;
-    position: absolute;
-    height: 75vh;
-    width: 65vw;
-    right: 0px;
-    left: 0px;
-    top: 200px;
-    bottom:0px;
+	padding: 5px;
+	position: absolute;
+	height: 80vh;
+	width: 65vw;
+	right: 0px;
+	left: 0px;
+	top: 200px;
+	bottom:0px;
 }
 
 #maincontent h2 {
@@ -19,9 +19,9 @@
 .redbuttons {
     border-radius: 6px;
     border:0px;
-    width: 60vw;
+    width: 65vw;
     background-color: #ec6d6d;
-    padding: 20px;
+    padding: 10px;
     margin: 10px;
     color: white;
     text-align: center;
@@ -38,9 +38,9 @@
 .greenbuttons {
     border-radius: 6px;
     border:0px;
-    width: 60vw;
+    width: 65vw;
     background-color: #589b78;
-    padding: 20px;
+    padding: 10px;
     margin: 10px;
     color: white;
     text-align: center;
@@ -57,9 +57,9 @@
 .yellowbuttons {
     border-radius: 6px;
     border:0px;
-    width: 60vw;
+    width: 65vw;
     background-color: #ffd53a;
-    padding: 20px;
+    padding: 10px;
     margin: 10px;
     color: white;
     text-align: center;
@@ -73,13 +73,12 @@
   opacity:1;
 }
 
-
 .greybuttons {
     border-radius: 6px;
     border:0px;
-    width: 60vw;
+    width: 65vw;
     background-color: #827878;
-    padding: 20px;
+    padding: 10px;
     margin: 10px;
     color: white;
     text-align: center;
@@ -88,8 +87,6 @@
     float: left;
     opacity: 0.9;
 }
-
-
 
 .notesbox {
 	position: relative;
@@ -107,9 +104,8 @@
 	width: 97%;
 	height: 97%;
 	left: 10px;
-    font-size: 20px;
+  font-size: 20px;
 }
-
 
 .textareaSS {
     background-color: #fff;
@@ -120,33 +116,33 @@
 
 .hiddenspaceSS {
 	top: -20px;
-    width: 60vw;
-    height: auto;
-    background-color: #fff;
-    float: left;
-    padding: 20px;
-    margin: 10px;
-    position: relative;
+  width: 64vw;
+  height: auto;
+  background-color: #fff;
+  float: left;
+  padding: 20px;
+  margin: 10px;
+  position: relative;
 
 }
 
 #crInfoSS {
-    display: none;
+  display: none;
 }
 
 
 #siteInfoSS {
-    display:none;
+  display:none;
 }
 
 #floorInfoSS {
-    display: none;
+  display: none;
 }
 
 #refInfoSS {
-    display: none;
+  display: none;
 }
 
 #fireInfoSS {
-    display: none;
+  display: none;
 }
