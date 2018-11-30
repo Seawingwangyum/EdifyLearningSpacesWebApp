@@ -198,16 +198,25 @@ app.post('/settings_email', (req, res) => {
 app.post('/settings_password', (req, res) => {
     var newPassword = req.body.password
     var id = req.session.user.id
-
-    if (check.checkForBlankEntry([newPassword]) && check.checkForPasswordFormat(newPassword)) {
-        db.changePassword(newPassword, id)
-        .then((resolved) => {
-            res.send(resolved);
-        }).catch ((error) => {
-            res.sendStatus(500);
-            console.log(error);
-        })
-    }
+    bcrypt2.genSalt(10, function(err, salt) {
+        if (err) return next(err);
+        bcrypt2.hash(newPassword, salt, null, function(err, hash) {
+            if (err) return next(err);
+            req.body.password = hash; 
+            //console.log(req.body.password);
+            //console.log(req.body.password.length)
+            db.changePassword(newPassword, id)
+            .then((resolved) => {
+                res.send(resolved);
+            }).catch ((error) => {
+                res.sendStatus(500);
+                console.log(error);
+            })
+                    
+             
+            });
+    });
+        
 });
 
 
