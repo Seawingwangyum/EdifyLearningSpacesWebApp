@@ -114,7 +114,7 @@ function filterList(list, id, fname, lname, status) {
 }
 
 app.get('/status', userSessionCheck, (request, response) => {
-    db.retrievelicenses(req.session.user.id)
+    db.retrievelicenses(request.session.user.id)
     .then((resolved) => {
         console.log(resolved);
         response.render('status.hbs', {
@@ -132,16 +132,15 @@ app.get('/status', userSessionCheck, (request, response) => {
     });
 });
 
-app.post('/status', (req, res) => {
-    db.retrievelicenses(req.session.user.id)
+app.post('/status', (request, response) => {
+    db.retrievelicenses(request.session.user.id)
     .then((resolved) =>{
-        res.send(resolved)
+        response.send(resolved)
     }).catch((error) => {
         console.log(error);
         response.send('error');
     });
 });
-
 
 app.get('/provider_edit', adminSessionCheck, (request, response) => {
     response.render('provider_edit.hbs', {
@@ -225,7 +224,7 @@ app.post('/settings_password', (req, res) => {
 
 
 app.get('/landing_page', (req, res) => {
-	res.render('landing_page.hbs')
+    res.render('landing_page.hbs')
 });
 
 app.get('/pass_recovery', (req, res) => {
@@ -237,14 +236,9 @@ app.get('/edify_quiz', (req, res) => {
 });
 
 app.get('/requirements', (req, res) => {
-	res.render('requirements.hbs')
+    res.render('requirements.hbs')
 });
 
-/*
-app.get('/ad_page', (req, res) => {
-	res.render('ad_page.hbs')
-});
-*/
 
 app.get('/login', (req, res) => {
     res.render('login.hbs')
@@ -255,7 +249,7 @@ app.post('/login', (req, res) => {
         console.log('stuff is happene');
         db.getUser(req.body.Email).then((resolved) => {
             console.log('resolve'+ resolved.password);
-        
+
             bcrypt2.compare(req.body.Passwd, resolved.password, function(err, rest) {
                 console.log(rest);
                 if (err){
@@ -273,18 +267,18 @@ app.post('/login', (req, res) => {
                     } else if (user.admin === 2) {
                         res.redirect('/admin_list')
                     }
-                } 
+                }
             })
-            
+
         }).catch ((error) => {
             console.log('db is bad' + error)
             res.redirect('/login')
         })
     } else {
         console.log('login is bad ' + err);
-    } 
+    }
 });
- 
+
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
 });
@@ -296,11 +290,11 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/licenses', (req, res) => {
-	res.render('license.hbs')
+    res.render('license.hbs')
 });
 
 app.post('/licenses', (req, res) => {
-  
+
     if (req.files == undefined) {
         return res.status(400).send('No files were uploaded.');
     } else {
@@ -320,7 +314,7 @@ app.post('/licenses', (req, res) => {
 
                     res.status(500).send(err);
                     }
-                    
+
                 });
             db.addLicense(filename, req.body.type, req.body.notes, 1)
                 .then((resolved) => {
@@ -332,7 +326,7 @@ app.post('/licenses', (req, res) => {
             }, (error) => {
                 res.send(error)
             })
-        }) 
+        })
     }
 });
 
@@ -344,11 +338,11 @@ app.get('/test', (req, res) => {
         //license: testData.provider_list_data
     })
     })
-    
+
 });
 
 app.get('/account_creation', (req, res) => {
-	res.render('account_creation.hbs')
+    res.render('account_creation.hbs')
 });
 app.post('/account_creation', (req, res) => {
     if(req.body.type =="check_email"){
@@ -366,7 +360,7 @@ app.post('/account_creation', (req, res) => {
             if (err) return next(err);
             bcrypt2.hash(req.body.password, salt, function(err, hash) {
                 if (err) return next(err);
-                req.body.password = hash; 
+                req.body.password = hash;
                 //console.log(req.body.password);
                 //console.log(req.body.password.length)
                 db.addUser(req.body)
@@ -378,7 +372,7 @@ app.post('/account_creation', (req, res) => {
             res.send(data)
         });
     });
-        
+
     }, (error) =>{
         res.send(error)
 })
@@ -520,7 +514,7 @@ app.post('/pass_forgot', function(req, res, next) {
         subject: 'Edify Providers Password Reset',
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your Edify Providers account.\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-          'http://' + req.headers.host + '/landing_page\n' /**+ token + '\n\n'**/ + 
+          'http://' + req.headers.host + '/landing_page\n' /**+ token + '\n\n'**/ +
           'If you did not request this, please ignore this email and your password will remain unchanged.\n'
       };
       smtpTransport.sendMail(mailOptions, function(err) {
@@ -555,7 +549,7 @@ app.post('/licenses', (req, res) => {
                     if (err) {
                     res.status(500).send(err);
                     }
-                    
+
                 });
             db.addNote(note, 'user_notes', req.session.user.id)
                 .then((resolved) => {
