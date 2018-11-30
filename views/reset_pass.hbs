@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title> Password Reset </title>
+  <link href="style.css" type="text/css" rel="stylesheet" />
+  <link href="login.css" type="text/css" rel="stylesheet" />
+  <link href="reset_pass.css" type="text/css" rel="stylesheet" />
+  
+</head>
+
+<body>
+  {{> navbar}}
+<form id="panel" method="POST">
+  <legend>Reset Password</legend>
+  <div class="container">
+    <label for="password">New Password</label>
+    <input class="inputbox doubleinput" type="password" name="password" value="" placeholder="New password" autofocus="autofocus"/>
+  </div>
+  <div class="container">
+    <label for="confirm">Confirm Password</label>
+    <input class="inputbox doubleinput" type="password" name="confirm" value="" placeholder="Confirm password"/>
+  </div>
+  <div class="container">
+    <button class="purple_button"  type="submit">Update Password</button>
+  </div>
+</form>
+</body>
+
+</html>

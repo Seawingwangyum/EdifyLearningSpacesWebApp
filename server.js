@@ -1,11 +1,11 @@
 //forgot_pass_modules
 var mysql = require('mysql');
-// var nodemailer = require('nodemailer');
+var nodemailer = require('nodemailer');
 // var passport = require('passport');
 // var LocalStrategy = require('passport-local').Strategy;
 // var bcrypt = require('bcrypt-nodejs');
 // var bcrypt2 = require('bcrypt');
-// var async = require('async');
+var async = require('async');
 var crypto = require('crypto');
 
 
@@ -225,6 +225,10 @@ app.post('/settings_password', (req, res) => {
 
 app.get('/landing_page', (req, res) => {
     res.render('landing_page.hbs')
+});
+
+app.get('/reset_pass_msg', (req, res) => {
+    res.render('reset_pass_msg.hbs')
 });
 
 app.get('/pass_recovery', (req, res) => {
@@ -469,7 +473,7 @@ app.listen(process.env.PORT || 8080, () => {
 
 
 //forgot_pass
-app.post('/pass_forgot', function(req, res, next) {
+app.post('/pass_recovery', function(req, res, next) {
   async.waterfall([
     function(done) {
       crypto.randomBytes(20, function(err, buf) {
@@ -482,7 +486,7 @@ app.post('/pass_forgot', function(req, res, next) {
       User.findOne({ email: req.body.email }, function(err, user) {
         if (!user) {
           req.flash('error', 'No account with that email address exists.');
-          return res.redirect('/pass_forgot');
+          return res.redirect('/pass_recovery');
         }
         user.resetPasswordToken = token;
         user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
@@ -509,16 +513,19 @@ app.post('/pass_forgot', function(req, res, next) {
         }
       });
       var mailOptions = {
-        to: 'edifyprovidersreset@gmail.com',
+        to: 'edifyprovidersreset@gmail.com',//user.email,
         from: 'edifyprovidersreset@gmail.com',
         subject: 'Edify Providers Password Reset',
         text: 'You are receiving this because you (or someone else) have requested the reset of the password for your Edify Providers account.\n\n' +
           'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
-          'http://' + req.headers.host + '/landing_page\n' /**+ token + '\n\n'**/ +
+
+          'http://' + req.headers.host + '/reset_pass\n' /**+ token + '\n\n'**/ + 
+
           'If you did not request this, please ignore this email and your password will remain unchanged.\n'
       };
       smtpTransport.sendMail(mailOptions, function(err) {
         console.log('info', 'An e-mail has been sent to ' + user.email + ' with further instructions.');
+        res.redirect('/reset_pass_msg')
         //done(err, 'done');
       });
     }
@@ -528,6 +535,70 @@ app.post('/pass_forgot', function(req, res, next) {
   });
 });
 
+
+//app.get('/reset_pass'/** /:token' **/, function(req, res) {
+//  User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+//    if (!user) {
+//      req.flash('error', 'Password reset token is invalid or has expired.');
+//      return res.redirect('/pass_recovery');
+//    }
+//    res.render('reset_pass.hbs', {
+//      user: req.user
+//    });
+//  });
+//});
+
+app.get('/reset_pass', (req, res) => {
+    res.render('reset_pass.hbs')
+});
+
+/**
+app.post('/reset/:token', function(req, res) {
+  async.waterfall([
+    function(done) {
+      User.findOne({ resetPasswordToken: req.params.token, resetPasswordExpires: { $gt: Date.now() } }, function(err, user) {
+        if (!user) {
+          req.flash('error', 'Password reset token is invalid or has expired.');
+          return res.redirect('back');
+        }
+
+        user.password = req.body.password;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+
+        user.save(function(err) {
+          req.logIn(user, function(err) {
+            done(err, user);
+          });
+        });
+      });
+    },
+    function(user, done) {
+      var smtpTransport = nodemailer.createTransport('SMTP', {
+        service: 'Gmail',
+        auth: {
+          user: 'edifyprovidersreset@gmail.com',
+          pass: 'EdifySpaces'
+        }
+      });
+      var mailOptions = {
+        to: user.email,
+        from: 'edifyprovidersreset@gmail.com',
+        subject: 'Your password has been changed',
+        text: 'Hello,\n\n' +
+          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+      };
+      smtpTransport.sendMail(mailOptions, function(err) {
+        req.flash('success', 'Success! Your password has been changed.');
+        done(err);
+      });
+    }
+  ], function(err) {
+    res.redirect('/landing_page');
+  });
+});
+
+**/
 
 app.post('/licenses', (req, res) => {
     if (Object.keys(req.files).length == 0) {
