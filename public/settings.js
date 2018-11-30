@@ -204,7 +204,7 @@ function changePassword() {
 		if (checkForBlankEntry(password)) {
 			if(password[0] === password[1]) {
 				if (checkForPasswordFormat(password)) {
-					confirm('Are you sure you want to change your password to "' +result.value[0]+ '?')
+					confirm('Are you sure you want to change your password?')
 					.then((result2) =>{
 						if (result2.value) {
 							var xhr = new XMLHttpRequest();
