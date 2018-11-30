@@ -5,19 +5,13 @@ var response = {};
 var fname = document.getElementById("fname");
 var lname = document.getElementById("lname")
 var email = document.getElementById("email");
-var educationbg = document.getElementById("selectbox");
+var educationbg = document.getElementById("background");
 var password = document.getElementById("password");
 var passwordcheck = document.getElementById("passwordcheck");
 var address = document.getElementById("address")
 var speechbubbble = document.getElementById("bubble");
 
-var errmsg = "OH NO!"
 var instructions = document.getElementById("instructions");
-
-
-
-
-
 
 document.getElementById("backbtn").addEventListener("click", function(){
     document.getElementById("tccontainer").style.display = "none";
@@ -48,7 +42,9 @@ document.addEventListener("click", function(event) {
     }
 })
 
-//verifies if everything is filled in returns alerts if not filled
+/**
+ * Alerts the user if any boxes have benn left empty
+ */
 function verification(){
     var pass_msg = check_characters(password.value);
 
@@ -97,7 +93,11 @@ function verification(){
 
 }
 
-//finds length of password, returns true/false
+/**
+ * finds the length of the password
+ * @param {string} pw - The password the user inputed.
+ * @return {boolean} - If the password is long enough.
+ */
 function password_length(pw){
     if(password.value.length < 8){
         return false;
@@ -107,7 +107,12 @@ function password_length(pw){
     }
 };
 
-//checks if the password has the required characters
+
+/**
+ * checks if the password has the required characters
+ * @param {*} pw - The password the user has inputed
+ * @return {boolean} - If the password is missing any requirements
+ */
 function check_characters(pw){
     var num = false;
     var cap = false;
@@ -132,7 +137,10 @@ function check_characters(pw){
 
 
 
-//prepares data to send to server
+
+/**
+ * prepares data and sends the prepaired data to server to server.
+ */
 function send_prep(){
     
     console.log('SOMETHING IS HAPPENING');
@@ -153,17 +161,20 @@ function emailValidation(emails) {
     }
 }
 
-//sends data to server
+/**
+ * Sends prepaired data to server then redirects user back to landing page.
+ * @param {*} json_obj - The data that gets send to the node server.
+ */
 function ajax_function(json_obj){
     $.ajax({
         type: 'POST',
         data: JSON.stringify(json_obj),
         contentType: 'application/json',
-        url: 'http://localhost:8080/account_creation',
+        url: '/account_creation',
         success: function(data){
             // console.log(data)
             if(data.Error == "0"){
-                location.href="/licenses"
+                location.href="/landing_page"
             }
             else{
                 swal("Whoops, Something went wrong", "Please reload your page", "error")

@@ -4,8 +4,8 @@ var crimtxtStateSS = "close",
 
 var user = 1;
 
-var windows = ["crimCheckSS", "siteCheckSS","floorCheckSS"]
-var statuses = ["CRC", "SP", "FP"]
+var windows = ["crimCheckSS", "siteCheckSS","floorCheckSS", "referencesSS", "firePlanSS"]
+var statuses = ["criminal", "siteplan", "floorplan", "references", "fireplan"]
 
 /**
 * Function to open and close criminal record check information box
@@ -53,21 +53,53 @@ function floorOCSS() {
 });
 }
 
-function request_status(json_obj){
-    console.log("hellothere");
+
+function refOCSS() {
+    document.getElementById("referencesSS").addEventListener("click", () =>{
+    if (floortxtStateSS == "close"){
+        document.getElementById("refInfoSS").style.display = "block";
+        floortxtStateSS = "open";
+    } else if (floortxtStateSS = "open"){
+       document.getElementById("refInfoSS").style.display = "none";
+       floortxtStateSS = "close";
+    }
+});
+}
+
+
+function fireOCSS() {
+    document.getElementById("firePlanSS").addEventListener("click", () =>{
+    if (floortxtStateSS == "close"){
+        document.getElementById("fireInfoSS").style.display = "block";
+        floortxtStateSS = "open";
+    } else if (floortxtStateSS = "open"){
+       document.getElementById("fireInfoSS").style.display = "none";
+       floortxtStateSS = "close";
+    }
+});
+}
+
+
+
+/**
+ * request information from the database to determine what color each tab is
+ */
+function request_status(){
+    //console.log("hellothere");
+
     $.ajax({
         type: 'POST',
         data: JSON.stringify({user:1}),
         contentType: 'application/json',
         url: 'http://localhost:8080/status',
         success: function(data){
-            //console.log(data["CRC"][0])
+            console.log(data)
 
             for(var item in data){
 
                 var cur = windows[statuses.indexOf(item)]
-                console.log(cur)
-                switch (data[item][0]){
+                console.log(data[item].status);
+                switch (data[item].status){
                     case "Accepted":
                         document.getElementById(cur).className = "greenbuttons"
                         break;
@@ -82,59 +114,12 @@ function request_status(json_obj){
     })
 }
 
-//yellowbuttons greenbuttons redbuttons
-
-
 crimOCSS();
 siteOCSS();
 floorOCSS();
+fireOCSS();
+refOCSS();
 
-
-
-
-
-// function run_mysqlSS() {
-
-//   var mysql = require('mysql');
-
-//   var con = mysql.createConnection({
-//     host: "localhost",
-//     user: "root",
-//     password: "password",
-//     database: "edify"
-//   });
-
-//   con.connect(function(err) {
-//     if (err) throw err;
-//     console.log("Connected!");
-//   });
-
-
-//   var approve_update = "UPDATE license SET status = 'Aprroved', admin_notes = 'The new notes' WHERE license_id = 12345";
-//     con.query(approve_update, function approve_update_func(err, result) {
-//       if (err) throw err;
-//       console.log(result.affectedRows + " record(s) updated");
-//     });
-
-//   var deny_update = "UPDATE license SET status = 'Denied', admin_notes = 'The very new notes' WHERE license_id = 12345";
-//     con.query(deny_update, function deny_update_func(err, result) {
-//       if (err) throw err;
-//       console.log(result.affectedRows + " record(s) updated");
-//     });
-
-//   var file_download = "SELECT file FROM license WHERE license_id = 12345";
-//     con.query(file_download, function file_download_func(err, result) {
-//       if (err) throw err;
-//       console.log(result.affectedRows + " record(s) updated");
-//     });
-
-
-//   document.getElementsByClassName('acceptBut').addEventListener("click", approve_update_func);
-//   document.getElementsByClassName('denyBut').addEventListener("click", deny_update_func);
-//   document.getElementsByClassName('download_but').addEventListener("click", file_download_func);
-// };
-
-// run_mysqlSS()
 
 document.addEventListener("DOMContentLoaded", function(){
     request_status()

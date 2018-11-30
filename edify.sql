@@ -96,8 +96,6 @@ UNLOCK TABLES;
 use edify;
 SELECT * from user;
 SELECT * from license;
--- INSERT INTO `user` VALUES (1,'admin','jeff','password','admin@admin.com','Vancouver',NULL,1);
-
 
 -- Dump completed on 2018-11-23 11:04:57
 
