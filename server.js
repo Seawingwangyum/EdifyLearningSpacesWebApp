@@ -299,50 +299,10 @@ app.post('/login', (req, res) => {
         } else {
             console.log('login is bad ' + err);
         } 
-  
-
-
-        
-    
-        
-    
     
 });
 
-app.post('/login', (req, res) => {
 
-    console.log(req.body);
-    bcrypt2.genSalt(10, function(err, salt) {
-        if (err) {
-            console.log(err);
-        }
-        bcrypt2.hash(req.body.Passwd, salt, function(err, hash) {
-            if (err) return console.log(err);
-                req.body.password = hash; 
-                console.log(req.body.password);
-            db.getUser(req.body.Email, req.body.Passwd).then((resolved) => {
-            var user = resolved
-            console.log(user);
-            req.session.user = user;
-                if (user.admin === 0) {
-                    res.redirect('/licenses')
-                } else if (user.admin === 1) {
-                    res.redirect('/provider_list')
-                } else if (user.admin === 2) {
-                res.redirect('/admin_list')
-        }
-    }).catch ((error) => {
-        console.log(error)
-        res.redirect('/login')
-    })
-            
-    });
-        
-    
-    
-});
-});
- 
 app.get('/tandp', (req, res) => {
     res.render('terms.hbs')
 });
