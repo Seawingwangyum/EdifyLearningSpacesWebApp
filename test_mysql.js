@@ -327,11 +327,11 @@ function getLicense(license_id) {
  */
 function retrievelicenses(user_id) {
     var defaultJSON = {
-        criminal: {status: 'submission is required', admin_notes: 'No note.'},
-        siteplan: {status: 'submission is required', admin_notes: 'No note.'},
-        floorplan: {status: 'submission is required', admin_notes: 'No note.'},
-        reference: {status: 'submission is required', admin_notes: 'No note.'},
-        fireplan: {status: 'submission is required', admin_notes: 'No note.'},
+        criminal: {status: 'submission is required', admin_notes: 'No note.', name: 'criminal'},
+        siteplan: {status: 'submission is required', admin_notes: 'No note.', name: 'siteplan'},
+        floorplan: {status: 'submission is required', admin_notes: 'No note.', name: 'floorplan'},
+        reference: {status: 'submission is required', admin_notes: 'No note.', name: 'reference'},
+        fireplan: {status: 'submission is required', admin_notes: 'No note.', name: 'fireplan'},
     }
     status_data = {}
 
@@ -342,21 +342,20 @@ function retrievelicenses(user_id) {
         connect(con)
         .then((resolved) => {
             con.query("SELECT * FROM license WHERE frn_user_id = " + user_id + ";", function (err, result) {
-                //console.log(result)
+                // console.log(result)
                 if (err) {
                     reject(err);
                 } else {
-                                            console.log(result);
-
                     for(i = 0; i < result.length; i++) {
 
                         var license_type = result[i].type
                         defaultJSON[license_type].status = result[i].status
                         defaultJSON[license_type].admin_notes = result[i].admin_notes
+                        defaultJSON[license_type].license_id = result[i].license_id
                     }
                     resolve(defaultJSON)
 
-                    resolve(status_data);
+                    // resolve(status_data);
                 }
             })
         }).catch((error) => {
