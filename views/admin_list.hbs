@@ -10,7 +10,7 @@
 
 	<div id='main'>
         <h3 id='title'>Employees</h3>
-        <form id='header' method='POST' action='/admin_list'>
+        <form id='header' method='POST' action='/filter_admin_list'>
             <div class='row'>
                 <input type="number" name="Idsearch" placeholder="ID Number"/>
             </div>
@@ -28,12 +28,12 @@
         </form>
 
         <div id='list'>
-            {{#each userData.admins as |admin|}}
-                <form class='providers' method='GET' action='admin_edit'>
-                    <input type='submit'  value='{{admin.id}}' class='goto_provider'/>
-                    <h2 class='id'></h2>
-                    <h2 class='fname'>{{admin.firstName}}</h2>
-                    <h2 class='lname'>{{admin.lastName}}</h2>
+            {{#each admins as |admin|}}
+                <form class='providers' method='GET' action='/admin_edit'>
+                    <input type='submit'  value='' class='goto_provider'/>
+                    <input class='id' value='{{admin.id}}'/>
+                    <input class='fname' value='{{admin.firstName}}'/>
+                    <input class='lname' value='{{admin.lastName}}'/>
                 </form>
             {{/each}}
         </div>

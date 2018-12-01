@@ -104,6 +104,32 @@ function addUser(info) {
 }
 
 /**
+ * Receives information from account_creation and creates entry into the database
+ * @param {JSON} info - The information revieved from the website when creating an account
+ */
+function addAdmin(fname, lname, password) {
+    return new Promise ((resolve, reject) => {
+
+        var con = createConnection.createConnection();
+
+        connect(con)
+        .then((resolved) => {
+            con.query(`INSERT INTO user(first_name, last_name, password, email, education,location, type) values ('${info.fname}', '${info.lname}', '${info.password}', '${info.email}', '${info.edubg}','${info.address}', 'user')`,
+            function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve('ok');
+                }
+            });
+
+        }).catch((error) => {
+            reject(error);
+        });
+    });
+}
+
+/**
 * Sends a query to the database to get the users info.
 * @param {string} email.
 * @param {string} password.
