@@ -88,7 +88,7 @@ function addUser(info) {
 
         connect(con)
         .then((resolved) => {
-            con.query(`INSERT INTO user(first_name, last_name, password, email, location, type) values ('${info.fname}', '${info.lname}', '${info.password}', '${info.email}', '${info.address}', 'user')`,
+            con.query(`INSERT INTO user(first_name, last_name, password, email, education,location, type) values ('${info.fname}', '${info.lname}', '${info.password}', '${info.email}', '${info.edubg}','${info.address}', 'user')`,
             function(err, result) {
                 if (err) {
                     reject(err);
@@ -375,7 +375,7 @@ function retrievelicenses(user_id) {
  */
 function addNote(note, type, id) {
     return new Promise((resolve, reject) => {
-        var con = createConnection();
+        var con = createConnection.createConnection();
         connect(con)
         .then((resolved) => {
 

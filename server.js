@@ -242,16 +242,25 @@ app.post('/settings_email', (req, res) => {
 app.post('/settings_password', (req, res) => {
     var newPassword = req.body.password
     var id = req.session.user.id
-
-    if (check.checkForBlankEntry([newPassword]) && check.checkForPasswordFormat(newPassword)) {
-        db.changePassword(newPassword, id)
-        .then((resolved) => {
-            res.send(resolved);
-        }).catch ((error) => {
-            res.sendStatus(500);
-            console.log(error);
-        })
-    }
+    bcrypt2.genSalt(10, function(err, salt) {
+        if (err) return next(err);
+        bcrypt2.hash(newPassword, salt, null, function(err, hash) {
+            if (err) return next(err);
+            req.body.password = hash; 
+            //console.log(req.body.password);
+            //console.log(req.body.password.length)
+            db.changePassword(newPassword, id)
+            .then((resolved) => {
+                res.send(resolved);
+            }).catch ((error) => {
+                res.sendStatus(500);
+                console.log(error);
+            })
+                    
+             
+            });
+    });
+        
 });
 
 app.get('/landing_page', (req, res) => {
@@ -354,7 +363,7 @@ app.post('/licenses', (req, res) => {
                 });
             db.addLicense(filename, req.body.type, req.body.notes, req.session.user.id)
                 .then((resolved) => {
-                    res.send('File uploaded!');
+                    res.send('File uploaded! Click here to go to the status');
                 }, (error) => {
                     res.sendStatus(500)
                     console.log(error);
@@ -413,7 +422,7 @@ app.post('/account_creation', (req, res) => {
         res.send(error)
 })
 
-    }
+}
 
 
 })
@@ -563,47 +572,3 @@ app.post('/pass_forgot', function(req, res, next) {
     res.redirect('/landing_page');
   });
 });
-
-
-app.post('/licenses', (req, res) => {
-    if (Object.keys(req.files).length == 0) {
-        return res.status(400).send('No files were uploaded.');
-    } else {
-        // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-        let sampleFile = req.files.pic;
-        var note = req.body.notes
-        console.log(req.files);
-
-        crypto.pseudoRandomBytes(16, function(err, raw) {
-            if (err) return callback(err);
-            var filename = raw.toString('hex') + path.extname(req.files.pic.name);
-
-            verify_license.verify_license(req.body).then((data) => {
-
-                sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
-
-                    if (err) {
-                    res.status(500).send(err);
-                    }
-                    
-                });
-            db.addNote(note, 'user_notes', req.session.user.id)
-                .then((resolved) => {
-                    res.send('File uploaded!');
-                }).catch((error) => {
-                    res.sendStatus(500)
-                    console.log(error);
-                });
-            db.addLicense(filename, req.body.type, req.body.notes, req.session.user.id)
-                .then((resolved) => {
-                    res.send('File uploaded!');
-                }).catch((error) => {
-                    res.sendStatus(500)
-                    console.log(error);
-                });
-            }).catch((error) => {
-                res.send(error)
-            });
-        })
-
-    }});

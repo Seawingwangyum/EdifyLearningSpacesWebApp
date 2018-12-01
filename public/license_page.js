@@ -150,8 +150,41 @@ function empOC() {
 });
 }
 
+
+
+function ajax_function(json_obj){
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(json_obj),
+        contentType: 'multipart/form-data;boundary=abc',
+        url: '/licenses',
+        success: function(data){
+            console.log(data)
+            if(data){
+                swal({
+
+                    type: 'success',
+
+                    title: 'Your file has been filed',
+
+                    confirmButtonText: 'OK'
+
+                    }).then((result) => {
+
+                        
+
+                })
+            }
+            else{
+
+                alert("Whoops, something went wrong")
+            }
+        }
+    })
+}
+
 function send_prep(filetype){
-    console.log('SOMETHING IS HAPPENING');
+    
     if (filetype == 'crimfile') {
         response["type"] = 'criminal';
         response["file"] = crimfile.value;
@@ -179,25 +212,6 @@ function send_prep(filetype){
     
     
     ajax_function(response);
-}
-
-function ajax_function(json_obj){
-    $.ajax({
-        type: 'POST',
-        data: JSON.stringify(json_obj),
-        contentType: 'application/json',
-        url: '/licenses',
-        success: function(data){
-            console.log(data)
-            if(data.Error == "0"){
-                location.href="/licenses"
-            }
-            else{
-
-                alert("Whoops, something went wrong")
-            }
-        }
-    })
 }
 
 
