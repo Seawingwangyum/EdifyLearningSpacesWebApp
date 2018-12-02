@@ -104,6 +104,35 @@ function addUser(info) {
 }
 
 /**
+ * Creates a new admin account in the database.
+ * @param {string} fname - 
+ * @param {string} lname - 
+ * @param {string} password - 
+ * @param {string} email - email / login credentail for admin account
+ */
+function addAdmin(fname, lname, password, email) {
+    return new Promise ((resolve, reject) => {
+
+        var con = createConnection.createConnection();
+
+        connect(con)
+        .then((resolved) => {
+            con.query(`INSERT INTO user(first_name, last_name, password, email, education,location, type) values ('${fname}', '${lname}', '${password}', '${email}', 'N/A','N/A', 'admin')`,
+            function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve('ok');
+                }
+            });
+
+        }).catch((error) => {
+            reject(error);
+        });
+    });
+}
+
+/**
 * Sends a query to the database to get the users info.
 * @param {string} email.
 * @param {string} password.
@@ -465,5 +494,6 @@ module.exports = {
     addLicense,
     addNote,
     addUser,
+    addAdmin,
     check_email,
 }
