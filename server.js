@@ -140,6 +140,7 @@ app.get('/provider_edit', adminSessionCheck, (request, response) => {
     var id = request.query.user_id
     db.retrievelicenses(id)
     .then((resolved) => {
+        // required json structure for provider edits hbs
         var sortedProviderLicenses = {
             licenses: {
                 awaitingApproval: {
@@ -160,6 +161,7 @@ app.get('/provider_edit', adminSessionCheck, (request, response) => {
                 },
             }
         }
+        // pushes the licenses into one of the license lists based on the status
         for (key in resolved) {
             console.log(resolved[key]);
             if (resolved.hasOwnProperty(key)) {
@@ -243,7 +245,6 @@ app.post('/settings_name', (req, res) => {
     var lname = req.body.lname
     var name = [fname, lname]
     var id = req.session.user.id
-    console.log(id);
 
     if (check.checkForBlankEntry(name) && check.checkForOnlyAlphabet(name)) {
         db.changeName(fname, lname, id)
@@ -509,22 +510,49 @@ app.post('/provider_list', (req, res) => {
 });
 
 app.get('/admin_list', superSessionCheck, (req, res) => {
-    res.render('admin_list.hbs', {
-        userData: testData.admin_list_data
+    db.getUsers('admin')
+    .then((resolved) => {
+        res.render('admin_list.hbs', {
+            admins: resolved
+        })
+    }).catch((error) => {
+        console.log(error);
+        res.send('error');
     })
 })
 
-app.post('/admin_list', (req, res) => {
+app.post('/filter_admin_list', (req, res) => {
     var id = req.body.Idsearch
     var fname = req.body.fnamesearch
     var lname = req.body.lnamesearch
-    var status = req.body.querytype
-    var list = testData.admin_list_data.admins;
 
-    var filteredList = {admins: filterList(list, id, fname, lname, status)}
-    res.render('admin_list.hbs', {
-        userData: filteredList
+    db.getUsers('admin')
+    .then((resolved) => {
+        var list = resolved;
+
+        var filteredList = {admins: filterList(list, id, fname, lname)}
+        res.render('admin_list.hbs', {
+            admins: filteredList.admins
+        })
+    }).catch((error) => {
+        console.log(error);
+        res.send('error');
     })
+});
+
+app.post('/create_admin', (req, res) => {
+    console.log(req.body);
+    var fname = req.body.fname
+    var lname = req.body.lname
+    var password = req.body.password
+    var email = req.body.email
+    //error check again
+    db.addAdmin(fname, lname, password, email)
+    .then((resolved) => {
+        res.send(resolved)
+    }).catch((error) => {
+        res.sendStatus(500)
+    });
 });
 
 app.get('/admin_edit', superSessionCheck, (req, res) => {

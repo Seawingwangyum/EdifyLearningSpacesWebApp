@@ -6,13 +6,19 @@ body {
     font-family: sans-serif;
 }
 
-input, select, button {
+input, select {
     border-style: none none solid;
+    background-color: #f5f8fa;
+    margin: 15px 0px 0px 20px;
     border-style: none none solid;
     border-bottom-width:1px;
     border-bottom-color: #ced7db;
     width:15vw;
+    font-size: 18px;
     float: left;
+}
+input[type=text] {
+    font-family: 'BalooBhai';
 }
 
 #main {
@@ -27,6 +33,7 @@ input, select, button {
     #title {
         position: relative;
         top: 20px;
+        font-size: 40px;
         text-align: center;
         color: rgb(87, 164, 219);
     }
@@ -47,6 +54,9 @@ input, select, button {
                 background: none;
                 border: none;
                 text-align: left;
+                font-family: 'BalooBhai';
+                color: #48456b;
+                font-size: 24px;
             }
             .id {width: 20%;}
             .fname {width: 16%;}
@@ -65,8 +75,8 @@ input, select, button {
                     margin: 0px;
                     color:white;
                     height: 80%;
+                    width: 200px;
                     margin: 5px 25px;
-                    padding: 0;
                     font-family: 'BalooBhai', sans-serif;
                     font-size: 20px;
                 }
@@ -91,7 +101,7 @@ input, select, button {
             .goto_provider {
                 position: absolute;
                 border: none;
-                height: 7.5%;
+                height: 70px;
                 background: none;
                 width: 100%;
                 text-align: left;
