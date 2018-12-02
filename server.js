@@ -210,7 +210,6 @@ app.post('/settings_name', (req, res) => {
     var lname = req.body.lname
     var name = [fname, lname]
     var id = req.session.user.id
-    console.log(id);
 
     if (check.checkForBlankEntry(name) && check.checkForOnlyAlphabet(name)) {
         db.changeName(fname, lname, id)
@@ -503,9 +502,19 @@ app.post('/filter_admin_list', (req, res) => {
 });
 
 app.post('/create_admin', (req, res) => {
-    console.log(req);
-    res.send('ok');
-})
+    console.log(req.body);
+    var fname = req.body.fname
+    var lname = req.body.lname
+    var password = req.body.password
+    var email = req.body.email
+    //error check again
+    db.addAdmin(fname, lname, password, email)
+    .then((resolved) => {
+        res.send(resolved)
+    }).catch((error) => {
+        res.sendStatus(500)
+    });
+});
 
 app.get('/admin_edit', superSessionCheck, (req, res) => {
     res.render('admin_edit.hbs', {
