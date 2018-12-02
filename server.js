@@ -20,6 +20,7 @@ const verify_signup = require("./components/verify_signup");
 const check = require("./public/credentialErrorChecking");
 const verify_license = require("./components/verify_license");
 const uploadS3 = require("./public/uploadS3");
+const downloadS3 = require("./public/downloadS3");
 const db = require('./test_mysql.js')
 
 app.set('view engine', 'hbs')
@@ -32,6 +33,7 @@ app.use(express.static('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads'));
 
 app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
 app.use(fileUpload());
+
 
 // bodyparser setup
 var bodyParser = require('body-parser')
@@ -49,6 +51,12 @@ app.use(session({
 }));
 
 var testData = require('./public/testData')
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 // Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
 function userSessionCheck(req, res, next) {
@@ -153,6 +161,7 @@ app.get('/provider_edit', adminSessionCheck, (request, response) => {
             }
         }
         for (key in resolved) {
+            console.log(resolved[key]);
             if (resolved.hasOwnProperty(key)) {
                 if(resolved[key].status === 'Awaiting Approval') {
                     sortedProviderLicenses.licenses.awaitingApproval.licenses.push(resolved[key]);
@@ -182,19 +191,43 @@ app.get('/provider_edit', adminSessionCheck, (request, response) => {
 });
 
 app.post('/provider_edit', adminSessionCheck, (request, response) => {
+    console.log(response);
+    response.header("Access-Control-Allow-Origin", "*");
     // response.send(JSON.stringify(request.body))
     // console.log('heeeelp');
     console.log(request.body.L_ID);
     console.log(request.body.Action);
     console.log(request.body.notesValue);
-
-    db.changeStatus(request.body.L_ID, request.body.Action, request.body.notesValue)
+    console.log(request.body.filename);
+    if (request.body.Action) {
+        db.changeStatus(request.body.L_ID, request.body.Action, request.body.notesValue)
         .then((resolved) => {
             response.send(resolved)
         }, (error) => {
             response.sendStatus(500)
             console.log(error);
         })
+    } else if (request.body.filename) {
+        db.getLicensePic(request.body.L_ID)
+        .then((resolved) => {
+            console.log('file is:' + resolved);
+            downloadS3.downloadS3(resolved)
+            .then((url) => {
+                console.log(url);
+            response.redirect(url)
+            }, (err) => {
+                response.sendStatus(500)
+                console.log(error);
+            });
+            
+        }, (error) => {
+            response.sendStatus(500)
+            console.log(error);
+        })
+    } else {
+        alert('Something went wrong')
+    }
+    
 
 });
 

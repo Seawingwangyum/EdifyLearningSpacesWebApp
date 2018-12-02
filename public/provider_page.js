@@ -2,6 +2,8 @@ var response = {};
 var license_ID = 11111;
 var license_name = '';
 var notesValue = '';
+var pictureName = '';
+
 /**
 * Function to create new HTML element
 * @param {string} element - The type of element to create
@@ -37,10 +39,14 @@ function CreateNewInput(type, value) {
 * @param {string} id - the identifier for the HTML element
 * @param {string} name - the specific name of the HTML element
 */
-function createOptions(id, name, l_id) {
+function createOptions(id, name, l_id, file) {
 	console.log(id);
 	license_name = id;
 	license_ID = l_id
+	pictureName = file;
+
+		
+	
 	var license = document.getElementById(id);
 	var licenseOptions = document.getElementById(license.id + '_options');
 	if (licenseOptions) {
@@ -58,7 +64,7 @@ function createOptions(id, name, l_id) {
 		// fixed element id
 		// document.getElementById('element3').addEventListener("click", send_conf);
 
-		filename_name = createNewElement('div', 'filename_name', 'Filename...');
+		filename_name = createNewElement('div', 'filename_name', pictureName);
 		filename_date = createNewElement('div', 'filename_date', '00/00/0000');
 
 		file_submit = createNewElement('div', 'file_submit');
@@ -89,7 +95,7 @@ function createOptions(id, name, l_id) {
 
 				file_submit.appendChild(form_right);
 
-
+		document.getElementById(id +'_DLbut').addEventListener("click", send_file);
 		if (name == 'Awaiting approval') {
 			
 			accept_but = CreateNewInput('submit', 'Approve');
@@ -133,6 +139,15 @@ function createOptions(id, name, l_id) {
 //-------------------------------------
 //--------------my sql-----------------
 //-------------------------------------
+
+
+function send_file() {
+	console.log('send '+ pictureName);
+	response["filename"] = pictureName;
+	response["L_ID"] = license_ID;
+	
+	ajax_function(response)
+}
 
 function send_prep_D(){
 	notesValue = document.getElementById(license_name +'_NInput').value;
@@ -178,10 +193,12 @@ function send_prep_UD(){
 
 function ajax_function(json_obj){
     $.ajax({
+    	dataType: "jsonp",
+    	crossOrigin: true,
         type: 'POST',
         data: JSON.stringify(json_obj),
         contentType: 'application/json',
-        url: 'http://localhost:8080/provider_edit',
+        url: '/provider_edit',
         success: function(data){
             console.log(data);
             if(data == "ok"){

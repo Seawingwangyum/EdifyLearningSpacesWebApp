@@ -327,11 +327,11 @@ function getLicense(license_id) {
  */
 function retrievelicenses(user_id) {
     var defaultJSON = {
-        criminal: {status: 'submission is required', admin_notes: 'No note.', name: 'criminal'},
-        siteplan: {status: 'submission is required', admin_notes: 'No note.', name: 'siteplan'},
-        floorplan: {status: 'submission is required', admin_notes: 'No note.', name: 'floorplan'},
-        reference: {status: 'submission is required', admin_notes: 'No note.', name: 'reference'},
-        fireplan: {status: 'submission is required', admin_notes: 'No note.', name: 'fireplan'},
+        criminal: {status: 'submission is required', admin_notes: 'No note.', name: 'criminal', filename: 'no file'},
+        siteplan: {status: 'submission is required', admin_notes: 'No note.', name: 'siteplan', filename: 'no file'},
+        floorplan: {status: 'submission is required', admin_notes: 'No note.', name: 'floorplan', filename: 'no file'},
+        reference: {status: 'submission is required', admin_notes: 'No note.', name: 'reference', filename: 'no file'},
+        fireplan: {status: 'submission is required', admin_notes: 'No note.', name: 'fireplan', filename: 'no file'},
     }
     status_data = {}
 
@@ -352,6 +352,7 @@ function retrievelicenses(user_id) {
                         defaultJSON[license_type].status = result[i].status
                         defaultJSON[license_type].admin_notes = result[i].admin_notes
                         defaultJSON[license_type].license_id = result[i].license_id
+                        defaultJSON[license_type].filename = result[i].file
                     }
                     resolve(defaultJSON)
 
@@ -451,6 +452,31 @@ function loadStatus(id) {
     })
 }
 
+function getLicensePic(license_id) {
+        return new Promise((resolve, reject) =>{
+
+        var con = createConnection.createConnection();
+
+        connect(con)
+        .then((resolved) => {
+            con.query("SELECT * FROM license WHERE license_id = " + license_id + ";", function (err, result) {
+                // console.log(result)
+                if (err) {
+                    reject(err);
+                } else {
+                    
+                    resolve(result[0].file)
+
+                    // resolve(status_data);
+                }
+            })
+        }).catch((error) => {
+            reject(error);
+        });
+    });
+    con.end();
+}
+
 module.exports = {
     getUser,
     getUsers,
@@ -466,4 +492,5 @@ module.exports = {
     addNote,
     addUser,
     check_email,
+    getLicensePic
 }
