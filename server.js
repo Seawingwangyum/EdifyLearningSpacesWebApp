@@ -7,6 +7,7 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
+const AWS = require('aws-sdk');
 
 const hbs = require('hbs');
 const fs = require('fs');
@@ -18,6 +19,7 @@ const send_email = require("./components/send_email")
 const verify_signup = require("./components/verify_signup");
 const check = require("./public/credentialErrorChecking");
 const verify_license = require("./components/verify_license");
+const uploadS3 = require("./public/uploadS3");
 const db = require('./test_mysql.js')
 
 app.set('view engine', 'hbs')
@@ -311,7 +313,11 @@ app.post('/licenses', (req, res) => {
             var filename = raw.toString('hex') + path.extname(req.files.pic.name);
 
             verify_license.verify_license(req.body).then((data) => {
-
+                uploadS3.uploadS3(req.files.pic.data, filename, function(err){
+                    if (err){
+                        console.log('s3 is bad: ' + err);
+                    }
+                })
                 sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
 
                     if (err) {
@@ -322,7 +328,7 @@ app.post('/licenses', (req, res) => {
                 });
             db.addLicense(filename, req.body.type, req.body.notes, req.session.user.id)
                 .then((resolved) => {
-                    res.send('File uploaded! Click here to go to the status');
+                    res.redirect('/status');
                 }, (error) => {
                     res.sendStatus(500)
                     console.log(error);
