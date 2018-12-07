@@ -38,7 +38,7 @@
 
         <div id='list'>
             {{#each userData as |provider|}}
-                <form class='providers' method='POST' action='/provider_edit'>
+                <form class='providers' method='GET' action='/provider_edit'>
                     <input type='submit'  value='' class='goto_provider'/>
                     <input class='id' name='user_id' value='{{provider.id}}'/>
                     <input class='fname' name='fname' value='{{provider.firstName}}'/>

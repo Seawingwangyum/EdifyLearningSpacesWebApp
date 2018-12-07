@@ -104,6 +104,35 @@ function addUser(info) {
 }
 
 /**
+ * Creates a new admin account in the database.
+ * @param {string} fname - 
+ * @param {string} lname - 
+ * @param {string} password - 
+ * @param {string} email - email / login credentail for admin account
+ */
+function addAdmin(fname, lname, password, email) {
+    return new Promise ((resolve, reject) => {
+
+        var con = createConnection.createConnection();
+
+        connect(con)
+        .then((resolved) => {
+            con.query(`INSERT INTO user(first_name, last_name, password, email, education,location, type) values ('${fname}', '${lname}', '${password}', '${email}', 'N/A','N/A', 'admin')`,
+            function(err, result) {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve('ok');
+                }
+            });
+
+        }).catch((error) => {
+            reject(error);
+        });
+    });
+}
+
+/**
 * Sends a query to the database to get the users info.
 * @param {string} email.
 * @param {string} password.
@@ -327,11 +356,11 @@ function getLicense(license_id) {
  */
 function retrievelicenses(user_id) {
     var defaultJSON = {
-        criminal: {status: 'submission is required', admin_notes: 'No note.'},
-        siteplan: {status: 'submission is required', admin_notes: 'No note.'},
-        floorplan: {status: 'submission is required', admin_notes: 'No note.'},
-        reference: {status: 'submission is required', admin_notes: 'No note.'},
-        fireplan: {status: 'submission is required', admin_notes: 'No note.'},
+        criminal: {status: 'submission is required', admin_notes: 'No note.', name: 'criminal', filename: 'no file'},
+        siteplan: {status: 'submission is required', admin_notes: 'No note.', name: 'siteplan', filename: 'no file'},
+        floorplan: {status: 'submission is required', admin_notes: 'No note.', name: 'floorplan', filename: 'no file'},
+        reference: {status: 'submission is required', admin_notes: 'No note.', name: 'reference', filename: 'no file'},
+        fireplan: {status: 'submission is required', admin_notes: 'No note.', name: 'fireplan', filename: 'no file'},
     }
     status_data = {}
 
@@ -342,21 +371,21 @@ function retrievelicenses(user_id) {
         connect(con)
         .then((resolved) => {
             con.query("SELECT * FROM license WHERE frn_user_id = " + user_id + ";", function (err, result) {
-                //console.log(result)
+                // console.log(result)
                 if (err) {
                     reject(err);
                 } else {
-                                            console.log(result);
-
                     for(i = 0; i < result.length; i++) {
 
                         var license_type = result[i].type
                         defaultJSON[license_type].status = result[i].status
                         defaultJSON[license_type].admin_notes = result[i].admin_notes
+                        defaultJSON[license_type].license_id = result[i].license_id
+                        defaultJSON[license_type].filename = result[i].file
                     }
                     resolve(defaultJSON)
 
-                    resolve(status_data);
+                    // resolve(status_data);
                 }
             })
         }).catch((error) => {
@@ -452,6 +481,31 @@ function loadStatus(id) {
     })
 }
 
+function getLicensePic(license_id) {
+        return new Promise((resolve, reject) =>{
+
+        var con = createConnection.createConnection();
+
+        connect(con)
+        .then((resolved) => {
+            con.query("SELECT * FROM license WHERE license_id = " + license_id + ";", function (err, result) {
+                // console.log(result)
+                if (err) {
+                    reject(err);
+                } else {
+                    
+                    resolve(result[0].file)
+
+                    // resolve(status_data);
+                }
+            })
+        }).catch((error) => {
+            reject(error);
+        });
+    });
+    con.end();
+}
+
 module.exports = {
     getUser,
     getUsers,
@@ -466,5 +520,7 @@ module.exports = {
     addLicense,
     addNote,
     addUser,
+    addAdmin,
     check_email,
+    getLicensePic
 }

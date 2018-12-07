@@ -7,6 +7,7 @@ const express = require('express');
 const path = require('path');
 const logger = require('morgan');
 const cookieParser = require('cookie-parser');
+const AWS = require('aws-sdk');
 
 const hbs = require('hbs');
 const fs = require('fs');
@@ -18,6 +19,8 @@ const send_email = require("./components/send_email")
 const verify_signup = require("./components/verify_signup");
 const check = require("./public/credentialErrorChecking");
 const verify_license = require("./components/verify_license");
+const uploadS3 = require("./public/uploadS3");
+const downloadS3 = require("./public/downloadS3");
 const db = require('./test_mysql.js')
 
 app.set('view engine', 'hbs')
@@ -30,6 +33,7 @@ app.use(express.static('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads'));
 
 app.use(express.static(__dirname + '/node_modules/sweetalert2/dist'))
 app.use(fileUpload());
+
 
 // bodyparser setup
 var bodyParser = require('body-parser')
@@ -47,6 +51,12 @@ app.use(session({
 }));
 
 var testData = require('./public/testData')
+
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
 
 // Checks to see if the session is still active, if it isnt it redirects to '/landing_page'
 function userSessionCheck(req, res, next) {
@@ -127,29 +137,100 @@ app.post('/status', (req, res) => {
 
 
 app.get('/provider_edit', adminSessionCheck, (request, response) => {
-    response.render('provider_edit.hbs', {
-        userData: testData.provider_edit_data
+    var id = request.query.user_id
+    db.retrievelicenses(id)
+    .then((resolved) => {
+        // required json structure for provider edits hbs
+        var sortedProviderLicenses = {
+            licenses: {
+                awaitingApproval: {
+                    name: 'Awaiting approval',
+                    licenses: []
+                },
+                approved: {
+                    name: 'Approved',
+                    licenses: []
+                },
+                denied: {
+                    name: 'Denied',
+                    licenses: []
+                },
+                awaitingSubmission: {
+                    name: 'Awaiting submission',
+                    licenses: []
+                },
+            }
+        }
+        // pushes the licenses into one of the license lists based on the status
+        for (key in resolved) {
+            console.log(resolved[key]);
+            if (resolved.hasOwnProperty(key)) {
+                if(resolved[key].status === 'Awaiting Approval') {
+                    sortedProviderLicenses.licenses.awaitingApproval.licenses.push(resolved[key]);
+                } else if (resolved[key].status === 'Accepted') {
+                    sortedProviderLicenses.licenses.approved.licenses.push(resolved[key]);
+                } else if (resolved[key].status === 'Denied') {
+                    sortedProviderLicenses.licenses.denied.licenses.push(resolved[key]);
+                } else if (resolved[key].status === 'submission is required') {
+                    sortedProviderLicenses.licenses.awaitingSubmission.licenses.push(resolved[key]);
+                }
+            }
+        }
+
+        // console.log(sortedProviderLicenses);
+        // console.log(sortedProviderLicenses.licenses.awaitingApproval);
+        response.render('provider_edit.hbs', {
+            id: id,
+            fname: request.query.fname,
+            lname: request.query.lname,
+            status: request.query.status,
+            userData: sortedProviderLicenses
+        })
+    }).catch((error) => {
+        console.log(error);
+        response.send('error');
     })
 });
 
 app.post('/provider_edit', adminSessionCheck, (request, response) => {
-    res.send(JSON.stringify(req.body))
-    console.log(request.body.Action);
+    console.log(response);
+    response.header("Access-Control-Allow-Origin", "*");
+    // response.send(JSON.stringify(request.body))
+    // console.log('heeeelp');
     console.log(request.body.L_ID);
-
-    db.getFile();
-
-    db.changeStatus(request.body.L_ID, request.body.Action, request.body.notesValue)
+    console.log(request.body.Action);
+    console.log(request.body.notesValue);
+    console.log(request.body.filename);
+    if (request.body.Action) {
+        db.changeStatus(request.body.L_ID, request.body.Action, request.body.notesValue)
         .then((resolved) => {
             response.send(resolved)
         }, (error) => {
             response.sendStatus(500)
             console.log(error);
         })
+    } else if (request.body.filename) {
+        db.getLicensePic(request.body.L_ID)
+        .then((resolved) => {
+            console.log('file is:' + resolved);
+            downloadS3.downloadS3(resolved)
+            .then((url) => {
+                console.log(url);
+            response.redirect(url)
+            }, (err) => {
+                response.sendStatus(500)
+                console.log(error);
+            });
+            
+        }, (error) => {
+            response.sendStatus(500)
+            console.log(error);
+        })
+    } else {
+        alert('Something went wrong')
+    }
+    
 
-    res.render('provider_edit.hbs', {
-        userData: testData.provider_edit_data
-    })
 });
 
 app.get('/settings', userSessionCheck, (req, res) => {
@@ -164,7 +245,6 @@ app.post('/settings_name', (req, res) => {
     var lname = req.body.lname
     var name = [fname, lname]
     var id = req.session.user.id
-    console.log(id);
 
     if (check.checkForBlankEntry(name) && check.checkForOnlyAlphabet(name)) {
         db.changeName(fname, lname, id)
@@ -218,9 +298,6 @@ app.post('/settings_password', (req, res) => {
     });
         
 });
-
-
-
 
 app.get('/landing_page', (req, res) => {
 	res.render('landing_page.hbs')
@@ -311,7 +388,11 @@ app.post('/licenses', (req, res) => {
             var filename = raw.toString('hex') + path.extname(req.files.pic.name);
 
             verify_license.verify_license(req.body).then((data) => {
-
+                uploadS3.uploadS3(req.files.pic.data, filename, function(err){
+                    if (err){
+                        console.log('s3 is bad: ' + err);
+                    }
+                })
                 sampleFile.mv('C:/ProgramData/MySQL/MySQL Server 8.0/Uploads/'+ filename, function(err) {
 
                     if (err) {
@@ -322,7 +403,7 @@ app.post('/licenses', (req, res) => {
                 });
             db.addLicense(filename, req.body.type, req.body.notes, req.session.user.id)
                 .then((resolved) => {
-                    res.send('File uploaded! Click here to go to the status');
+                    res.redirect('/status');
                 }, (error) => {
                     res.sendStatus(500)
                     console.log(error);
@@ -396,7 +477,7 @@ app.get('/deleteaccount', (req, res)=>{
 
 app.get('/provider_list', adminSessionCheck, (req, res, list) => {
     //get list of providers from the db
-    db.getUsers(0)
+    db.getUsers('user')
     .then((resolved) =>{
         res.render('provider_list.hbs', {
             userData: resolved
@@ -409,7 +490,7 @@ app.get('/provider_list', adminSessionCheck, (req, res, list) => {
 
 app.post('/provider_list', (req, res) => {
     console.log('prolist');
-    db.getUsers(0)
+    db.getUsers('users')
     .then((resolved) => {
         var id = req.body.Idsearch
         var fname = req.body.fnamesearch
@@ -429,22 +510,49 @@ app.post('/provider_list', (req, res) => {
 });
 
 app.get('/admin_list', superSessionCheck, (req, res) => {
-    res.render('admin_list.hbs', {
-        userData: testData.admin_list_data
+    db.getUsers('admin')
+    .then((resolved) => {
+        res.render('admin_list.hbs', {
+            admins: resolved
+        })
+    }).catch((error) => {
+        console.log(error);
+        res.send('error');
     })
 })
 
-app.post('/admin_list', (req, res) => {
+app.post('/filter_admin_list', (req, res) => {
     var id = req.body.Idsearch
     var fname = req.body.fnamesearch
     var lname = req.body.lnamesearch
-    var status = req.body.querytype
-    var list = testData.admin_list_data.admins;
 
-    var filteredList = {admins: filterList(list, id, fname, lname, status)}
-    res.render('admin_list.hbs', {
-        userData: filteredList
+    db.getUsers('admin')
+    .then((resolved) => {
+        var list = resolved;
+
+        var filteredList = {admins: filterList(list, id, fname, lname)}
+        res.render('admin_list.hbs', {
+            admins: filteredList.admins
+        })
+    }).catch((error) => {
+        console.log(error);
+        res.send('error');
     })
+});
+
+app.post('/create_admin', (req, res) => {
+    console.log(req.body);
+    var fname = req.body.fname
+    var lname = req.body.lname
+    var password = req.body.password
+    var email = req.body.email
+    //error check again
+    db.addAdmin(fname, lname, password, email)
+    .then((resolved) => {
+        res.send(resolved)
+    }).catch((error) => {
+        res.sendStatus(500)
+    });
 });
 
 app.get('/admin_edit', superSessionCheck, (req, res) => {
