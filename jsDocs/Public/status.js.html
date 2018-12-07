@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: status.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: status.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>var crimtxtStateSS = "close",
+    sitetxtStateSS = "close",
+    floortxtStateSS = "close";
+
+var user = 1;
+
+var windows = ["crimCheckSS", "siteCheckSS","floorCheckSS", "referencesSS", "firePlanSS"]
+var statuses = ["criminal", "siteplan", "floorplan", "references", "fireplan"]
+
+/**
+* Function to open and close criminal record check information box
+* 
+*/
+function crimOCSS() {
+document.getElementById("crimCheckSS").addEventListener("click", () =>{
+    if (crimtxtStateSS == "close"){
+        document.getElementById("crInfoSS").style.display = "block";
+        crimtxtStateSS = "open";
+    } else if (crimtxtStateSS = "open"){
+       document.getElementById("crInfoSS").style.display = "none";
+       crimtxtStateSS = "close";
+    }
+});
+}
+
+/**
+* Function to open and close site plan information box
+*/
+function siteOCSS() {
+    document.getElementById("siteCheckSS").addEventListener("click", () =>{
+    if (sitetxtStateSS == "close"){
+        document.getElementById("siteInfoSS").style.display = "block";
+        sitetxtStateSS = "open";
+    } else if (sitetxtStateSS = "open"){
+       document.getElementById("siteInfoSS").style.display = "none";
+       sitetxtStateSS = "close";
+    }
+});
+}
+
+/**
+* Function to open and close floor plan information box
+*/
+function floorOCSS() {
+    document.getElementById("floorCheckSS").addEventListener("click", () =>{
+    if (floortxtStateSS == "close"){
+        document.getElementById("floorInfoSS").style.display = "block";
+        floortxtStateSS = "open";
+    } else if (floortxtStateSS = "open"){
+       document.getElementById("floorInfoSS").style.display = "none";
+       floortxtStateSS = "close";
+    }
+});
+}
+
+
+function refOCSS() {
+    document.getElementById("referencesSS").addEventListener("click", () =>{
+    if (floortxtStateSS == "close"){
+        document.getElementById("refInfoSS").style.display = "block";
+        floortxtStateSS = "open";
+    } else if (floortxtStateSS = "open"){
+       document.getElementById("refInfoSS").style.display = "none";
+       floortxtStateSS = "close";
+    }
+});
+}
+
+
+function fireOCSS() {
+    document.getElementById("firePlanSS").addEventListener("click", () =>{
+    if (floortxtStateSS == "close"){
+        document.getElementById("fireInfoSS").style.display = "block";
+        floortxtStateSS = "open";
+    } else if (floortxtStateSS = "open"){
+       document.getElementById("fireInfoSS").style.display = "none";
+       floortxtStateSS = "close";
+    }
+});
+}
+
+
+
+/**
+ * request information from the database to determine what color each tab is
+ */
+function request_status(){
+    //console.log("hellothere");
+
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify({user:1}),
+        contentType: 'application/json',
+        url: 'http://localhost:8080/status',
+        success: function(data){
+            console.log(data)
+
+            for(var item in data){
+
+                var cur = windows[statuses.indexOf(item)]
+                console.log(data[item].status);
+                switch (data[item].status){
+                    case "Accepted":
+                        document.getElementById(cur).className = "greenbuttons"
+                        break;
+                    case "Awaiting Approval":
+                        document.getElementById(cur).className = "yellowbuttons"
+                        break;
+                    case "Denied":
+                        document.getElementById(cur).className = "redbuttons"
+                }
+            }
+        }
+    })
+}
+
+crimOCSS();
+siteOCSS();
+floorOCSS();
+fireOCSS();
+refOCSS();
+
+
+document.addEventListener("DOMContentLoaded", function(){
+    request_status()
+}, false)
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#ajax_function">ajax_function</a></li><li><a href="global.html#changeEmail">changeEmail</a></li><li><a href="global.html#changeName">changeName</a></li><li><a href="global.html#changePassword">changePassword</a></li><li><a href="global.html#check_characters">check_characters</a></li><li><a href="global.html#checkForBlankEntry">checkForBlankEntry</a></li><li><a href="global.html#checkForEmailFormat">checkForEmailFormat</a></li><li><a href="global.html#checkForOnlyAlphabet">checkForOnlyAlphabet</a></li><li><a href="global.html#checkForPasswordFormat">checkForPasswordFormat</a></li><li><a href="global.html#confirm">confirm</a></li><li><a href="global.html#createNewElement">createNewElement</a></li><li><a href="global.html#CreateNewInput">CreateNewInput</a></li><li><a href="global.html#createOptions">createOptions</a></li><li><a href="global.html#crimOC">crimOC</a></li><li><a href="global.html#crimOCSS">crimOCSS</a></li><li><a href="global.html#deleteAdmin">deleteAdmin</a></li><li><a href="global.html#downloadS3">downloadS3</a></li><li><a href="global.html#empOC">empOC</a></li><li><a href="global.html#fireOC">fireOC</a></li><li><a href="global.html#floorOC">floorOC</a></li><li><a href="global.html#floorOCSS">floorOCSS</a></li><li><a href="global.html#getInputs">getInputs</a></li><li><a href="global.html#immunOC">immunOC</a></li><li><a href="global.html#loggedIn">loggedIn</a></li><li><a href="global.html#notification">notification</a></li><li><a href="global.html#password_length">password_length</a></li><li><a href="global.html#refOC">refOC</a></li><li><a href="global.html#request_status">request_status</a></li><li><a href="global.html#send_prep">send_prep</a></li><li><a href="global.html#siteOC">siteOC</a></li><li><a href="global.html#siteOCSS">siteOCSS</a></li><li><a href="global.html#uploadS3">uploadS3</a></li><li><a href="global.html#verification">verification</a></li><li><a href="global.html#verify">verify</a></li><li><a href="global.html#verify_forms_entered">verify_forms_entered</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Dec 06 2018 20:08:30 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -1,3 +1,8 @@
+/**
+ * verifies if name and password field are blank and returns displays a sweetalert.
+ * @param {String} name -User input for name.
+ * @param {String} password -User input for password.
+ */
 function verify(name, password) {
 	if (name != '' && password != '') {
 		swal(
@@ -14,6 +19,9 @@ function verify(name, password) {
 	}
 }
 
+/**
+ * Opens a Sweetalert and allows the user to change the password of an account.
+ */
 function getInputs() {
 	swal({
 		title: 'Change Password',
@@ -36,6 +44,9 @@ function getInputs() {
 	})
 }
 
+/**
+ * Deletes an admin, opens a sweet alert for verification.
+ */
 function deleteAdmin() {
 	swal({
 		title: 'Delete Admin?',

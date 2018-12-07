@@ -1,6 +1,9 @@
 const AWS = require('aws-sdk');
 const cred = require("./s3credentials")
-
+/**
+ * Downloads an S3 bucket. *Not Functional
+ * @param {String} file - Name of a file.
+ */
 function downloadS3(file) {
     return new Promise((resolve, reject) =>{
  let s3 = new AWS.S3({

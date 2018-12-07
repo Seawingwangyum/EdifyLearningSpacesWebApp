@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: settings.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: settings.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+* Checks that there are no empty strings and null entrys.
+* @param {array} entry - Array of user entered strings.
+* @return {boolean} True if it has no empty strings or null.
+*/
+function checkForBlankEntry(entry) {
+	for (i = 0; i &lt; entry.length; i++) {
+		if (entry[i] === '' || entry[i] === null) {
+			return false
+		}
+	}
+	return true
+}
+
+/**
+* Checks that there are only alphabetical characters.
+* @param {array} entry - Array of user entered strings.
+* @return {boolean} True if it only contains alphabetical characters.
+*/
+function checkForOnlyAlphabet(entry) {
+	for (i = 0; i &lt; entry.length; i++) {
+		if (!/^[a-zA-Z]+$/.test(entry[i])) {
+			return false
+		}
+	}
+	return true
+}
+
+/**
+* Checks that the string is in a valid email format.
+* @param {string} email - The users entered email.
+* @return {boolean} True if it passes the email format test.
+*/
+function checkForEmailFormat(email) {
+    if ((/^[^@]+@[a-z]+\.[a-z]{2,4}$/).test(email)) {
+        return true
+    } else {
+        return false
+    }
+}
+
+/**
+* Checks password strength (>= 8 length, 1 lower and upper case, 1 number).
+* @param {string} password - The users entered password.
+* @return {boolean} True if it passes the strength test.
+*/
+function checkForPasswordFormat(password) {
+	if ((/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$/).test(password)) {
+		return true
+	} else {
+		return false
+	}
+}
+
+/**
+* Displays a sweet alert with your message.
+* @param {string} message - The title or main message.
+* @param {string} type - The sweet alert sign (checkmark, x, etc).
+* @param {string} html - Additional text under the title.
+*/
+function notification(message, type, html = '') {
+	swal({
+		title: message,
+		type: type,
+		html: html
+	})
+}
+
+/**
+* Displays a sweet alert asking to confirm.
+* @param {string} message - The title or main message.
+* @return {boolean} True if they click "Yes".
+*/
+function confirm(message) {
+	return swal({
+		title:'Are you sure?',
+		text: message,
+		confirmButtonColor:'blue',
+		showCancelButton: true,
+		cancelButtonColor: 'red',
+		confirmButtonText: 'Yes'
+	})
+}
+
+/**
+* Sends a sweet alert to get a users new first and last name. Then if it passes error checking, it
+* ask for a confirmation before sendsing the inputs to server. Finally it shows an error or success message.
+*/
+function changeName() {
+	swal({
+		title: 'Change your name',
+		html:
+		'&lt;input id="swal-input1" class="swal2-input" maxlength="45" autofocus placeholder="First name">' +
+		'&lt;input id="swal-input2" class="swal2-input" maxlength="45" placeholder="Last name">',
+		 preConfirm: () => {
+		   	return [
+				document.getElementById('swal-input1').value,
+				document.getElementById('swal-input2').value
+		    ]  	
+		}
+	})
+	.then((result)=>{
+		if(result.value){
+			var entry = result.value
+			if (checkForBlankEntry(entry)) {
+				if (checkForOnlyAlphabet(entry)) {
+					confirm('Are you sure you want to change your name to "' +result.value[0]+ ' '+ result.value[1]+'"?')
+					.then((result2) => {
+						if (result2.value) {
+							var name = entry[0] + ' ' + entry[1]
+							var xhr = new XMLHttpRequest();
+							xhr.open('POST', '/settings_name');
+					        xhr.setRequestHeader('Content-Type', 'application/json');
+					        xhr.onload = function() {
+					        	if (xhr.status === 200) {
+									document.getElementById('userName').innerHTML=name;
+									notification('Name change successful!', 'success', 'Your name is now: '+name);
+					        	} else {
+					        		notification('Unable to change name', 'error', 'Please try again later')
+					        	}
+					        };
+					        xhr.send(JSON.stringify({
+					        	'fname': entry[0],
+					        	'lname': entry[1]
+					     	}))
+					    }
+				    })
+				} else {
+					notification('Incorrect name format', 'warning', 'alphabetical characters only')
+				}
+			} else {
+				notification('Please fill all forms', 'warning')
+			}
+		}
+	})
+}
+
+/**
+* Sends a sweet alert to get a users new email. Then if it passes error checking, it
+* ask for a confirmation before sendsing the input to server. Finally it shows an error or success message.
+*/
+function changeEmail() {
+	swal({
+		title: 'Change your email',
+		html:
+		'&lt;input id="swal-input1" class="swal2-input" maxlength="45" autofocus placeholder="New Email">',
+		 preConfirm: () => {
+		    return [
+				document.getElementById('swal-input1').value
+			]
+		}
+	})
+	.then(function(result) {
+		email = result.value
+		if (checkForBlankEntry(email)) {
+			if (checkForEmailFormat(email)) {
+				confirm('Are you sure you want to change your email to "' +result.value[0]+ '?')
+				.then((result2) =>{
+					if (result2.value) {
+						var xhr = new XMLHttpRequest();
+						xhr.open('POST', '/settings_email');
+				        xhr.setRequestHeader('Content-Type', 'application/json');
+				        xhr.onload = function() {
+				        	if (xhr.status === 200) {
+								document.getElementById('userEmail').innerHTML= email[0]
+								notification('Email change successful!', 'success', 'Your email is now: '+email);
+				        	} else {
+				        		notification('Unable to change email', 'error', 'Please try again later')
+				        	}
+				        };
+						xhr.send(JSON.stringify({
+				        	'email': email[0]
+				        }))
+					}
+				})
+			} else {
+				notification('Incorrect email format', 'warning', 'ex: email@gmail.com');
+			}
+		} else {
+			notification('Please fill all forms', 'warning');
+		}
+	})
+}
+
+/**
+* Sends a sweet alert to get a users new password. Then if it passes error checking, it
+* ask for a confirmation before sendsing the input to server. Finally it shows an error or success message.
+*/
+function changePassword() {
+	swal({
+		title: 'Change your password',
+		html:
+		'&lt;input id="swal-input1" class="swal2-input" maxlength="45" type="password" autofocus placeholder="New Password">' +
+		'&lt;input id="swal-input2" class="swal2-input" maxlength="45" type="password" placeholder="Confirm Password">',
+		 preConfirm: () => {
+		    return [
+				document.getElementById('swal-input1').value,
+				document.getElementById('swal-input2').value
+		    ]
+		}
+	})
+	.then(function(result) {
+		var password = result.value
+		if (checkForBlankEntry(password)) {
+			if(password[0] === password[1]) {
+				if (checkForPasswordFormat(password)) {
+					confirm('Are you sure you want to change your password?')
+					.then((result2) =>{
+						if (result2.value) {
+							var xhr = new XMLHttpRequest();
+							xhr.open('POST', '/settings_password');
+					        xhr.setRequestHeader('Content-Type', 'application/json');
+					        xhr.onload = function() {
+					        	if (xhr.status === 200) {
+									console.log('password changed');
+									notification('Password change successful!', 'success', '');
+					        	} else {
+					        		notification('Unable to change password', 'error', 'Please try again later')
+					        	}
+					        };
+					        xhr.send(JSON.stringify({
+					        	'password': password[0]
+					        }))
+					    }
+					})
+				} else {
+					notification('Incorrect password format', 'warning', 'Requires upper and lowercase, a number, and must be 8 characters long ');
+				}
+			} else {
+				notification('Password do not match', 'warning', 'Please type the same password for both entrys')
+			}
+		} else {
+			notification('Please fill all forms', 'warning');
+		}
+	})
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#ajax_function">ajax_function</a></li><li><a href="global.html#changeEmail">changeEmail</a></li><li><a href="global.html#changeName">changeName</a></li><li><a href="global.html#changePassword">changePassword</a></li><li><a href="global.html#check_characters">check_characters</a></li><li><a href="global.html#checkForBlankEntry">checkForBlankEntry</a></li><li><a href="global.html#checkForEmailFormat">checkForEmailFormat</a></li><li><a href="global.html#checkForOnlyAlphabet">checkForOnlyAlphabet</a></li><li><a href="global.html#checkForPasswordFormat">checkForPasswordFormat</a></li><li><a href="global.html#confirm">confirm</a></li><li><a href="global.html#createNewElement">createNewElement</a></li><li><a href="global.html#CreateNewInput">CreateNewInput</a></li><li><a href="global.html#createOptions">createOptions</a></li><li><a href="global.html#crimOC">crimOC</a></li><li><a href="global.html#crimOCSS">crimOCSS</a></li><li><a href="global.html#deleteAdmin">deleteAdmin</a></li><li><a href="global.html#downloadS3">downloadS3</a></li><li><a href="global.html#empOC">empOC</a></li><li><a href="global.html#fireOC">fireOC</a></li><li><a href="global.html#floorOC">floorOC</a></li><li><a href="global.html#floorOCSS">floorOCSS</a></li><li><a href="global.html#getInputs">getInputs</a></li><li><a href="global.html#immunOC">immunOC</a></li><li><a href="global.html#loggedIn">loggedIn</a></li><li><a href="global.html#notification">notification</a></li><li><a href="global.html#password_length">password_length</a></li><li><a href="global.html#refOC">refOC</a></li><li><a href="global.html#request_status">request_status</a></li><li><a href="global.html#send_prep">send_prep</a></li><li><a href="global.html#siteOC">siteOC</a></li><li><a href="global.html#siteOCSS">siteOCSS</a></li><li><a href="global.html#uploadS3">uploadS3</a></li><li><a href="global.html#verification">verification</a></li><li><a href="global.html#verify">verify</a></li><li><a href="global.html#verify_forms_entered">verify_forms_entered</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Thu Dec 06 2018 20:08:30 GMT-0800 (Pacific Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

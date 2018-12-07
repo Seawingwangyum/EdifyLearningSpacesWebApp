@@ -9,6 +9,9 @@ var reciever = "";
 var subject = "";
 var text = "";
 
+/**
+ * Sends an email using node mailer
+ */
 module.exports.send_email = function(info) {
     var transporter = nodemailer.createTransport({
         service: mailservice,

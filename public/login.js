@@ -20,7 +20,10 @@ document.getElementById('Passwd').addEventListener("keyup", function(event) {
   }
 }); 
 
-
+/**
+ * 
+ * @param {JSON} json_obj -Object that's getting sent back to the server.
+ */
 function loggedIn(json_obj){
     console.log(json_obj);
     $.ajax({

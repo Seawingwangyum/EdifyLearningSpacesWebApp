@@ -1,3 +1,6 @@
+/**
+ * Verifies sign up and returns 1 or 0
+ */
 module.exports.verify_signup = function(info){
     var to_return = {};
     return new Promise((resolve, reject)=>{

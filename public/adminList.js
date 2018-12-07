@@ -1,3 +1,10 @@
+/**
+ * Checks if all input fields have been filled
+ * @param {String} email -User input for email
+ * @param {String} fname -User input for first name
+ * @param {String} lname -User input for last name
+ * @param {String} password -User input for password
+ */
 function verify_forms_entered(email, fname, lname, password) {
 	if (email === '' || fname === '' || lname === '' || password === '') {
 		swal(
@@ -66,7 +73,9 @@ function checkForOnlyAlphabet(entry) {
 	return true
 }
 
-
+/**
+ * Opens a sweetalert and allows the user to create an admin account
+ */
 function getInputs() {
 	swal({
 		title: 'Create Admin',

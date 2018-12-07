@@ -190,7 +190,10 @@ function send_prep_UD(){
 // 	ajax_function(response);
 // }
 
-
+/**
+ * 
+ * @param {JSON} json_obj -Object to send to the server.
+ */
 function ajax_function(json_obj){
     $.ajax({
     	dataType: "jsonp",

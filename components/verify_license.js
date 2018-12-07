@@ -1,3 +1,6 @@
+/**
+ * Verifies Licenses
+ */
 module.exports.verify_license = function(info){
     var to_return = {};
     console.log(info);

@@ -1,6 +1,10 @@
 const cred = require("./s3credentials")
 const AWS = require('aws-sdk');
-
+/**
+ * Sends data to an AWS S3 Bucket to store.
+ * @param {Buffer} file - File buffer of from the uploaded file.
+ * @param {String} name - Name of the S3 Bucket.
+ */
 function uploadS3(file, name) {
  let s3bucket = new AWS.S3({
    accessKeyId: cred.IAM_USER_KEY,
